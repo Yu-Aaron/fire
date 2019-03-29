@@ -1,0 +1,556 @@
+// =========================
+// BOOTSTRAP TABLE VARIABLES
+// =========================
+//** Padding for cells in `.table-condensed`.
+@table-condensed-cell-padding: 5px;
+//** Background color used for `.table-striped`.
+@table-bg-accent: @gray75;
+@table-cell-padding: 8px 10px;
+@table-bg: @bg-gray-lighter;
+@table-bg-hover: @bg-gray-lightest;
+@table-bg-active: @table-bg-hover;
+@table-border-color: @bg-gray-darker;
+@bg-table-row-odd: @bg-cyan-darker;
+@bg-table-row-even: @bg-cyan;
+@table-border-color: hsla(222,14%,11%,1);
+
+// =========================
+// CUSTOM TABLE STYLES
+// =========================
+
+// TABLE WRAPPER
+// ===============
+.table-wrapper {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: @gray90;
+}
+
+// REGULAR TABLE
+// ===============
+.table {
+  margin: 0 0 10px;
+  background: @bg-cyan-darker;
+  // head
+  > thead {
+    border-top: 1px solid @bg-cyan;
+    color: #999999;
+    > tr {
+      > th {
+        border: 1px solid @bg-cyan;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        position: relative;
+        height: 30px;
+        background: @bg-cyan;
+        color: #b3b6bb;
+        i {
+          position: absolute;
+          top: 11px;
+          right: 10px;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  // body
+  > tbody {
+    //border: 1px solid @table-border-color;
+    > tr {
+      &:hover{
+        background: rgba(255,255,255,0.1);
+      }
+      > td {
+        color: @txt-light-gray;
+        vertical-align: middle;
+        border-top: none;
+        .btn {
+          &:extend(.btn-sm all);
+          // margin-left: 16px; // Need to restyle all buttons to be used within tables
+          line-height: 1;
+        }
+      }
+    }
+  }
+
+  // overwrite bootstrap style: top border
+  > tbody + tbody {
+    border-top: 0;
+  }
+}
+
+.table-ucd-device {
+  border: 1px solid black;
+  background: #333333;
+}
+
+.table {
+  background-repeat: repeat-x;
+  color: #999999;
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .table-head {
+    box-sizing: border-box;
+    background-image: linear-gradient(to bottom, #252525 0%, #1b1b1b 100%);
+    //    padding: 5px;
+    font-size: 13px;
+    .table-th {
+      display: table-row;
+      vertical-align: inherit;
+      border-color: inherit;
+      padding: 8px;
+    }
+  }
+  .table-body {
+    box-sizing: border-box;
+    //    background-image: linear-gradient(to bottom, #252525 0%, #1b1b1b 100%);
+    //    padding: 5px;
+    font-size: 12px;
+    .table-tb {
+      padding: 8px;
+      display: table-row;
+      vertical-align: inherit;
+      border-color: inherit;
+    }
+    .table-hover-row:hover {
+      background-color: #404040;
+    }
+  }
+}
+
+// HOVER TABLE
+// ===============
+.table-hover {
+  .noselect();
+
+  .inner-table-row,
+  .show-hide-table-row {
+    &:hover {
+      background: transparent; // inner tables should not have hover effect on the parent row
+    }
+  }
+}
+
+// CONDENSED TABLE (EXTENDED FROM BOOTSTRAP)
+// =========================================
+.table-condensed {
+  tbody > tr {
+    > td,
+    > th {
+      border-top: 0;
+    }
+  }
+}
+
+// TABLE WITH FIRST CELL BORDERED
+// ==============================
+.table-th-right-border {
+  tbody {
+    tr th {
+      border-right: 1px solid @table-border-color;
+    }
+  }
+}
+
+// INNER TABLE
+// ===============
+.table {
+  .table {
+    > thead {
+      background-image: none;
+
+      > tr {
+        > th {
+          background: transparent;
+          border: 0;
+        }
+      }
+    }
+
+    > tbody {
+      border: 0;
+    }
+  }
+}
+
+// TABLE BLACK ROWS
+// ================
+.table-black-rows {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  background: transparent;
+
+  th {
+    background: transparent;
+    padding-top: 0;
+  }
+
+  td {
+    background-color: @black;
+  }
+}
+
+// RADIO SELECT TABLE
+// ==================
+.table-radio-select {
+  > tbody {
+    > .onSelect {
+      td {
+        background-color: @gray50;
+        &:first-child {
+          box-shadow: inset 4px 0 0 0 @lime;
+          -webkit-box-shadow: inset 4px 0 0 0 @lime;
+        }
+      }
+    }
+  }
+}
+
+// TABLE ACCORDION TREE
+// ==================
+.table-accordion-tree {
+  .show-hide-table-row {
+    .table-accordion-tree-icon {
+      padding-left: 30px;
+    }
+  }
+}
+
+// COLUMN SIZES
+// ==============
+.table-col-40 {
+  width: 40%;
+}
+
+.table-col-30 {
+  width: 30%;
+}
+
+.table-col-20 {
+  width: 20%;
+}
+
+.table-col-break-word {
+  word-wrap: break-word;
+}
+
+.table-overview-wrapper {
+  overflow-y: scroll;
+
+  .row {
+    padding: @spacing-default;
+  }
+}
+
+.td-truncate-variant(@max-width) {
+  max-width: @max-width;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table-col-device-name {
+  .td-truncate-variant(100px);
+}
+
+.table-col-online {
+  width: 60px;
+  text-align: center;
+}
+
+.table-col-serial {
+  .td-truncate-variant(100px);
+}
+
+.td-nowrap-notruncate {
+  padding: 0px;
+  white-space: nowrap;
+}
+
+.table-col-date {
+  width: 100px;
+}
+
+.table-col-datetime {
+  width: 160px;
+}
+
+.table-col-ip {
+  .td-truncate-variant(130px);
+}
+
+.table-col-mac {
+  .td-truncate-variant(50px);
+}
+
+.table-col-version {
+  .td-truncate-variant(120px);
+}
+
+.table-col-make {
+  .td-truncate-variant(100px);
+}
+
+.table-col-model {
+  .td-truncate-variant(120px);
+}
+
+.table-col-mode {
+  .td-truncate-variant(80px);
+}
+
+.table-col-last {
+  max-width: auto;
+}
+
+// DIV TABLE SCROLLING
+// ===============
+.table-scroll-wrapper {
+  height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  table{
+    height: auto;
+    max-height: 500px;
+  }
+  tr {
+    max-height: 40px;
+  }
+  tr > td, tr > th {
+
+    padding: 6px 0 6px 6px;
+    &:nth-last-child(1) {
+      padding: 6px;
+    }
+  }
+  .row {
+    padding: @spacing-default;
+  }
+}
+
+// DIV TABLE STRIPED
+.table-scroll-wrapper-striped {
+  font-size: 12px;
+
+  > div > .row ,tbody > tr{
+    &:nth-child(odd) {
+      background-color: @bg-table-row-odd;
+    }
+
+    &:nth-child(even) {
+      background-color: @bg-table-row-even;
+    }
+
+    .row {
+      padding: 0px;
+    }
+  }
+}
+
+// TABLE STATUS (THIS CAN MAYBE BE DELETED)
+// ===============
+.table {
+  .status {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .new {
+    background: #585858;
+  }
+
+  .new .status {
+    color: #99CCFF;
+    font-size: 11px;
+    opacity: 100;
+    visibility: visible;
+
+    &:before {
+      content: ' \25CF';
+      margin-right: 8px;
+      vertical-align: 10%;
+      font-size: 8px;
+    }
+  }
+}
+
+.table-preview-signature {
+  table-layout: fixed;
+  word-wrap: break-word;
+  td {
+    overflow: overlay;
+  }
+  th:nth-child(1) {
+    width: 8%;
+  }
+  th:nth-child(2) {
+    width: 42%;
+  }
+  th:nth-child(3) {
+    width: 8%;
+  }
+  th:nth-child(4) {
+    width: 30%;
+  }
+  th:nth-child(5) {
+    width: 12%;
+  }
+}
+
+.table-custom-preview-signature-2 {
+  table-layout: fixed;
+  word-wrap: break-word;
+  td {
+    // overflow: overlay; // Turn off scroll bar for td elements
+  }
+  // td:nth-child(1) {
+  //   width: 8%;
+  //   overflow: hidden;
+  // }
+  // td:nth-child(2) {
+  //   width: 42%;
+  // }
+  // td:nth-child(3) {
+  //   width: 8%;
+  // }
+  // td:nth-child(4) {
+  //   width: 30%;
+  // }
+  .th-40 {
+    width: 40%;
+  }
+  .th-35 {
+    width: 35%;
+  }
+  .th-30 {
+    width: 30%;
+  }
+  .th-25 {
+    width: 25%;
+  }
+  .th-20 {
+    width: 20%;
+  }
+  .th-count {
+    width: 6%;
+  }
+  .th-checkbox {
+    width: 30px;
+  }
+  .th-protocol {
+    width: 10%;
+  }
+  .th-name {
+    width: 15%;
+  }
+  .th-action {
+    width: 8%;
+  }
+  .th-edit {
+    width: 12%;
+  }
+}
+
+// .table-overflow-nowrap
+// {
+//   max-width: 300px;
+//   overflow-x: hidden;
+//   text-overflow: ellipsis;
+//   white-space: nowrap;
+// }
+
+
+.table-data-number {
+  text-align: right;
+}
+
+.table-data-label,
+.table-data-checkbox-title,
+.table-data-checkbox {
+  text-align: center;
+}
+
+.table-data-checkbox-title {
+  width: 50px;
+}
+
+.table-data-checkbox {
+  padding: 10px 20px;
+}
+
+.table-data-expand {
+  padding-bottom: 20px;
+  overflow: visible;
+  white-space: normal;
+  text-overflow: clip;
+  a {
+    position: relative;
+    top: 10px;
+    color: @info;
+    &:hover {
+      color: @info-light;
+    }
+    &:before {
+      position: relative;
+      top: -6px;
+      content: "…";
+      margin-right: 10px;
+      color: @txt-white;
+    }
+  }
+}
+
+// Used to show the total number of records currently displayed
+// i.e. '总共 0 台设备'
+.count-show {
+  color: #868a95;
+  float: right;
+}
+
+// Managing td sizes
+
+.trancate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.table-col-xs,
+.table-col-sm,
+.table-col-md,
+.table-col-lg,
+.table-col-xl,
+.table-col-max {
+  &:extend(.trancate);
+}
+
+.table-col-xs {
+  max-width: 30px;
+}
+
+.table-col-sm {
+  max-width: 50px;
+}
+
+.table-col-md {
+  max-width: 75px;
+}
+
+.table-col-lg {
+  max-width: 100px;
+}
+
+.table-col-xl {
+  max-width: 125px;
+}
+
+.table-max-width {
+  max-width: 150px;
+}

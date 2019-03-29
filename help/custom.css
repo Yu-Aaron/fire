@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box;
+}
+a {
+  color: #0000FF;
+  text-decoration: none;
+}
+a:visited {
+  color: #0000ff;
+}
+a:hover {
+  color: #E4641C;
+  text-decoration: underline;
+}
+a.weblink {
+  color: #0000FF;
+  text-decoration: underline;
+}
+a.weblink:visited {
+  color: #0000ff;
+}
+a.weblink:hover {
+  color: #e4641c;
+}
+a.popuplink {
+  color: #FF0000;
+  text-decoration: none;
+}
+a.popuplink:visited {
+  color: #ff0000;
+}
+a.popuplink:hover {
+  color: #FF0000;
+  text-decoration: underline;
+}
+a.filelink {
+  color: #04BC14;
+  text-decoration: none;
+}
+a.filelink:visited {
+  color: #04bc14;
+}
+a.filelink:hover {
+  color: #04BC14;
+  text-decoration: underline;
+}
+a.inline-toggle {
+  color: Green;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: "Times New Roman", serif;
+}
+a.inline-toggle:visited {
+  color: Green;
+}
+a.inline-toggle:hover {
+  text-decoration: underline;
+}
+.fsmall {
+  font-size: 10px;
+  font-family: Verdana, Helvetica, sans-serif;
+  text-align: center;
+  margin: 10px 0px 0px 0px;
+}
+@media screen {
+  #idcontent {
+    margin-top: 0 !important;
+    width: 100%;
+    padding: 10px 20px;
+    position: relative;
+  }
+  #innerdiv {
+    padding: 0px;
+  }
+  .topichead {
+    padding: 5px;
+  }
+  .navlinks {
+    font-size: 10pt;
+  }
+  .navlinks a {
+    text-decoration: none;
+    color: blue;
+  }
+  .navlinks a:visited {
+    text-decoration: none;
+    color: blue;
+  }
+  .navlinks a:hover {
+    text-decoration: underline;
+    color: blue;
+  }
+  html.nonscroll {
+    overflow: hidden;
+  }
+  body.nonscroll {
+    overflow: hidden;
+    height: 100%;
+  }
+  div.nonscroll {
+    overflow-x: auto;
+    overflow-y: scroll;
+  }
+}
+#idheader {
+  position: static !important;
+}
+#idheader #idheaderbg {
+  padding: 20px;
+  border-bottom: 1px dashed #ccc;
+}
+#idheader #idheaderbg table {
+  min-height: 0;
+  background: transparent;
+}
+#idheader #idheaderbg table .crumbs,
+#idheader #idheaderbg table h1 {
+  line-height: 1 !important;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 14px;
+  color: #999;
+}
+#idheader #idheaderbg table .crumbs span,
+#idheader #idheaderbg table h1 span {
+  font-size: 14px !important;
+}
+#idheader #idheaderbg table .f_Heading1 {
+  font-size: 14px;
+  color: #007af4;
+}
+#idheader #idheaderbg table a,
+#idheader #idheaderbg table a:visited {
+  color: #007af4;
+}
+#idheader #idheaderbg table #idnav {
+  width: auto;
+  position: absolute;
+  right: 20px;
+  font-size: 18px;
+}
+#idheader #idheaderbg table #idnav a {
+  color: #999;
+}
+#idheader #idheaderbg table #idnav a:hover {
+  color: #007af4;
+}
+
+/*# sourceMappingURL=custom.css.map */

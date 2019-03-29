@@ -1,0 +1,71 @@
+<div id="backup-list-container" class="row">
+  <div class="col-md-12"><span class="form-group-title">已备份清单</span></div>
+  <div class="col-md-12">
+    <span class="pull-left text-orange">（注意：备份文件最多只保留5个，更早的文件会被自动删除）</span>
+    <table class="table table-hover icon-hidden" align="center">
+      <thead>
+      <tr>
+        <th width="5%" style="text-align:center;">备份序号</th>
+        <th width="15%" style="text-align:center;">备份文件名</th>
+        <th width="10%" style="text-align:center;">备份时间</th>
+        <th width="10%" style="text-align:center;">备份用户</th>
+        <th width="40%" style="text-align:center;">标记</th>
+        <th width="20%" style="text-align:center;">动作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="file in dtable.table">
+        <td class="text-center">{{$index + 1}}</td>
+        <td>{{file.fileName || '无'}}</td>
+        <td>{{(file.backupAt | date:'yyyy/MM/dd HH:mm:ss') || '无'}}</td>
+        <td style="text-align:center;">{{file.backupBy || '无'}}</td>
+        <td>{{file.tag || '无'}}</td>
+        <td>
+          <a class="btn btn-default"
+             ng-click="dtable.restoreConfBackUpFiles(file.confBackupFileInfoId);$event.stopPropagation();"
+             ng-disabled="backup.handling"
+             privilege-name="OPERATION_BACKUP" privilege-require="MIXED" privilege-handle="hidden">&nbsp;<i
+            class="fa fa-refresh icon-left"></i> 恢复&nbsp;</a>
+          <a class="btn btn-default"
+             ng-click="dtable.downloadConfBackUpFiles([file.directory]);$event.stopPropagation();"
+             privilege-name="OPERATION_BACKUP" privilege-require="MIXED" privilege-handle="disabled"
+             ng-disabled="backup.handling">&nbsp;<i
+            class="fa fa-download icon-left"></i> 下载到本地&nbsp;</a>
+          <a class="btn btn-default"
+             ng-click="dtable.deleteConfBackUpFiles([file.confBackupFileInfoId]);$event.stopPropagation();"
+             ng-disabled="backup.handling">&nbsp;<i
+            class="fa fa-trash-o icon-left"
+            privilege-name="OPERATION_BACKUP" privilege-require="MIXED" privilege-handle="hidden"></i> 删除&nbsp;</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <script type="text/ng-template" id="conf-backup-restore-confirmation.html">
+    <div class="modal-header">
+      <h3 class="modal-header-title">配置信息恢复</h3>
+    </div>
+    <div class="modal-body">
+      {{backup.isMW ? $root.PLATFORM_SHORT_NAME : '安全设备'}}配置信息恢复将会持续较长时间，确认开始恢复？
+      <br/>
+      <br/>
+      <div class="row" style="font-size: 1.2em">
+        <div class="col-md-6">
+          <span style="margin-left: 20px">密码：</span><input ng-model="backupPassword" type="password" maxlength="20">
+        </div>
+        <div class="col-md-6" style="line-height: 30px">
+          <span class="input-alert-error"
+                ng-hide="backupPassword.length > 0">请输入备份时设置的密码</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default pull-right" ng-click="ok()"
+              ng-disabled="backupPassword === undefined || backupPassword.length === 0"><i
+        class="fa fa-check text-lime icon-left"></i>确定
+      </button>
+      <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times-circle icon-left"></i>取消
+      </button>
+    </div>
+  </script>
+</div>

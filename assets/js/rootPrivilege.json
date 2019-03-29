@@ -1,0 +1,124 @@
+{
+    "targetAndActionValueFormList": [
+        {
+            "name": "REAL_TIME_PROTECTION",
+            "actionValue": 1,
+            "description": "实时监控"
+        },
+        {
+            "name": "INCIDENT",
+            "actionValue": 1,
+            "description": "安全事件"
+        },
+        {
+            "name": "EVENT",
+            "actionValue": 1,
+            "description": "系统事件"
+        },
+        {
+            "name": "LOG_MANAGEMENT",
+            "actionValue": 1,
+            "description": "日志管理"
+        },
+        {
+            "name": "DEVICE_MANAGEMENT",
+            "actionValue": 1,
+            "description": "设备管理"
+        },
+        {
+            "name": "POLICY",
+            "actionValue": 1,
+            "description": "规则管理"
+        },
+        {
+            "name": "ATTACKPATH",
+            "actionValue": 1,
+            "description": "攻击路径"
+        },
+        {
+            "name": "INTRUSION_DETECTION",
+            "actionValue": 1,
+            "description": "入侵检测"
+        },
+        {
+            "name": "AUDIT_MANAGEMENT",
+            "actionValue": 1,
+            "description": "网络审计"
+        },
+        {
+            "name": "REPORT",
+            "actionValue": 1,
+            "description": "定期报告"
+        },
+        {
+            "name": "SYSTEM_MANAGEMENT",
+            "actionValue": 30,
+            "description": "系统设置"
+        },
+        {
+            "name": "USER_MANAGEMENT",
+            "actionValue": 30,
+            "description": "用户管理"
+        },
+        {
+            "name": "DOMAIN_SUBNET",
+            "actionValue": 30,
+            "description": "分区管理"
+        },
+        {
+            "name": "STRATEGY_MANAGEMENT",
+            "actionValue": 30,
+            "description": "策略管理"
+        },
+        {
+            "name": "PRIVATE_PROTOCOL",
+            "actionValue": 1,
+            "description": "私有协议"
+        },
+        {
+            "name": "STRUCTURE_SAFETY",
+            "actionValue": 1,
+            "description": "结构安全性"
+        },
+        {
+            "name": "USER_GROUP_MANAGEMENT",
+            "actionValue": 30,
+            "description": "用户组管理"
+        },
+        {
+            "name": "SETTINGS_POLICY",
+            "actionValue": 30,
+            "description": "基本设置"
+        },
+        {
+            "name": "SETTINGS_IP_LOGIN",
+            "actionValue": 30,
+            "description": "远程IP登录"
+        },
+        {
+            "name": "SETTINGS_PROTOCOL",
+            "actionValue": 1,
+            "description": "协议设置"
+        },
+        {
+            "name": "SETTINGS_PLATFORM_REBOOT",
+            "actionValue": 30,
+            "description": "MW 重启"
+        },
+        {
+            "name": "SETTINGS_PLATFORM_UPGRADE_RESET",
+            "actionValue": 30,
+            "description": "MW 升级\u0026重置"
+        },
+        {
+            "name": "SETTINGS_DPI_REBOOT",
+            "actionValue": 1,
+            "description": "DPI 重启"
+        },
+        {
+            "name": "SETTINGS_DPI_UPGRADE_RESET",
+            "actionValue": 1,
+            "description": "DPI 升级\u0026重置"
+        }
+    ]
+}

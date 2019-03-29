@@ -1,0 +1,61 @@
+<div class="modal-content" id="mac-activity-record-modal">
+  <div class="modal-header">
+    <h3 class="modal-header-title">IP/MAC地址记录</h3>
+    <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+  </div>
+  <div class="modal-body">
+    <div class="signature-learning-activity-table">
+      <table class="table table-hover icon-hidden">
+        <thead>
+        <tr>
+          <th>
+            <span>设备名称</span>
+          </th>
+          <th>
+            <span>IP地址</span>
+          </th>
+          <th>
+            <span>实际MAC地址</span>
+          </th>
+          <th>
+            <span>资产MAC地址</span>
+          </th>
+          <th>
+            <span>vlanId</span>
+          </th>
+          <th style="min-width: 72px"></th>
+        </tr>
+        </thead>
+        <tbody id="macItems-container">
+        <tr ng-repeat="activity in macItems | orderBy:['createdAt', 'assetName', 'assetIp']" class="macItem">
+          <td>
+            <span>{{activity.assetName||'资产外设备'}}</span>
+          </td>
+          <td>
+            <span>{{activity.assetIp}}</span>
+          </td>
+          <td>
+            <span>{{activity.realMac}}</span>
+          </td>
+          <td>
+            <span>{{activity.assetMac}}</span>
+          </td>
+          <td>
+            <span>{{activity.vlanId}}</span>
+          </td>
+          <td>
+            <button class="btn btn-default"
+                    ng-if="activity.assetId && activity.realMac && activity.realMac.toUpperCase() !== activity.assetMac.toUpperCase()"
+                    ng-click="updateMac(activity)">更新
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <!-- 	    <button class="btn btn-primary" ng-click="ok()">OK</button>
+			<button class="btn btn-warning" ng-click="cancel()">Cancel</button> -->
+  </div>
+</div>

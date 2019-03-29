@@ -1,0 +1,54 @@
+<div class="ov-event">
+  <div class="box" ng-init="isCollapsed = false">
+    <div class="box-hd">
+      <i class="icon icon-network"></i>
+      <span class="title">实时流量</span>
+
+      <i class="fa fa-info-circle" popover="接口共有三种状态：绿色的指示灯表示 running 状态，红色的指示灯表示 disconnect 状态，灰色指示灯表示 down 状态。勾选接口前的复选框可以查看其流量统计图。" popover-placement="right" popover-trigger="mouseenter"></i>
+      <i class="fa pull-right" ng-class="{'fa-angle-double-up': !isCollapsed, 'fa-angle-double-down': isCollapsed}" ng-click="isCollapsed = !isCollapsed"></i>
+    </div>
+    <div class="option-wrap row">
+      <div class="wrap-left">
+        <span class="pull-left eth-span">接口</span>
+        <div class="eth-wrap">
+          <div class="row">
+            <label ng-repeat="item in overview.ETHList track by item.name" style="width: 10%;" fade-in-list>
+              <input custom-checkbox id="eth-list-{{$index}}" type="checkbox" ng-model="item.checked"
+                     ng-disabled="item.status === 'down' || !item.status" name="ETHList"
+                     touch-down >
+
+              <div style="display: inline-block;">
+                <!--<i class="icon icon-ethernet"></i>-->
+                <span>{{item.name}}</span>
+                <status-lamp status="item.status"></status-lamp>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="wrap-right">
+        <span class="frequency-span">统计频率</span>
+        <select id="monitor_overview_eth_frequency_select"
+                class="select-styled" ng-model="overview.ETHFrequency"
+                ng-options="item.value as item.name for item in overview.ETHFrequencyList"
+                touch-down>
+        </select>
+      </div>
+    </div>
+    <div class="row content" collapse="isCollapsed">
+      <div class="col-xlg-6" ng-repeat="item in overview.ETHList track by item.name" ng-if="item.checked">
+        <div class="panel panel-lg">
+          <div class="panel-header panel-header-border clearfix">
+            <h5 class="panel-header-title"><i class="fa fa-line-chart"></i> 流量统计{{item.name}}</h5>
+          </div>
+          <div class="panel-body" cg-busy="{promise:overview.loadingPromise,message:'载入中...'}">
+            <div class="highchart-container" style="margin-right:4px;height: 240px;">
+              <highchart config="overview.chartAreaConfig[item.name]" ng-show="overview.chartAreaConfig[item.name]"></highchart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

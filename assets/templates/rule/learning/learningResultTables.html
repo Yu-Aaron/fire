@@ -1,0 +1,30 @@
+<div class="learning-rule-list tab-container" ng-if="learningCtrl.taskId" ng-controller="TabCtrl as tab"
+     ng-init="tab.activateTab('whitelist')">
+  <ul class="nav nav-tabs nav-tabs-lime">
+    <li ng-class="{ active: tab.isActiveTab('whitelist') }"><a
+      ng-click="tab.activateTab('whitelist');learningCtrl.ddd='aaa'"><span>工控白名单</span><span
+      ng-if="learningCtrl.countOfICRules>0" class='badge nav-tab-badge'>{{learningCtrl.countOfICRules}}</span></a></li>
+    <!--<li ng-class="{ active: tab.isActiveTab('networklist') }"><a
+      ng-click="tab.activateTab('networklist');learningCtrl.ddd='bbb'"><span>网络白名单</span><span
+      ng-if="learningCtrl.countOfIPRules>0" class='badge nav-tab-badge'>{{learningCtrl.countOfIPRules}}</span></a></li>-->
+    <div id="edit-policy-button">
+      <button class="btn btn-default pull-right" ng-click="learningCtrl.editPolicy(tab.activeTab)" setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED"><i
+        class="fa fa-file-o fa-plus-overlay fa-after-lime icon-left"></i>新增规则
+      </button>
+    </div>
+  </ul>
+  <div ng-switch on="tab.activeTab" class="panel panel-gradient padding-default tab-container-body">
+    <div ng-switch-when="whitelist">
+      <learning-table count="learningCtrl.countOfICRules" learning-type="'WHITELIST'"
+                      topology-id="learningCtrl.topologyId" policy-id="learningCtrl.getPolicyId"
+                      task="learningCtrl.getTask" move="learningCtrl.refreshPreDeployTable(block)"
+                      checkbox='false'></learning-table>
+    </div>
+    <!--<div ng-switch-when="networklist">
+      <learning-table count="learningCtrl.countOfIPRules" learning-type="'IP_RULE'"
+                      topology-id="learningCtrl.topologyId" policy-id="learningCtrl.getPolicyId"
+                      task="learningCtrl.getTask" move="learningCtrl.refreshPreDeployTable(block)"
+                      checkbox='false'></learning-table>
+    </div>-->
+  </div>
+</div>

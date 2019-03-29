@@ -1,0 +1,88 @@
+<div class="basic-backup-contariner" cg-busy="{promise:$root.mwConfBackUpPromise,message:'备份处理中...'}">
+  <div class="col-md-12">
+    <div class="panel panel-lg padding-zero">
+      <div class="panel-header panel-header-border">
+        <span>配置备份与恢复</span>
+      </div>
+      <div class="panel-body panel-body-light">
+        <div id="backup-panel" class="row" >
+          <div class="col-md-1"><span class="form-group-title">备份标记</span></div>
+
+          <div class="col-md-7">
+            <input id="setting_security_operation_text_tag" placeholder="备份标记：0-64个字符" ng-model="backup.tag" style="width:100%" type="text" maxlength="64" >
+          </div>
+          <div class="col-md-1">
+            <button id="setting_backup_button_backup" type="button" privilege-name="OPERATION_BACKUP" privilege-require="MIXED" privilege-handle="disabled"
+                    class="btn btn-default" ng-click="backup.doConfBackUp()"
+                    class="syslog-icon-green" ng-disabled="backup.backingup"><i
+              class="fa fa-copy icon-left"></i></span>备份
+            </button>
+          </div>
+        </div>
+        <div class="row" >
+          <hr class="hr-small-margin">
+        </div>
+        <dtable>
+          <conf-backup-table></conf-backup-table>
+        </dtable>
+        <div id="restore-panel" class="row" >
+          <div class="col-md-12">
+            <span class="form-group-title">从本地恢复</span>
+            <button id="setting_backup_button_restore" type="button"
+                    privilege-name="OPERATION_BACKUP" privilege-require="MIXED" privilege-handle="disabled"
+                    class="btn btn-default" ng-click="backup.openUploadPanel('.des3')"
+                    class="syslog-icon-green" ><i
+              class="fa fa-folder-open-o icon-left"></i></span>从本地配置文件上传
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <script type="text/ng-template" id="conf-backup-delete-confirmation.html">
+        <div class="modal-header">
+          <h3 class="modal-header-title">删除配置信息备份</h3>
+        </div>
+        <div class="modal-body">
+          确定删除选中的备份文件？
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default pull-right" ng-click="ok()" id="button_delete_backup_confirm"><i class="fa fa-check text-lime icon-left"></i>确定
+          </button>
+          <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times-circle icon-left"></i>取消
+          </button>
+        </div>
+      </script>
+      <script type="text/ng-template" id="conf-backup-collection-confirmation.html">
+        <div class="modal-header">
+          <h3 class="modal-header-title">配置信息备份</h3>
+        </div>
+        <div class="modal-body">
+          配置信息备份需要输入密码，用于恢复配置，请妥善保管好密码
+          <br/>
+          <br/>
+          <div class="row" style="font-size: 1.2em">
+            <div class="col-md-6">
+              <span style="margin-left: 20px" >密码：</span><input id="setting_security_operation_backupPassword" ng-model="backupPassword" type="password" maxlength="20"
+              >
+            </div>
+            <div class="col-md-6" style="line-height: 30px">
+              <span class="input-alert-error" ng-hide="backupPassword.length>7 && backupPassword.length<21">密码必须为8-20位</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button id="setting_backup_button_backup_confirm" class="btn btn-default pull-right" ng-click="ok()"
+                  ng-disabled="backupPassword === undefined || backupPassword.length>20 || backupPassword.length<8"><i
+            class="fa fa-check text-lime icon-left"></i>确定
+          </button>
+          <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times-circle icon-left"></i>取消
+          </button>
+        </div>
+      </script>
+    </div>
+  </div>
+
+
+</div>

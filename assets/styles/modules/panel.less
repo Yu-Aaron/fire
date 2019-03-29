@@ -1,0 +1,267 @@
+// =========================
+// BOOTSTRAP PANEL VARIABLES
+// =========================
+
+@panel-bg: #2a2d36;
+@panel-border: hsla(220,10%,12%,1);
+@panel-body-padding: 15px;
+@panel-heading-padding: 5px 15px;
+@panel-footer-padding: @panel-heading-padding;
+@panel-border-radius: 4px;
+
+//** Border color for elements within panels
+@panel-inner-border: @black;
+@panel-footer-bg: @gray80;
+
+@panel-default-text: @color-font;
+@panel-default-border: @black;
+@panel-default-heading-bg: @gray90;
+
+@panel-primary-text: @color-font;
+@panel-primary-border: @brand-primary;
+@panel-primary-heading-bg: @brand-primary;
+
+@panel-success-text: @state-success-text;
+@panel-success-border: @state-success-border;
+@panel-success-heading-bg: @state-success-bg;
+
+@panel-info-text: @state-info-text;
+@panel-info-border: @state-info-border;
+@panel-info-heading-bg: @state-info-bg;
+
+@panel-warning-text: @state-warning-text;
+@panel-warning-border: @state-warning-border;
+@panel-warning-heading-bg: @state-warning-bg;
+
+@panel-danger-text: @state-danger-text;
+@panel-danger-border: @state-danger-border;
+@panel-danger-heading-bg: @state-danger-bg;
+
+@panel-color: @gray40;
+@panel-header: @bg-cyan;
+
+// =========================
+// CUSTOM PANEL STYLES
+// =========================
+
+.panel-wrapper {
+  padding: 5px;
+  background: @bg-gray;
+  border: 1px solid @bg-gray-dark;
+  border-radius: 2px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.50),
+  inset 0px 1px 2px 0px rgba(227, 227, 227, 0.2);
+}
+
+.panel-container {
+  margin-left: -5px;
+  margin-right: -5px;
+}
+
+.panel-spacer {
+  padding: 0 5px;
+}
+
+.panel {
+  &:extend(.panel-default all);
+  border: none;
+  background: @bg-cyan;
+  border-radius: 0px;
+
+  &.panel-sm {
+    margin-bottom: 10px;
+    .panel-header .btn {
+      margin-top: -1px;
+    }
+  }
+
+  &.panel-lg {
+    margin-bottom: 10px;
+    + .panel-lg {
+      margin-top: 10px;
+    }
+    .panel-header .btn{
+      margin-top: -7px;
+    }
+  }
+  &.panel-edit {
+    position: relative;
+
+    > * {
+      position: relative;
+    }
+
+    &:before {
+      position: absolute;
+      font-family: FontAwesome;
+      font-size: 300px;
+      top: 50%;
+      left: 50%;
+      width: 400px;
+      height: 400px;
+      margin-left: -200px;
+      margin-top: -200px;
+      text-align: center;
+      content: "\f040";
+      z-index: 0;
+      opacity: 0.3;
+    }
+  }
+
+  .panel-header {
+    background: @panel-header;
+    position: relative;
+    height: 35px;
+    padding: 9px 12px 10px;
+    color: #414457;
+    box-shadow: none;
+    .icon-left {
+      margin-right: 6px;
+    }
+    &.panel-header-dark {
+      padding: 10px;
+      background: @gray90;
+      border-top-left-radius: @panel-border-radius;
+      border-top-right-radius: @panel-border-radius;
+    }
+    .panel-header-title {
+      font-size: 16px;
+      line-height: 16px;
+      i{
+        margin-right: 6px;
+      }
+    }
+  }
+  .panel-title {
+    font-size: 14px;
+    color: @gray40;
+  }
+  .table-wrapper {
+    margin: 0;
+    padding: 0;
+  }
+  .panel-header + .panel-body {
+    margin-top: -2px;
+    padding-top: 22px;
+    border-top: 0;
+  }
+  .panel-body {
+    padding: 20px;
+    background: #fff;
+    // box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50),
+    //             inset 0px 1px 2px 0px rgba(227, 227, 227, 0.2);
+    &.panel-body-dark {
+      background-color: @gray88;
+      border: 0px solid black;
+      padding: @panel-body-padding;
+      padding-top: 30px;
+      border-bottom-left-radius: @panel-border-radius;
+      border-bottom-right-radius: @panel-border-radius;
+    }
+
+    &.panel-body-fixed-height-80 {
+      height: 80px;
+    }
+
+    &.panel-body-fixed-height-200 {
+      height: 200px;
+      overflow-y: auto;
+    }
+
+    &.panel-body-fixed-height-300 {
+      height: 300px;
+    }
+  }
+  .cg-busy-default-sign {
+    border-radius: 10px
+  }
+
+  .cg-busy-backdrop {
+    opacity: 0.85;
+  }
+}
+
+.second-title {
+  background: #fff;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #414457;
+  line-height: 38px;
+  padding-left: 10px;
+}
+
+.panel-content {
+  background: @bg-cyan;
+}
+
+.pandel-heading-with-icon {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+// Panel dashboard
+.panel-dashboard {
+  .panel-dashboard-value-note {
+    font-size: 12px;
+    margin-bottom: -20px;
+  }
+
+  .panel-dashboard-title {
+    font-size: 16px;
+
+    .panel-dashboard-title-icon {
+      font-size: 14px;
+      padding-right: 8px;
+    }
+  }
+
+  .panel-dashboard-value {
+    font-size: 30px;
+    font-weight: 300;
+    line-height: 30px;
+
+    .panel-dashboard-value-unit {
+      font-size: 18px;
+    }
+  }
+  .panel-dashboard-up-note {
+    position: absolute;
+    padding-right: 15px;
+    float: right;
+    right: 0px;
+    font-size: 12px;
+    margin-top: -15px;
+  }
+}
+
+// Panel device
+.panel-device {
+  width: 250px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.panel-selection-half {
+  background: @gray85;
+  height: 620px;
+  border-left: black solid 1px;
+  padding: 5px;
+  .panel-selection-title {
+    display: block;
+    margin: auto;
+    width: 320px;
+    font-size: 28px;
+    margin-top: 250px;
+  }
+  .panel-selection-subtitle {
+    display: block;
+    margin: auto;
+    width: 265px;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+}
+
+.panel-selection-half:hover .panel-selection-title {
+  color: @white;
+}

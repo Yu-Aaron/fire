@@ -1,0 +1,223 @@
+<div class="detail-page-wrapper bg-gray-85">
+  <div class="detail-page-body">
+    <section id="device-info">
+      <div class="detail-information detail-panel">
+        <div class="detail-information-content">
+          <div class="row">
+            <div class="col-xs-4 col-md-4">
+              <div class="panel">
+                <div class="panel-heading">
+                  <span><i class="fa fa-picture-o icon-left"></i>设备图</span>
+                </div>
+                <div class="panel-body text-center panel-body-fixed-height-300">
+                  <div class="panel-body-device text-center">
+                    <div class="device-image"
+                         ng-style="{'background-image': 'url(/images/' + factorydetail.device._iconName + '-icon.png)'}"
+                         ng-if="!factorydetail.isEdited"></div>
+                    <div class="device-image"
+                         ng-style="{'background-image': 'url(/images/' + factorydetail.editedInfo.iconType + '-icon.png)'}"
+                         ng-if="factorydetail.isEdited"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-4 col-md-4">
+              <div class="panel">
+                <div class="panel-heading">
+                  <span><i class="fa fa-folder-open icon-left"></i>设备规格</span>
+                  <div privilege class="pull-right btn-top-pull-right-margin-back">
+                    <button class="btn btn-default btn-sm pull-right" ng-hide="factorydetail.isEdited"
+                            ng-disabled="factorydetail.isIPEdited" ng-click="factorydetail.editDevice()"><i
+                      class="fa fa-pencil-square-o"></i></button>
+                    <button class="btn btn-default btn-sm pull-right" ng-show="factorydetail.isEdited"
+                            ng-disabled="factorydetail.nameError || factorydetail.modelError || factorydetail.hasDuplicateSN"
+                            ng-click="factorydetail.editDone()"><i class="fa fa-check text-lime"></i></button>
+                    <button class="btn btn-default btn-sm margin-right-default pull-right"
+                            ng-show="factorydetail.isEdited" ng-click="factorydetail.editCancel()"><i
+                      class="fa fa-remove"></i></button>
+                  </div>
+                </div>
+                <div class="panel-body panel-body-fixed-height-300">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title" id="name-label"><span class="text-red"
+                                                                                      ng-show="factorydetail.isEdited">&#42;</span>设备名称
+                        </h5>
+                        <p ng-hide="factorydetail.isEdited" class="device-name-space" id="name-content">
+                          {{factorydetail.device.name || '未知'}}</p>
+                        <input type="text" ng-show="factorydetail.isEdited" ng-model="factorydetail.editedInfo.name"
+                               ng-change="factorydetail.validateDevice()" maxlength="100" size="15">
+                        <error-msg ng-show="factorydetail.isEdited" obj="factorydetail.device" validator="factorydetail"
+                                   type="'name'"></error-msg>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title" id="serial-number-label">设备序列号</h5>
+                        <p ng-hide="factorydetail.isEdited" class="device-sn-space" id="serial-number-content">
+                          {{factorydetail.device.serialNumber || '未知'}}</p>
+                        <input type="text" ng-show="factorydetail.isEdited"
+                               ng-model="factorydetail.editedInfo.serialNumber"
+                               ng-change="factorydetail.validateDevice()" maxlength="255" size="15">
+                        <error-msg ng-show="factorydetail.isEdited" validator="factorydetail"
+                                   type="'serialNumber'"></error-msg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" ng-hide="factorydetail.editedInfo.iconType==='subnet'">
+                    <div class="col-xs-12">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title"><span class="text-red" ng-show="factorydetail.isEdited">&#42;</span>设备型号
+                        </h5>
+                        <p ng-hide="factorydetail.isEdited" id="model-content">{{factorydetail.device._model_name ||
+                          '未知' | deviceModel}}</p>
+                        <div class="select-styled input-stacked" ng-show="factorydetail.isEdited">
+                          <div class="input-stacked-wrap" ng-show="factorydetail.newModel">
+                            <input class="form-control" ng-show="factorydetail.newModel" type="text"
+                                   placeholder="请输入设备型号名称" ng-model="factorydetail.editedInfo._model_name"
+                                   ng-change="factorydetail.validateDevice()" maxlength="255">
+                          </div>
+                          <select id="device-model-list" class="form-control"
+                                  ng-model="factorydetail.editedInfo.modelId"
+                                  ng-options="item.modelId as (item.model_name + (item.model && (item.model !== item.model_name) ? ' / ' + item.model : '')) for item in factorydetail.forms.models"
+                                  ng-change="factorydetail.modelChange(factorydetail.editedInfo.modelId)">
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6" ng-hide="factorydetail.editedInfo.iconType==='subnet'">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">设备厂商</h5>
+                        <p ng-hide="factorydetail.isEdited" id="manufacturer-content">{{factorydetail.device.make ||
+                          '未知'}}</p>
+                        <p ng-show="factorydetail.isEdited && !factorydetail.newModel">{{factorydetail.editedInfo.make
+                          || '未知'}}</p>
+                        <input type="text" ng-show="factorydetail.isEdited && factorydetail.newModel"
+                               ng-model="factorydetail.editedInfo.make" ng-change="factorydetail.validateDevice()"
+                               maxlength="255" size="15">
+                      </div>
+                    </div>
+                    <div class="col-xs-6" ng-hide="true">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">设备版本</h5>
+                        <p id="version-content">{{factorydetail.device.version || '未知'}}</p>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title"><span class="text-red" ng-show="factorydetail.isEdited">&#42;</span>逻辑分区
+                        </h5>
+                        <p ng-hide="factorydetail.isEdited" id="node-zone-content">
+                          {{factorydetail.device.nodes[0].zoneName | convertText:'NA':'无'}}</p>
+                        <div class="select-styled input-stacked" ng-show="factorydetail.isEdited">
+                          <select class="form-control" ng-model="factorydetail.editedInfo.nodeZoneId"
+                                  ng-options="nodeZone.nodeZoneId as nodeZone.zoneName for nodeZone in factorydetail.forms.nodezones  | convertOptions:'zoneName':'NA':'' | orderBy: 'zoneName'">
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">更新时间</h5>
+                        <p id="update-time-content">{{factorydetail.device.updatedAt || '未知' | date:'yyyy-MM-dd
+                          HH:mm:ss'}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-4 col-md-4">
+              <div class="panel">
+                <div class="panel-heading">
+                  <span><i class="fa fa-cogs icon-left"></i>设备端口</span>
+                  <div privilege class="pull-right btn-top-pull-right-margin-back">
+                    <button class="btn btn-default btn-sm pull-right" id="edit-ip-button"
+                            ng-hide="factorydetail.isIPEdited" ng-disabled="factorydetail.isEdited"
+                            ng-click="factorydetail.editIP()"><i class="fa fa-pencil-square-o"></i></button>
+                    <button class="btn btn-default btn-sm pull-right" id="edit-ip-done"
+                            ng-show="factorydetail.isIPEdited" ng-disabled="!factorydetail.allIpMacValid"
+                            ng-click="factorydetail.editIPDone()"><i class="fa fa-check text-lime"></i></button>
+                    <button class="btn btn-default btn-sm margin-right-default pull-right" id="edit-ip-cancel"
+                            ng-show="factorydetail.isIPEdited" ng-click="factorydetail.editIPCancel()"><i
+                      class="fa fa-remove"></i></button>
+                  </div>
+                </div>
+                <div class="panel-body panel-min-height">
+                  <div class="row">
+                    <div class="col-xs-5 padding-right-zero">
+                      <h5 class="detail-page-list-item-title"><span class="text-red" ng-show="factorydetail.isIPEdited">&#42;</span>{{
+                        (factorydetail.device.iconType === 'subnet')? '子网地址' : 'IP地址'}}</h5>
+                    </div>
+                    <div class="col-xs-5 padding-right-zero" ng-show="factorydetail.editedInfo.iconType!=='subnet'">
+                      <h5 class="detail-page-list-item-title">MAC地址</h5>
+                    </div>
+                  </div>
+                  <div class="row ip-mac-row ip-mac-row-{{$index}}"
+                       ng-repeat="port in factorydetail.editedInfo.devicePorts | filter:search.isMgmtPort=true">
+                    <div class="col-xs-5 padding-right-zero">
+                      <div class="detail-page-list-item">
+                        <div ng-hide="factorydetail.isIPEdited">
+                          <p class="ip-content">{{ port.portIp || '未知'}} </p>
+                        </div>
+                        <div ng-show="factorydetail.isIPEdited">
+                          <div>
+                            <input type="text" id="ip-input-{{$index}}"
+                                   ng-show="!(factorydetail.device.iconType === 'subnet')" ng-model="port.portIp"
+                                   ng-change="factorydetail.validateAllIp(port, $index)" maxlength="255" size="15">
+                            <input type="text" id="subnet-ip-input-{{$index}}"
+                                   ng-show="factorydetail.device.iconType === 'subnet'" ng-model="port.portIp"
+                                   ng-change="factorydetail.validateAllIp(port, $index)" maxlength="255" size="15">
+                            <error-msg id="ip-error-{{$index}}" ng-show="factorydetail.isIPEdited"
+                                       obj="factorydetail.device" validator="port" type="'ip'"></error-msg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-5 padding-right-zero" ng-hide="(factorydetail.device.iconType === 'subnet')">
+                      <div class="detail-page-list-item">
+                        <div ng-hide="factorydetail.isIPEdited">
+                          <p class="mac-content">{{port.mac || '未知'}} </p>
+                        </div>
+                        <div ng-show="factorydetail.isIPEdited">
+                          <div>
+                            <input type="text" id="mac-input-{{$index}}" ng-show="factorydetail.isIPEdited"
+                                   ng-model="port.mac" ng-change="factorydetail.validateAllMac(port, $index)"
+                                   maxlength="255" size="15">
+                            <error-msg id="mac-error-{{$index}}" ng-show="factorydetail.isIPEdited"
+                                       obj="factorydetail.device" validator="port" type="'mac'"></error-msg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-2 remove-ip-mac"
+                         ng-show="factorydetail.device.iconType !== 'subnet' && factorydetail.isIPEdited">
+                      <div ng-show="$index>0">
+                        <button class="btn btn-default" id="remove-ip-mac-button-{{$index}}"
+                                ng-disabled="$index<factorydetail.editedInfo.devicePorts.length-1"
+                                ng-click="factorydetail.removeIpMac($index)"><i class="fa fa-trash"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row add-ip-mac-button"
+                       ng-show="factorydetail.isIPEdited && factorydetail.device.iconType !== 'subnet'">
+                    <div class="col-xs-12">
+                      <button class="btn btn-default" ng-disabled="!factorydetail.allIpMacValid"
+                              ng-click="factorydetail.addIpMac()">添加端口
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

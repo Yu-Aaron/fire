@@ -1,0 +1,60 @@
+{
+    "folders": [
+        [
+            {
+                "fileID": 1,
+                "filename": "2014-10-05_system.log",
+                "date": "2014-10-05",
+                "time": "16:04:00",
+                "data": "Mock data created at 2014-10-05 16:04:00"
+            },
+            {
+                "fileID": 2,
+                "filename": "2014-10-04_system.log",
+                "date": "2014-10-04",
+                "time": "19:54:00",
+                "data": "Mock data created at 2014-10-04 19:54:00"
+            },
+            {
+                "fileID": 3,
+                "filename": "2014-10-03_system.log",
+                "date": "2014-10-03",
+                "time": "12:05:00",
+                "data": "Mock data created at 2014-10-03 12:05:00"
+            },
+            {
+                "fileID": 4,
+                "filename": "2014-10-02_system.log",
+                "date": "2014-10-02",
+                "time": "06:31:00",
+                "data": "Mock data created at 2014-10-02 06:31:00"
+            }
+        ],
+        [
+            {
+                "filename": "2014-10-01_system.log",
+                "date": "2014-10-01",
+                "time": "16:04:00",
+                "data": "Mock data created at 2014-10-01 16:04:00"
+            },
+            {
+                "filename": "2014-09-30_system.log",
+                "date": "2014-09-30",
+                "time": "19:54:00",
+                "data": "Mock data created at 2014-09-30 19:54:00"
+            },
+            {
+                "filename": "2014-09-28_system.log",
+                "date": "2014-09-28",
+                "time": "12:05:00",
+                "data": "Mock data created at 2014-09-28 12:05:00"
+            },
+            {
+                "filename": "2014-09-25_system.log",
+                "date": "2014-09-25",
+                "time": "06:31:00",
+                "data": "Mock data created at 2014-10-02 2014-09-25"
+            }
+        ]
+    ]
+}

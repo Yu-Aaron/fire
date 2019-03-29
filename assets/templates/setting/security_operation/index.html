@@ -1,0 +1,103 @@
+<div class="second-title">
+  <span>安全操作</span>
+  <div class="pull-right">
+    <button id="setting_basic_button_resetModal" type="button" class="btn btn-default btn-primary"
+            setting-privilege privilege-name="OPERATION_RESET" privilege-handle="MIXED"
+            ng-click="update.reset.resetModal()">
+      <span><i class="fa fa-refresh icon-left" aria-hidden="true"></i>重置</span></button>
+    </button>
+    <button id="setting_basic_button_restartModal" type="button" class="btn btn-default btn-primary"
+            setting-privilege privilege-name="OPERATION_REBOOT" privilege-handle="MIXED"
+            ng-click="update.reset.rebootModal()">
+      <span><i class="fa fa-power-off icon-left" aria-hidden="true"></i>重启</span></button>
+    </button>
+  </div>
+</div>
+<div class="panel-content">
+    <!-- 配置备份与恢复 start-->
+    <div class="row" cg-busy="{promise:$root.backupDeployTaskPromise,message:'备份中...'}"
+         setting-privilege privilege-name="OPERATION_BACKUP" privilege-handle="MIXED">
+      <conf-backup target="CONFIGURATION"></conf-backup>
+    </div>
+    <!-- 配置备份与恢复 end -->
+
+    <!-- 在线升级 start-->
+    <div class="row" setting-privilege privilege-name="OPERATION_UPGRADE" privilege-handle="MIXED">
+      <div class="col-md-12">
+        <div class="panel panel-lg padding-zero">
+          <div class="panel-header panel-header-border">
+            <span>在线升级</span>
+          </div>
+          <div class="panel-body panel-body-light">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="system-upgrade-main">
+                  <div class="row">
+                    <div class="col-xs-12">
+                      当前版本: {{$root.VERSION_NUMBER}}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      序列号: {{update.serialNumber}}
+                    </div>
+                  </div>
+                  <div>
+                    <dtable>
+                      <update-info-table/>
+                    </dtable>
+                  </div>
+                  <div class="row"
+                       ng-hide="update.uploader.queue.length > 0 && !update.uploadImageFail && !update.uploadImageSuccess">
+                    <div class="col-xs-1">
+                      升级包文件:
+                    </div>
+                    <div class="col-xs-4">
+                      <span
+                        ng-class="update.uploadImageFail ? 'upload-error' : ''"><u>{{ update.uploadedImage}}</u></span>
+                    </div>
+                  </div>
+                  <div class="btn-group btn-group-column"
+                       ng-hide="update.uploader.queue.length > 0 && !update.uploadImageFail && !update.uploadImageSuccess">
+                    <button type="button" class="btn btn-default" id="setting-systemconsole_li_systemUpgrade_browse">
+                      <input type="file" accept=".bin" nv-file-select="" uploader="update.uploader"
+                             ng-click="update.uploader.clearQueue();" multiple/>
+                      <i class="fa fa-folder-open-o icon-left"></i>上传
+                    </button>
+                    <span class="upload-error input-alert-error" ng-show="update.uploadImageFail">{{update.uploadImageFail ? update.uploadImageFail : '上传失败，请重新上传。'}}</span>
+                  </div>
+                  <div class="row" ng-repeat="item in update.uploader.queue"
+                       ng-hide="update.uploadImageFail || update.uploadImageSuccess">
+                    <div class="col-xs-1">
+                      升级包文件:
+                    </div>
+                    <div class="col-xs-3">
+                      <div class="progress" style="margin-bottom: 0;">
+                        <div class="progress-bar" role="progressbar"
+                             ng-style="{ 'width': item.progress + '%' }"></div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-default" ng-click="update.cancelUpload(item)">取消</button>
+                  </div>
+
+                  <div class="btn-group btn-group-column">
+                    <button type="button" class="btn btn-default" ng-click="update.showUpgradeConfirmationModal()"
+                            ng-disabled="!update.uploadImageSuccess" id="systemUpgrade_start">
+                      <span><i class="fa fa-arrow-circle-up text-lime icon-left"></i>开始升级</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 在线升级 end -->
+  </div>
+
+
+
+
+
+
+

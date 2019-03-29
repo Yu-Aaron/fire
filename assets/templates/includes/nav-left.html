@@ -1,0 +1,59 @@
+<nav class="left-navbar with-icons"
+     ng-class="{'left-navbar-collapsed': dashboard.expanded}">
+  <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat="tab in menuCtrl.subMenus.getChilds()"
+        disable="true" class="highlight" id="{{tab.getTarget()}}">
+      <a ng-if="!(tab.getChilds()&&tab.getChilds()!==[]&&tab.getChilds().length>0)" id="{{tab.getState().split('.')[0]}}_a_{{tab.getState()}}"
+         class="left-navbar-item left-navbar-item-{{tab.getState()}}"
+         ng-click="dashboard.closeOtherSecondLvMenu()"
+         ui-sref="{{tab.getState()}}" ng-class="{active: menuCtrl.isActive(tab)}">
+        <!--ui-sref-opts="{{tab.getOptions()}}"-->
+        <i class="icon-wrapper" tooltip-placement="right" tooltip="{{tab.getDescription()}}" tooltip-append-to-body="true" tooltip-enable="dashboard.expanded">
+          <i class="icon icon-{{tab.getIcon()}}-active"></i>
+        </i>
+        <div class="left-navbar-item-name">{{tab.getDescription()}}</div>
+      </a>
+
+      <a ng-if="tab.getChilds()&&tab.getChilds()!==[]&&tab.getChilds().length>0" id="{{tab.getState().split('.')[0]}}_a_{{tab.getState()}}"
+         class="left-navbar-item left-navbar-item-{{tab.getState()}} menu-container"
+         ng-class="{hoverActive: $root.subMenusSelected(tab), active: $root.isSubMenusActive(tab)}"
+         ng-click="$root.displaySubMenus(tab);dashboard.toggleExpand(false);">
+        <i class="icon-wrapper" tooltip-placement="right" tooltip="{{tab.getDescription()}}" tooltip-append-to-body="true" tooltip-enable="dashboard.expanded">
+          <i class="icon icon-{{tab.getIcon()}}-active"></i>
+        </i>
+        <span class="left-navbar-item-name">{{tab.getDescription()}}</span>
+        <span class="expand-icon" ng-if="!dashboard.expanded">
+          <!--<i class="fa fa-chevron-right whitelist-icon"-->
+          <!--ng-if="dashboard.expanded?false:!tab.expanded"></i>-->
+          <i class="fa fa-chevron-up" ng-if="tab.expanded"></i>
+          <i class="fa fa-chevron-down" ng-if="!tab.expanded"></i>
+        </span>
+      </a>
+      <div class="submenu" ng-style="{height: (dashboard.expanded?false:tab.expanded) ? (tab.getChilds().length * 48 + 'px') : 0}">
+        <div class="submenu-item" ng-repeat="child in tab.getChilds()">
+          <a id="{{menuCtrl.prefixId}}a_sub_{{child.getState()}}"
+             class="left-navbar-item left-navbar-item-{{child.getState()}}"
+             ui-sref="{{child.getState()}}" ng-class="{active: menuCtrl.isActive(child)}">
+            <!--ui-sref-opts="{{tab.getOptions()}}"-->
+            <i class="icon-wrapper">
+              <i ng-if="!child.getIcon()" class="icon icon-circle-active left-navbar-item-icon"></i>
+              <i ng-if="child.getIcon()" class="icon icon-{{child.getIcon()}}-active left-navbar-item-icon"></i>
+            </i>
+            <div class="left-navbar-item-name">
+              {{child.getDescription()}}
+            </div>
+          </a>
+        </div>
+      </div>
+    </li>
+    <li class="left-navbar-expand-toggle reset-highlight" ng-class="{'collapsed': dashboard.expanded}">
+      <a href="javascript:void(0)" ng-click="dashboard.toggleExpand()">
+        <i class="fa" ng-class="{false: 'fa-angle-double-left', true: 'fa-angle-double-right'}[dashboard.expanded]"></i>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<div class="main-content main-content-with-nav" ng-class="{'navbar-collapsed': dashboard.expanded}" ui-view></div>
+
+<div class="clearfix"></div>

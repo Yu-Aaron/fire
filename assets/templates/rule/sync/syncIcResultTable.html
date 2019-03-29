@@ -1,0 +1,54 @@
+<div id="rule_sync_tab_icTab">
+  <div class="padding-default">
+    <button id="rule_sync_icTab_button_selectAll" type="button" class="btn btn-default" style="margin-left:10px"
+            ng-if="syncCtrl.editRight" ng-disabled="dtable.totalNum < 1" ng-click="dtable.selectAllRule()">
+      {{dtable.selectAllRulesText}}
+    </button>
+    <button id="rule_sync_icTab_button_deleteSelected" type="button" class="btn btn-default" style="margin-left:10px"
+            ng-if="syncCtrl.editRight" ng-disabled="dtable.selectedRuleCount < 1"
+            ng-click="syncCtrl.add(dtable, 'WHITELIST')"><i class="fa fa-plus-square icon-left"></i>添加到模板库
+    </button>
+    <button id="rule_sync_icTab_button_deploy" type="button" class="btn btn-default pull-right" style="margin-left:10px"
+            ng-if="syncCtrl.editRight" ng-click="syncCtrl.goedit('WHITELIST')"><i class="fa fa-pencil icon-left"></i>前往编辑
+    </button>
+  </div>
+  <table class="table table-hover icon-hidden rule_sync_ic_table">
+    <thead>
+    <tr>
+      <th style="width: 10%">
+        <input id="rule_sync_icTab_checkbox_selectAll" type="checkbox" ng-disabled="dtable.selectAllRules"
+               ng-change="dtable.toggle()" ng-model="dtable.selectAll"/>
+      </th>
+      <th style="width: 25%" order-by="ruleName">规则描述</th>
+      <th>协议名称</th>
+      <th style="width: 30%">创建时间</th>
+      <th style="width: 25%">规则内容</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="rule in dtable.table">
+      <td>
+        <input id="rule_sync_icTab_checkbox_check_{{(dtable.currentPage-1)*dtable.numPerPage+$index+1}}" type="checkbox"
+               ng-disabled="dtable.selectAllRules" ng-change="dtable.countSelected(rule)" ng-model="rule.checked"/>
+      </td>
+      <td>{{rule.sourceZoneName}}&nbsp;到&nbsp;{{rule.destinationZoneName}}</td>
+      <td>
+        {{syncCtrl.getProtocolType(rule, 'whitelist')}}
+      </td>
+      <td>
+        {{syncCtrl.getRuleCreatedAt(rule)}}
+      </td>
+      <td>
+        <button id="rule_sync_icTab_button_detail_{{$index}}" class="btn btn-default margin-right-default"
+                ng-click="syncCtrl.detail(rule)"><i class="fa fa-file-text-o"></i> 内容
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="text-center">
+    <p id="rule_sync_icTab_selectedNum" ng-if="dtable.selectedRuleCount">
+      已选择{{dtable.selectedRuleCount}}/{{dtable.totalNum}}条规则</p>
+    <p id="rule_sync_icTab_totalnum" ng-if="!dtable.selectedRuleCount">总共{{dtable.totalNum}}条规则</p>
+  </div>
+</div>

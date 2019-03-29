@@ -1,0 +1,255 @@
+<div>
+    <div class="margin-bottom-default object-new-delete-container">
+        <a id="object-deviceasset-add" class="btn btn-default" ng-click="dtable.addNewDeviceAsset()"
+           setting-privilege privilege-name="OBJECT_ASSET" privilege-require="MIXED" privilege-handle="hidden"
+           ng-disabled="isEdittingDeviceAsset">
+            &nbsp;<i class="fa fa-file-o fa-after-blue fa-plus-overlay icon-left"></i> 新增&nbsp;</a>
+        <a id="object-deviceasset-delete" class="btn btn-default" ng-click="dtable.deleteDeviceAsset()"
+           setting-privilege privilege-name="OBJECT_ASSET" privilege-require="MIXED" privilege-handle="hidden">
+            &nbsp;<i class="fa fa-trash-o icon-left"></i> 删除&nbsp;</a>
+        <span class="device-asset-quick-to-panel" setting-privilege
+              privilege-name="OBJECT_ASSET" privilege-require="MIXED" privilege-handle="hidden">
+            <a id="object-deviceasset-transfer" class="btn btn-default"
+               ng-click="dvcasset.quickTransferTo(dtable.selectedItems, dtable)">
+               &nbsp;&nbsp;快速转至&nbsp;&nbsp;</a>
+            <select id="transfer-to-securityarea" class="select-styled margin-left-default"
+                    ng-model="dvcasset.securityarea"
+                    ng-options="area for area in dtable.securityareas">
+                <option value="">安全区域</option>
+            </select>
+            <!--<select id="transfer-to-ippool" class="select-styled margin-left-default"-->
+                    <!--ng-init="dvcasset.ippool = ''" ng-model="dvcasset.ippool"-->
+                    <!--ng-options="ippool for ippool in dtable.ippools">-->
+                <!--<option value="">地址池</option>-->
+            <!--</select>-->
+        </span>
+    </div>
+    <form name="deviceAsestForm" ng-submit="dtable.ok(deviceAsestForm.$valid)">
+    <table class="table table-hover icon-hidden"
+           cg-busy="{promise:$root.dvcAssetTask.promise, message:$root.dvcAssetTask.message}">
+        <thead>
+        <tr>
+            <th class="text-center">
+                <label>
+                    <input id="selected-item-all" custom-checkbox tri-state-checkbox type="checkbox" ng-model="dtable.selectAllValue"
+                           ng-click="dtable.selectAll()"/>
+                </label>
+            </th>
+            <th>序号</th>
+            <th order-by="name">名称</th>
+            <th order-by="kind">类型</th>
+            <th order-by="make">厂商</th>
+            <th order-by="model">型号</th>
+            <th order-by="ipAddress">IP地址</th>
+            <th order-by="macAddress">MAC地址</th>
+            <!--<th order-by="addressPoolName">地址池</th>-->
+            <th order-by="securityAreaName">安全区域</th>
+            <th order-by="inputType">录入方式</th>
+            <th order-by="enable">启动</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-if="isAddDeviceAsset" class="device-asset-add-new-container">
+            <td colspan="2"></td>
+            <td>
+                <input id="add_new_name" name="name" type="text" ng-model="newDeviceAsset.name"
+                       custom-val="nameval" validator="checkNameVal"
+                       class="input-sm input-text" maxlength="20" placeholder="名称" required/>
+                <div class="input-alert-error" ng-show="deviceAsestForm.name.$error.nameval">
+                    {{nameValMsg}}</div>
+            </td>
+            <td>
+                <div class="select-styled input-stacked">
+                    <div class="input-stacked-wrap" ng-if="newDeviceAsset.manual_kind">
+                        <input id="add-new-types-input" type="text"
+                               placeholder="请输入设备类型" ng-model="newDeviceAsset.kind"
+                               ng-model-options="{ updateOn: 'blur' }" maxlength="255"/>
+                    </div>
+                    <select id="add-new-types" ng-model="newDeviceAsset.kind" ng-options="type for type in types"
+                            ng-change="manualType()">
+                        <option value="" selected="selected">添加类型</option>
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div class="select-styled input-stacked">
+                    <div class="input-stacked-wrap" ng-if="newDeviceAsset.manual_make">
+                        <input id="add-new-factories-input" type="text"
+                               placeholder="请输入设备厂商" ng-model="newDeviceAsset.make"
+                               ng-model-options="{ updateOn: 'blur' }" maxlength="255" />
+                    </div>
+                    <select id="add-new-factories" ng-model="newDeviceAsset.make"
+                            ng-options="factory for factory in factories" ng-change="manualFactory()">
+                        <option value="" selected="selected">添加厂商</option>
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div class="select-styled input-stacked">
+                    <div class="input-stacked-wrap" ng-if="newDeviceAsset.manual_model">
+                        <input id="add-new-models-input" type="text"
+                               placeholder="请输入设备型号" ng-model="newDeviceAsset.model" maxlength="255"/>
+                    </div>
+                    <select id="add-new-models" ng-model="newDeviceAsset.model"
+                            ng-options="model for model in models" ng-change="manualModel()">
+                        <option value="" selected="selected">添加型号</option>
+                    </select>
+                </div>
+            </td>
+            <td>
+                <input id="add_new_ip" name="ipAddress" type="text" ng-model="newDeviceAsset.ipAddress"
+                       custom-val="ipval" validator="checkIpVal"
+                       class="input-sm input-text" maxlength="18" placeholder="192.168.1.2" required/>
+                <div class="input-alert-error" ng-show="deviceAsestForm.ipAddress.$error.ipval">
+                    请输入有效IP地址</div>
+            </td>
+            <td>
+                <input id="add_new_mac" name="mac" type="text" ng-model="newDeviceAsset.macAddress"
+                       custom-val="macval" validator="checkMacVal"
+                       class="input-sm input-text" maxlength="17" placeholder="00:00:00:00:00:01"/>
+                <div class="input-alert-error" ng-show="deviceAsestForm.mac.$error.macval">
+                    请输入有效MAC地址</div>
+            </td>
+            <!--<td>-->
+                <!--<select id="add-new-ippools" class="select-styled" ng-model="newDeviceAsset.addressPoolName"-->
+                        <!--ng-options="ippool for ippool in dtable.ippools">-->
+                <!--</select>-->
+            <!--</td>-->
+            <td>
+                <select id="add-new-securityareas" class="select-styled" ng-model="newDeviceAsset.securityAreaName"
+                        ng-options="securityarea for securityarea in dtable.securityareas" required/>
+            </td>
+            <td colspan="3">
+                <button type="submit" class="btn btn-default btn-sm btn-middle-pull-left-margin-back"
+                        id="object-deviceasset-add-ok" ng-disabled="!deviceAsestForm.$valid || isAddingDeviceAsset">
+                    <i class="fa fa-check text-lime"></i>
+                </button>
+                <button type="button" class="btn btn-default btn-sm margin-right-default btn-middle-pull-left-margin-back"
+                        id="object-deviceasset-add-cancel" ng-click="dtable.cancel()" ng-disabled="isAddingDeviceAsset">
+                    <i class="fa fa-remove"></i>
+                </button>
+                <span ng-show="isAddingDeviceAsset">
+                    <i class="fa fa-spinner fa-spin icon-left"></i>添加中
+                </span>
+            </td>
+        </tr>
+        <tr ng-repeat-start="asset in dtable.table" ng-hide="isEditDeviceAssetId === asset.assetId" fade-in-list>
+            <td class="text-center">
+                <label>
+                    <input custom-checkbox type="checkbox" id="selected-item-{{$index}}"
+                           ng-checked="dtable.selectedItems[asset.name]"
+                           ng-change="dtable.selectedChanged()"
+                           ng-model="dtable.selectedItems[asset.name]"/>
+                </label></td>
+            <td>{{skip + $index + 1}}</td>
+            <td>{{asset.name}}</td>
+            <td>{{asset.kind | convertNullBlank:'--'}}</td>
+            <td>{{asset.make | convertNullBlank:'--'}}</td>
+            <td>{{asset.model | convertNullBlank:'--'}}</td>
+            <td>{{asset.ipAddress}}</td>
+            <td>{{asset.macAddress}}</td>
+            <!--<td>{{asset.addressPoolName | convertNullBlank:'--'}}</td>-->
+            <td>{{asset.securityAreaName | convertNullBlank:'--'}}</td>
+            <td>{{asset.inputType | dvcAssetInputMode}}</td>
+            <td class="switch-toggle-td">
+                <switch-toggle status="asset.enable" change="dtable.changeStartStatus(asset)"
+                               disabled="isNoEditPri || isSwitchAction[asset.name]"></switch-toggle>
+                <span ng-show="isSwitchAction[asset.name]">
+                    <i class="fa fa-spinner fa-spin icon-left"></i>{{switchActionMsg[asset.name]}}中
+                </span>
+            </td>
+            <td>
+                <a class="btn btn-sm btn-default" ng-click="dtable.editDeviceAsset(asset)" title="编辑"
+                   id="object-deviceasset-edit" ng-disabled="isNoEditPri || isEdittingDeviceAsset">
+                    <i class="fa fa-edit"></i></a>
+            </td>
+        </tr>
+        <tr ng-repeat-end ng-if="isEditDeviceAssetId === asset.assetId" class="device-asset-edit-container">
+            <td class="text-center">
+                <label>
+                    <input custom-checkbox type="checkbox" id="selected-item-{{$index}}"
+                           ng-checked="dtable.selectedItems[asset.name]"
+                           ng-model="dtable.selectedItems[asset.name]"/>
+                </label></td>
+            <td>{{skip + $index + 1}}</td>
+            <td>{{editDeviceAsset.name}}</td>
+            <td>
+                <div class="select-styled input-stacked">
+                    <div class="input-stacked-wrap" ng-if="editInputInfo.manual_kind">
+                        <input id="edit-types-input" type="text"
+                               placeholder="请输入资产类型" ng-model="editInputInfo.editInputKind"
+                               ng-model-options="{ updateOn: 'blur' }" maxlength="255" />
+                    </div>
+                    <select id="edit-types" ng-model="editDeviceAsset.kind" ng-options="type for type in types"
+                            ng-change="manualType()">
+                        <option value="">添加类型</option>
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div class="select-styled input-stacked">
+                    <div class="input-stacked-wrap" ng-if="editInputInfo.manual_make">
+                        <input id="edit-factories-input" type="text"
+                               placeholder="请输入设备厂商" ng-model="editInputInfo.editInputMake"
+                               ng-model-options="{ updateOn: 'blur' }" maxlength="255"/>
+                    </div>
+                    <select id="edit-factories" ng-model="editDeviceAsset.make"
+                            ng-options="factory for factory in factories" ng-change="manualFactory()">
+                        <option value="">添加厂商</option>
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div class="select-styled input-stacked">
+                    <div class="input-stacked-wrap" ng-if="editInputInfo.manual_model">
+                        <input id="edit-models-input" type="text"
+                               placeholder="请输入资产型号" ng-model="editInputInfo.editInputModel" maxlength="255"/>
+                    </div>
+                    <select id="edit-models" ng-model="editDeviceAsset.model"
+                            ng-options="model for model in models" ng-change="manualModel()">
+                        <option value="">添加型号</option>
+                    </select>
+                </div>
+            </td>
+            <td>
+                <input id="edit_ip" name="editIpAddress" type="text" ng-model="editDeviceAsset.ipAddress"
+                       custom-val="ipval" validator="checkIpVal"
+                       class="input-sm input-text" maxlength="18" placeholder="192.168.1.2" required/>
+                <div class="input-alert-error" ng-show="deviceAsestForm.editIpAddress.$error.ipval">
+                    请输入有效IP地址</div>
+            </td>
+            <td>
+                <input id="edit_mac" name="editMac" type="text" ng-model="editDeviceAsset.macAddress"
+                       custom-val="macval" validator="checkMacVal"
+                       class="input-sm input-text" maxlength="17" placeholder="00:00:00:00:00:01"/>
+                <div class="input-alert-error" ng-show="deviceAsestForm.editMac.$error.macval">
+                    请输入有效MAC地址</div>
+            </td>
+            <!--<td>-->
+                <!--<select id="edit-ippools" class="select-styled" ng-model="editDeviceAsset.addressPoolName"-->
+                        <!--ng-options="ippool for ippool in dtable.ippools">-->
+                <!--</select>-->
+            <!--</td>-->
+            <td>
+                <select id="edit-securityareas" class="select-styled" ng-model="editDeviceAsset.securityAreaName"
+                        ng-options="securityarea for securityarea in dtable.securityareas" required/>
+            </td>
+            <td colspan="3">
+                <button type="submit" class="btn btn-default btn-sm btn-middle-pull-left-margin-back"
+                        id="object-deviceasset-edit-ok" ng-disabled="!deviceAsestForm.$valid || isEdittingDeviceAsset">
+                    <i class="fa fa-check text-lime"></i>
+                </button>
+                <button type="button" class="btn btn-default btn-sm margin-right-default btn-middle-pull-left-margin-back"
+                        id="object-deviceasset-edit-cancel" ng-click="dtable.cancel()" ng-disabled="isEdittingDeviceAsset">
+                    <i class="fa fa-remove"></i>
+                </button>
+                <span ng-show="isEdittingDeviceAsset">
+                    <i class="fa fa-spinner fa-spin icon-left"></i>修改中
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </form>
+</div>

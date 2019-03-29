@@ -1,0 +1,136 @@
+<div cg-busy="{promise:$root.deployTaskPromise,message:'部署中...'}">
+  <div cg-busy="{promise:$root.ActionPromise,message:'事件处理中...'}">
+    <div class="">
+      <div class="pull-left">
+        <h4 class="display-inline-block">编辑工作区</h4>{{policyblocks.id}}
+      </div>
+      <div class="pull-right">
+        <span ng-if="policyblocks.isDPIUpgrading" class="warning">(DPI设备升级中，无法部署规则) &nbsp;</span>
+        <button id="rule-blackList-editor_button_deploy" class="btn btn-default btn-deploy"
+                ng-if="!policyblocks.alreadyDeployed" ng-disabled="$root.disableDeploy|| (!policyblocks.table.length) ||policyblocks.isDPIUpgrading"
+                ng-click="policyblocks.deploy()"><i class="fa fa-cloud-download icon-left"
+                setting-privilege privilege-name="RULE_BLACKLIST" privilege-require="MIXED"></i>部署规则
+        </button>
+        <button class="btn btn-default" ng-if="policyblocks.alreadyDeployed" disabled="disabled"><i
+          class="fa fa-check-circle icon-left text-lime" setting-privilege privilege-name="RULE_BLACKLIST" privilege-require="MIXED"></i>已部署规则
+        </button>
+
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <hr class="hr-small-margin">
+
+    <div class="pull-left">
+      <input id="rule-blackList-editor_text_policyName" maxlength="25" type="text" ng-blur="policyblocks.changeName()"
+             ng-model="policyblocks.policy.name">
+      <span style="color: #878787;">（长度：不超过25个字符）</span>
+    </div>
+
+    <div class="pull-right">
+      <button id="rule-blacklist-editor_button_deleteAll" ng-click="policyblocks.deleteAllPredeployPolicy()" class="btn btn-default ng-isolate-scope" ng-disabled="!policyblocks.table.length" setting-privilege privilege-name="RULE_BLACKLIST" privilege-require="MIXED" disabled="disabled"><i class="fa fa-trash-o icon-left"></i>
+        删除所有
+      </button>
+    </div>
+    <div class="btn-group pull-right dropdown" dropdown is-open="status.isopen">
+      <button id="rule-blackList-editor_button_changeAll" type="button" class="btn btn-default dropdown-toggle"
+              dropdown-toggle setting-privilege privilege-name="RULE_BLACKLIST" privilege-require="MIXED">
+        操作全部 <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li id="rule-blackList-editor_li_changeAllAllow"><a
+                                                            ng-click="policyblocks.changeActionToAll('ALLOW')">全部允许</a>
+        </li>
+        <li id="rule-blackList-editor_li_changeAllAlert"><a
+                                                            ng-click="policyblocks.changeActionToAll('ALERT')">全部警告</a>
+        </li>
+        <li id="rule-blackList-editor_li_changeAllDeny"><a
+                                                           ng-click="policyblocks.changeActionToAll('DROP')">全部丢弃</a>
+        </li>
+        <li id="rule-blackList-editor_li_changeAllReject"><a
+                                                            ng-click="policyblocks.changeActionToAll('REJECTBOTH')">全部阻断</a>
+        </li>
+      </ul>
+    </div>
+    <div class="clearfix"></div>
+    <hr>
+    <div class="spacing-small"></div>
+
+    <!-- A NOTE ABOUT TABLES -->
+    <!-- =================== -->
+    <!-- BELOW TABLE IS ACTUALLY MADE WITH DIVs IN A GRID. THIS IS THE IDEAL WAY (due to nature of transitions) BUT FOR NOW WE'LL KEEP ALL OTHER TABLES AS ACTUAL TABLES (because of effort) -->
+
+    <div class="policy-detail-table panel panel-edit panel-gradient padding-default">
+      <div class="table-scroll-wrapper table-scroll-wrapper-striped">
+        <table id="blacklist_pre_deploy_table" class="" style="width: 100%;">
+          <tbody class="">
+          <tr>
+            <th style="min-width: 50px;">优先级</th>
+            <th>漏洞名称</th>
+            <th style="min-width: 56px;">事件处理</th>
+            <th style="min-width: 90px;">编辑</th>
+          </tr>
+
+          <tr id="blacklist_pre_deploy_table_row_{{$index}}" data-index="0" ng-repeat="policy in policyblocks.table" fade-in-list>
+            <td class=" ">{{(policyblocks.currentPage-1)*10+$index+1}}</td>
+            <td class="" style="overflow: hidden; text-overflow: ellipsis;">
+              {{policy.name}}
+            </td>
+            <td ng-if="policy.type!=='SIGNATURE'" class="">{{policy['_rulesCount']}}</td>
+            <td ng-if="policy.type=='SIGNATURE'" class="">
+              <select id="rule-blackList-editor_select_changeAction" class="select-in-list select-styled"
+                      ng-model="policy.sigAction" ng-change="policyblocks.changeAction(policy, policy.sigAction)">
+                <option id="rule-blackList-editor_option_changeAlert" value="ALERT">警告</option>
+                <option id="rule-blackList-editor_option_changeDeny" value="DROP">丢弃</option>
+                <option id="rule-blackList-editor_option_changeRejectBoth" value="REJECTBOTH">阻断</option>
+                <option id="rule-blackList-editor_option_changeAllow" value="ALLOW">允许</option>
+              </select>
+            </td>
+            <td class="">
+              <button id="rule-blackList-editor_button_editPre"
+                      ng-click="policyblocks.showDetail(policy, policy.status=='ACTIVE')" class="btn btn-sm btn-default"
+                      ng-disabled="false"><i class="fa fa-edit"></i></button>
+              <button id="rule-blackList-editor_button_cancelPre" ng-click="policyblocks.deletePredeployPolicy(policy)"
+                      class="btn btn-sm btn-default"><i class="fa fa-trash"></i></button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="text-center">
+        <div id="rule_blacklist_predeploy_totalnum">总共 {{policyblocks.totalNum}} 组规则</div>
+      </div>
+      <div class="text-center">
+        <pagination ng-model="policyblocks.currentPage"
+                    class="pagination-sm"
+                    boundary-links="true"
+                    total-items="policyblocks.totalNum"
+                    items-per-page="policyblocks.numPerPage"
+                    max-size="5"
+                    num-pages="policyblocks.numPages"
+                    previous-text="&lsaquo;"
+                    next-text="&rsaquo;"
+                    first-text="&laquo;"
+                    last-text="&raquo;"
+                    ng-change="policyblocks.pageChanged()"
+        ></pagination>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/ng-template" id="moveTo.html">
+  <div class="modal-header">
+    <h3>移至特定点</h3>
+  </div>
+  <div class="modal-body alart-body">
+    <b>移动选择规则至优先级<input type="number" ng-model="priority" min="1" , max="{{max}}" , required></b>
+
+    <div class="modal-footer">
+      <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-times icon-left"></i>取消</button>
+      <button class="btn btn-primary" ng-click="ok()"><i class="fa fa-check icon-left"></i>移动</button>
+    </div>
+  </div>
+</script>

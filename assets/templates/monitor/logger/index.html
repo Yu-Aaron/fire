@@ -1,0 +1,196 @@
+<div class="monitor-inner-main inner-main">
+
+  <!--   <div class="tab-container" ng-controller="TabCtrl as tab">
+      <ul class="nav nav-tabs nav-tabs-lg nav-tabs-lime" ng-init="tab.active || tab.activatePanel('LOGS')">
+        <li ng-class="{ active: tab.isActive('LOGS') }">
+          <a href ng-click="tab.activatePanel('LOGS')"><i class="fa fa-clock-o nav-tab-icon"></i> <span>日志</span></a>
+        </li>
+        <li ng-class="{ active: tab.isActive('BOOKMARKS') }">
+          <a href ng-click="tab.activatePanel('BOOKMARKS')"><i class="fa fa-bookmark"></i> <span>书签</span></a>
+        </li>
+        <li ng-class="{ active: tab.isActive('SCREENSHOTS') }">
+          <a href ng-click="tab.activatePanel('SCREENSHOTS')"><i class="fa fa-image"></i> <span>截图</span></a>
+        </li>
+      </ul>
+
+      <div ng-switch on="tab.active" class="tab-container-body">
+        <div ng-switch-when="LOGS">
+   -->
+  <div class="tab-container" ng-controller="TabCtrl as tab">
+    <ul class="nav nav-tabs nav-tabs-lg nav-tabs-red-orange nav-tabs-top-border"
+        ng-init="tab.active || tab.activatePanel('pllogs')">
+      <!--<li ng-class="{ active: tab.isActive('all') }">
+        <a ui-sref="monitor.logger({panel: 'all'})"><i class="fa"></i>
+          <span>全部日志</span>
+        </a>
+      </li>-->
+      <li id="monitor_logger_pllogs" ng-class="{ active: tab.isActive('pllogs') }">
+        <a ui-sref="monitor.logger({panel: 'pllogs'})"><i class="fa"></i>
+          <span>防火墙登录日志</span>
+        </a>
+      </li>
+      <li id="monitor_logger_pflogs" ng-class="{ active: tab.isActive('pflogs') }">
+        <a ui-sref="monitor.logger({panel: 'pflogs'})"><i class="fa"></i>
+          <span>防火墙操作日志</span>
+        </a>
+      </li>
+      <li id="monitor_logger_dllogs" ng-class="{ active: tab.isActive('dllogs') }">
+        <a ui-sref="monitor.logger({panel: 'dllogs'})"><i class="fa"></i>
+          <span>终端用户登录日志</span>
+        </a>
+      </li>
+      <li id="monitor_logger_dclogs" ng-class="{ active: tab.isActive('dclogs') }">
+        <a ui-sref="monitor.logger({panel: 'dclogs'})"><i class="fa"></i>
+          <span>终端用户操作日志</span>
+        </a>
+      </li>
+      <li id="monitor_logger_syslogs" ng-class="{ active: tab.isActive('syslogs') }">
+        <a ui-sref="monitor.logger({panel: 'syslogs'})"><i class="fa"></i>
+          <span>系统日志</span>
+        </a>
+      </li>
+      <li id="monitor_logger_dflogs" ng-class="{ active: tab.isActive('dflogs') }">
+        <a ui-sref="monitor.logger({panel: 'dflogs'})"><i class="fa"></i>
+          <span>策略日志</span>
+        </a>
+      </li>
+    </ul>
+    <div ng-switch on="tab.active" class="tab-container-body">
+      <div ng-switch-when="all">
+        <dtable>
+          <log-tab></log-tab>
+        </dtable>
+      </div>
+      <div ng-switch-when="pllogs">
+        <dtable>
+          <logpl-tab></logpl-tab>
+        </dtable>
+      </div>
+      <div ng-switch-when="pflogs">
+        <dtable>
+          <logpf-tab></logpf-tab>
+        </dtable>
+      </div>
+      <div ng-switch-when="dllogs">
+        <dtable>
+          <logdl-tab></logdl-tab>
+        </dtable>
+      </div>
+      <div ng-switch-when="dclogs">
+        <dtable>
+          <logdc-tab></logdc-tab>
+        </dtable>
+      </div>
+      <div ng-switch-when="syslogs">
+        <dtable>
+          <event-table></event-table>
+        </dtable>
+      </div>
+      <div ng-switch-when="dflogs">
+        <dtable>
+          <logdf-tab></logdf-tab>
+        </dtable>
+      </div>
+    </div>
+  </div>
+
+  <!--       </div>
+
+        <div ng-switch-when="BOOKMARKS">
+          <div class="panel">
+            <div class="panel-body"> -->
+
+  <!-- TOOLBAR -->
+  <!--             <div class="toolbar padding-default" ng-include="'templates/includes/toolbar.html'"></div>
+
+
+              <table class="table table-hover" ng-init="items=[0,1,2]">
+                <thead>
+                  <tr>
+                    <th>
+                      <span>缩略图</span>
+                    </th>
+                    <th>
+                      <span>日期</span>
+                    </th>
+                    <th>
+                      <span>时间</span>
+                    </th>
+                    <th>
+                      <span>链接文件</span>
+                    </th>
+                    <th>
+                      <span>备注</span>
+                    </th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in items">
+                    <td>2014-10-05</td>
+                    <td>2014-10-05</td>
+                    <td>10:00:00:00</td>
+                    <td>2014-10-05_system.log</td>
+                    <td>发现漏洞可能性，需要详细分析</td>
+                    <td><button class="btn btn-default">查看详情</button></td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </div>
+
+        <div ng-switch-when="SCREENSHOTS">
+          <div class="panel">
+            <div class="panel-body"> -->
+
+  <!-- TOOLBAR -->
+  <!--             <div class="toolbar padding-default" ng-include src="'templates/includes/toolbar.html'"></div>
+
+
+              <table class="table table-hover" ng-init="items=[0,1,2]">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>
+                      <span>缩略图</span>
+                    </th>
+                    <th>
+                      <span>日期</span>
+                    </th>
+                    <th>
+                      <span>时间</span>
+                    </th>
+                    <th>
+                      <span>链接文件</span>
+                    </th>
+                    <th>
+                      <span>备注</span>
+                    </th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="item in items">
+                    <td><input type="checkbox" /></td>
+                    <td class="text-center"><a href=""><img src="images/placeholders/u460.jpg" width="200"></a></td>
+                    <td>2014-10-05</td>
+                    <td>10:00:00:00</td>
+                    <td>2014-10-05_system.log</td>
+                    <td>发现漏洞可能性，需要详细分析</td>
+                    <td><button class="btn btn-default">查看详情</button></td>
+                  </tr>
+                </tbody>
+              </table> -->
+
+
+  <!-- PAGINATOR -->
+  <!--             <div class="paginator" ng-include src="'templates/includes/paginator-dtable.html'"></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+</div>

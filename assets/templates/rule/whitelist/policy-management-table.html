@@ -1,0 +1,88 @@
+<div class="panel panel-lg" ng-if="policies.ruleDeployed">
+  <div class="panel-header">
+    <h5 class="panel-header-title">当前部署规则</h5>
+  </div>
+  <div class="panel-body deployed-policy-panel">
+    <div class="row">
+      <div class="col-xs-12 input-group-left deployed-policy">
+        <div class="column">
+          <div class="label-text">规则名称</div>
+          <div class="content">{{policies.table[0].name}}</div>
+        </div>
+        <div class="column">
+          <div class="label-text">规则数量</div>
+          <div class="content">{{policies.table[0]['_blocksCount']}}&nbsp;({{policies.table[0]['_rulesCount'] +
+            policies.table[0]['_signaturesCount']}}规则项)
+          </div>
+        </div>
+        <div class="column">
+          <div class="label-text">上次编辑人员</div>
+          <div class="content">{{policies.table[0].updatedBy}}</div>
+        </div>
+        <div class="column">
+          <div class="label-text">上次更新</div>
+          <div class="content">{{policies.table[0].updatedAt | date: 'yyyy-MM-dd'}}</div>
+        </div>
+        <div class="column">
+          <a ng-click="policies.viewDetail(policies.table[0].policyId)"
+             class="view-button">
+            <button id="rule-whiteList-policyDetail_button_ruleDetail{{$index}}" class="btn btn-small btn-default">查看 <i
+              class="fa fa-chevron-circle-right icon-right"></i></button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-lg" id="whitelist-undeployed-panel">
+  <div class="panel-header">
+    <h5 class="panel-header-title">规则编辑区</h5>
+  </div>
+  <div class="panel-body undeployed-policy-panel">
+    <div class="row">
+      <div class="col-xs-2 input-group-left margin-bottom-default" id="rule-white-newpolicy">
+        <button id="rule-whiteList-policyManagement_button_createRules" class="btn btn-default"
+                ng-click="policies.createPolicy()" setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED">
+          <i class="fa fa-file-o fa-plus-overlay fa-after-lime icon-left"></i>新增规则
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 input-group-left">
+        <table id="whitelist_policy_management_edit_policy_table" class="table table-hover icon-hidden">
+          <thead>
+          <tr>
+            <th><span>规则名称</span></th>
+            <th><span>规则数量</span></th>
+            <th><span>上次编辑人员</span></th>
+            <th><span>上次更新</span></th>
+            <th><span>&nbsp;&nbsp;</span></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr id="whitelist_policy_management_edit_policy_table_row_{{$index}}" data-index="0"
+              ng-repeat="policy in policies.table | filter:{inUse: false} | orderBy:'-updatedAt'">
+            <td>{{policy.name}}</td>
+            <td>{{policy['_blocksCount']}}&nbsp;({{policy['_rulesCount'] + policy['_signaturesCount']}}规则项)</td>
+            <td>{{policy.updatedBy}}</td>
+            <td>{{policy.updatedAt | date: 'yyyy-MM-dd'}}</td>
+            <td>
+              <a ng-click="policies.viewDetail(policy.policyId)">
+                <button id="rule-whiteList-policyManagement_button_ruleDetail{{$index}}"
+                        class="btn btn-small btn-default">查看 <i class="fa fa-chevron-circle-right icon-right"></i>
+                </button>
+              </a>
+              <a ng-click="policies.deletePolicy(policy.policyId)">
+                <button id="rule-whiteList-policyManagement_button_ruleDelete{{$index}}"
+                        class="btn btn-small btn-default" setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED">删除 <i class="fa fa-chevron-circle-right icon-right"></i>
+                </button>
+              </a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,374 @@
+@import "../plugins/bootstrap-3.3.0/mixins.less";
+
+// SHARE BUTTON AND INPUT STYLES
+.btn,
+input {
+  font-size: 12px;
+}
+
+// INPUT STYLES
+input,
+input:active {
+  outline: none;
+}
+
+//
+.input-3-letter {
+  width: 40px;
+}
+
+// SMALL INPUT SIZE
+.input-sm {
+  width: 50%;
+}
+
+.input-md {
+  width: 75%;
+}
+
+.input-wide {
+  width: 400px;
+}
+
+.input-ty {
+  width: 50px;
+}
+
+.input-text {
+
+}
+
+input[type=text],
+input[type=date],
+input[type=time],
+input[type=password],
+input[type=number],
+textarea {
+  background-color: @white;
+  color: @color-font-content;
+  padding: 8px 10px;
+  border: 1px solid @border-gray-new;
+  border-radius: @border-radius-base;
+  line-height: 17px;
+  outline: none;
+  box-shadow: none;
+  max-width: 100%;
+  &:focus {
+    border: 2px solid @primary;
+    color: @txt-white-gray;
+  }
+}
+
+input[type="file"] {
+  opacity: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+&[disabled],
+&[readonly],
+fieldset[disabled] & {
+  box-shadow: none !important;
+}
+
+.textarea-full-width {
+  width: 100%;
+  resize: vertical;
+}
+
+// SELECT INPUTS
+select:disabled{
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.select-default {
+  background: @gray80;
+  #gradient > .vertical(#282c37, #1e2128);
+  height: 30px;
+  width: 250px;
+  outline: 0;
+}
+
+.select-styled {
+  color: @color-font;
+  width: 100%;
+  min-height: 34px;
+  overflow: hidden;
+  border: 1px solid @black;
+  position: relative;
+  #gradient > .vertical(#282c37, #1e2128);
+
+  option {
+    background-color: #282c37;
+    #gradient > .vertical(#282c37, #1e2128);
+  }
+
+  &:after {
+    font-family: FontAwesome;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    margin-top: -10px;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 1em;
+    content: "\f0d7";
+    pointer-events: none;
+  }
+
+  select {
+    background: transparent;
+    background-color: @gray80;
+    #gradient > .vertical(#282c37, #1e2128);
+    width: 100%;
+    line-height: 2em;
+    min-height: inherit;
+    border: 0;
+    border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 0.05px;
+    text-overflow: '';
+    padding-right: 45px;
+    padding-left: 10px;
+    color: @color-font;
+  }
+
+  &.input-stacked {
+    .input-stacked-wrap {
+      #gradient > .vertical(#282c37, #1e2128);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: calc(~'100% - 35px');
+      height: 100%;
+      padding-left: 3px;
+      input {
+        border: 0;
+        box-shadow: none;
+        background-color: transparent;
+      }
+    }
+  }
+
+  // Custom styling for event/log report
+  &.select-styled-report {
+    width: auto;
+    min-height: 30px;
+  }
+}
+
+.input-group {
+  input {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .btn {
+    margin-top: -3px;
+    height: 32px;
+  }
+}
+
+textarea {
+  resize: vertical;
+}
+
+.custom-checkbox-wrap {
+  label&{
+    cursor: pointer;
+    &.disabled{
+      cursor: not-allowed;
+    }
+  }
+  > *{
+    vertical-align: middle;
+  }
+  [type="checkbox"]:not(:checked),
+  [type="checkbox"]:checked {
+    position: absolute;
+    visibility: hidden;
+  }
+  [type="checkbox"]:not(:checked) + label,
+  [type="checkbox"]:checked + label {
+    display: inline-block;
+    position: relative;
+    height: 14px;
+    padding-left: 14px;
+    cursor: pointer;
+    margin-right: 6px;
+    margin-bottom: 0;
+  }
+
+  /* checkbox aspect */
+  [type="checkbox"]:not(:checked) + label:before,
+  [type="checkbox"]:checked + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #aaa;
+    background: #ccc;
+    border-radius: 2px;
+  }
+  [type="checkbox"].tri-state-indeterminate + label:before{
+
+  }
+  /* checked mark aspect */
+  [type="checkbox"]:not(:checked) + label:after,
+  [type="checkbox"]:checked + label:after {
+    font-family: 'FontAwesome';
+    width: 14px;
+    height: 14px;
+    line-height: 14px;
+    vertical-align: middle;
+    text-align: center;
+    content: '\f00c';
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    font-size: 12px;
+    color: #fff;
+    background: #01aef0;
+    border-radius: 2px;
+    transition: all 0.3s ease 0s;
+  }
+  /* checked mark aspect changes */
+  [type="checkbox"]:not(:checked) + label:after {
+    opacity: 0;
+    transform: scale(0);
+  }
+  [type="checkbox"]:checked + label:after {
+    opacity: 1;
+    transform: scale(1);
+  }
+  [type="checkbox"].tri-state-indeterminate + label:after{
+    font-size: 0;
+    opacity: 1;
+    transform: scale(1);
+    background: #01aef0;
+    border: 1px solid #fff;
+  }
+  /* disabled checkbox */
+  [type="checkbox"]:disabled:not(:checked) + label:before,
+  [type="checkbox"]:disabled:checked + label:before {
+  }
+  [type="checkbox"]:disabled:checked + label:after {
+  }
+  [type="checkbox"]:disabled + label {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  /* accessibility */
+  [type="checkbox"]:checked:focus + label:before,
+  [type="checkbox"]:not(:checked):focus + label:before {
+  }
+
+  /* hover style just for information */
+  label:hover:before {
+  }
+}
+
+.custom-radio-wrap {
+  label&{
+    cursor: pointer;
+    &.disabled{
+      cursor: not-allowed;
+    }
+  }
+  > *{
+    vertical-align: middle;
+  }
+  [type="radio"]:not(:checked),
+  [type="radio"]:checked {
+    position: absolute;
+    visibility: hidden;
+  }
+  [type="radio"]:not(:checked) + label,
+  [type="radio"]:checked + label {
+    display: inline-block;
+    position: relative;
+    height: 16px;
+    padding-left: 16px;
+    margin-right: 6px;
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+
+  /* radio aspect */
+  [type="radio"]:not(:checked) + label:before,
+  [type="radio"]:checked + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #aaa;
+    background: #fff;
+    .box-shadow(1px 1px 8px -6px #000 inset);
+    transition: all 0.3s ease 0s;
+  }
+  [type="radio"]:not(:checked) + label:hover:before,
+  [type="radio"]:checked + label:hover:before {
+    .box-shadow(1px 1px 6px -2px #000 inset);
+  }
+  /* checked mark aspect */
+  [type="radio"]:not(:checked) + label:after,
+  [type="radio"]:checked + label:after {
+    content: '';
+    display: block;
+    margin: -4px 0 0 -4px;
+    width: 8px;
+    height: 8px;
+    line-height: 16px;
+    vertical-align: middle;
+    text-align: center;
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: #01aef0;
+    border-radius: 50%;
+    transition: all 0.3s ease 0s;
+    .box-shadow(0px 0px 4px -2px #000 inset);
+  }
+  /* checked mark aspect changes */
+  [type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    transform: scale(0);
+  }
+  [type="radio"]:checked + label:after {
+    opacity: 1;
+    transform: scale(1);
+  }
+  /* disabled radio */
+  [type="radio"]:disabled:not(:checked) + label:before,
+  [type="radio"]:disabled:checked + label:before {
+  }
+  [type="radio"]:disabled:checked + label:after {
+  }
+  [type="radio"]:disabled + label {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  /* accessibility */
+  [type="radio"]:checked:focus + label:before,
+  [type="radio"]:not(:checked):focus + label:before {
+  }
+
+  /* hover style just for information */
+  label:hover:before {
+  }
+}
+

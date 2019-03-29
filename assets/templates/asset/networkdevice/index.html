@@ -1,0 +1,16 @@
+<div class="panel panel-lg">
+  <div class="panel-header panel-header-border">
+    <h5 class="panel-header-title">网络设备</h5>
+  </div>
+  <div class="panel-body">
+    <div class="pull-right margin-bottom-default">
+      <a class="btn btn-default" ui-sref="asset.networkdevice.new" ng-if="networkdevice.editRight"><i
+        class="fa fa-plus text-lime icon-left"></i>新建设备</a>
+    </div>
+
+    <div class="clearfix"></div>
+    <dtable>
+      <network-device-table></network-device-table>
+    </dtable>
+  </div>
+</div>

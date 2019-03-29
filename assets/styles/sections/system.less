@@ -1,0 +1,674 @@
+.page-setting-basic, .page-setting-backup{
+  font-size: 13px;
+  color: #999999;
+
+  .input-label {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    select {
+      width: 100%;
+    }
+    > *{
+      display: table-cell;
+      vertical-align: middle;
+    }
+    > span:nth-child(1){
+    }
+
+  }
+  .input-alert-error{
+    margin-top: 6px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .panel {
+    margin-bottom: 30px;
+    .panel-header {
+      font-size: 16px;
+      padding: 0;
+      height: 40px;
+      span, h3{
+        line-height: 40px;
+        color: #414457;
+      }
+      > * {
+        vertical-align: middle;
+      }
+      i.fa-info-circle {
+        line-height: 40px;
+        margin-left: 6px;
+        vertical-align: middle;
+        font-size: 14px;
+      }
+      button.btn{
+        margin-top: 4px;
+      }
+    }
+    .panel-body {
+      .row {
+        > div {
+          margin: 10px 0px 15px 0px;
+          vertical-align: middle;
+        }
+      }
+      .form-group-title{
+        font-size: 14px;
+        color: #414457;
+      }
+      /*i {
+        font-size: 14px;
+      }
+      i.read-only-mode {
+        padding: 1px 3px;
+      }
+      div.select.read-only-mode {
+        padding: 10px 15px;
+      }
+      span.sysconsole-dropdown-label {
+        line-height: 37px;
+      }*/
+    }
+  }
+
+}
+.system-status {
+  width: 18px;
+  height: 18px;
+}
+
+.system-config-page {
+  font-size: 12px;
+  color: #999999;
+  .panel-header {
+    i.fa-info-circle {
+      font-size: 14px;
+    }
+  }
+  .panel-body {
+    .row {
+      > div {
+        margin: 10px 0px 15px 0px;
+      }
+    }
+    i {
+      font-size: 14px;
+    }
+    i.read-only-mode {
+      padding: 1px 3px;
+    }
+    div.select.read-only-mode {
+      padding: 10px 15px;
+    }
+    span.sysconsole-dropdown-label {
+      line-height: 37px;
+    }
+  }
+}
+
+.row-setting-margin {
+  margin: 5px 0px 5px 0px !important;
+}
+
+.label-setting-lime-border {
+
+  input {
+    display: none;
+  }
+
+  span {
+    border: 1px @gray solid;
+    padding: 5px 8px;
+    margin: 0px 5px;
+    border-radius: 2px;
+  }
+
+  input[type="radio"]:checked + span {
+    border: 1px @lime solid;
+    background: #232323;
+    color: @lime;
+  }
+}
+
+.label-setting-no-border {
+  span {
+    // border: 1px @gray solid;
+
+  }
+  // margin-left: 10px;
+  padding: 5px 5px 5px 5px;
+}
+
+.span-setting-height {
+  height: 32px;
+}
+
+.line-setting-margin {
+  margin-bottom: 0px;
+}
+
+.remoteIp-panel {
+  background: @gray90;
+  border: 1px black solid;
+  margin: 0px;
+}
+
+.remoteIp {
+  font-size: 12px;
+  padding: 10px;
+  display: inline;
+  overflow: auto;
+  .remoteIp-editView, .remoteIp-showView {
+    overflow: auto;
+  }
+  .remoteIp-landingPage {
+    width: 100%;
+    padding: 100px;
+    text-align: center;
+    .remoteIp-landingPage-add {
+      height: 40px;
+      width: 200px;
+    }
+    .remoteIp-landingPage-title {
+      font-size: 20px;
+      padding: 10px;
+    }
+  }
+  .remoteIp-item {
+    padding: 10px;
+    padding-left: 30px;
+    margin: 10px;
+    line-height: 25px;
+    max-width: 45%;
+    min-width: 45%;
+    min-height: 50px;
+  }
+  .remoteIp-input {
+    font-size: 12px;
+    width: 135px;
+    background: @gray75;
+    margin-top: -5px;
+    &:focus {
+      border: 2px solid @lime-lighter;
+      color: @gray40;
+
+      &:before {
+        color: @gray40;
+      }
+    }
+    &.input-error {
+      border-color: @red;
+    }
+  }
+  .remoteIp-input-name {
+    width: 140px;
+  }
+  .remoteIp-err {
+    padding-left: 0;
+    display: inline;
+  }
+  .remoteIp-err-name {
+    padding-left: 40px;
+    display: inline;
+  }
+  .remoteIp-right {
+    padding-left: 10px;
+    color: #76B900;
+    display: inline;
+  }
+  .remoteIp-add {
+    padding-left: 15px;
+  }
+  .remoteIp-remove {
+    left: 470px;
+    position: absolute;
+    display: inline;
+  }
+  .remoteIp-icon-green {
+    padding: 5px;
+    color: #76B900;
+  }
+  .remoteIp-item-label, .remoteIp-item-ip, .remoteIp-item-name {
+    display: inline;
+    position: absolute;
+  }
+  .remoteIp-item-label {
+    left: 50px;
+  }
+  .remoteIp-item-ip {
+    left: 145px;
+    color: @gray20;
+  }
+  .remoteIp-item-name {
+    left: 285px;
+  }
+
+}
+
+.system-upgrade {
+  .error {
+    border: 2px solid #994A2B;
+  }
+  .warning {
+    border: 2px solid #FF9900;
+  }
+  .warning-icon {
+    color: #FF9900;
+    font-size: 20px !important;
+    margin-right: 10px;
+  }
+  .correct {
+    border: 2px solid #577425;
+  }
+  .system-upgrade-top-note {
+    background-color: @gray80;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+  .system-upgrade-main {
+    .title {
+      font-size: 14px;
+    }
+    .content {
+      margin-bottom: 20px;
+      margin-left: 10px;
+    }
+    .upload-progress {
+      max-width: 360px;
+      display: inline;
+    }
+    img.upgrade-logo {
+      width: 300px;
+    }
+    .upload-error {
+      margin-left: 10px;
+      color: #CCCCCC;
+    }
+  }
+}
+
+.upgrade-modal-backdrop {
+
+}
+
+.upgrade-modal-window {
+  .modal-dialog {
+    width: 450px;
+    left: 50%;
+    top: 50%;
+    // important required to overwrite some translations that are
+    // messing with this modal's v+h centering. It will only
+    // affect the upgrade-modal-window's modal-dialog.
+    transform: translate(-50%, -50%) !important;
+    .modal-container {
+      padding: 10px;
+    }
+  }
+}
+
+.upgrade-progress-modal-window {
+  pointer-events: none;
+  .modal-dialog {
+    width: 450px;
+    left: 50%;
+    top: 50%;
+    // important required to overwrite some translations that are
+    // messing with this modal's v+h centering. It will only
+    // affect the upgrade-modal-window's modal-dialog.
+    transform: translate(-50%, -50%) !important;
+    .modal-container {
+      padding: 10px;
+    }
+  }
+}
+
+.log-delete-select {
+  width: 100px;
+  option {
+    width: 100px;
+  }
+}
+
+main.page-setting-systemconsole {
+  .panel-title {
+    margin: 0 20px;
+    border-bottom: 2px solid #555;
+    margin-bottom: 8px;
+  }
+  .ip-config-panel {
+    .panel-body {
+      min-height: 85px;
+    }
+  }
+  .security-config-panel {
+    .panel-body {
+      min-height: 218px;
+      .fixed-height-row {
+        height: 60px;
+      }
+      .move-left {
+        margin-left: 14px;
+      }
+    }
+  }
+  .storage-config-panel {
+    .panel-body {
+      min-height: 150px;
+      .content-text {
+        display: inline-block;
+        margin-top: 10px;
+      }
+    }
+  }
+  .log-reset-config-panel {
+    .panel-body {
+      min-height: 150px;
+    }
+    div.select-styled {
+      width: 137px;
+    }
+  }
+  .incedent-inform-config {
+    .panel-body {
+      .select-input {
+        max-width: 175px;
+      }
+    }
+  }
+  #setting-systemconsole_text_ipAddress {
+    width: 110px;
+  }
+  #system-protocol-setting-panel {
+    .toggle-container {
+      label.on {
+        margin: 0;
+      }
+    }
+    .protocol-table-table {
+      .transport-layer {
+        .select-styled {
+          width: 100px;
+        }
+      }
+      .protocol-switch {
+        padding-top: 8px;
+      }
+    }
+    #custom-protocol-header {
+      margin: 0;
+    }
+  }
+  #setting-systemconsole_text_iptrafficmanagement {
+    width: 50px;
+  }
+  #add-custom-protocol-button {
+    float: right;
+    i {
+      margin-right: 3px;
+    }
+  }
+  .custom-protocol-empty {
+    padding: 15px 0;
+    h4 {
+      text-align: center;
+      padding: 30px 0;
+    }
+  }
+  .no-padding {
+    padding: 0;
+  }
+}
+
+main.page-ntpsync-setting {
+  .panel-title {
+    margin: 0 20px;
+    border-bottom: 2px solid #555;
+    margin-bottom: 8px;
+  }
+}
+
+form[name="timeConf"] {
+  .date-picker {
+    margin-bottom: 10px;
+  }
+  .import-button {
+    padding: 0;
+  }
+  .row {
+    min-height: 48px;
+    &.ntp-row {
+      min-height: 73px;
+    }
+    input[type='radio'] {
+      // display:none;
+      &[disabled='disabled'] {
+        height: 12px;
+        width: 12px;
+        border-radius: 5px;
+        background-color: #555;
+        &.checked {
+          background-color: #ccc;
+          border: 3px solid #555;
+        }
+        -webkit-appearance: none;
+      }
+    }
+    #import_system_time {
+      margin-top: 5px;
+    }
+    .date-picker-input {
+      width: 90px;
+      min-width: 90px;
+    }
+    .time-picker-input {
+      width: 90px;
+    }
+    .system-time-input {
+      position: relative;
+      top: -5px;
+    }
+    .system-time-sync-option {
+      div {
+        display: inline-block;
+      }
+      .option-title {
+        position: absolute;
+        left: 30px;
+      }
+      .radio-button {
+        position: relative;
+        top: 2px;
+        input {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}
+
+.port-setting-container {
+  .port-setting-header {
+    overflow: hidden;
+    .buttons {
+      float: right;
+      .btn {
+        margin-left: 5px;
+      }
+    }
+  }
+  .port-setting-content {
+    background-color: #333333;
+    padding: 10px;
+    .row {
+      &.port-row {
+        min-height: 41px;
+      }
+      padding: 5px 0;
+      vertical-align: middle;
+      .port-label {
+        margin-top: 7px;
+      }
+      .checkbox-field {
+        margin-top: 7px;
+        .label-default {
+          margin-left: 13px;
+        }
+      }
+    }
+  }
+}
+
+.bootstrap-datetimepicker-widget {
+  z-index:9999;//solving picker is hided in modal problem.
+  .datepicker {
+    .datepicker-days {
+      td.day.new {
+        color: #888;
+      }
+    }
+  }
+}
+
+.error-page {
+  background-image: url("../images/placeholders/login_bg_u_98.jpg");
+  height: 1080px;
+  .error-page-canvas {
+    opacity: 0.8;
+    height: 1080px;
+    background: black;
+  }
+  .error-page-main {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    .error-page-logo {
+      height: 84px;
+    }
+    .error-container {
+      opacity: 1;
+      margin: 40px;
+      .panel-header {
+        color: @yellow;
+      }
+      .panel-body {
+        text-align: center;
+        padding: 20px;
+        font-size: 20px;
+      }
+      .error-icon {
+        font-size: 100px;
+        color: @yellow;
+      }
+      .error-content {
+        padding-top: 200px;
+        padding-bottom: 200px;
+      }
+    }
+  }
+}
+
+.configuration-backup-contariner {
+  .auto-backup-title {
+    position: absolute;
+    margin-top: @spacing-default;
+  }
+  .auto-backup-toggle {
+    position: relative;
+    left: 0px;
+    margin-top: @spacing-default;
+  }
+  p {
+    position: relative;
+    margin-top: @spacing-default;
+    float: left;
+  }
+  .top-bar-height-default {
+    height: @topbar-height;
+  }
+}
+
+.table-heading-remark {
+  padding-top: 20px;
+}
+
+.margin-left-20 {
+  margin-left: 20px;
+}
+
+.span-vertical-center {
+  position: absolute;
+  top: 0.2rem;
+  left: 12rem;
+}
+
+#setting-systemconsole_li_systemUpgrade_browse {
+  position: relative;
+}
+
+.text-content-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#audit-setting-panel {
+  .toggle-container {
+    label.on {
+      margin: 0;
+    }
+  }
+  .audit-setting-table {
+    .transport-layer {
+      .select-styled {
+        width: 100px;
+      }
+    }
+    .audit-switch {
+      padding-top: 8px;
+    }
+  }
+  .default-audit-empty {
+    padding: 15px;
+    h4 {
+      text-align: center;
+      padding: 30px 0;
+    }
+    button {
+
+    }
+  }
+  .warning {
+    border: 2px solid #FF9900;
+  }
+  .audit-top-note {
+    background-color: @gray80;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+  #audit-table-header {
+    margin: 0;
+  }
+}
+
+#add-audit-button {
+  float: right;
+  i {
+    margin-right: 3px;
+  }
+}
+
+#add-custom-protocol-button {
+  float: right;
+  i {
+    margin-right: 3px;
+  }
+}
+
+.page-setting-usercontrol .systemuser-header .btn-group {
+  margin-top: -5px;
+}

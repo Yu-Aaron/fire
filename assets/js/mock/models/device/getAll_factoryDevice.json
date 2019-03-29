@@ -1,0 +1,159 @@
+[
+    {
+        "deviceId": "067a29a5-08a2-4310-b837-84e089f44478",
+        "topologyId": "999c3f9c-d209-417b-9694-62e464534b0f",
+        "modelId": "8bbfa4a4-40bb-4184-a345-891d997ee79f",
+        "name": "Client VM(Linux)",
+        "_zoneNames": [
+            "HMI"
+        ],
+        "portsNumber": 0,
+        "_configMismatch": true,
+        "protectedDevicesNumber": 0,
+        "devicePorts": [
+            {
+                "portName": "p0",
+                "deployedRulesNumber": 0,
+                "protectedDevicesNumber": 0,
+                "linkState": 0,
+                "isMgmtPort": true,
+                "portId": "1d569d5a-ff08-4aab-8554-34ec2584e7b1",
+                "portIp": "192.168.3.101",
+                "mac": "08:00:27:6f:50:98",
+                "deviceId": "067a29a5-08a2-4310-b837-84e089f44478",
+                "status": 0,
+                "_subnets": []
+            }
+        ],
+        "category": "FACTORY_DEVICE",
+        "knownVulnerabilitiesNumber": 0,
+        "protectedVulnerabilitiesNumber": 0,
+        "hasUSB": true,
+        "hasWireless": true,
+        "hasPort": true,
+        "cmmnPortnumber": 0,
+        "isProtected": false,
+        "make": "",
+        "blocksRef": {
+            "baseUrl": "/policies/topology/999c3f9c-d209-417b-9694-62e464534b0f/device/067a29a5-08a2-4310-b837-84e089f44478/blocks",
+            "type": "policyblock"
+        },
+        "iconType": "hmi",
+        "hidden": 0,
+        "deviceOnline": 0,
+        "updatedAt": "2015-11-27T22:35:58Z",
+        "createdAt": "2015-11-27T22:35:58Z",
+        "_remoteRoutings": [],
+        "selected": 0,
+        "_subCategory": "NORMAL",
+        "deviceSource": "UPLOAD",
+        "_model_name": "OPCandS7 / OPCandS7",
+        "_ipmac": 0,
+        "_ipmacStatus": 0
+    },
+    {
+        "deviceId": "24776ca8-bce0-4838-829c-caf2603d3bd8",
+        "topologyId": "999c3f9c-d209-417b-9694-62e464534b0f",
+        "modelId": "88e82b2d-6f7f-4829-8e7a-b4f86faebc97",
+        "name": "Client VM(Windows)",
+        "modelIdentifier": "V1000",
+        "_zoneNames": [
+            "OPC"
+        ],
+        "portsNumber": 0,
+        "_configMismatch": true,
+        "protectedDevicesNumber": 0,
+        "devicePorts": [
+            {
+                "portName": "mgmtPort",
+                "deployedRulesNumber": 0,
+                "protectedDevicesNumber": 0,
+                "linkState": 0,
+                "isMgmtPort": true,
+                "portId": "a7d8dcc1-6096-4d7b-913e-9e2d6fd5d714",
+                "portIp": "192.168.3.102",
+                "deviceId": "24776ca8-bce0-4838-829c-caf2603d3bd8",
+                "status": 0,
+                "_subnets": []
+            }
+        ],
+        "category": "FACTORY_DEVICE",
+        "knownVulnerabilitiesNumber": 0,
+        "protectedVulnerabilitiesNumber": 0,
+        "hasUSB": true,
+        "hasWireless": true,
+        "hasPort": true,
+        "cmmnPortnumber": 0,
+        "isProtected": false,
+        "make": "",
+        "blocksRef": {
+            "baseUrl": "/policies/topology/999c3f9c-d209-417b-9694-62e464534b0f/device/24776ca8-bce0-4838-829c-caf2603d3bd8/blocks",
+            "type": "policyblock"
+        },
+        "iconType": "opc_client",
+        "hidden": 0,
+        "deviceOnline": 0,
+        "updatedAt": "2015-11-27T22:35:58Z",
+        "createdAt": "2015-11-27T22:35:58Z",
+        "_remoteRoutings": [],
+        "selected": 0,
+        "_subCategory": "NORMAL",
+        "deviceSource": "UPLOAD",
+        "_model_name": "N/A / N/A",
+        "_ipmac": 0,
+        "_ipmacStatus": 0
+    },
+    {
+        "deviceId": "a0d57ca7-21df-4c03-937e-ccedbf48f78f",
+        "topologyId": "999c3f9c-d209-417b-9694-62e464534b0f",
+        "modelId": "eaa2ac55-ad56-427a-b169-86a7823f800a",
+        "name": "Server VW(Windows)",
+        "modelIdentifier": "V1000",
+        "_zoneNames": [
+            "Server(OPC)"
+        ],
+        "portsNumber": 0,
+        "_configMismatch": true,
+        "protectedDevicesNumber": 0,
+        "devicePorts": [
+            {
+                "portName": "p0",
+                "deployedRulesNumber": 0,
+                "protectedDevicesNumber": 0,
+                "linkState": 0,
+                "isMgmtPort": true,
+                "portId": "349aa162-9bb1-4940-a1cd-06bb8886b64e",
+                "portIp": "192.168.3.201",
+                "mac": "08:00:27:76:c7:b3",
+                "deviceId": "a0d57ca7-21df-4c03-937e-ccedbf48f78f",
+                "status": 0,
+                "_subnets": []
+            }
+        ],
+        "category": "FACTORY_DEVICE",
+        "knownVulnerabilitiesNumber": 0,
+        "protectedVulnerabilitiesNumber": 0,
+        "hasUSB": false,
+        "hasWireless": false,
+        "hasPort": true,
+        "cmmnPortnumber": 0,
+        "isProtected": false,
+        "make": "",
+        "blocksRef": {
+            "baseUrl": "/policies/topology/999c3f9c-d209-417b-9694-62e464534b0f/device/a0d57ca7-21df-4c03-937e-ccedbf48f78f/blocks",
+            "type": "policyblock"
+        },
+        "iconType": "opc_server",
+        "hidden": 0,
+        "deviceOnline": 0,
+        "updatedAt": "2015-11-27T22:35:58Z",
+        "createdAt": "2015-11-27T22:35:58Z",
+        "_remoteRoutings": [],
+        "selected": 0,
+        "_subCategory": "NORMAL",
+        "deviceSource": "UPLOAD",
+        "_model_name": "S7 / S7",
+        "_ipmac": 0,
+        "_ipmacStatus": 0
+    }
+]

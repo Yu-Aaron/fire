@@ -1,0 +1,40 @@
+<!--<form name="intervalForm">-->
+  <!--<div class="row">-->
+    <!--<div class="col-xs-12 text-center">-->
+      <span>为期</span>
+      <input id="learningInterval_text_days" class="input-ty" type="text"
+             maxlength="5"
+             name="days"
+             ng-model="learningCtrl.interval.days"
+             ng-change="learningCtrl.changeInterval()"
+             ng-blur="learningCtrl.calculateValues()"
+             style="width: 64px"
+             required>
+      <span class="learning-time-unit">天</span>
+
+      <input id="learningInterval_text_hours" class="input-ty" type="text"
+             maxlength="2"
+             name="hours"
+             ng-model="learningCtrl.interval.hours"
+             ng-change="learningCtrl.changeInterval()"
+             ng-blur="learningCtrl.calculateValues()"
+             required>
+      <span class="learning-time-unit">时</span>
+
+      <input id="learningInterval_text_minutes" class="input-ty" type="text"
+             maxlength="4"
+             name="minutes"
+             ng-model="learningCtrl.interval.minutes"
+             ng-change="learningCtrl.changeInterval()"
+             ng-blur="learningCtrl.calculateValues()"
+             required>
+      <span class="learning-time-unit">分</span><br/><br/>
+      <div class="col-xs-12">
+        <span class="error" id="learningInterval_error_container"
+              ng-show="learningCtrl.intervalError && !learningCtrl.setInterval && learningCtrl.intervalErrorMessage"><i
+          class="fa fa-warning text-red"> </i> {{learningCtrl.intervalErrorMessage}}</span>
+      </div>
+    <!--</div>-->
+  <!--</div>-->
+<!--</form>-->
+

@@ -1,0 +1,42 @@
+<div>
+  <div>
+    <div class="btn-flash-wrapper" style="vertical-align:top; margin-left:10px">
+      <!-- <div class="btn-flash" ng-class="{'flashing-green-faster': shouldFlash}"></div> -->
+      <button id="todolist_refresh_btn" type="button" class="btn btn-default"
+              ng-click="dtable.refresh(); shouldFlash=false"><i class="fa fa-refresh text-lime icon-left"></i>刷新
+      </button>
+    </div>
+  </div>
+  <br/>
+  <table class="table table-hover icon-hidden" id="todolist_table">
+    <thead>
+    <tr>
+      <th class="table-col-xsm">
+        <span>&nbsp;</span>
+      </th>
+      <th order-by="createdAt">日期</th>
+      <th order-by="content">内容</th>
+      <th class="table-col-xsm">
+        <span>&nbsp;</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="todo in dtable.table" class="todolist-item" ng-class="{'new': todo.todoListStatus == 'PENDING'}">
+      <td class="text-light-blue" style="width: 60px;"><span ng-if="todo.todoListStatus==='PENDING'"><i
+        class="fa fa-circle"></i> 未读</span></td>
+      <td class="table-col-datetime">{{todo.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+      <td class="row">
+        <span>{{todo.content}}</span>
+      </td>
+      <td class="row tolist-table-btn-container">
+        <button id="todoItem_btn_view_{{$index}}" class="btn btn-default margin-right-default"
+                ng-click="viewDetail(todo)">查看 <i class="fa fa-chevron-circle-right icon-right"></i></button>
+        <button id="todoItem_btn_decline_{{$index}}" class="btn btn-default" ng-click="updateTodoItem(todo, 'DECLINED')"
+                ng-if="todo.todoListStatus==='PENDING'||todo.todoListStatus==='READ'"> 忽略
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

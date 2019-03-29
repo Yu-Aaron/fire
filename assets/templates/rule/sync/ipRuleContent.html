@@ -1,0 +1,68 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">规则内容</h3>
+  <a id="rule_sync_ip_detail_previewCancel" class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body" id="rule_sync_ip_detail_modal">
+  <div class="bg-gray-80">
+    <div class="rules-info">
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="row">
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">规则类型</h6>
+                <span>网络白名单</span>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">起源IP</h6>
+                <span>{{rule.sourceZoneName}}</span>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">目标IP</h6>
+                <span>{{rule.destinationZoneName}}</span>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">协议名称</h6>
+                <span>{{getProtocolType(rule, 'ip_rule')}}</span>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">起源端口</h6>
+                <span>{{getSourcePort(rule)}}</span>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">目标端口</h6>
+                <span>{{getDestinationPort(rule)}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="row">
+            <div class="col-xs-6 no-padding">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">处理方式</h6>
+                <div>{{rule.action | actionName}}</div>
+              </div>
+            </div>
+            <div class="col-xs-6 no-padding">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">风险等级</h6>
+                <div>{{rule.riskLevel | riskLevel}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

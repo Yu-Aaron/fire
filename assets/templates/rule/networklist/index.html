@@ -1,0 +1,69 @@
+<div class="tab-container" ng-controller="TabCtrl as tab">
+  <ul class="nav nav-tabs nav-tabs-inverted nav-tabs-lg nav-tabs-lime" ng-init="tab.activatePanel(networkListCtrl.tab)">
+    <li id="rule-networklist_li_deployedPanel" ng-class="{ active: tab.isActive('deployedPanel')}"
+        ng-show="networkListCtrl.hasDeployedPolicy"><a ui-sref="rule.networklist({'tab':'deployedPanel'})"><i
+      class="fa fa-wrench nav-tab-icon"></i><span class="nav-tab-title">已部署规则</span><span
+      ng-if="networkListCtrl.deployedPanelCount"
+      class="badge nav-tab-badge">{{networkListCtrl.deployedPanelCount}}</span></a></li>
+    <li id="rule-networklist_li_networklist_li_policyManagement" ng-class="{ active: tab.isActive('policyManagement')}">
+      <a ui-sref="rule.networklist({'tab':'policyManagement'})"><i class="fa fa-file-text-o nav-tab-icon"></i><span
+        class="nav-tab-title">规则管理</span><span ng-if="networkListCtrl.policyManagementCount"
+                                               class="badge nav-tab-badge">{{networkListCtrl.policyManagementCount}}</span></a>
+    </li>
+  </ul>
+  <!-- <div>
+    <span ng-if="signature.currentTopoId==null">当前没有使用的拓扑</span>
+    <span ng-if="signature.currentTopoId!=null">当前使用的拓扑ID：{{signature.currentTopoId}}</span>
+  </div> -->
+
+  <div ng-switch on="tab.active" class="tab-container-body">
+
+    <!-- 已部署规则 -->
+    <div ng-switch-when="deployedPanel" class="signature-editor-panel">
+      <div ng-if="networkListCtrl.canEdit">
+        <div ng-if="networkListCtrl.showDash!=null && networkListCtrl.showDash"
+             class="btn-group-column-wrapper text-center">
+          <h4 class="whitelist-title">当前没有已部署规则，请前往规则库，部署适用于您网络的安全规则</h4><br/>
+          <div class="btn-group btn-group-column" role="group" aria-label="...">
+            <button id="rule-networklist_button_signatures" privilege disable="self"
+                    class="btn-group-column-button bottom-btn"
+                    ng-click="tab.activateTab('learning'); networkListCtrl.createPolicy('learning')">前往规则库
+            </button>
+          </div>
+          <!--
+          <div class="btn-group btn-group-column" role="group" aria-label="...">
+            <div class="btn-group-column-label"><div class="btn-group-column-label-small">来源</div> <span class="btn-group-column-label-number">2</span></div>
+              <button privilege disable="self" class="btn-group-column-button" ng-click="tab.activateTab('signatures'); signature.createPolicy('signatures')">通过设备漏洞库创建规则</button>
+          </div>
+          <div class="btn-group btn-group-column" role="group" aria-label="...">
+            <div class="btn-group-column-label"><div class="btn-group-column-label-small">来源</div> <span class="btn-group-column-label-number">3</span></div>
+              <button privilege disable="self" class="btn-group-column-button" ng-click="tab.activateTab('templates'); signature.createPolicy('templates')">通过规则模版创建规则</button>
+          </div>
+          <div class="btn-group btn-group-column" role="group" aria-label="...">
+            <div class="btn-group-column-label"><div class="btn-group-column-label-small">来源</div> <span class="btn-group-column-label-number">4</span></div>
+              <button privilege disable="self" class="btn-group-column-button" ng-click="tab.activateTab('customs'); signature.createPolicy('customs')">自定义创建规则</button>
+          </div>-->
+        </div>
+      </div>
+      <div ng-if="!networkListCtrl.canEdit">
+        <div ng-if="networkListCtrl.showDash!=null && networkListCtrl.showDash"
+             class="btn-group-column-wrapper text-center">
+          <h4>当前没有已部署规则</h4>
+        </div>
+      </div>
+
+      <div ng-if="networkListCtrl.showDash!=null && !networkListCtrl.showDash">
+        <div>
+          <deployed-table></deployed-table>
+        </div>
+      </div>
+    </div>
+
+    <div ng-switch-when="policyManagement">
+      <!-- 规则管理 -->
+      <div>
+        <policy-management-table></policy-management-table>
+      </div>
+    </div>
+  </div>
+</div>

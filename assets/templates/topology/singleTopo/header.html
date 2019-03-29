@@ -1,0 +1,98 @@
+<div ng-hide="noTopo" class="view-control topo-toolbar">
+  <div class="topo-header">
+    <div class="row">
+      <div class="col-xs-4">
+        <!--Added as for CS-3224 should be removed once full functionality implemented -->
+        <div privilege class="margin-left-default dropdown display-inline-block" dropdown>
+          <button type="button" class="btn btn-default" ng-hide="topologyHasNode||$root.MW_SETTING==='remote'"
+                  ng-if="topoCtrl.isDefaultRole || topoCtrl.hasAllDeviceCtrl">
+             <span>
+                <i class="fa fa-cloud-upload text-lime icon-left"></i>
+                <input id="topology-singleTopo_file_topologySelector" type="file" name="topologySelector" nv-file-select
+                       uploader="uploader" ng-disabled="isDPIUpgrading">上传网络拓扑</input>
+              </span>
+          </button>
+          <button id="topology-singleTopo_button_uploadTopologyModal" type="button" class="btn btn-default"
+                  ng-click="(topoCtrl.EditMode)?topoCtrl.EnterEdit(true):angular.noop();topoCtrl.uploadTopologyModal()"
+                  ng-show="topologyHasNode&&$root.MW_SETTING!=='remote'" ng-disabled="isDPIUpgrading"
+                  ng-if="topoCtrl.isDefaultRole || topoCtrl.hasAllDeviceCtrl">
+             <span>
+                <i class="fa fa-cloud-upload text-lime icon-left"></i>
+                上传网络拓扑 <span ng-if="isDPIUpgrading" class="warning">&nbsp; (DPI设备升级中，无法上传拓扑图)</span>
+              </span>
+          </button>
+        </div>
+        <div privilege class="margin-left-default dropdown display-inline-block" dropdown>
+          <button id="topology-singleTopo_button_downloadTopo" type="button" class="btn btn-default"
+                  ng-show="topologyHasNode" ng-disabled="hasPalette" ng-click="downloadModal()"><i
+            class="fa fa-download icon-left"></i>下载
+          </button>
+        </div>
+      </div>
+      <div class="col-xs-8 text-right pull-right">
+        <div class="margin-right-default display-inline-block btn-group" dropdown ng-show="topoCtrl.invalid">
+          <button id="topology-singleTopo_button_unable_to_edit" dropdown-toggle type="button dropdown-toggle"
+                  class="btn btn-default" ng-href='#here' title="需要修改设备">
+            <i class="fa fa-exclamation-circle icon-left text-red"></i>
+            <span class="margin-right-default">{{topoCtrl.invalidDeviceList.length}} 个设备需要修改</span><span
+            class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right">
+            <li ng-repeat="invalidDevice in topoCtrl.invalidDeviceList"
+                ng-click="topoCtrl.selectedInvalidDevice=invalidDevice;selectInvalidDevice(topoCtrl.selectedInvalidDevice)">
+              <a href="#"><i class="fa  fa-mail-forward icon-left"></i><span>{{invalidDevice.nameInDetail || '<' + (invalidDevice.category === 'SECURITY_DEVICE' ? '安全设备' : (invalidDevice.category === 'FACTORY_DEVICE' ? '工控设备' : (invalidDevice.category === 'NETWORK_DEVICE' ? '网络设备' : '设备分组'))) + '>'}}</span></a>
+            </li>
+          </ul>
+        </div>
+        <div privilege class="margin-right-default display-inline-block" dropdown
+             ng-class="{'btn-group':topologyHasNode}">
+          <button id="topology-singleTopo_button_enterEdit" type="button" class="btn btn-default" ng-href='#here'
+                  ng-disabled="drawing" ng-click="topoCtrl.EnterEdit(false);" ng-show="!topoCtrl.EditMode" title="编辑拓扑">
+            <i class="fa fa-pencil icon-left icon-lime" ng-class="{'text-lime': hasPalette}"></i>
+            编辑拓扑
+          </button>
+          <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle ng-disabled="drawing"
+                  ng-if="topoCtrl.isDefaultRole || topoCtrl.hasAllDeviceCtrl"
+                  ng-show="topologyHasNode&&!topoCtrl.EditMode&&['allInOne', 'remote'].indexOf($root.MW_SETTING)<0">
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu pull-right" ng-if="topoCtrl.isDefaultRole || topoCtrl.hasAllDeviceCtrl">
+            <li id="topology-singleTopo_button_clearTopo" ng-click="topoCtrl.cleanupTopo();" title="清空拓扑"><a href="#"><i
+              class="fa fa-trash-o icon-left" ng-class="{'text-lime': hasPalette}"></i><span>清空拓扑</span></a></li>
+          </ul>
+          <span ng-show="topoCtrl.EditMode">
+            <button id="topology-singleTopo_button_cancelEdit" type="button"
+                    class="btn btn-default btn-group-pull-right" ng-click="topoCtrl.EnterEdit(true);"><i
+              class="fa fa-times icon-left"></i>退出编辑</button>
+            <button id="topology-singleTopo_button_saveEdit" type="button" class="btn btn-primary"
+                    ng-disabled="topoCtrl.isUpdating || securitydetail.invalidIp || topoCtrl.invalid"
+                    ng-click="topoCtrl.EnterEdit(false);"><i class="fa fa-check icon-left"></i>确认修改</button>
+          </span>
+        </div>
+        <div privilege class="margin-right-default dropdown display-inline-block">
+          <button id="topology-singleTopo_button_showSideBar" type="button" class="btn btn-default"
+                  ng-class="{'active': hasSidebar}" ng-click="hasSidebar = !hasSidebar" ng-show="topologyHasNode"
+                  title="设备信息">
+            <i class="fa fa-info-circle icon-left" ng-class="{'text-lime': hasSidebar}"></i>设备信息
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="upload-confirmation.html">
+  <div class="modal-header">
+    <h5 class="modal-header-title">替换网络拓扑</h5>
+  </div>
+  <div class="modal-body">
+    <span>替换拓扑后所有分析、评估、事件与审计也会跟随拓扑改变移除。请在替换使用拓扑前完成日志归档，确保信息不会丢失。</span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-close icon-left"></i>取消</button>
+    <button class="btn btn-default pull-right" style="position: relative;"><i
+      class="fa fa-cloud-upload text-lime icon-left"></i>
+      <input type="file" id="topologySelector" name="topologySelector" nv-file-select uploader="uploader">选择新拓扑</input>
+    </button>
+  </div>
+</script>

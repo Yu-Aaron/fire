@@ -1,0 +1,47 @@
+<div>
+    <div class="router-button-container">
+        <a id="network_router_add" class="btn btn-default" ng-click="dtable.addNew()" setting-privilege
+           privilege-name="NETWORK_ROUTE" privilege-require="MIXED" privilege-handle="hidden">
+            <i class="fa fa-file-o fa-after-blue fa-plus-overlay icon-left"></i>新增</a>
+        <a id="network_router_delete" class="btn btn-default" ng-click="dtable.delete()"
+           ng-disabled="!dtable.table.length" setting-privilege
+           privilege-name="NETWORK_ROUTE" privilege-require="MIXED" privilege-handle="hidden">
+            <i class="fa fa-trash-o icon-left"></i>删除</a>
+    </div>
+    <table class="table table-hover icon-hidden">
+        <thead>
+        <tr>
+            <th class="text-center"><input id="selected-item-all" custom-checkbox tri-state-checkbox type="checkbox"
+                                           ng-model="dtable.selectAllValue"
+                                           ng-click="dtable.selectAll()"/>
+            </th>
+            <!--<th>序号</th>-->
+            <th order-by="destIpMask">目的IP掩码</th>
+            <th order-by="outInterfaceName">出接口</th>
+            <th order-by="gateWayNextJump">网关(下一跳)</th>
+          <!-- <th order-by="priority">优先级</th>-->
+           <th order-by="manageScope">管理距离</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="staticRouterData in dtable.table" fade-in-list>
+            <td class="text-center"><input id="selected-item-{{$index}}" custom-checkbox type="checkbox"
+                                           ng-click="dtable.selectItem()"
+                                           ng-model="dtable.selectedItems[staticRouterData.routeId]"/></td>
+            <!--<td>{{skip + $index + 1}}</td>-->
+            <td>{{staticRouterData.destIpMask}}</td>
+            <td>{{staticRouterData.outInterfaceName | outerInterface}}</td>
+            <td>{{staticRouterData.gateWayNextJump}}</td>
+          <!--  <td>{{staticRouterData.priority}}</td> -->
+            <td>{{staticRouterData.manageScope}}</td>
+            <td>
+                <a id="network_router_edit" class="btn btn-sm btn-default" ng-click="dtable.edit(staticRouterData)"
+                   title="编辑" setting-privilege privilege-name="NETWORK_ROUTE" privilege-require="MIXED"
+                   privilege-handle="hidden"><i
+                        class="fa fa-edit"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

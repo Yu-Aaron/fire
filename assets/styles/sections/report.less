@@ -1,0 +1,85 @@
+.report-content {
+  .setting-tag {
+    padding-top: 7px;
+  }
+  .report-setting-padding {
+    padding: 5px;
+  }
+  .bottom-Table {
+    margin-bottom: 5px;
+  }
+  .selectedPage {
+    background-color: #333333 !important;
+    color: #ffffff;
+  }
+  .disabledPage {
+    cursor: not-allowed;
+  }
+  #report_logger_detail_all_table, #report_logger_detail_console_table, #report_logger_detail_login_table, #report_logger_detail_console_login_table, #report_logger_detail_cmd_table {
+    tbody {
+      tr {
+        td:nth-child(4), td:nth-child(3) {
+          min-width: 110px;
+        }
+      }
+    }
+  }
+  #report_incident_detail_page_table, #report_event_detail_page_table {
+    tbody {
+      tr {
+        td:nth-child(n+2) {
+          min-width: 110px;
+        }
+      }
+    }
+  }
+}
+
+.page-monitor-report_event{
+  .tab-container-body {
+    .flex-row{
+      display: flex;
+      .wrap-left{
+        padding-left: 100px;
+        flex-grow: 1;
+        display: flex;
+        .col{
+          width: 30%;
+          flex-grow: 1;
+        }
+      }
+      .wrap-right{
+        width: 280px;
+      }
+    }
+    .select-wrap{
+      position: relative;
+      margin-left: 10px;
+      display: inline-block;
+      >* {
+        vertical-align: middle;
+      }
+      select{
+        width:160px;
+        padding-right: 10px;
+      }
+      .input-wrap{
+        position: absolute;
+        top: 0;
+        z-index:10000;
+        input{
+          width: 130px;
+          height: 32px;
+          margin: 1px;
+          background: linear-gradient(to bottom, #282c37 0%, #1e2128 100%);
+          border: none;
+          box-shadow: none;
+        }
+      }
+      button{
+        margin-left:4px;
+      }
+    }
+  }
+
+}

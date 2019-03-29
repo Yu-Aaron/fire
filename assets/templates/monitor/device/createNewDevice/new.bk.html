@@ -1,0 +1,157 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">新建设备</h3>
+  <a class="modal-close" ng-click="newDevicePanel.cancel()"><i class="fa fa-times"></i></a>
+</div>
+
+<div class="modal-body" ng-switch on="newDevicePanel.step">
+  <!-- STEP 1 -->
+  <div class="modal-container" ng-switch-when="1">
+
+    <div class="row">
+      <div class="col-xs-6">
+        <strong>设备规格</strong>
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="new-device-type" class="col-xs-2 control-label">设备类型</label>
+            <div class="col-xs-10">
+              <div class="select-styled">
+                <select id="new-device-type" class="form-control" ng-model="device.type"
+                        ng-options="type for type in forms.types" ng-change="newDevicePanel.setType(device.type)">
+                  <option value="">-- 请选择设备类型 --</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-name" class="col-xs-2 control-label">设备名称</label>
+            <div class="col-xs-10">
+              <input type="text" class="form-control" id="new-device-name" ng-model="device.name" value="匡恩安全设备01">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-make" class="col-xs-2 control-label">设备厂商</label>
+            <div class="col-xs-10">
+              <div class="select-styled">
+                <select id="new-device-make" class="form-control" ng-model="device.make"
+                        ng-options="make for make in forms.info[device.typeIndex].makes">
+                  <option value="">-- 请选择设备厂商 --</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-code" class="col-xs-2 control-label">设备型号</label>
+            <div class="col-xs-10">
+              <div class="select-styled">
+                <select id="new-device-code" class="form-control" ng-model="device.code"
+                        ng-options="code for code in forms.info[device.typeIndex].codes">
+                  <option value="">-- 请选择设备型号 --</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-version" class="col-xs-2 control-label">设备版本</label>
+            <div class="col-xs-10">
+              <div class="select-styled">
+                <select id="new-device-version" class="form-control" ng-model="device.version"
+                        ng-options="version for version in forms.info[device.typeIndex].versions">
+                  <option value="">-- 请选择设备版本 --</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-serial" class="col-xs-2 control-label">设备序列号</label>
+            <div class="col-xs-10">
+              <input type="text" class="form-control" id="new-device-serial" placeholder="设备序列号"
+                     ng-model="device.serial">
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-xs-6">
+        <div class="panel panel-device">
+          <div class="panel-body">
+            <img src="/images/placeholders/u857.png" height="150"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- STEP 2 -->
+  <div class="modal-container" ng-switch-when="2">
+    <strong>端口设置</strong>
+
+    <!-- INCLUDE DEVICE VIEW -->
+    <div class="device-view" ng-include src="'templates/includes/device-view.html'"></div>
+  </div>
+
+
+  <!-- STEP 3 -->
+  <div class="modal-container" ng-switch-when="3">
+
+    <div class="row">
+      <div class="col-xs-6">
+        <strong>设备规格</strong>
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="new-device-time" class="col-xs-2 control-label">设备类型</label>
+            <div class="col-xs-10">
+              <span>2014年11月12号, 12:00:00</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-network" class="col-xs-2 control-label">网络结构</label>
+            <div class="col-xs-10">
+              <span>123生产线拓扑图</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-zone" class="col-xs-2 control-label">分区</label>
+            <div class="col-xs-10">
+              <div class="select-styled">
+                <select id="new-device-zone" class="form-control" ng-init="device.zone = '无'" ng-model="device.zone"
+                        ng-options="zone for zone in ['无']"></select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-group" class="col-xs-2 control-label">分组</label>
+            <div class="col-xs-10">
+              <div class="select-styled">
+                <select id="new-device-group" class="form-control" ng-init="device.group = '无'" ng-model="device.group"
+                        ng-options="code for code in ['无']"></select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-priority" class="col-xs-2 control-label">权重</label>
+            <div class="col-xs-10">
+              <div class="select-styled">
+                <select id="new-device-priority" class="form-control" ng-init="device.priority = 0"
+                        ng-model="device.priority" ng-options="priority for priority in [0, 1, 2, 3, 4, 5]"></select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL FOOTER -->
+<div class="modal-footer">
+  <button ng-if="newDevicePanel.step > 1" class="btn btn-default pull-left" ng-click="newDevicePanel.previous()"><i
+    class="fa fa-caret-left icon-left"></i>上一步
+  </button>
+  <button ng-if="newDevicePanel.step < 3" class="btn btn-default" ng-click="newDevicePanel.next()">下一步<i
+    class="fa fa-caret-right icon-right"></i></button>
+  <button ng-if="newDevicePanel.step == 3" class="btn btn-default" ng-click="newDevicePanel.done()"><i
+    class="fa fa-check icon-left" style="color:#76B900"></i>完成
+  </button>
+</div>

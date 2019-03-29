@@ -1,0 +1,59 @@
+<div class="uploader" style="display:inline-block">
+  <a href="javascript:void(0)" class="btn btn-default" style="position:relative">
+    <span class="glyphicon glyphicon-plus"></span>{{uploader.action}}
+    <input type="file" id="selector" name="selector"
+           style="width: 100px;position: absolute;top: 0;bottom: 0;left: 0;right: 0;opacity: 0;">
+  </a>
+  <span>{{uploader.msg}}</span>
+  <span ng-if="uploader.hasFile">
+        <span style="color: white">{{uploader.fileName}}</span>
+        <a href="javascript:void(0)" class="btn btn-default" id="upload" ng-click="uploader.create()">上传</a>
+    </span>
+
+  <div ng-if="($index>=(attack.attackTarget.length - 1))">
+    <ul>
+      <li ng-repeat="file in uploader.array">
+        <div class="row">
+          <div class="col-xs-9">
+            {{file.name}}
+          </div>
+          <div class="col-xs-3 text-right">
+            <!-- <button class="btn btn-default text-lime btn-sm" ng-click="uploader.download($index)"><i class="fa fa-arrow-circle-o-down"></i></button> -->
+            <button class="btn btn-default text-lime btn-sm" ng-click="uploader.cancel($index)"><i
+              class="fa fa-trash"></i></button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div ng-if="!($index>=(attack.attackTarget.length - 1))">
+    <ul>
+      <li ng-repeat="file in uploader.array">
+        <div class="row">
+          <div class="col-xs-9">
+            {{file.name}}
+          </div>
+          <div class="col-xs-3 text-right">
+            <!-- <button class="btn btn-default text-lime btn-sm" ng-click="uploader.download($index)"><i class="fa fa-arrow-circle-o-down"></i></button> -->
+            <button class="btn btn-default text-lime btn-sm" ng-click="uploader.cancel($index)"><i
+              class="fa fa-trash"></i></button>
+          </div>
+        </div>
+      </li>
+      <li ng-repeat="editFile in attack.attackAttachedFile">
+        <!-- {{editFile}} -->
+        <div class="row">
+          <div class="col-xs-9">
+            {{editFile.fileName}}
+          </div>
+          <div class="col-xs-3 text-right">
+            <button class="btn btn-default text-lime btn-sm" ng-click="uploader.downloadAPI(editFile)"><i
+              class="fa fa-arrow-circle-o-down"></i></button>
+            <button class="btn btn-default text-lime btn-sm" ng-click="uploader.deleteAPI(editFile, $index)"><i
+              class="fa fa-trash"></i></button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

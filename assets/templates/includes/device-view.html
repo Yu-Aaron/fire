@@ -1,0 +1,154 @@
+<div class="device-view-inner">
+  <div class="device-view-inner-main">
+    <img src="/images/devices/device.png" alt="device" width="400">
+  </div>
+
+  <div class="device-view-inner-cables">
+    <span class="device-mgmt">
+      <img class="device-cable" src="/images/devices/cable_left.png" alt="cable">
+    </span>
+
+    <span class="device-left-cables">
+      <img class="device-cable" src="/images/devices/cable_left.png" alt="cable">
+      <img class="device-cable" src="/images/devices/cable_left.png" alt="cable">
+    </span>
+
+    <span class="device-right-cables">
+      <img class="device-cable" src="/images/devices/cable_right.png" alt="cable" style="visibility: hidden">
+      <img class="device-cable" src="/images/devices/cable_right.png" alt="cable">
+    </span>
+  </div>
+
+  <div class="device-view-inner-borders">
+    <div class="border-mgmt" ng-class="{'port-selected': deviceModel.selectedPort == 'mgmt'}"
+         ng-click="deviceModel.selectPort('mgmt')"></div>
+    <div class="border-p0"
+         ng-class="{'port-selected': deviceModel.is('P0','P0/P1')}"
+         ng-click="deviceModel.selectPort('P0')"
+    ></div>
+    <div class="border-p1"
+         ng-class="{'port-selected': deviceModel.is('P1','P0/P1')}"
+         ng-click="deviceModel.selectPort('P1')"
+    ></div>
+    <div class="border-p2"
+         ng-class="{'port-selected': deviceModel.is('P2','P2/P3')}"
+         ng-click="deviceModel.selectPort('P2')"
+    ></div>
+    <div class="border-p3"
+         ng-class="{'port-selected': deviceModel.is('P3','P2/P3')}"
+         ng-click="deviceModel.selectPort('P3')"
+    ></div>
+  </div>
+</div>
+
+<div class="device-view-panels">
+  <div class="device-view-panels-container" ng-style="{width:deviceModel.portsWidth()}">
+    <div class="device-view-panel device-view-panel-wrapper"
+         ng-class="{'port-selected': deviceModel.selectedPort == 'mgmt'}" ng-click="deviceModel.selectPort('mgmt')">
+      <div class="device-view-panel-head">
+        <div class="row">
+          <div class="col-xs-8">管理端口 MGMT</div>
+          <div class="col-xs-4 text-right">
+            <button class="btn btn-sm btn-default"><img src="/images/icons/topology.png" height="12"></button>
+          </div>
+        </div>
+      </div>
+      <div class="device-view-panel-content">
+        <div class="device-view-panel-content-row">
+          <div class="title">管理端口MGMT状态</div>
+          <div>端口连接正常</div>
+        </div>
+        <div class="device-view-panel-content-row">
+          <div class="title">管理端口MGMT IP</div>
+          <div>192.168.0.11</div>
+        </div>
+      </div>
+      <div class="device-view-panel-angle port-angle"></div>
+    </div>
+
+    <div ng-repeat="port in deviceModel.ports" class="device-view-panel-wrapper">
+      <!-- IPS -->
+      <div ng-if="port.mode == 'IPS'">
+        <div class="device-view-panel"
+             ng-class="{'port-selected': deviceModel.is(port.name)}"
+             ng-click="deviceModel.selectPort(port.name)"
+        >
+          <div class="device-view-panel-head">通讯端口 {{port.name}}</div>
+          <div class="device-view-panel-content">
+            <div class="device-view-panel-content-row">
+              <div class="title">功能模式</div>
+
+              <!-- INCLUDE TOGGLE SWITCH -->
+              <div class="toggle-switch" ng-include src="'templates/includes/toggle-switch.html'"></div>
+            </div>
+
+            <!-- PORT STATUS -->
+            <div class="device-view-panel-content-row"
+                 ng-repeat="sub in port.sub"
+            >
+              <div class="title">通信端口{{sub.name}}状态</div>
+              <div><i class="fa fa-circle"></i> {{sub.status ? '端口连接正常' : '端口未连接'}}</div>
+            </div>
+
+
+            <!-- PORT BYPASS -->
+            <div class="device-view-panel-content-row">
+              <div class="title">Bypass状态</div>
+              <div>未启用</div>
+            </div>
+          </div>
+          <div class="device-view-panel-angle port-angle"></div>
+        </div>
+      </div>
+
+      <!-- IDS -->
+      <div ng-if="port.mode == 'IDS'" ng-repeat="sub in port.sub" class="device-view-panel-wrapper">
+        <div class="device-view-panel"
+             ng-class="{'port-selected': deviceModel.is(sub.name)}"
+             ng-click="deviceModel.selectPort(sub.name)"
+        >
+          <div class="device-view-panel-head">
+            <div class="row">
+              <div class="col-xs-6">通讯端口 {{sub.name}}</div>
+              <div class="col-xs-6 text-right">
+                <button class="btn btn-sm btn-default"><img src="/images/icons/topology.png" height="12"></button>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="device-view-panel-content">
+            <div class="device-view-panel-content-row">
+              <div class="title">功能模式</div>
+
+              <!-- INCLUDE TOGGLE SWITCH -->
+              <div class="toggle-switch" ng-include src="'templates/includes/toggle-switch.html'"></div>
+            </div>
+
+            <!-- PORT STATUS -->
+            <div class="device-view-panel-content-row">
+              <div class="title">通信端口{{sub.name}}状态</div>
+              <div>{{sub.status ? '端口连接正常' : '端口未连接'}}</div>
+              <div>
+                <!-- enabled status icon -->
+                <i class="fa fa-circle icon-status-circle glow-active"></i>
+
+                <!-- warning icon -->
+                <i class="fa fa-warning text-yellow"></i>
+
+                <!-- disabled status icon -->
+                <i class="fa fa-circle icon-status-circle glow-disabled"></i>
+              </div>
+            </div>
+
+            <!-- PORT BYPASS -->
+            <div class="device-view-panel-content-row">
+              <div class="title">Bypass状态</div>
+              <div>未启用</div>
+            </div>
+          </div>
+          <div class="device-view-panel-angle port-angle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

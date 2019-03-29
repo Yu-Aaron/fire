@@ -1,0 +1,165 @@
+<div cg-busy="{promise:systemuser.updateUserGroupPromise, message:'更新中...'}">
+  <div>
+    <button class="btn btn-default" ng-click="systemuser.goToUserManagerPage();systemuser.cleanErrorMsg()" id="btn_back">
+      <i class="fa fa-chevron-circle-left icon-left"></i>返回
+    </button>
+  </div>
+
+  <div class="systemuser-user-panel margin-top-default padded-rows">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="systemuser-create-panel">
+          <div class="systemuser-header">
+            个性资料
+          </div>
+          <div>
+
+            <div class="row">
+              <div class="col-md-2">
+                <span>用户名: </span>
+              </div>
+              <div class="col-md-2">
+                <input type="text" id="input-username" ng-model="systemuser.newUser.name"
+                       ng-change="systemuser.validateNewUserForm()" maxlength="20">
+              </div>
+              <div class="col-md-8">
+                <div class="account-input-error" ng-if="systemuser.createdError.nameVoid">
+                  <span class="input-alert-error">用户名称不能为空</span>
+                </div>
+                <div class="account-input-error" ng-if="systemuser.requestError">
+                  <span class="input-alert-error">{{systemuser.requestError}}</span>
+                </div>
+                <div class="account-input-error" ng-if="systemuser.createdError.nameOversize">
+                  <span class="input-alert-error">用户名称不能超过20</span>
+                </div>
+              </div>
+            </div>
+            <div class="row no-padding">
+              <div class="col-md-2"></div>
+              <div class="col-md-8"><i class="fa fa-info-circle fa-beside-button-right"></i>用户名为20位以内的字母数字和下划线(_)的一种或多种的任意组合
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <span>姓名: </span>
+              </div>
+              <div class="col-md-2">
+                <input type="text" id="input-stuffname" ng-model="systemuser.newUser.stuffName"
+                       ng-change="systemuser.validateNewUserForm()" maxlength="20">
+              </div>
+              <div class="col-md-8">
+                <div class="account-input-error" ng-if="systemuser.createdError.stuffNameVoid">
+                  <span class="input-alert-error">姓名不能为空</span>
+                </div>
+                <div class="account-input-error" ng-if="systemuser.createdError.stuffNameOversize">
+                  <span class="input-alert-error">姓名不能超过20个字</span>
+                </div>
+              </div>
+            </div>
+            <div class="row no-padding">
+              <div class="col-md-2"></div>
+              <div class="col-md-8"><i class="fa fa-info-circle fa-beside-button-right"></i>姓名不能超过64个字</div>
+            </div>
+            <div class="row" style="margin-top: 20px">
+              <div class="col-md-2">
+                <span>用户组: </span>
+              </div>
+              <div class="col-md-2">
+                <span>{{systemuser.selectedUserGroup.name}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="systemuser-create-panel">
+          <div class="systemuser-header">
+            用户密码
+          </div>
+          <div>
+            <div class="row">
+              <div class="col-md-2">
+                <span>新密码: </span>
+              </div>
+              <div class="col-md-6">
+                <div class="row nopadding-top nopadding-bottom">
+                  <div class="col-sm-4 nomargin-top nomargin-bottom">
+                    <input type="password" id="input-password" maxlength="25" ng-model="systemuser.newUser.newPassword"
+                           ng-change="systemuser.validatePassword(systemuser.newUser.newPassword, systemuser.newUser.confirmNewPassword);systemuser.validateNewUserForm()">
+                  </div>
+                  <div class="col-sm-6 nomargin-top nomargin-bottom">
+                    <div class="input-alert-error input-invalid" ng-show="systemuser.newPassValid===1"><span>{{systemuser.passwordErrormessages.newPass}}</span>
+                    </div>
+                    <div class="input-valid" ng-show="systemuser.newPassValid===2"><i class="fa fa-check text-lime"></i>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <span class="fa-beside-button-left ng-binding"><i
+                    class="fa fa-info-circle fa-beside-button-right"></i>{{systemuser.passwordComplexityMessage}}</span></td>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <span>确认密码: </span>
+              </div>
+              <div class="col-md-6">
+                <div class="row nopadding-top nopadding-bottom">
+                  <div class="col-sm-4 nomargin-top nomargin-bottom">
+                    <input type="password" id="input-confirm-password" maxlength="25"
+                           ng-model="systemuser.newUser.confirmNewPassword"
+                           ng-change="systemuser.validatePassword(systemuser.newUser.newPassword, systemuser.newUser.confirmNewPassword);systemuser.validateNewUserForm()">
+                  </div>
+                  <div class="col-sm-6 nomargin-top nomargin-bottom">
+                    <div class="input-alert-error input-invalid" ng-show="systemuser.confirmPassValid===1"><span></i>
+                      {{systemuser.passwordErrormessages.confirmPass}}</span></div>
+                    <div class="input-valid" ng-show="systemuser.confirmPassValid===2"><i
+                      class="fa fa-check text-lime"></i></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--<div class="col-md-4">-->
+        <!--<div class="systemuser-create-panel systemuser-user-groups">-->
+          <!--<div class="systemuser-header">-->
+            <!--用户组-->
+          <!--</div>-->
+          <!--<ul id="create_user_group_radio_buttons" class="no-bullets systemuser-roles">-->
+            <!--<li id="group_radio_button_-1" class="systemuser-role" ng-if="!systemuser.currentRole.defaultRole">-->
+              <!--<input id="group_select_radio_button_{{systemuser.currentRole.name}}" type="radio"-->
+                     <!--ng-model="systemuser.newUser._roleId" ng-value="systemuser.currentRole.roleId"-->
+                     <!--ng-change="systemuser.validateNewUserForm()">-->
+              <!--<span>{{systemuser.currentRole.name}}</span>-->
+            <!--</li>-->
+            <!--<li id="group_radio_button_{{$index}}" class="systemuser-role" ng-repeat="role in systemuser.subRoles"-->
+                <!--ng-if="!role.defaultRole">-->
+              <!--<input id="group_select_radio_button_{{role.name}}" type="radio" ng-model="systemuser.newUser._roleId"-->
+                     <!--ng-value="role.roleId" ng-change="systemuser.validateNewUserForm()">-->
+              <!--<span>{{role.name}}</span>-->
+            <!--</li>-->
+          <!--</ul>-->
+          <!--<div class="margin-top-default" ng-show="systemuser.createdError.roleNotSelected">-->
+            <!--<span class="input-alert-error">未选择用户组</span>-->
+          <!--</div>-->
+          <!--<div class="margin-top-default"-->
+               <!--ng-show="systemuser.subRoles.length === 0 && systemuser.currentRole.defaultRole">-->
+            <!--<span class="input-alert-error">请先在"<strong>用户组</strong>"菜单中创建新的用户组</span>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    </div>
+    <div class="system-footer-button-group">
+      <button id="systemuser_create_confirm" class="btn btn-default pull-right" ng-disabled="!systemuser.formValid"
+              ng-click="systemuser.saveNewUser()">
+        <i class="fa fa-check text-lime icon-left"></i>确定
+      </button>
+      <button id="systemuser_create_cancel" class="btn btn-default pull-right"
+              ng-click="systemuser.goToUserManagerPage();systemuser.cleanErrorMsg()" style="margin-right: 10px">
+        <i class="fa fa-times-circle icon-left"></i>取消
+      </button>
+    </div>
+  </div>
+</div>

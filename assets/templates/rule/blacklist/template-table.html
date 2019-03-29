@@ -1,0 +1,59 @@
+<hr class="hr-small-margin">
+<div class="spacing"></div>
+
+<div class="table-scroll-wrapper table-scroll-wrapper-striped">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-1 padding-zero">
+        <input type="checkbox" ng-change="templates.toggle()" ng-model="templates.selectAll"/>
+      </div>
+      <div class="col-xs-8">
+        <span>名称</span>
+      </div>
+      <div class="col-xs-2 padding-zero">
+        <span>上传时间</span>
+      </div>
+      <div class="col-xs-1">
+      </div>
+    </div>
+    <div class="row" data-index="0" ng-repeat="template in templates.table">
+      <div class="col-xs-1 padding-zero">
+        <div class="row padding-sm">
+          <div class="col-xs-6">
+            <input type="checkbox" ng-hide="template.deployed" ng-disabled="template.deployed"
+                   ng-change="templates.countSelected(template)" ng-model="template.checked">
+          </div>
+          <div class="col-xs-6 padding-sm">
+            <span class="fa-stack fa-small">
+              <i class="fa fa-puzzle-piece fa-stack-2x text-white"></i>
+              <div ng-show="template.deployed" class="fa-position-bottom-right">
+                <span class="fa-stack fa-stack-sm">
+                  <i class="fa fa-circle fa-stack-2x text-lime"></i>
+                  <i class="fa fa-circle-o fa-stack-2x text-black"></i>
+                  <i class="fa fa-check fa-stack-1x text-black"></i>
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-8">
+        {{template.name}}
+      </div>
+      <div class="col-xs-2 padding-zero">
+        {{template.createdAt | date: 'yyyy-MM-dd'}}
+      </div>
+      <div class="col-xs-1">
+        <span><button ng-click="templates.showDetail(template)" class="btn btn-sm btn-default"><i
+          class="fa fa-file-text-o"></i></button></span>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="text-center">
+  <p id="rule_blacklist_templatetable_totalnum" ng-if="!templates.selectedBlockCount">
+    总共{{templates.table.length}}条规则，{{templates.blockCount}}条规则项</p>
+  <p id="rule_blacklist_templatetable_selectednum" ng-if="templates.selectedBlockCount">
+    已选择{{templates.selectedBlockCount}}/{{templates.table.length}}条规则，{{templates.selectedRuleCount}}/{{templates.blockCount}}条规则项</p>
+</div>

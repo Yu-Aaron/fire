@@ -1,0 +1,148 @@
+<div class="fixed-table">
+  <div class="toolbar">
+    <div class="row">
+      <div class="col-xs-8">
+        <div class="drag-grouping">
+          <input class="drag-grouping-input" type="text" placeholder="  拖拽表头至此处进行分组">
+        </div>
+      </div>
+
+
+      <div class="col-xs-4 text-right">
+        <!-- SEARCH -->
+        <div class="toolbar-search">
+          <div class="input-group">
+            <input type="text" class="form-control" ng-model="q" ng-keyup="dtable.keyPress($event.keyCode)"
+                   placeholder="搜索">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+              </span>
+          </div>
+        </div>
+
+        <!-- DROPDOWN -->
+        <!--
+		<div class="dropdown toolbar-dropdown">
+		  <button type="button" class="btn dropdown-toggle" id="filter" data-toggle="dropdown"><i class="fa fa-bars"></i><span class="caret"></span></button>
+		  <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="filter">
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+			<li role="presentation" class="divider"></li>
+			<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+		  </ul>
+		</div>
+		-->
+        <!-- SETTINGS ICON -->
+        <button type="button" class="btn btn-default toolbar-btn"><i class="fa fa-gear"></i></button>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fixed-table-container" style="height: 300px;">
+    <div class="fixed-table-body">
+      <table class="table table-hover icon-hidden">
+        <thead>
+        <tr>
+          <th>
+            <span>&nbsp;</span>
+          </th>
+          <th>
+            <span>名称</span>
+            <i class="fa"
+               ng-class="{false: 'fa-caret-up', true: 'fa-caret-down'}[dtable.reverse]"
+               ng-show="dtable.predicate == ''"
+            ></i>
+          </th>
+          <th>
+            <span>IP地址</span>
+            <i class="fa"
+               ng-class="{false: 'fa-caret-up', true: 'fa-caret-down'}[dtable.reverse]"
+               ng-show="dtable.predicate == ''"
+            ></i>
+          </th>
+          <th>
+            <span>分组</span>
+            <i class="fa"
+               ng-class="{false: 'fa-caret-up', true: 'fa-caret-down'}[dtable.reverse]"
+               ng-show="dtable.predicate == ''"
+            ></i>
+          </th>
+          <th>
+            <span>型号</span>
+            <i class="fa"
+               ng-class="{false: 'fa-caret-up', true: 'fa-caret-down'}[dtable.reverse]"
+               ng-show="dtable.predicate == ''"
+            ></i>
+          </th>
+          <th>
+            <span>漏洞数量</span>
+            <i class="fa"
+               ng-class="{false: 'fa-caret-up', true: 'fa-caret-down'}[dtable.reverse]"
+               ng-show="dtable.predicate == ''"
+            ></i>
+          </th>
+          <th>
+            <span>只显示未隐藏</span>
+          </th>
+          <th>
+            <span>查看漏洞</span>
+          </th>
+          <th>
+            <span>&nbsp;</span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="device in dtable.table"
+            ng-click="attackDirective.testPrint(device)">
+          <td> &nbsp;</td>
+          <td>{{device.NAME}}</td>
+          <td>{{device.IP}}</td>
+          <td>{{device.MAKE}}</td>
+          <td>{{device.MODEL}}</td>
+          <td>{{device.PORT}}个</td>
+          <td>{{device.PDEVICE}}台</td>
+          <td><a class="btn btn-default" href="/monitor/device/{{device.ID}}">查看</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="fixed-table-pagination">
+    <div class="row">
+      <div class="col-xs-4">
+        <div class="count-show">
+          <span id="common_scrolltable_totalcount">总共 {{dtable.totalCount}}条事件</span>
+        </div>
+      </div>
+
+      <div class="col-xs-4 text-center">
+        <pagination ng-model="dtable.currentPage"
+                    class="pagination-sm"
+                    boundary-links="true"
+                    total-items="dtable.totalCount"
+                    items-per-page="dtable.numPerPage"
+                    max-size="5"
+                    num-pages="dtable.numPages"
+                    previous-text="&lsaquo;"
+                    next-text="&rsaquo;"
+                    first-text="&laquo;"
+                    last-text="&raquo;"
+                    ng-change="dtable.pageChanged()"
+        ></pagination>
+      </div>
+
+      <div class="col-xs-4">
+        <div class="page-number-show text-right">
+          <span>每页显示:</span>
+          <select ng-model="dtable.numPerPage" ng-options="pageNum for pageNum in [20, 40, 60]"
+                  ng-change="dtable.updateNumPerPage()"></select>
+          <span>条</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12081) - http://www.bohemiancoding.com/sketch -->
+    <title>side_nav_icons_devices</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="53.56666%" y1="-10.62756%" x2="53.56666%" y2="86.23878%" id="linearGradient-1">
+            <stop stop-color="#B7D552" offset="0%"></stop>
+            <stop stop-color="#56883D" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="53.56666%" y1="-6.33589999%" x2="53.56666%" y2="88.05304%" id="linearGradient-2">
+            <stop stop-color="#B7D552" offset="0%"></stop>
+            <stop stop-color="#56883D" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="53.56666%" y1="-9.81458%" x2="53.56666%" y2="84.57436%" id="linearGradient-3">
+            <stop stop-color="#B7D552" offset="0%"></stop>
+            <stop stop-color="#56883D" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Side-Nav" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="side_nav_icons_devices" sketch:type="MSArtboardGroup">
+            <g sketch:type="MSLayerGroup" transform="translate(29.166667, 30.000000)">
+                <g id="Group" fill="#CCCCCC" sketch:type="MSShapeGroup">
+                    <g id="Shape">
+                        <path d="M39.0873016,3.2 L39.0873016,12.2 L2.57936508,12.2 L2.57936508,3.2 L39.0873016,3.2 L39.0873016,3.2 Z M39.0873016,1.8 L2.57936508,1.8 C1.78571429,1.8 1.38888889,2.4 1.38888889,3 L1.38888889,12.2 C1.38888889,13 1.98412698,13.4 2.57936508,13.4 L39.0873016,13.4 C39.8809524,13.4 40.2777778,12.4 40.2777778,11.6 L40.2777778,2.8 C40.2777778,2 39.6825397,1.8 39.0873016,1.8 L39.0873016,1.8 L39.0873016,1.8 Z"></path>
+                    </g>
+                </g>
+                <path d="M6.94444444,9.8 C7.93650794,9.8 8.92857143,9 8.92857143,7.8 C8.92857143,6.6 8.13492063,5.8 6.94444444,5.8 C5.75396825,5.8 4.96031746,6.6 4.96031746,7.8 C4.96031746,9 5.95238095,9.8 6.94444444,9.8 L6.94444444,9.8 Z" id="Shape" fill="url(#linearGradient-1)" sketch:type="MSShapeGroup"></path>
+                <g id="Group" transform="translate(0.000000, 14.000000)" fill="#CCCCCC" sketch:type="MSShapeGroup">
+                    <g id="Shape">
+                        <path d="M39.0873016,2 L39.0873016,11 L2.57936508,11 L2.57936508,2 L39.0873016,2 L39.0873016,2 Z M39.0873016,0.8 L2.57936508,0.8 C1.78571429,0.8 1.38888889,1.4 1.38888889,2 L1.38888889,11.2 C1.38888889,12 1.98412698,12.4 2.57936508,12.4 L39.0873016,12.4 C39.8809524,12.4 40.2777778,11.4 40.2777778,10.6 L40.2777778,1.6 C40.2777778,1 39.6825397,0.8 39.0873016,0.8 L39.0873016,0.8 L39.0873016,0.8 Z"></path>
+                    </g>
+                </g>
+                <path d="M6.94444444,22.6 C7.93650794,22.6 8.92857143,21.8 8.92857143,20.6 C8.92857143,19.4 8.13492063,18.6 6.94444444,18.6 C5.75396825,18.6 4.96031746,19.4 4.96031746,20.6 C4.96031746,21.8 5.95238095,22.6 6.94444444,22.6 L6.94444444,22.6 Z" id="Shape" fill="url(#linearGradient-2)" sketch:type="MSShapeGroup"></path>
+                <g id="Group" transform="translate(0.000000, 26.000000)" fill="#CCCCCC" sketch:type="MSShapeGroup">
+                    <g id="Shape">
+                        <path d="M39.0873016,3.2 L39.0873016,12.2 L2.57936508,12.2 L2.57936508,3.2 L39.0873016,3.2 L39.0873016,3.2 Z M39.0873016,1.8 L2.57936508,1.8 C1.78571429,1.8 1.38888889,2.4 1.38888889,3 L1.38888889,12.2 C1.38888889,13 1.98412698,13.4 2.57936508,13.4 L39.0873016,13.4 C39.8809524,13.4 40.2777778,12.4 40.2777778,11.6 L40.2777778,2.4 C40.2777778,2 39.6825397,1.8 39.0873016,1.8 L39.0873016,1.8 L39.0873016,1.8 Z"></path>
+                    </g>
+                </g>
+                <path d="M6.94444444,35.8 C7.93650794,35.8 8.92857143,35 8.92857143,33.8 C8.92857143,32.6 8.13492063,31.8 6.94444444,31.8 C5.75396825,31.8 4.96031746,32.6 4.96031746,33.8 C4.96031746,35 5.95238095,35.8 6.94444444,35.8 L6.94444444,35.8 Z" id="Shape" fill="url(#linearGradient-3)" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,132 @@
+/* ----------------------------------------
+  New Tables
+---------------------------------------- */
+
+// Overwrite Bootstrap Variables
+
+@table-cell-padding: 8px 10px;
+@table-bg: @bg-gray-lighter;
+@table-bg-hover: @bg-gray-lightest;
+@table-bg-active: @table-bg-hover;
+@table-border-color: @bg-gray-darker;
+
+// Custom Table Styles
+
+.table {
+  margin-bottom: 10px;
+}
+
+th {
+  position: relative;
+  height: 30px;
+  background: linear-gradient(@bg-gray, @bg-gray-darker);
+  color: @txt-gray;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  i {
+    position: absolute;
+    top: 11px;
+    right: 10px;
+    font-size: 14px;
+  }
+}
+
+td {
+  color: @txt-light-gray;
+  vertical-align: middle;
+  border-top: none;
+  .btn {
+    &:extend(.btn-sm all);
+    // margin-left: 16px; // Need to restyle all buttons to be used within tables
+    line-height: 1;
+  }
+}
+
+.table-data-number {
+  text-align: right;
+}
+
+.table-data-label,
+.table-data-checkbox-title,
+.table-data-checkbox {
+  text-align: center;
+}
+
+.table-data-checkbox-title {
+  width: 50px;
+}
+
+.table-data-checkbox {
+  padding: 10px 20px;
+}
+
+.table-data-expand {
+  padding-bottom: 20px;
+  overflow: visible;
+  white-space: normal;
+  text-overflow: clip;
+  a {
+    position: relative;
+    top: 10px;
+    color: @info;
+    &:hover {
+      color: @info-light;
+    }
+    &:before {
+      position: relative;
+      top: -6px;
+      content: "…";
+      margin-right: 10px;
+      color: @txt-white;
+    }
+  }
+}
+
+// Used to show the total number of records currently displayed
+// i.e. '总共 0 台设备'
+.count-show {
+  color: @gray50;
+  float: right;
+}
+
+// Managing td sizes
+
+.trancate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.table-col-xs,
+.table-col-sm,
+.table-col-md,
+.table-col-lg,
+.table-col-xl,
+.table-col-max {
+  &:extend(.trancate);
+}
+
+.table-col-xs {
+  max-width: 30px;
+}
+
+.table-col-sm {
+  max-width: 50px;
+}
+
+.table-col-md {
+  max-width: 75px;
+}
+
+.table-col-lg {
+  max-width: 100px;
+}
+
+.table-col-xl {
+  max-width: 125px;
+}
+
+.table-max-width {
+  max-width: 150px;
+}

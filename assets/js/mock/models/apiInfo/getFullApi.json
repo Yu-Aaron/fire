@@ -1,0 +1,6108 @@
+[
+    {
+        "versions": [
+            "2.0"
+        ],
+        "buildNumber": "Build MC-2.0.1-DEV-151814-C00-3478d72e3a82",
+        "buildDatetime": "Sat May  2 19:26:12 UTC 2015",
+        "currentTime": "2015-10-27T23:08:10.330Z",
+        "apiNumbers": 320
+    },
+    {
+        "/api/v2.0/alarms/getAlarms": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/alarms/new/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/alarms/read": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/attackpaths/attackpath/{attackpathId}/attacktarget": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "targetId": "String"
+                    },
+                    {
+                        "pathId": "String"
+                    },
+                    {
+                        "targetName": "String"
+                    },
+                    {
+                        "queryConditions": "String"
+                    },
+                    {
+                        "selectedTarget": "String"
+                    },
+                    {
+                        "selectedTargetList": "LIST"
+                    },
+                    {
+                        "attackMethod": "String"
+                    },
+                    {
+                        "description": "String"
+                    },
+                    {
+                        "targetOrder": "Integer"
+                    },
+                    {
+                        "attackTargetList": "LIST"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "customDescription": "String"
+                    },
+                    {
+                        "attachedFile": "LIST"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/attackpaths/attackpath/{attackpathId}/attacktarget/{attacktargetId}": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "targetId": "String"
+                    },
+                    {
+                        "pathId": "String"
+                    },
+                    {
+                        "targetName": "String"
+                    },
+                    {
+                        "queryConditions": "String"
+                    },
+                    {
+                        "selectedTarget": "String"
+                    },
+                    {
+                        "selectedTargetList": "LIST"
+                    },
+                    {
+                        "attackMethod": "String"
+                    },
+                    {
+                        "description": "String"
+                    },
+                    {
+                        "targetOrder": "Integer"
+                    },
+                    {
+                        "attackTargetList": "LIST"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "customDescription": "String"
+                    },
+                    {
+                        "attachedFile": "LIST"
+                    }
+                ]
+            },
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/attackpaths/attackpath/{pathId}/targets": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/attackpaths/listquery": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/attackpaths/searchcriteria": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/attackpaths/searchcriteria/topology/{topologyId}/{criteria}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/attackpaths/topology/{topologyId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "pathId": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "pathName": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/attackpaths/topology/{topologyId}/attackpath/{attackpathId}": [
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/attackpaths/topology/{topologyId}/attackpath/{pathId}/nodes": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/detailinfo/type/{typeName}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/detailinfo/type/{typeName}/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/flowdata/type/{typeName}/frequency/{frequency}/starttime/{startTime}/endtime/{endTime}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/head/{headId}/type/{typename}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/iptraffic/devices/total/{deviceId}/{startTime}/{endTime}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/iptraffic/devices/{deviceId}/{startTime}/{endTime}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/iptraffic/selecteddevices": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "deviceId": "String"
+                    },
+                    {
+                        "name": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/iptraffic/selecteddevices/{deviceId}": [
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/topology/{topologyId}/heads": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/topology/{topologyId}/heads/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/topology/{topologyId}/import": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/topology/{topologyId}/iptraffic": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/topology/{topologyId}/iptraffic/devices": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/topology/{topologyId}/iptraffic/devices/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/topology/{topologyId}/iptraffic/protocolstats/{startTime}/{endTime}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/topology/{topologyId}/iptraffic/testtraffic": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/topology/{topologyId}/iptraffic/testtrafficstat": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/topology/{topologyId}/iptraffic/totalstats/{startTime}/{endTime}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/topology/{topologyId}/iptraffic/{trafficType}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/topology/{topologyId}/testprotocol/{protocol}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/auditlogs/topology/{topologyId}/{type}/export": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/dashboards/dashboard": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "dashBoardId": "String"
+                    },
+                    {
+                        "sourceId": "String"
+                    },
+                    {
+                        "dashBoardType": "ENUM(TOPOLOGY,POLICY,DEVICE,THREAT,VULNERABILITY,INCIDENT)"
+                    },
+                    {
+                        "dashBoardTypeDetail": "ENUM(DEVICE_INFORMATION,DEVICE_COVERAGE,NO_PROTECTED_VULNERABILITY,POLICY_UPDATED,POLICY_BLOCK_COUNT,POLICY_VULNERABILITY_COUNT,POLICY_DEPLOYED_RULE_COUNT,INCIDENT_INFORMATION,TOPOLOGY_STRUCTURESAFETY,PROTECTIONRATIO,PATH_COVERAGE,POLICY_DEPLOYED_SIGNATURE_COUNT,INCIDENT_PEAKHOUR,POLICY_SIGNATURE_UPDATED)"
+                    },
+                    {
+                        "statsString": "String"
+                    },
+                    {
+                        "statsValue": "Double"
+                    },
+                    {
+                        "frequency": "ENUM(FIVE_SECONDS,ONE_MINUTE,ONE_HOUR,TWENTY_FOUR_HOURS)"
+                    },
+                    {
+                        "cycle": "ENUM(ONE_HOUR,SIX_HOURS,TWELVE_HOURS,ONE_DAY,ONE_WEEK,ONE_MONTH,ONE_YEAR)"
+                    },
+                    {
+                        "updatedAt": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/dashboards/device/topology/{topologyId}/type/{type}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/dashboards/incident/topology/{topologyId}/peakhour": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/dashboards/incident/topology/{topologyId}/type/{type}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/dashboards/policy/topology/{topologyId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/dashboards/policy/topology/{topologyId}/type/{type}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/dashboards/topology/{topologyId}/dashboard": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "dashBoardId": "String"
+                    },
+                    {
+                        "sourceId": "String"
+                    },
+                    {
+                        "dashBoardType": "ENUM(TOPOLOGY,POLICY,DEVICE,THREAT,VULNERABILITY,INCIDENT)"
+                    },
+                    {
+                        "dashBoardTypeDetail": "ENUM(DEVICE_INFORMATION,DEVICE_COVERAGE,NO_PROTECTED_VULNERABILITY,POLICY_UPDATED,POLICY_BLOCK_COUNT,POLICY_VULNERABILITY_COUNT,POLICY_DEPLOYED_RULE_COUNT,INCIDENT_INFORMATION,TOPOLOGY_STRUCTURESAFETY,PROTECTIONRATIO,PATH_COVERAGE,POLICY_DEPLOYED_SIGNATURE_COUNT,INCIDENT_PEAKHOUR,POLICY_SIGNATURE_UPDATED)"
+                    },
+                    {
+                        "statsString": "String"
+                    },
+                    {
+                        "statsValue": "Double"
+                    },
+                    {
+                        "frequency": "ENUM(FIVE_SECONDS,ONE_MINUTE,ONE_HOUR,TWENTY_FOUR_HOURS)"
+                    },
+                    {
+                        "cycle": "ENUM(ONE_HOUR,SIX_HOURS,TWELVE_HOURS,ONE_DAY,ONE_WEEK,ONE_MONTH,ONE_YEAR)"
+                    },
+                    {
+                        "updatedAt": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/dashboards/topology/{topologyId}/type/{type}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/dashboards/vulnerability/topology/{topologyId}/type/{type}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/dashboarduserprofile": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/datadictionaries/source/{source}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/device/{deviceId}/acl": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "deviceACLId": "String"
+                    },
+                    {
+                        "aclNumber": "String"
+                    },
+                    {
+                        "aclAction": "ENUM(permit,deny)"
+                    },
+                    {
+                        "aclLog": "Bool"
+                    },
+                    {
+                        "sourceIp": "String"
+                    },
+                    {
+                        "sourcePort": "String"
+                    },
+                    {
+                        "destinationIp": "String"
+                    },
+                    {
+                        "destinationPort": "String"
+                    },
+                    {
+                        "protocolType": "ENUM(ANY,TCP,UDP,ICMP,OPC_Classic)"
+                    },
+                    {
+                        "protocolTypeName": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdBy": "String"
+                    },
+                    {
+                        "updatedBy": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/device/{deviceId}/acl/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/device/{deviceId}/acl/delete": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/device/{deviceId}/acls": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/factoryreset/device/{boxId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/ipmac/topology/{topologyId}/delete": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/ipmac/topology/{topologyId}/set": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/iptraffic/{deviceId}/{selected}": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/model/protocolCategory": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/newdiscovered": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/selecteddevices": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/test/addnode": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/test/newdeviceviadpi/gen": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/test/newdiscovered/gen": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "deviceId": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "modelId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "modelIdentifier": "String"
+                    },
+                    {
+                        "serialNumber": "String"
+                    },
+                    {
+                        "ip": "String"
+                    },
+                    {
+                        "portsNumber": "Integer"
+                    },
+                    {
+                        "notConnectedPortMap": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "defaultGateway": "String"
+                    },
+                    {
+                        "protectedDevicesNumber": "Integer"
+                    },
+                    {
+                        "allPorts": "LIST"
+                    },
+                    {
+                        "installedAt": "String"
+                    },
+                    {
+                        "weight": "ENUM(NORMAL,IMPORTANT,CRITICAL)"
+                    },
+                    {
+                        "installationState": "ENUM(SUGGESTED,NOT_INSTALLED,INSTALLED)"
+                    },
+                    {
+                        "devicePorts": "LIST"
+                    },
+                    {
+                        "category": "ENUM(SECURITY_DEVICE,FACTORY_DEVICE,NETWORK_DEVICE,CLOUD)"
+                    },
+                    {
+                        "memo": "String"
+                    },
+                    {
+                        "protectedDeviceIds": "LIST"
+                    },
+                    {
+                        "relatedSecurityDeviceIds": "LIST"
+                    },
+                    {
+                        "knownVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "protectedVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "hasUSB": "Bool"
+                    },
+                    {
+                        "hasWireless": "Bool"
+                    },
+                    {
+                        "hasPort": "Bool"
+                    },
+                    {
+                        "vulnerabilityIds": "LIST"
+                    },
+                    {
+                        "cmmnPortnumber": "Integer"
+                    },
+                    {
+                        "isProtected": "Bool"
+                    },
+                    {
+                        "make": "String"
+                    },
+                    {
+                        "version": "String"
+                    },
+                    {
+                        "blocksRef": [
+                            {
+                                "baseUrl": "String"
+                            },
+                            {
+                                "type": "String"
+                            },
+                            {
+                                "actionsUrl": "MAP"
+                            }
+                        ]
+                    },
+                    {
+                        "iconType": "String"
+                    },
+                    {
+                        "hidden": "Integer"
+                    },
+                    {
+                        "deviceOnline": "Integer"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "selected": "Integer"
+                    },
+                    {
+                        "deviceSource": "ENUM(UPLOAD,DISCOVERY,MANUALLY)"
+                    },
+                    {
+                        "startDatetime": "String"
+                    },
+                    {
+                        "groupId": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/assigndevice/{deviceId}": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/device/{deviceId}/acl": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "deviceId": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "modelId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "modelIdentifier": "String"
+                    },
+                    {
+                        "serialNumber": "String"
+                    },
+                    {
+                        "ip": "String"
+                    },
+                    {
+                        "portsNumber": "Integer"
+                    },
+                    {
+                        "notConnectedPortMap": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "defaultGateway": "String"
+                    },
+                    {
+                        "protectedDevicesNumber": "Integer"
+                    },
+                    {
+                        "allPorts": "LIST"
+                    },
+                    {
+                        "installedAt": "String"
+                    },
+                    {
+                        "weight": "ENUM(NORMAL,IMPORTANT,CRITICAL)"
+                    },
+                    {
+                        "installationState": "ENUM(SUGGESTED,NOT_INSTALLED,INSTALLED)"
+                    },
+                    {
+                        "devicePorts": "LIST"
+                    },
+                    {
+                        "category": "ENUM(SECURITY_DEVICE,FACTORY_DEVICE,NETWORK_DEVICE,CLOUD)"
+                    },
+                    {
+                        "memo": "String"
+                    },
+                    {
+                        "protectedDeviceIds": "LIST"
+                    },
+                    {
+                        "relatedSecurityDeviceIds": "LIST"
+                    },
+                    {
+                        "knownVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "protectedVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "hasUSB": "Bool"
+                    },
+                    {
+                        "hasWireless": "Bool"
+                    },
+                    {
+                        "hasPort": "Bool"
+                    },
+                    {
+                        "vulnerabilityIds": "LIST"
+                    },
+                    {
+                        "cmmnPortnumber": "Integer"
+                    },
+                    {
+                        "isProtected": "Bool"
+                    },
+                    {
+                        "make": "String"
+                    },
+                    {
+                        "version": "String"
+                    },
+                    {
+                        "blocksRef": [
+                            {
+                                "baseUrl": "String"
+                            },
+                            {
+                                "type": "String"
+                            },
+                            {
+                                "actionsUrl": "MAP"
+                            }
+                        ]
+                    },
+                    {
+                        "iconType": "String"
+                    },
+                    {
+                        "hidden": "Integer"
+                    },
+                    {
+                        "deviceOnline": "Integer"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "selected": "Integer"
+                    },
+                    {
+                        "deviceSource": "ENUM(UPLOAD,DISCOVERY,MANUALLY)"
+                    },
+                    {
+                        "startDatetime": "String"
+                    },
+                    {
+                        "groupId": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/device/{deviceId}/coverremoteroutings": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/device/{deviceId}/defaultgateway": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "deviceId": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "modelId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "modelIdentifier": "String"
+                    },
+                    {
+                        "serialNumber": "String"
+                    },
+                    {
+                        "ip": "String"
+                    },
+                    {
+                        "portsNumber": "Integer"
+                    },
+                    {
+                        "notConnectedPortMap": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "defaultGateway": "String"
+                    },
+                    {
+                        "protectedDevicesNumber": "Integer"
+                    },
+                    {
+                        "allPorts": "LIST"
+                    },
+                    {
+                        "installedAt": "String"
+                    },
+                    {
+                        "weight": "ENUM(NORMAL,IMPORTANT,CRITICAL)"
+                    },
+                    {
+                        "installationState": "ENUM(SUGGESTED,NOT_INSTALLED,INSTALLED)"
+                    },
+                    {
+                        "devicePorts": "LIST"
+                    },
+                    {
+                        "category": "ENUM(SECURITY_DEVICE,FACTORY_DEVICE,NETWORK_DEVICE,CLOUD)"
+                    },
+                    {
+                        "memo": "String"
+                    },
+                    {
+                        "protectedDeviceIds": "LIST"
+                    },
+                    {
+                        "relatedSecurityDeviceIds": "LIST"
+                    },
+                    {
+                        "knownVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "protectedVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "hasUSB": "Bool"
+                    },
+                    {
+                        "hasWireless": "Bool"
+                    },
+                    {
+                        "hasPort": "Bool"
+                    },
+                    {
+                        "vulnerabilityIds": "LIST"
+                    },
+                    {
+                        "cmmnPortnumber": "Integer"
+                    },
+                    {
+                        "isProtected": "Bool"
+                    },
+                    {
+                        "make": "String"
+                    },
+                    {
+                        "version": "String"
+                    },
+                    {
+                        "blocksRef": [
+                            {
+                                "baseUrl": "String"
+                            },
+                            {
+                                "type": "String"
+                            },
+                            {
+                                "actionsUrl": "MAP"
+                            }
+                        ]
+                    },
+                    {
+                        "iconType": "String"
+                    },
+                    {
+                        "hidden": "Integer"
+                    },
+                    {
+                        "deviceOnline": "Integer"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "selected": "Integer"
+                    },
+                    {
+                        "deviceSource": "ENUM(UPLOAD,DISCOVERY,MANUALLY)"
+                    },
+                    {
+                        "startDatetime": "String"
+                    },
+                    {
+                        "groupId": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/device/{deviceId}/ipmac": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "portName": "String"
+                    },
+                    {
+                        "sourceWorkingMode": "ENUM(IPS,IDS)"
+                    },
+                    {
+                        "deployedRulesNumber": "Integer"
+                    },
+                    {
+                        "protectedDevicesNumber": "Integer"
+                    },
+                    {
+                        "connectedDevice": "String"
+                    },
+                    {
+                        "connectivity": "ENUM(CONNECTED,NOT_CONNECTED)"
+                    },
+                    {
+                        "linkState": "Integer"
+                    },
+                    {
+                        "bypassState": "ENUM(ON,OFF)"
+                    },
+                    {
+                        "isMgmtPort": "Bool"
+                    },
+                    {
+                        "portId": "String"
+                    },
+                    {
+                        "portIp": "String"
+                    },
+                    {
+                        "mac": "String"
+                    },
+                    {
+                        "deviceId": "String"
+                    },
+                    {
+                        "targetWorkingMode": "ENUM(IPS,IDS)"
+                    },
+                    {
+                        "netMask": "String"
+                    },
+                    {
+                        "status": "Integer"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "currentPortIp": "String"
+                    },
+                    {
+                        "currentNetMask": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/device/{deviceId}/notconnectedport": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "deviceId": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "modelId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "modelIdentifier": "String"
+                    },
+                    {
+                        "serialNumber": "String"
+                    },
+                    {
+                        "ip": "String"
+                    },
+                    {
+                        "portsNumber": "Integer"
+                    },
+                    {
+                        "notConnectedPortMap": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "defaultGateway": "String"
+                    },
+                    {
+                        "protectedDevicesNumber": "Integer"
+                    },
+                    {
+                        "allPorts": "LIST"
+                    },
+                    {
+                        "installedAt": "String"
+                    },
+                    {
+                        "weight": "ENUM(NORMAL,IMPORTANT,CRITICAL)"
+                    },
+                    {
+                        "installationState": "ENUM(SUGGESTED,NOT_INSTALLED,INSTALLED)"
+                    },
+                    {
+                        "devicePorts": "LIST"
+                    },
+                    {
+                        "category": "ENUM(SECURITY_DEVICE,FACTORY_DEVICE,NETWORK_DEVICE,CLOUD)"
+                    },
+                    {
+                        "memo": "String"
+                    },
+                    {
+                        "protectedDeviceIds": "LIST"
+                    },
+                    {
+                        "relatedSecurityDeviceIds": "LIST"
+                    },
+                    {
+                        "knownVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "protectedVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "hasUSB": "Bool"
+                    },
+                    {
+                        "hasWireless": "Bool"
+                    },
+                    {
+                        "hasPort": "Bool"
+                    },
+                    {
+                        "vulnerabilityIds": "LIST"
+                    },
+                    {
+                        "cmmnPortnumber": "Integer"
+                    },
+                    {
+                        "isProtected": "Bool"
+                    },
+                    {
+                        "make": "String"
+                    },
+                    {
+                        "version": "String"
+                    },
+                    {
+                        "blocksRef": [
+                            {
+                                "baseUrl": "String"
+                            },
+                            {
+                                "type": "String"
+                            },
+                            {
+                                "actionsUrl": "MAP"
+                            }
+                        ]
+                    },
+                    {
+                        "iconType": "String"
+                    },
+                    {
+                        "hidden": "Integer"
+                    },
+                    {
+                        "deviceOnline": "Integer"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "selected": "Integer"
+                    },
+                    {
+                        "deviceSource": "ENUM(UPLOAD,DISCOVERY,MANUALLY)"
+                    },
+                    {
+                        "startDatetime": "String"
+                    },
+                    {
+                        "groupId": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/device/{deviceId}/portroutingconfig": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "deviceId": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "modelId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "modelIdentifier": "String"
+                    },
+                    {
+                        "serialNumber": "String"
+                    },
+                    {
+                        "ip": "String"
+                    },
+                    {
+                        "portsNumber": "Integer"
+                    },
+                    {
+                        "notConnectedPortMap": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "defaultGateway": "String"
+                    },
+                    {
+                        "protectedDevicesNumber": "Integer"
+                    },
+                    {
+                        "allPorts": "LIST"
+                    },
+                    {
+                        "installedAt": "String"
+                    },
+                    {
+                        "weight": "ENUM(NORMAL,IMPORTANT,CRITICAL)"
+                    },
+                    {
+                        "installationState": "ENUM(SUGGESTED,NOT_INSTALLED,INSTALLED)"
+                    },
+                    {
+                        "devicePorts": "LIST"
+                    },
+                    {
+                        "category": "ENUM(SECURITY_DEVICE,FACTORY_DEVICE,NETWORK_DEVICE,CLOUD)"
+                    },
+                    {
+                        "memo": "String"
+                    },
+                    {
+                        "protectedDeviceIds": "LIST"
+                    },
+                    {
+                        "relatedSecurityDeviceIds": "LIST"
+                    },
+                    {
+                        "knownVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "protectedVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "hasUSB": "Bool"
+                    },
+                    {
+                        "hasWireless": "Bool"
+                    },
+                    {
+                        "hasPort": "Bool"
+                    },
+                    {
+                        "vulnerabilityIds": "LIST"
+                    },
+                    {
+                        "cmmnPortnumber": "Integer"
+                    },
+                    {
+                        "isProtected": "Bool"
+                    },
+                    {
+                        "make": "String"
+                    },
+                    {
+                        "version": "String"
+                    },
+                    {
+                        "blocksRef": [
+                            {
+                                "baseUrl": "String"
+                            },
+                            {
+                                "type": "String"
+                            },
+                            {
+                                "actionsUrl": "MAP"
+                            }
+                        ]
+                    },
+                    {
+                        "iconType": "String"
+                    },
+                    {
+                        "hidden": "Integer"
+                    },
+                    {
+                        "deviceOnline": "Integer"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "selected": "Integer"
+                    },
+                    {
+                        "deviceSource": "ENUM(UPLOAD,DISCOVERY,MANUALLY)"
+                    },
+                    {
+                        "startDatetime": "String"
+                    },
+                    {
+                        "groupId": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/device/{deviceId}/remoteroutings": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            },
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/device/{deviceId}/remoteroutings/delete": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/device/{deviceId}/routing": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "deviceId": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "modelId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "modelIdentifier": "String"
+                    },
+                    {
+                        "serialNumber": "String"
+                    },
+                    {
+                        "ip": "String"
+                    },
+                    {
+                        "portsNumber": "Integer"
+                    },
+                    {
+                        "notConnectedPortMap": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "defaultGateway": "String"
+                    },
+                    {
+                        "protectedDevicesNumber": "Integer"
+                    },
+                    {
+                        "allPorts": "LIST"
+                    },
+                    {
+                        "installedAt": "String"
+                    },
+                    {
+                        "weight": "ENUM(NORMAL,IMPORTANT,CRITICAL)"
+                    },
+                    {
+                        "installationState": "ENUM(SUGGESTED,NOT_INSTALLED,INSTALLED)"
+                    },
+                    {
+                        "devicePorts": "LIST"
+                    },
+                    {
+                        "category": "ENUM(SECURITY_DEVICE,FACTORY_DEVICE,NETWORK_DEVICE,CLOUD)"
+                    },
+                    {
+                        "memo": "String"
+                    },
+                    {
+                        "protectedDeviceIds": "LIST"
+                    },
+                    {
+                        "relatedSecurityDeviceIds": "LIST"
+                    },
+                    {
+                        "knownVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "protectedVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "hasUSB": "Bool"
+                    },
+                    {
+                        "hasWireless": "Bool"
+                    },
+                    {
+                        "hasPort": "Bool"
+                    },
+                    {
+                        "vulnerabilityIds": "LIST"
+                    },
+                    {
+                        "cmmnPortnumber": "Integer"
+                    },
+                    {
+                        "isProtected": "Bool"
+                    },
+                    {
+                        "make": "String"
+                    },
+                    {
+                        "version": "String"
+                    },
+                    {
+                        "blocksRef": [
+                            {
+                                "baseUrl": "String"
+                            },
+                            {
+                                "type": "String"
+                            },
+                            {
+                                "actionsUrl": "MAP"
+                            }
+                        ]
+                    },
+                    {
+                        "iconType": "String"
+                    },
+                    {
+                        "hidden": "Integer"
+                    },
+                    {
+                        "deviceOnline": "Integer"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "selected": "Integer"
+                    },
+                    {
+                        "deviceSource": "ENUM(UPLOAD,DISCOVERY,MANUALLY)"
+                    },
+                    {
+                        "startDatetime": "String"
+                    },
+                    {
+                        "groupId": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/devicegroup": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "deviceGroupId": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "groupName": "String"
+                    },
+                    {
+                        "groupX": "Double"
+                    },
+                    {
+                        "groupY": "Double"
+                    },
+                    {
+                        "isExpaneded": "Bool"
+                    },
+                    {
+                        "groupId": "Integer"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    }
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/devicegroup/{groupId}": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/deviceip/{deviceIp}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/models": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "modelId": "String"
+                    },
+                    {
+                        "model_name": "String"
+                    },
+                    {
+                        "make": "String"
+                    },
+                    {
+                        "category": "ENUM(SECURITY_DEVICE,FACTORY_DEVICE,NETWORK_DEVICE,CLOUD)"
+                    },
+                    {
+                        "model": "String"
+                    },
+                    {
+                        "version": "String"
+                    },
+                    {
+                        "hidden": "Integer"
+                    },
+                    {
+                        "protocol": "String"
+                    },
+                    {
+                        "model_serialNo": "String"
+                    },
+                    {
+                        "firmwareVersion": "String"
+                    },
+                    {
+                        "model_memo": "String"
+                    },
+                    {
+                        "pictureURL": "String"
+                    },
+                    {
+                        "numOfPorts": "Integer"
+                    },
+                    {
+                        "iconType": "String"
+                    },
+                    {
+                        "subCategory": "ENUM(NORMAL,DATA_COLLECTION_DEVICE)"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/mw/systemstat": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/protecteddevices/{deviceId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/securitydevices/{deviceId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/test/operationlog": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/{category}/search/{text}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/{deviceId}": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "deviceId": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "modelId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "modelIdentifier": "String"
+                    },
+                    {
+                        "serialNumber": "String"
+                    },
+                    {
+                        "ip": "String"
+                    },
+                    {
+                        "portsNumber": "Integer"
+                    },
+                    {
+                        "notConnectedPortMap": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "defaultGateway": "String"
+                    },
+                    {
+                        "protectedDevicesNumber": "Integer"
+                    },
+                    {
+                        "allPorts": "LIST"
+                    },
+                    {
+                        "installedAt": "String"
+                    },
+                    {
+                        "weight": "ENUM(NORMAL,IMPORTANT,CRITICAL)"
+                    },
+                    {
+                        "installationState": "ENUM(SUGGESTED,NOT_INSTALLED,INSTALLED)"
+                    },
+                    {
+                        "devicePorts": "LIST"
+                    },
+                    {
+                        "category": "ENUM(SECURITY_DEVICE,FACTORY_DEVICE,NETWORK_DEVICE,CLOUD)"
+                    },
+                    {
+                        "memo": "String"
+                    },
+                    {
+                        "protectedDeviceIds": "LIST"
+                    },
+                    {
+                        "relatedSecurityDeviceIds": "LIST"
+                    },
+                    {
+                        "knownVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "protectedVulnerabilitiesNumber": "Integer"
+                    },
+                    {
+                        "hasUSB": "Bool"
+                    },
+                    {
+                        "hasWireless": "Bool"
+                    },
+                    {
+                        "hasPort": "Bool"
+                    },
+                    {
+                        "vulnerabilityIds": "LIST"
+                    },
+                    {
+                        "cmmnPortnumber": "Integer"
+                    },
+                    {
+                        "isProtected": "Bool"
+                    },
+                    {
+                        "make": "String"
+                    },
+                    {
+                        "version": "String"
+                    },
+                    {
+                        "blocksRef": [
+                            {
+                                "baseUrl": "String"
+                            },
+                            {
+                                "type": "String"
+                            },
+                            {
+                                "actionsUrl": "MAP"
+                            }
+                        ]
+                    },
+                    {
+                        "iconType": "String"
+                    },
+                    {
+                        "hidden": "Integer"
+                    },
+                    {
+                        "deviceOnline": "Integer"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "selected": "Integer"
+                    },
+                    {
+                        "deviceSource": "ENUM(UPLOAD,DISCOVERY,MANUALLY)"
+                    },
+                    {
+                        "startDatetime": "String"
+                    },
+                    {
+                        "groupId": "String"
+                    }
+                ]
+            },
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/{deviceId}/devicemodechange": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "id": "Integer"
+                    },
+                    {
+                        "deviceId": "String"
+                    },
+                    {
+                        "deviceName": "String"
+                    },
+                    {
+                        "serialNumber": "String"
+                    },
+                    {
+                        "oldMode": "String"
+                    },
+                    {
+                        "newMode": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "boxInfo": "String"
+                    }
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/{deviceId}/systemstat": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/{deviceId}/testdevicemodechange": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/topology/{topologyId}/{deviceId}/{portId}/{mode}": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/upgrade": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/uploadcsv": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/devices/{deviceId}/deviceports": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/domains/": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "domainInfoId": "String"
+                    },
+                    {
+                        "domainName": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdBy": "String"
+                    },
+                    {
+                        "updatedBy": "String"
+                    },
+                    {
+                        "currentTopologyId": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "domainCode": "String"
+                    },
+                    {
+                        "isMultiDomains": "Bool"
+                    }
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/domains/customizedMenus": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/domains/customizedMenus/{level}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/domains/initdomain": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/domains/{domaininfoid}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/domains/{domaininfoid}/delete": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/domains/{domaininfoid}/domainsubnets": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/events/dpitemperatureInfo/boxid/{boxid}": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/events/topology/{topologyId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/events/topology/{topologyId}/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/events/topology/{topologyId}/export": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/events/topology/{topologyId}/import": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/events/topology/{topologyId}/markalldeleted": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/events/topology/{topologyId}/markallread": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/events/topology/{topologyId}/points/level/{level}/frequency/{frequency}/starttime/{startTime}/endtime/{endTime}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/events/topology/{topologyId}/testevent": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/events/topology/{topologyId}/testheartbeat": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/events/topology/{topologyId}/{eventId}": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            },
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/console/image": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/console/lastsuccessfulupgrade": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/console/upgrade": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/console/uploadimage": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/device/image": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/device/uploadimage": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/fileid/{fileId}/filedelete": [
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/topology/{tid}/filedownload": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/topology/{topologyId}/fileupload": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/topology/{topologyId}/imageupload": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/topology/{topologyId}/{intrusionDetectionId}/pcapdeletion": [
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/topology/{topologyId}/{intrusionDetectionId}/pcapupload": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/topologydiscover/{topologyId}/topologyskeletonupload": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/type/{sourceType}/fileid/{fileId}/download": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/files/type/{sourceType}/sourceid/{sourceId}/multipleupload": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/incidents/topology/{topologyId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/incidents/topology/{topologyId}/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/incidents/topology/{topologyId}/devices/{deviceId}/{start}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/incidents/topology/{topologyId}/export": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/incidents/topology/{topologyId}/import": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/incidents/topology/{topologyId}/markalldeleted": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/incidents/topology/{topologyId}/markallread": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/incidents/topology/{topologyId}/mostfrequentzone": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/incidents/topology/{topologyId}/points/level/{level}/frequency/{frequency}/starttime/{startTime}/endtime/{endTime}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/incidents/topology/{topologyId}/testincident": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/incidents/topology/{topologyId}/{incidentId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ]
+            },
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/intrusiondetection/newid": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/intrusiondetection/topology/{topologyId}": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "intrusionDetectionId": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "intrusionDetectionName": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "detectionType": "ENUM(REALTIME,OFFLINE)"
+                    },
+                    {
+                        "inUse": "Bool"
+                    },
+                    {
+                        "fileUploaded": "Bool"
+                    },
+                    {
+                        "startTime": "String"
+                    },
+                    {
+                        "userName": "String"
+                    },
+                    {
+                        "initialState": "Short"
+                    }
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "intrusionDetectionId": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "intrusionDetectionName": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "detectionType": "ENUM(REALTIME,OFFLINE)"
+                    },
+                    {
+                        "inUse": "Bool"
+                    },
+                    {
+                        "fileUploaded": "Bool"
+                    },
+                    {
+                        "startTime": "String"
+                    },
+                    {
+                        "userName": "String"
+                    },
+                    {
+                        "initialState": "Short"
+                    }
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/intrusiondetection/topology/{topologyId}/intrusionincidents": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/intrusiondetection/topology/{topologyId}/intrusionincidents/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/intrusiondetection/topology/{topologyId}/intrusionincidents/{intrusionIncidentId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/intrusiondetection/topology/{topologyId}/{detectionType}": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/intrusiondetection/topology/{topologyId}/{intrusionDetectionId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/intrusiondetection/topology/{topologyId}/{intrusionDetectionId}/incidentstats": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/intrusiondetection/topology/{topologyId}/{intrusionDetectionId}/initialstate": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/intrusiondetection/topology/{topologyId}/{intrusionDetectionId}/lowlevelactor": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/intrusiondetection/topology/{topologyId}/{intrusionDetectionId}/patterns": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/intrusiondetection/topology/{topologyId}/{intrusionDetectionId}/{signatureId}/patternmatching": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/jobscheduler/jobbuilder": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "schedulingJob": [
+                            {
+                                "jobId": "Integer"
+                            },
+                            {
+                                "jobCategory": "ENUM(INCIDENT_REPORT,EVENT_REPORT,LOG_REPORT,PROTOCOL_REPORT,LOG_DELETION)"
+                            },
+                            {
+                                "jobName": "String"
+                            },
+                            {
+                                "jobData": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "schedulingJobMeta": "LIST"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/jobscheduler/jobbuilder/category/{jobCategory}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/learning": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/learning/topology/{topologyId}": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "learningTaskId": "String"
+                    },
+                    {
+                        "startTime": "String"
+                    },
+                    {
+                        "endTime": "String"
+                    },
+                    {
+                        "taskName": "String"
+                    },
+                    {
+                        "timeZoneOffset": "String"
+                    }
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/learning/{taskId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "learningTaskId": "String"
+                    },
+                    {
+                        "startTime": "String"
+                    },
+                    {
+                        "endTime": "String"
+                    },
+                    {
+                        "taskName": "String"
+                    },
+                    {
+                        "timeZoneOffset": "String"
+                    }
+                ]
+            },
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/learning/{taskId}/pause": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/learning/{taskId}/resume": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/learning/{taskId}/stop": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/login": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/logout": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/logs": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/logs/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/logs/{name}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/logs/{name}/download": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/backuplog": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/backuplogs": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/backuplogs/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/backuplogs/delete": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/operationlog/{operationlogId}/type/{typename}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/all": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/all/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/all/export": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/all/import": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/points/type/{type}/frequency/{frequency}/starttime/{startTime}/endtime/{endTime}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/testdpilog/{dpilogtype}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/type/DpiUserCmdLog": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/type/DpiUserCmdLog/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/type/DpiUserCmdLog/export": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/type/DpiUserCmdLog/import": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/type/DpiUserLogin": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/type/DpiUserLogin/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/type/DpiUserLogin/export": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/type/DpiUserLogin/import": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/type/DpifwPacketAccounting": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/type/DpifwPacketAccounting/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/type/DpifwPacketAccounting/export": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/operationlogs/topology/{topologyId}/type/DpifwPacketAccounting/import": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/block/{blockid}/rule": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "ruleId": "String"
+                    },
+                    {
+                        "priority": "Integer"
+                    },
+                    {
+                        "fields": "LIST"
+                    },
+                    {
+                        "action": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "id": "Integer"
+                    },
+                    {
+                        "policyBlockId": "String"
+                    },
+                    {
+                        "failedReason": "String"
+                    },
+                    {
+                        "sourceRuleId": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/block/{policyBlockId}": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "policyBlockId": "String"
+                    },
+                    {
+                        "priority": "Integer"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "status": "ENUM(INACTIVE,ACTIVE)"
+                    },
+                    {
+                        "targetStatus": "ENUM(INACTIVE,ACTIVE)"
+                    },
+                    {
+                        "type": "ENUM(LEARN,TEMPLATE,CUSTOM,SIGNATURE)"
+                    },
+                    {
+                        "rules": "LIST"
+                    },
+                    {
+                        "signatures": "LIST"
+                    },
+                    {
+                        "lockedStatus": "ENUM(NODEPLOY,READYDEPLOY,DEPLOYED)"
+                    },
+                    {
+                        "sourceId": "String"
+                    },
+                    {
+                        "policyId": "String"
+                    },
+                    {
+                        "lastMessage": "String"
+                    },
+                    {
+                        "sourceZoneId": "String"
+                    },
+                    {
+                        "destinationZoneId": "String"
+                    },
+                    {
+                        "taskId": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "revision": "Integer"
+                    },
+                    {
+                        "vulnerabilityId": "String"
+                    },
+                    {
+                        "description": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/block/{policyBlockId}/rule/{ruleId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "ruleId": "String"
+                    },
+                    {
+                        "priority": "Integer"
+                    },
+                    {
+                        "fields": "LIST"
+                    },
+                    {
+                        "action": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "id": "Integer"
+                    },
+                    {
+                        "policyBlockId": "String"
+                    },
+                    {
+                        "failedReason": "String"
+                    },
+                    {
+                        "sourceRuleId": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/block/{policyBlockId}/rules": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/block/{policyBlockId}/rules/priority": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "ruleId": "String"
+                    },
+                    {
+                        "currentOrder": "Integer"
+                    },
+                    {
+                        "targetOrder": "Integer"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/block/{policyBlockId}/signature/{signatureId}": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "signatureId": "String"
+                    },
+                    {
+                        "priority": "Short"
+                    },
+                    {
+                        "rev": "Short"
+                    },
+                    {
+                        "signame": "String"
+                    },
+                    {
+                        "msg": "String"
+                    },
+                    {
+                        "body": "String"
+                    },
+                    {
+                        "sid": "Integer"
+                    },
+                    {
+                        "action": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "vulnerabilityId": "String"
+                    },
+                    {
+                        "sourceSignatureId": "String"
+                    },
+                    {
+                        "flowbits": "LIST"
+                    },
+                    {
+                        "deleted": "Bool"
+                    }
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/block/{policyBlockId}/signatures": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "signatureId": "String"
+                    },
+                    {
+                        "priority": "Short"
+                    },
+                    {
+                        "rev": "Short"
+                    },
+                    {
+                        "signame": "String"
+                    },
+                    {
+                        "msg": "String"
+                    },
+                    {
+                        "body": "String"
+                    },
+                    {
+                        "sid": "Integer"
+                    },
+                    {
+                        "action": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "vulnerabilityId": "String"
+                    },
+                    {
+                        "sourceSignatureId": "String"
+                    },
+                    {
+                        "flowbits": "LIST"
+                    },
+                    {
+                        "deleted": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/blocks/delete": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/newid": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/policy/{policyId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/policy/{policyId}/blocks/priority": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "policyBlockId": "String"
+                    },
+                    {
+                        "currentOrder": "Integer"
+                    },
+                    {
+                        "targetOrder": "Integer"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/policy/{policyId}/defaultrules": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "policyId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "blocksRef": [
+                            {
+                                "baseUrl": "String"
+                            },
+                            {
+                                "type": "String"
+                            },
+                            {
+                                "actionsUrl": "MAP"
+                            }
+                        ]
+                    },
+                    {
+                        "blocks": "LIST"
+                    },
+                    {
+                        "defaultPolicy": "Bool"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedBy": "String"
+                    },
+                    {
+                        "createdBy": "String"
+                    },
+                    {
+                        "currentRevision": "Integer"
+                    },
+                    {
+                        "inUse": "Bool"
+                    },
+                    {
+                        "lockedType": "ENUM(NODEPLOY,READYDEPLOY,DEPLOYED)"
+                    },
+                    {
+                        "sourcePolicyId": "String"
+                    },
+                    {
+                        "supportRuleAction": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "unknownRuleAction": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "policyType": "ENUM(WHITELIST,BLACKLIST,IPMAC)"
+                    },
+                    {
+                        "ipMacAction": "ENUM(ALLOW,ALERT,DENY)"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/policy/{policyId}/signatures": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "signatureId": "String"
+                    },
+                    {
+                        "priority": "Short"
+                    },
+                    {
+                        "rev": "Short"
+                    },
+                    {
+                        "signame": "String"
+                    },
+                    {
+                        "msg": "String"
+                    },
+                    {
+                        "body": "String"
+                    },
+                    {
+                        "sid": "Integer"
+                    },
+                    {
+                        "action": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "vulnerabilityId": "String"
+                    },
+                    {
+                        "sourceSignatureId": "String"
+                    },
+                    {
+                        "flowbits": "LIST"
+                    },
+                    {
+                        "deleted": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/policyid/{policyid}/blocks/deleteall/type/{policytype}": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/prompt": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/rules/delete": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "policyId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "blocksRef": [
+                            {
+                                "baseUrl": "String"
+                            },
+                            {
+                                "type": "String"
+                            },
+                            {
+                                "actionsUrl": "MAP"
+                            }
+                        ]
+                    },
+                    {
+                        "blocks": "LIST"
+                    },
+                    {
+                        "defaultPolicy": "Bool"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedBy": "String"
+                    },
+                    {
+                        "createdBy": "String"
+                    },
+                    {
+                        "currentRevision": "Integer"
+                    },
+                    {
+                        "inUse": "Bool"
+                    },
+                    {
+                        "lockedType": "ENUM(NODEPLOY,READYDEPLOY,DEPLOYED)"
+                    },
+                    {
+                        "sourcePolicyId": "String"
+                    },
+                    {
+                        "supportRuleAction": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "unknownRuleAction": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "policyType": "ENUM(WHITELIST,BLACKLIST,IPMAC)"
+                    },
+                    {
+                        "ipMacAction": "ENUM(ALLOW,ALERT,DENY)"
+                    }
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/device/{deviceId}/blocks": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/device/{deviceId}/blocks/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/device/{deviceId}/items/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/incident/{incidentId}/action": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "targetAction": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "policyName": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/ipmac": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/ipmacaction": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "policyId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "blocksRef": [
+                            {
+                                "baseUrl": "String"
+                            },
+                            {
+                                "type": "String"
+                            },
+                            {
+                                "actionsUrl": "MAP"
+                            }
+                        ]
+                    },
+                    {
+                        "blocks": "LIST"
+                    },
+                    {
+                        "defaultPolicy": "Bool"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedBy": "String"
+                    },
+                    {
+                        "createdBy": "String"
+                    },
+                    {
+                        "currentRevision": "Integer"
+                    },
+                    {
+                        "inUse": "Bool"
+                    },
+                    {
+                        "lockedType": "ENUM(NODEPLOY,READYDEPLOY,DEPLOYED)"
+                    },
+                    {
+                        "sourcePolicyId": "String"
+                    },
+                    {
+                        "supportRuleAction": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "unknownRuleAction": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "policyType": "ENUM(WHITELIST,BLACKLIST,IPMAC)"
+                    },
+                    {
+                        "ipMacAction": "ENUM(ALLOW,ALERT,DENY)"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/nodes/{nodeId}/rulesignaturecount": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/policy/{policyId}": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "policyId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "blocksRef": [
+                            {
+                                "baseUrl": "String"
+                            },
+                            {
+                                "type": "String"
+                            },
+                            {
+                                "actionsUrl": "MAP"
+                            }
+                        ]
+                    },
+                    {
+                        "blocks": "LIST"
+                    },
+                    {
+                        "defaultPolicy": "Bool"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedBy": "String"
+                    },
+                    {
+                        "createdBy": "String"
+                    },
+                    {
+                        "currentRevision": "Integer"
+                    },
+                    {
+                        "inUse": "Bool"
+                    },
+                    {
+                        "lockedType": "ENUM(NODEPLOY,READYDEPLOY,DEPLOYED)"
+                    },
+                    {
+                        "sourcePolicyId": "String"
+                    },
+                    {
+                        "supportRuleAction": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "unknownRuleAction": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "policyType": "ENUM(WHITELIST,BLACKLIST,IPMAC)"
+                    },
+                    {
+                        "ipMacAction": "ENUM(ALLOW,ALERT,DENY)"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/policy/{policyId}/block": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "policyBlockId": "String"
+                    },
+                    {
+                        "priority": "Integer"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "status": "ENUM(INACTIVE,ACTIVE)"
+                    },
+                    {
+                        "targetStatus": "ENUM(INACTIVE,ACTIVE)"
+                    },
+                    {
+                        "type": "ENUM(LEARN,TEMPLATE,CUSTOM,SIGNATURE)"
+                    },
+                    {
+                        "rules": "LIST"
+                    },
+                    {
+                        "signatures": "LIST"
+                    },
+                    {
+                        "lockedStatus": "ENUM(NODEPLOY,READYDEPLOY,DEPLOYED)"
+                    },
+                    {
+                        "sourceId": "String"
+                    },
+                    {
+                        "policyId": "String"
+                    },
+                    {
+                        "lastMessage": "String"
+                    },
+                    {
+                        "sourceZoneId": "String"
+                    },
+                    {
+                        "destinationZoneId": "String"
+                    },
+                    {
+                        "taskId": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "revision": "Integer"
+                    },
+                    {
+                        "vulnerabilityId": "String"
+                    },
+                    {
+                        "description": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/policy/{policyId}/blocks": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/policy/{policyId}/blocks/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/policy/{policyId}/blocks/test": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/policy/{policyId}/blocktype/{blockType}/availableblocks": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/policy/{policyId}/blocktype/{blockType}/unlock": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/policy/{policyId}/blocktype/{blockType}/unlockall": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/policy/{policyId}/rule/{blockType}/export": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/policy/{policyId}/sigrules/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/policytype/{policyType}": [
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/rule/{blockType}/export": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/topology/{topologyId}/rule/{blockType}/fileupload": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/vulnerabilities/fileupload": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/{policyId}/block/{blockId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/policies/{policyId}/deploy": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/privateprotocols/": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/privateprotocols/defaultports": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/roles/": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/roles/privilegeactions": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/roles/privilegetargets": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/roles/role/{roleId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/roles/topology/{topologyId}/role/{roleId}/devices": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/roles/{topologyId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/servicesetting/protocolswitch": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "devices": "LIST"
+                    },
+                    {
+                        "subscribeConfig": [
+                            {
+                                "requestContext": [
+                                    {
+                                        "requestId": "String"
+                                    },
+                                    {
+                                        "clientId": "String"
+                                    },
+                                    {
+                                        "taskId": "String"
+                                    },
+                                    {
+                                        "timestamp": "String"
+                                    }
+                                ]
+                            },
+                            {
+                                "boxId": "String"
+                            },
+                            {
+                                "flowdataReport": "Bool"
+                            },
+                            {
+                                "itprotocolReport": "Bool"
+                            },
+                            {
+                                "iptrafficReport": "Bool"
+                            },
+                            {
+                                "icAccountingReport1": "Long"
+                            },
+                            {
+                                "icAccountingReport2": "Long"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategyaction": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "strategyActionId": "String"
+                    },
+                    {
+                        "strategyActionSetId": "String"
+                    },
+                    {
+                        "strategyActionCode": "ENUM(DENY,DELETE,ALERT,TIMEOUT,BACKUP,ALLOW)"
+                    },
+                    {
+                        "actionData": "String"
+                    },
+                    {
+                        "strategyActionName": "String"
+                    },
+                    {
+                        "actionPriority": "Short"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "disabled": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategyaction/actiondata": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "strategyActionId": "String"
+                    },
+                    {
+                        "strategyActionSetId": "String"
+                    },
+                    {
+                        "strategyActionCode": "ENUM(DENY,DELETE,ALERT,TIMEOUT,BACKUP,ALLOW)"
+                    },
+                    {
+                        "actionData": "String"
+                    },
+                    {
+                        "strategyActionName": "String"
+                    },
+                    {
+                        "actionPriority": "Short"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "disabled": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategyaction/{strategyActionId}": [
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategyactionset": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "strategyActionSetId": "String"
+                    },
+                    {
+                        "strategyActionSetName": "String"
+                    },
+                    {
+                        "strategyActionDescription": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdBy": "String"
+                    },
+                    {
+                        "updatedBy": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "disabled": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategyactionset/{strategyActionSetId}": [
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategybuilder/strategycode/{strategyCode}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategybuilder/strategyinfo/{strategyInfoId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategybuilders": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategyinfo": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "strategyInfoId": "String"
+                    },
+                    {
+                        "strategyName": "String"
+                    },
+                    {
+                        "strategyDescription": "String"
+                    },
+                    {
+                        "strategyCode": "ENUM(STORAGE_MANAGEMENT,IP_LOGIN_MANAGEMENT,LOG_MANAGEMENT,TIMEOUT_MANAGEMENT,MAX_LOGIN_TRY_MANAGEMENT,PASSWORD_COMPLEXITY_MANAGEMENT,IP_TRAFFIC_MANAGEMENT,IP_TRAFFIC_TOGGLE,FTP_PROTOCOL_TOGGLE,NOTIFICATION_MANAGEMENT)"
+                    },
+                    {
+                        "strategyRuleSetId": "String"
+                    },
+                    {
+                        "strategyActionSetId": "String"
+                    },
+                    {
+                        "matchOption": "ENUM(OR,AND)"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdBy": "String"
+                    },
+                    {
+                        "updatedBy": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "disabled": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategyinfo/{strategyInfoId}": [
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategyrule": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "strategyRuleId": "String"
+                    },
+                    {
+                        "strategyRuleSetId": "String"
+                    },
+                    {
+                        "strategyRuleCode": "ENUM(GT,GE,EQ,LT,LE,LIKE)"
+                    },
+                    {
+                        "ruleData": "String"
+                    },
+                    {
+                        "strategyRuleName": "String"
+                    },
+                    {
+                        "rulePriority": "Short"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "disabled": "Bool"
+                    },
+                    {
+                        "strategyRuleIdentifier": "ENUM(STORAGE_THRESHOLD,MAX_LOGIN_TRY,VALID_IP,IDLE_TIME,PASSWORD_COMPLEXITY,IP_TRAFFIC_INTERVAL,IP_TRAFFIC_TOGGLE,FTP_PROTOCOL_TOGGLE,NOTIFICATIOIN_TYPE)"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategyrule/ruledata": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "strategyRuleId": "String"
+                    },
+                    {
+                        "strategyRuleSetId": "String"
+                    },
+                    {
+                        "strategyRuleCode": "ENUM(GT,GE,EQ,LT,LE,LIKE)"
+                    },
+                    {
+                        "ruleData": "String"
+                    },
+                    {
+                        "strategyRuleName": "String"
+                    },
+                    {
+                        "rulePriority": "Short"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "disabled": "Bool"
+                    },
+                    {
+                        "strategyRuleIdentifier": "ENUM(STORAGE_THRESHOLD,MAX_LOGIN_TRY,VALID_IP,IDLE_TIME,PASSWORD_COMPLEXITY,IP_TRAFFIC_INTERVAL,IP_TRAFFIC_TOGGLE,FTP_PROTOCOL_TOGGLE,NOTIFICATIOIN_TYPE)"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategyrule/{strategyRuleId}": [
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategyruleset": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "strategyRuleSetId": "String"
+                    },
+                    {
+                        "strategyRuleSetName": "String"
+                    },
+                    {
+                        "strategyRuleDescription": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "createdBy": "String"
+                    },
+                    {
+                        "updatedBy": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    },
+                    {
+                        "disabled": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/strategymanagement/strategyruleset/{strategyRuleSetId}": [
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ]
+            },
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/structuresafeties/newid": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/structuresafeties/topology/{topologyId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "structureId": "String"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "structureName": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/structuresafeties/topology/{topologyId}/structuresafety/{structureId}": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "structureSafetyNodeId": "String"
+                    },
+                    {
+                        "structureId": "String"
+                    },
+                    {
+                        "selectedSourceList": "LIST"
+                    },
+                    {
+                        "selectedTargetList": "LIST"
+                    },
+                    {
+                        "useVulner": "Bool"
+                    },
+                    {
+                        "vimp": "Bool"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "attachedFile": "LIST"
+                    },
+                    {
+                        "nodeName": "String"
+                    },
+                    {
+                        "zoneName": "String"
+                    },
+                    {
+                        "make": "String"
+                    },
+                    {
+                        "model": "String"
+                    },
+                    {
+                        "memo": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/structuresafeties/topology/{topologyId}/structuresafety/{structureId}/calculatesafety": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "structureSafetyNodeId": "String"
+                    },
+                    {
+                        "structureId": "String"
+                    },
+                    {
+                        "selectedSourceList": "LIST"
+                    },
+                    {
+                        "selectedTargetList": "LIST"
+                    },
+                    {
+                        "useVulner": "Bool"
+                    },
+                    {
+                        "vimp": "Bool"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "attachedFile": "LIST"
+                    },
+                    {
+                        "nodeName": "String"
+                    },
+                    {
+                        "zoneName": "String"
+                    },
+                    {
+                        "make": "String"
+                    },
+                    {
+                        "model": "String"
+                    },
+                    {
+                        "memo": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/structuresafeties/topology/{topologyId}/structuresafety/{structureId}/nodes": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/structuresafeties/{structureSafetyId}/structuresafetynode": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/sysbaseinfo/curtime": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/sysbaseinfo/curtimesimple": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/sysbaseinfo/localip": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/sysbaseinfo/serialnumber": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/sysbaseinfo/version": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/diskusage": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "checkDiskUsageInterval": "Integer"
+                    },
+                    {
+                        "diskUsageWarningThreshold": "Integer"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/ipmac": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "requestContext": [
+                            {
+                                "requestId": "String"
+                            },
+                            {
+                                "clientId": "String"
+                            },
+                            {
+                                "taskId": "String"
+                            },
+                            {
+                                "timestamp": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "payload": "LIST"
+                    },
+                    {
+                        "systemSettingType": "ENUM(OPMODE_CHANGE,IPMAC,MAINTENANCE_MODE)"
+                    },
+                    {
+                        "flag": "Bool"
+                    },
+                    {
+                        "action": "ENUM(ALLOW,ALERT,DENY)"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/logs": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/mode": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "requestContext": [
+                            {
+                                "requestId": "String"
+                            },
+                            {
+                                "clientId": "String"
+                            },
+                            {
+                                "taskId": "String"
+                            },
+                            {
+                                "timestamp": "String"
+                            }
+                        ]
+                    },
+                    {
+                        "payload": "LIST"
+                    },
+                    {
+                        "systemSettingType": "ENUM(OPMODE_CHANGE,IPMAC,MAINTENANCE_MODE)"
+                    },
+                    {
+                        "flag": "Bool"
+                    },
+                    {
+                        "action": "ENUM(ALLOW,ALERT,DENY)"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/mwip": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "syslogIp": "String"
+                    },
+                    {
+                        "syslogPort": "Integer"
+                    },
+                    {
+                        "protocol": "String"
+                    },
+                    {
+                        "ipmacMode": "Bool"
+                    },
+                    {
+                        "maintenanceMode": "Bool"
+                    },
+                    {
+                        "action": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "checkDiskUsageInterval": "Integer"
+                    },
+                    {
+                        "diskUsageWarningThreshold": "Integer"
+                    },
+                    {
+                        "mwIp": "String"
+                    },
+                    {
+                        "ntpIp": "String"
+                    },
+                    {
+                        "activateNtp": "Bool"
+                    },
+                    {
+                        "delLogdataCount": "Integer"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/syslog": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "syslogIp": "String"
+                    },
+                    {
+                        "syslogPort": "Integer"
+                    },
+                    {
+                        "protocol": "String"
+                    },
+                    {
+                        "ipmacMode": "Bool"
+                    },
+                    {
+                        "maintenanceMode": "Bool"
+                    },
+                    {
+                        "action": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "checkDiskUsageInterval": "Integer"
+                    },
+                    {
+                        "diskUsageWarningThreshold": "Integer"
+                    },
+                    {
+                        "mwIp": "String"
+                    },
+                    {
+                        "ntpIp": "String"
+                    },
+                    {
+                        "activateNtp": "Bool"
+                    },
+                    {
+                        "delLogdataCount": "Integer"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/topology/{topologyId}/factoryreset/dpi": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/topology/{topologyId}/factoryreset/mw": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/topology/{topologyId}/ntp": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "syslogIp": "String"
+                    },
+                    {
+                        "syslogPort": "Integer"
+                    },
+                    {
+                        "protocol": "String"
+                    },
+                    {
+                        "ipmacMode": "Bool"
+                    },
+                    {
+                        "maintenanceMode": "Bool"
+                    },
+                    {
+                        "action": "ENUM(ALLOW,ALERT,DENY)"
+                    },
+                    {
+                        "checkDiskUsageInterval": "Integer"
+                    },
+                    {
+                        "diskUsageWarningThreshold": "Integer"
+                    },
+                    {
+                        "mwIp": "String"
+                    },
+                    {
+                        "ntpIp": "String"
+                    },
+                    {
+                        "activateNtp": "Bool"
+                    },
+                    {
+                        "delLogdataCount": "Integer"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/topology/{topologyId}/restart/dpi": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/topology/{topologyId}/restart/mw": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/topology/{topologyId}/restart/process": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/systemsetting/topology/{topologyId}/shutdown/dpi": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/tasks": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/tasks/{taskId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/Device/{deviceId}/NodeZone/{nodeZoneId}": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/current/unset": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/device/{deviceId}/nodes": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/node/{nodeId}": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "id": "Integer"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "orderID": "Integer"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "zoneName": "String"
+                    },
+                    {
+                        "type": "ENUM(IPS,IDS,ENDPOINT,SWITCH,ROUTER,CLOUD,ROUTING_IPS,INLINE_IDS)"
+                    },
+                    {
+                        "software": "String"
+                    },
+                    {
+                        "version": "String"
+                    },
+                    {
+                        "x": "Double"
+                    },
+                    {
+                        "y": "Double"
+                    },
+                    {
+                        "ports": "LIST"
+                    },
+                    {
+                        "deviceId": "String"
+                    },
+                    {
+                        "importance": "Integer"
+                    },
+                    {
+                        "nodeZoneId": "String"
+                    },
+                    {
+                        "online": "Integer"
+                    },
+                    {
+                        "currentMode": "ENUM(IPS,IDS,ENDPOINT,SWITCH,ROUTER,CLOUD,ROUTING_IPS,INLINE_IDS)"
+                    },
+                    {
+                        "nodeProperty": "ENUM(AllRules,SignatureONLY,modbus_DAQ,opcda_DAQ,iec104_DAQ,modbus_iec104_DAQ,modbus_s7_opcda_DAQ)"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/node/{nodeId}/nodeProperty": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "id": "Integer"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "orderID": "Integer"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "zoneName": "String"
+                    },
+                    {
+                        "type": "ENUM(IPS,IDS,ENDPOINT,SWITCH,ROUTER,CLOUD,ROUTING_IPS,INLINE_IDS)"
+                    },
+                    {
+                        "software": "String"
+                    },
+                    {
+                        "version": "String"
+                    },
+                    {
+                        "x": "Double"
+                    },
+                    {
+                        "y": "Double"
+                    },
+                    {
+                        "ports": "LIST"
+                    },
+                    {
+                        "deviceId": "String"
+                    },
+                    {
+                        "importance": "Integer"
+                    },
+                    {
+                        "nodeZoneId": "String"
+                    },
+                    {
+                        "online": "Integer"
+                    },
+                    {
+                        "currentMode": "ENUM(IPS,IDS,ENDPOINT,SWITCH,ROUTER,CLOUD,ROUTING_IPS,INLINE_IDS)"
+                    },
+                    {
+                        "nodeProperty": "ENUM(AllRules,SignatureONLY,modbus_DAQ,opcda_DAQ,iec104_DAQ,modbus_iec104_DAQ,modbus_s7_opcda_DAQ)"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/node/{nodeId}/nodeProtocols": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/node/{nodeId}/nodeview": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "NodeId": "Integer"
+                    },
+                    {
+                        "x": "Double"
+                    },
+                    {
+                        "y": "Double"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/allzones": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/cleanup": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/configdevices": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/current": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/device/{deviceId}/configdevice": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/deviceip/{deviceIp}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/devices": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/filedownload": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/ipsidscount": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/links": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "POST"
+                ]
+            },
+            {
+                "methods": [
+                    "PUT"
+                ]
+            },
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/memo": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "memo": "String"
+                    },
+                    {
+                        "usedPolicyId": "String"
+                    },
+                    {
+                        "currentTopology": "Bool"
+                    },
+                    {
+                        "defaultTopology": "Bool"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "specVersion": "String"
+                    },
+                    {
+                        "sourceType": "Integer"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/node": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "id": "Integer"
+                    },
+                    {
+                        "topologyId": "String"
+                    },
+                    {
+                        "orderID": "Integer"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "zoneName": "String"
+                    },
+                    {
+                        "type": "ENUM(IPS,IDS,ENDPOINT,SWITCH,ROUTER,CLOUD,ROUTING_IPS,INLINE_IDS)"
+                    },
+                    {
+                        "software": "String"
+                    },
+                    {
+                        "version": "String"
+                    },
+                    {
+                        "x": "Double"
+                    },
+                    {
+                        "y": "Double"
+                    },
+                    {
+                        "ports": "LIST"
+                    },
+                    {
+                        "deviceId": "String"
+                    },
+                    {
+                        "importance": "Integer"
+                    },
+                    {
+                        "nodeZoneId": "String"
+                    },
+                    {
+                        "online": "Integer"
+                    },
+                    {
+                        "currentMode": "ENUM(IPS,IDS,ENDPOINT,SWITCH,ROUTER,CLOUD,ROUTING_IPS,INLINE_IDS)"
+                    },
+                    {
+                        "nodeProperty": "ENUM(AllRules,SignatureONLY,modbus_DAQ,opcda_DAQ,iec104_DAQ,modbus_iec104_DAQ,modbus_s7_opcda_DAQ)"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/nodeZone": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "nodeZoneId": "String"
+                    },
+                    {
+                        "zoneName": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/nodeZone/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/nodeZone/{nodeZoneId}/zoneName": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "nodeZoneId": "String"
+                    },
+                    {
+                        "zoneName": "String"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/nodeZones/": [
+            {
+                "methods": [
+                    "DELETE"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/nodes": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            },
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/topologyimages": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/validation": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "nodes": "LIST"
+                    },
+                    {
+                        "links": "LIST"
+                    },
+                    {
+                        "devices": "LIST"
+                    },
+                    {
+                        "models": "LIST"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologies/{topologyId}/wholetopology": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologydiscover/currentdiscover": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologydiscover/skeleton/{taskId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologydiscover/stop": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/topologydiscover/{topologyid}/startwithoutskeleton": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/users": [
+            {
+                "methods": [
+                    "POST"
+                ],
+                "expects": [
+                    {
+                        "userId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "passwordHash": "String"
+                    },
+                    {
+                        "salt": "String"
+                    },
+                    {
+                        "failedLoginAttemptCount": "Integer"
+                    },
+                    {
+                        "locked": "Bool"
+                    },
+                    {
+                        "lastLogin": "String"
+                    },
+                    {
+                        "createdBy": "String"
+                    },
+                    {
+                        "updatedBy": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "lockedAt": "String"
+                    },
+                    {
+                        "stuffName": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/users/password": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "userId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "passwordHash": "String"
+                    },
+                    {
+                        "salt": "String"
+                    },
+                    {
+                        "failedLoginAttemptCount": "Integer"
+                    },
+                    {
+                        "locked": "Bool"
+                    },
+                    {
+                        "lastLogin": "String"
+                    },
+                    {
+                        "createdBy": "String"
+                    },
+                    {
+                        "updatedBy": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "lockedAt": "String"
+                    },
+                    {
+                        "stuffName": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/users/unlock": [
+            {
+                "methods": [
+                    "POST"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/users/user/info": [
+            {
+                "methods": [
+                    "PUT"
+                ],
+                "expects": [
+                    {
+                        "userId": "String"
+                    },
+                    {
+                        "name": "String"
+                    },
+                    {
+                        "passwordHash": "String"
+                    },
+                    {
+                        "salt": "String"
+                    },
+                    {
+                        "failedLoginAttemptCount": "Integer"
+                    },
+                    {
+                        "locked": "Bool"
+                    },
+                    {
+                        "lastLogin": "String"
+                    },
+                    {
+                        "createdBy": "String"
+                    },
+                    {
+                        "updatedBy": "String"
+                    },
+                    {
+                        "createdAt": "String"
+                    },
+                    {
+                        "updatedAt": "String"
+                    },
+                    {
+                        "lockedAt": "String"
+                    },
+                    {
+                        "stuffName": "String"
+                    },
+                    {
+                        "deleted": "Bool"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/users/user/{type}/{id}": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/users/user/{userId}/markasdeleted": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/users/userWidgetOptionSettings": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/users/usertoken": [
+            {
+                "methods": [
+                    "PUT"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/users/whoami": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/users/{topologyId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/vulnerabilities/": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/vulnerabilities/count": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    },
+    {
+        "/api/v2.0/vulnerabilities/{deviceId}": [
+            {
+                "methods": [
+                    "GET"
+                ]
+            }
+        ]
+    }
+]

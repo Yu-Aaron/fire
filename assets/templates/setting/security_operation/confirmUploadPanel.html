@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">上传备份文件</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+
+<div class="modal-body">
+  <div class="modal-container">
+    <h5>请选择上传des3文件： </h5><br/>
+
+    <div style="font-size: 1.2em">
+      上传文件 (*.des3):<br/><span ng-hide="uploader.queue[0].file" class="warning"
+                               style="padding-left: 10px;">尚未选择文件</span>
+      <span ng-show="uploader.queue[0].file"
+            ng-class="extension && '.'+uploader.queue[0].file.name.split('.').pop() !== extension ? 'invalid': ''"
+            class="file-select-frame text-overflow">
+        <i class="fa fa-file icon-left"
+           ng-class="extension && '.'+uploader.queue[0].file.name.split('.').pop() !== extension ? 'text-red': 'text-lime'"></i>{{uploader.queue[0].file.name}}</span>
+    </div>
+    <br/>
+    <span>
+      <button type="button" class="btn btn-default position-relative">
+        <input type="file" ng-if="extension" accept="{{extension}}" nv-file-select="" uploader="uploader"
+               ng-click="uploader.clearQueue()"/>
+        <input type="file" ng-if="!extension" nv-file-select="" uploader="uploader"
+               ng-click="uploader.clearQueue()"/>
+        <i class="fa fa-file icon-left"></i>选择导入文件
+      </button>
+    </span>
+    <br/>
+
+    <div class="row" style="font-size: 1.2em" ng-hide="!uploader.queue[0].file || (extension && '.'+uploader.queue[0].file.name.split('.').pop() !== extension)">
+      <br/>
+      <div class="col-md-6">
+        <span style="margin-left: 20px">密码：</span><input ng-model="backupPassword" type="password" maxlength="20">
+      </div>
+      <div class="col-md-6" style="line-height: 30px">
+          <span class="input-alert-error"
+                ng-hide="backupPassword.length > 0">请输入备份时设置的密码</span>
+      </div>
+    </div>
+    <br/>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-default pull-right"
+          ng-disabled="backupPassword === undefined || backupPassword === '' || !uploader.queue[0].file || (extension && '.'+uploader.queue[0].file.name.split('.').pop() !== extension)"
+          ng-click="ok(); upload();"><i class="fa fa-upload icon-left"></i>上传文件
+  </button>
+</div>

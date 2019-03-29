@@ -1,0 +1,73 @@
+<div class="modal-interface">
+    <div class="margin-bottom-default clearfix" ng-init="expanded=true" ng-mouseover="expanded=false;"
+         ng-mouseout="expanded=true;" style="width: 90px;">
+        <a   id="network_interface-addBtn" class="btn btn-default" style="width: 90px;" setting-privilege privilege-name="NETWORK_INTERFACE"
+           privilege-require="MIXED" privilege-handle="hidden">
+            &nbsp;<i class="fa fa-file-o fa-after-blue fa-plus-overlay icon-left"></i> 新增&nbsp;</a>
+        <ul id="network_interface-add" class="addIMenu" collapse="expanded">
+            <li id="network_interface-addSubInterface" ng-click="addSubInterface()">
+                <span>子接口</span>
+            </li>
+           <!-- <li id="network_interface-addVlanInterface" ng-click="addVlanInterface()">
+                <span>VLAN接口</span>
+            </li> -->
+            <li id="network_interface-addBriInterface" ng-click="addBriInterface()">
+                <span>桥接口</span>
+            </li>
+        </ul>
+    </div>
+  <div cg-busy="{promise:configPromise,message:'网络接口设置部署中，请稍等...'}">
+    <table id="interface_table" class="table table-hover icon-hidden">
+        <thead>
+        <tr>
+            <th><span>&nbsp;</span></th>
+            <th>接口</th>
+            <th>LINK状态</th>
+            <th>获取方式</th>
+            <th>IP</th>
+            <th>类型</th>
+            <th>MAC地址</th>
+            <th>安全域</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="interfaceData in dtable.table" fade-in-list>
+            <td>&nbsp;</td>
+            <td>{{interfaceData.interfaceName}}</td>
+            <td>
+                <i ng-if="interfaceData.status===1" class="icon icon-up"></i>
+                <i ng-if="interfaceData.status===0" class="icon icon-down"></i>
+            </td>
+            <td>
+                <span ng-if="interfaceData.ipType===0">静态</span>
+                <span ng-if="interfaceData.ipType===1">DHCP</span>
+            </td>
+            <td>{{interfaceData.ipAddressMask}}</td>
+            <td>
+                <span ng-if="interfaceData.interfaceType==='ETH'">物理</span>
+                <span ng-if="interfaceData.interfaceType==='VLAN'">VLAN</span>
+                <span ng-if="interfaceData.interfaceType==='SUB'">子接口</span>
+                <span ng-if="interfaceData.interfaceType==='BRI'">桥接口</span>
+            </td>
+            <td>{{interfaceData.mac}}</td>
+            <td>{{interfaceData.dmz}}</td>
+            <td>
+                <a id="network_interface-show" class="btn btn-sm btn-default" ng-click="showDetail(interfaceData)"
+                   setting-privilege privilege-name="NETWORK_INTERFACE" privilege-require="VIEW"
+                   privilege-handle="hidden">查看</a>
+                <a id="network_interface-edit" class="btn btn-sm btn-default" ng-click="editInterface(interfaceData)"
+                   title="编辑" setting-privilege privilege-name="NETWORK_INTERFACE" privilege-require="MIXED"
+                   privilege-handle="hidden" ng-disabled="interfaceData.isAddBri"><i
+                        class="fa fa-edit"></i></a>
+                <a id="network_interface-delete" class="btn btn-sm btn-default"
+                   ng-click="deleteInterface(interfaceData)" title="删除" setting-privilege
+                   privilege-name="NETWORK_INTERFACE" privilege-require="MIXED" privilege-handle="hidden"
+                   ng-disabled="interfaceData.interfaceType==='ETH' || (!!interfaceData.dmz&&interfaceData.dmz.length)"><i
+                        class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+  </div>
+</div>

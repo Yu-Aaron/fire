@@ -1,0 +1,68 @@
+<hr class="hr-small-margin">
+<div class="spacing"></div>
+
+<div class="table-scroll-wrapper table-scroll-wrapper-striped">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-1 padding-zero">
+        <input id="rule-whiteList-editor_checkbox_templateCheckAll" type="checkbox" ng-change="dtable.toggle()"
+               custom-checkbox tri-state-checkbox ng-model="dtable.selectAll"/>
+      </div>
+      <div class="col-xs-4">
+        <span>名称</span>
+      </div>
+      <div class="col-xs-3 padding-zero" order-by="updatedAt">
+        <span>更新时间</span>
+      </div>
+      <div class="col-xs-2" order-by="policyBlockSource">
+        <span>来源</span>
+      </div>
+      <div class="col-xs-1">
+      </div>
+    </div>
+    <div class="row" data-index="0" ng-repeat="template in dtable.table" ng-model="dtable.table" fade-in-list>
+      <div class="col-xs-1 padding-zero">
+        <div class="row padding-sm">
+          <div class="col-xs-6">
+            <input custom-checkbox id="rule-whiteList-editor_checkbox_templateCheck{{$index+1}}" type="checkbox"
+                   ng-hide="template.deployed" ng-disabled="template.deployed"
+                   ng-change="dtable.countSelected(template)" ng-model="template.checked">
+          </div>
+          <div class="col-xs-6 padding-sm">
+            <span class="fa-stack fa-small">
+              <i class="fa fa-puzzle-piece fa-stack-2x text-white"></i>
+              <div ng-show="template.deployed" class="fa-position-bottom-right">
+                <span class="fa-stack fa-stack-sm">
+                  <i class="fa fa-circle fa-stack-2x text-lime"></i>
+                  <i class="fa fa-circle-o fa-stack-2x text-black"></i>
+                  <i class="fa fa-check fa-stack-1x text-black"></i>
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-4">
+        {{template.name}}
+      </div>
+      <div class="col-xs-3 padding-zero">
+        {{template.updatedAt | date: 'yyyy-MM-dd HH:mm:ss'}}
+      </div>
+      <div class="col-xs-2">
+        {{template.policyBlockSource | templateSourceName}}
+      </div>
+      <div class="col-xs-1">
+        <span><button id="rule-whiteList-editor_button_templateShowDetail-{{$index+1}}"
+                      ng-click="dtable.showDetail(template)" class="btn btn-sm btn-default"><i
+          class="fa fa-file-text-o"></i></button></span>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="text-center">
+  <p id="rule_whitelist_templatetable_totalnum" ng-if="!templates.selectedBlockCount">
+    总共{{dtable.table.length}}组规则，{{dtable.blockCount}}条规则项</p>
+  <p id="rule_whitelist_templatetable_selectednum" ng-if="templates.selectedBlockCount">
+    已选择{{dtable.selectedBlockCount}}/{{dtable.table.length}}组规则，{{dtable.selectedRuleCount}}/{{dtable.blockCount}}条规则项</p>
+</div>

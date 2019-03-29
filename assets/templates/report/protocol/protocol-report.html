@@ -1,0 +1,24 @@
+<table id="report_protocol_detail_table" class="table table-hover icon-hidden">
+  <thead>
+  <tr>
+    <th class="table-col-sm"></th>
+    <th>起始时间</th>
+    <th>源IP地址</th>
+    <th>源端口</th>
+    <th>目标IP地址</th>
+    <th>目标端口</th>
+    <th>协议类型</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr id="report_protocol_detail_table_row_{{$index}}" ng-repeat="detailItem in dtable.table">
+    <td></td>
+    <td>{{detailItem.flowTimestamp | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+    <td>{{detailItem.sourceIp}}</td>
+    <td>{{detailItem.sourcePort}}</td>
+    <td>{{detailItem.destinationIp}}</td>
+    <td>{{detailItem.destinationPort}}</td>
+    <td>{{detailItem.protocolSourceName}}</td>
+  </tr>
+  </tbody>
+</table>

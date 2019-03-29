@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">下载拓扑文件</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body-no-frame" id="topology-download-modal">
+  <div class="topo-name-label">命名拓扑文件:</div>
+  <input type="text" ng-model="topoName" maxlength="64" ng-change="validateTopoFileName()">
+  <div class="input-alert-error" ng-show="!valid">
+    请输入合法的文件名
+  </div>
+</div>
+<br>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times icon-left"></i>取消</button>
+  <button class="btn btn-default" ng-disabled="!topoName || !valid" ng-click="confirm()"><i
+    class="fa fa-check text-green icon-left"></i>下载
+  </button>
+</div>

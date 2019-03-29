@@ -1,0 +1,374 @@
+[
+    {
+        "customizedMenuId": "1",
+        "description": "实时监控",
+        "target": "REAL_TIME_PROTECTION",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-1",
+        "description": "总览",
+        "target": "OVERVIEW",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-2",
+        "description": "事件",
+        "target": "INCIDENT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-2-1",
+        "description": "安全事件",
+        "target": "SEC_INCIDENT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-2-2",
+        "description": "系统事件",
+        "target": "EVENT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-3",
+        "description": "日志",
+        "target": "OPERATION_LOG",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-3-1",
+        "description": "全部日志",
+        "target": "ALL_LOG",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-3-2",
+        "description": "监管平台日志",
+        "target": "MW_LOG",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-3-3",
+        "description": "终端用户登录日志",
+        "target": "USER_LOGIN_LOG",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-3-4",
+        "description": "终端用户操作日志",
+        "target": "USER_COMMAND_LOG",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-3-5",
+        "description": "终端防火墙报文日志",
+        "target": "FIREWALL_LOG",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-4",
+        "description": "设备",
+        "target": "DEVICE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-4-1",
+        "description": "安全设备",
+        "target": "PROTECTION_SECURITY_DEVICE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-4-2",
+        "description": "工控设备",
+        "target": "PROTECTION_FACTORY_DEVICE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "1-4-3",
+        "description": "网络设备",
+        "target": "PROTECTION_NETWORK_DEVICE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "2",
+        "description": "资产管理",
+        "target": "ASSET_MANAGEMENT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "2-1",
+        "description": "安全设备",
+        "target": "SECURITY_DEVICE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "2-1-1",
+        "description": "全部安装设备",
+        "target": "NORMAL",
+        "active": true
+    },
+    {
+        "customizedMenuId": "2-1-2",
+        "description": "数据采集设备",
+        "target": "DATA_COLLECTION_DEVICE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "2-2",
+        "description": "工控设备",
+        "target": "FACTORY_DEVICE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "2-2-1",
+        "description": "工控设备",
+        "target": "FACTORY_DEVICE_LIST",
+        "active": true
+    },
+    {
+        "customizedMenuId": "2-2-2",
+        "description": "设备分区",
+        "target": "FACTORY_DEVICE_ZONE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "2-3",
+        "description": "网络设备",
+        "target": "NETWORK_DEVICE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "3",
+        "description": "规则管理",
+        "target": "RULE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "3-1",
+        "description": "黑名单",
+        "target": "BLACK_LIST",
+        "active": true
+    },
+    {
+        "customizedMenuId": "3-1-1",
+        "description": " 已防范漏洞",
+        "target": "DEPLOYED_BLACK_LIST",
+        "active": true
+    },
+    {
+        "customizedMenuId": "3-1-2",
+        "description": " 漏洞管理",
+        "target": "SIGNATURE_MANAGEMENT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "3-2",
+        "description": "白名单",
+        "target": "WHITE_LIST",
+        "active": true
+    },
+    {
+        "customizedMenuId": "3-2-1",
+        "description": "已部署规则",
+        "target": "DEPLOYED_WHITE_LIST",
+        "active": true
+    },
+    {
+        "customizedMenuId": "3-2-2",
+        "description": "规则管理",
+        "target": "POLICY_MANAGEMENT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "3-3",
+        "description": "IP/MAC",
+        "target": "IP_MAC",
+        "active": true
+    },
+    {
+        "customizedMenuId": "3-4",
+        "description": "域名规则",
+        "target": "MALICIOUS_DOMAIN",
+        "active": true
+    },
+    {
+        "customizedMenuId": "4",
+        "description": "网络拓扑",
+        "target": "TOPOLOGY",
+        "active": true
+    },
+    {
+        "customizedMenuId": "5",
+        "description": "结构安全性",
+        "target": "STRUCTURE_SAFETY",
+        "active": true
+    },
+    {
+        "customizedMenuId": "6",
+        "description": "攻击路径",
+        "target": "ATTACK_PATH",
+        "active": true
+    },
+    {
+        "customizedMenuId": "7",
+        "description": "入侵监测",
+        "target": "INTRUSION_DETECTION",
+        "active": true
+    },
+    {
+        "customizedMenuId": "7-1",
+        "description": "实时检测",
+        "target": "ONLINE_DETECTION",
+        "active": true
+    },
+    {
+        "customizedMenuId": "7-2",
+        "description": "离线检测",
+        "target": "OFFLINE_DETECTION",
+        "active": true
+    },
+    {
+        "customizedMenuId": "8",
+        "description": "定期报告",
+        "target": "SCHEDULED_REPORT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "8-1",
+        "description": "事件",
+        "target": "REPORT_INCIDENT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "8-1-1",
+        "description": "安全事件",
+        "target": "REPORT_SEC_INCIDENT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "8-1-2",
+        "description": "系统事件",
+        "target": "REPORT_EVENT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "8-2",
+        "description": "日志",
+        "target": "REPORT_LOGGER",
+        "active": true
+    },
+    {
+        "customizedMenuId": "8-3",
+        "description": "审计",
+        "target": "REPORT_AUDIT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "9",
+        "description": "网络审计",
+        "target": "AUDIT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "9-1",
+        "description": "流量总览",
+        "target": "FLOWDATA",
+        "active": true
+    },
+    {
+        "customizedMenuId": "9-2",
+        "description": "安全设备流量",
+        "target": "DPIDEVICE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "9-3",
+        "description": "工控设备流量",
+        "target": "ICDEVICE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "9-4",
+        "description": "协议审计",
+        "target": "PROTOCOL_AUDIT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "10",
+        "description": "系统管理",
+        "target": "SYSTEM_MANAGEMENT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "10-1",
+        "description": "安全监管平台",
+        "target": "SYSTEM_CONSOLE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "10-1-1",
+        "description": "基本设置",
+        "target": "BASIC_SETTING",
+        "active": true
+    },
+    {
+        "customizedMenuId": "10-1-2",
+        "description": "系统升级",
+        "target": "SYSTEM_UPGRADE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "10-1-3",
+        "description": "远程登录IP控制",
+        "target": "IP_CONTROL",
+        "active": true
+    },
+    {
+        "customizedMenuId": "10-1-5",
+        "description": "我的账户",
+        "target": "MY_ACCOUNT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "10-1-6",
+        "description": "用户管理",
+        "target": "USER_MANAGEMENT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "10-1-7",
+        "description": "私有协议设置",
+        "target": "PRIVATE_PROTOCOL",
+        "active": true
+    },
+    {
+        "customizedMenuId": "10-1-8",
+        "description": "系统版本",
+        "target": "SYSTEM_VERSION",
+        "active": true
+    },
+    {
+        "customizedMenuId": "10-2",
+        "description": "安全设备",
+        "target": "SYSTEM_DEVICE_MANAGEMENT",
+        "active": true
+    },
+    {
+        "customizedMenuId": "10-2-1",
+        "description": "设备重置",
+        "target": "SYSTEM_DEVICE_RESET",
+        "active": true
+    },
+    {
+        "customizedMenuId": "10-2-2",
+        "description": "设备升级",
+        "target": "SYSTEM_DEVICE_UPGRADE",
+        "active": true
+    },
+    {
+        "customizedMenuId": "10-7",
+        "description": "分区管理",
+        "target": "DOMAIN",
+        "active": true
+    }
+]

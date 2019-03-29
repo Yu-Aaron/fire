@@ -1,0 +1,148 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">详细信息</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body-no-frame">
+  <div class="modal-container">
+    <div
+      ng-if="auditDataDetail.flowdataHead.protocolSourceName === 'ftp' || auditDataDetail.flowdataHead.protocolSourceName === 'ftpcontrol'">
+      <div class="row">
+        <div class="col-xs-4">
+          <h5>协议类型</h5>
+          <div class="gray-content">ftp</div>
+        </div>
+        <div class="col-xs-4">
+          <h5>起始时间</h5>
+          <div class="gray-content">{{auditDataDetail.flowTimestampLocal | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+        </div>
+        <div class="col-xs-4">
+          <h5>控制流端口</h5>
+          <div class="gray-content">{{auditDataDetail.flowdataHead.sourcePort}} <=>
+            {{auditDataDetail.flowdataHead.destinationPort}}
+          </div>
+        </div>
+      </div>
+      <br/><br/>
+      <div class="row">
+        <div class="col-xs-5">
+          <h5>IP地址</h5>
+          <div class="gray-content">{{auditDataDetail.flowdataHead.sourceIp}} <=>
+            {{auditDataDetail.flowdataHead.destinationIp}}
+          </div>
+        </div>
+        <div class="col-xs-7">
+          <h5>MAC地址</h5>
+          <div class="gray-content">{{auditDataDetail.flowdataHead.sourceMac}} <=>
+            {{auditDataDetail.flowdataHead.destinationMac}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      ng-if="auditDataDetail.flowdataHead.protocolSourceName === 'hexagon' || auditDataDetail.flowdataHead.protocolSourceName === 'telnet'">
+      <div class="row">
+        <div class="col-xs-4">
+          <h5>协议类型</h5>
+          <div class="gray-content">{{auditDataDetail.flowdataHead.protocolSourceName}}</div>
+        </div>
+        <div class="col-xs-4">
+          <h5>起始时间</h5>
+          <div class="gray-content">{{auditDataDetail.flowTimestampLocal | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+        </div>
+        <div class="col-xs-4">
+          <h5>端口</h5>
+          <div class="gray-content">{{auditDataDetail.flowdataHead.sourcePort}} <=>
+            {{auditDataDetail.flowdataHead.destinationPort}}
+          </div>
+        </div>
+      </div>
+      <br/><br/>
+      <div class="row">
+        <div class="col-xs-5">
+          <h5>IP地址</h5>
+          <div class="gray-content">{{auditDataDetail.flowdataHead.sourceIp}} <=>
+            {{auditDataDetail.flowdataHead.destinationIp}}
+          </div>
+        </div>
+        <div class="col-xs-7">
+          <h5>MAC地址</h5>
+          <div class="gray-content">{{auditDataDetail.flowdataHead.sourceMac}} <=>
+            {{auditDataDetail.flowdataHead.destinationMac}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <tabset
+    ng-if="auditDataDetail.flowdataHead.protocolSourceName === 'ftp' || auditDataDetail.flowdataHead.protocolSourceName === 'ftpcontrol'">
+    <tab heading="输入命令">
+      <div class="panel panel-gradient reduction-detail-panel-panel">
+        <div class="reduction-detail-panel-panel-header pull-left">
+          <span class="{{auditDataDetail.cmdZipPsw.length?'text-lime':'text-red'}}" style="font-size: 1.5em;">*</span>
+          设置解压密码： &nbsp; <input type="password" ng-model="auditDataDetail.cmdZipPsw"> &nbsp; &nbsp;
+          <button class="btn btn-default"
+                  ng-disabled="!auditDataDetail._commands.length||!auditDataDetail.cmdZipPsw.length"
+                  ng-click="downloadCommand()"><i class="fa fa-download icon-left"></i>下载
+          </button>
+        </div>
+        <div class="reduction-detail-panel-panel-container">
+          <div style="text-align:left">
+            <pre style="background: #212121; color: #cccccc">{{auditDataDetail._commands}}</pre>
+          </div>
+        </div>
+      </div>
+    </tab>
+    <tab heading="文件下载">
+      <div class="panel panel-gradient reduction-detail-panel-panel">
+        <div class="reduction-detail-panel-panel-header pull-left">
+          <button class="btn btn-default pull-left" ng-click="getData()"><i
+            class="fa fa-refresh text-lime icon-left"></i>刷新
+          </button>
+          <span class="{{auditDataDetail.fileZipPsw.length?'text-lime':'text-red'}}"
+                style="font-size: 1.5em; padding-left: 30px;">*</span> 设置解压密码： &nbsp; <input type="password"
+                                                                                             ng-model="auditDataDetail.fileZipPsw">
+        </div>
+        <div class="reduction-detail-panel-panel-container">
+          <table class="table table-striped table-bordered">
+            <tr>
+              <th>文件名</th>
+              <th width="75px">状态</th>
+              <th width="65px"></th>
+            </tr>
+            <tr ng-repeat="name in auditDataDetail._fileNames">
+              <td style="text-align:left">{{name}}</td>
+              <td style="text-align:left" width="75px" ng-if="auditDataDetail._downloadProgress[$index]==='TIMEOUT'">
+                <i class="fa fa-exclamation-triangle text-red"></i> 超时
+              </td>
+              <td style="text-align:left" width="75px"
+                  ng-if="auditDataDetail._downloadProgress[$index]==='DOWNLOADING'">
+                <i class="fa fa-spinner fa-spin"></i> 还原中
+              </td>
+              <td style="text-align:left" width="75px" ng-if="auditDataDetail._downloadProgress[$index]==='COMPLETE'">
+                <i class="fa fa-check-circle text-lime"></i> 完成
+              </td>
+              <td width="65px">
+                <button class="btn btn-default" ng-disabled="!auditDataDetail.fileZipPsw.length"
+                        ng-if="auditDataDetail._downloadProgress[$index]!=='DOWNLOADING'"
+                        ng-click="downloadFile(auditDataDetail._fileLocationId[$index], auditDataDetail._fileNames[$index], auditDataDetail._downloadProgress[$index]==='TIMEOUT')"
+                        style="margin-left: 0;"><i class="fa fa-download icon-left"></i>下载
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </tab>
+  </tabset>
+  <div
+    ng-if="auditDataDetail.flowdataHead.protocolSourceName !== 'ftp' && auditDataDetail.flowdataHead.protocolSourceName !== 'ftpcontrol'">
+    <span class="{{auditDataDetail.zipPsw.length?'text-lime':'text-red'}}" style="font-size: 1.5em;">*</span> 设置解压密码：
+    &nbsp; <input type="password" ng-model="auditDataDetail.zipPsw"> &nbsp; &nbsp;
+    <button class="btn btn-default" ng-disabled="!auditDataDetail.zipPsw.length" ng-click="downloadZip()"><i
+      class="fa fa-download icon-left"></i>下载
+    </button>
+  </div>
+</div>

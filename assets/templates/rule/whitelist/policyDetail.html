@@ -1,0 +1,37 @@
+<div class="padding-default">
+  <a class="display-inline-block" ng-click="goBack()">
+    <button id="rule-whiteList-policyDetail_button_cancel" class="btn btn-default"><i
+      class="fa fa-arrow-circle-left icon-left"></i>返回
+    </button>
+  </a></span>
+  <h5 class="text-lime margin-left-default display-inline-block">规则内容</h5>
+</div>
+
+<div class="panel detail-page-wrapper info-panel signature-wrapper-left toolbar policy-detail-container">
+  <span>规则名称：{{policyDetail.policy.name}}</span>
+  <div cg-busy="{promise:$root.deployTaskPromise,message:'部署中...'}">
+    <div class="pull-right" setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED">
+      <span ng-if="!policyDetail.policy.inUse">
+        <a ng-click="viewPolicyDetail(policyDetail.policy.policyId)">
+          <button id="rule-whiteList-policyDetail_button_editRules" class="btn btn-default">编辑规则</button>
+        </a>
+      </span>
+      <span>
+        <button id="rule-whiteList-policyDetail_button_exportRules" class="btn btn-default"
+                ng-click="policyItem.export(policyDetail.policy.policyId)" ><span><i
+          class="fa fa-download text-lime icon-left"></i>导出规则</span></button>
+      </span>
+      <span>
+        <button id="rule-whiteList-policyDetail_button_deploy" class="btn btn-default btn-deploy"
+                ng-if="!policyDetail.policy.inUse" ng-click="policyItem.deploy()"
+                ng-disabled="policyDetail.isDPIUpgrading">
+          <i class="fa fa-cloud-download icon-left"></i>部署规则</button>
+        <button privilege disable="self" class="btn btn-default" ng-if="policyDetail.policy.inUse"
+                disabled="disabled"><span class="text-lime"><i
+          class="fa fa-check-circle-o icon-left"></i>已部署规则</span></button>
+      </span><br/>
+      <p><span ng-if="policyDetail.isDPIUpgrading" class="warning pull-right">(DPI设备升级中，无法部署规则)</span></p>
+    </div>
+    <policy-detail-table></policy-detail-table>
+  </div>
+</div>

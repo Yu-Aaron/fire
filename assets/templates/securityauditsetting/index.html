@@ -1,0 +1,35 @@
+<div style="margin-left: 10px;margin-top: 5px" class="tab-container margin-top-medium system-config-page system-upgrade"
+     ng-controller="TabCtrl as tab">
+  <ul class="nav nav-tabs nav-tabs-lime"
+      ng-init="tab.active || tab.activatePanel(securityauditsetting.securityauditsetting_init_tab)">
+    <li id="setting-systemconsole_li_protocolConfig" ng-class="{ active: tab.isActive('PROTOCOL_SETTING') }"
+        disable="true">
+      <a href="#" ng-click="tab.activatePanel('PROTOCOL_SETTING')">
+        <span>协议审计配置</span>
+      </a>
+    </li>
+    <li id="setting-systemconsole_li_protocolPortSetting" ng-class="{ active: tab.isActive('BEHAVIOR_AUDIT') }"
+        disable="true">
+      <a href="#" ng-click="tab.activatePanel('BEHAVIOR_AUDIT')">
+        <span>行为审计配置</span>
+      </a>
+    </li>
+    <li id="setting-systemconsole_li_debugInfoCollection" ng-class="{ active: tab.isActive('CONTENT_AUDIT') }"
+        disable="true">
+      <a href="#" ng-click="tab.activatePanel('CONTENT_AUDIT')">
+        <span>内容审计配置</span>
+      </a>
+    </li>
+  </ul>
+  <div ng-switch on="tab.active">
+    <div class="tab-container-body" ng-switch-when="PROTOCOL_SETTING">
+      <protocol-setting></protocol-setting>
+    </div>
+    <div class="tab-container-body" ng-switch-when="BEHAVIOR_AUDIT">
+      <action-audit></action-audit>
+    </div>
+    <div class="tab-container-body" ng-switch-when="CONTENT_AUDIT">
+      <content-audit></content-audit>
+    </div>
+  </div>
+</div>

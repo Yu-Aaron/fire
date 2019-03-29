@@ -1,0 +1,278 @@
+<div cg-busy="{promise:configPromise,message:'正在保存...'}" global-events>
+  <div class="modal-header">
+    <h3 class="modal-header-title">编辑/新增DNAT策略</h3>
+  </div>
+
+  <div class="modal-body modal-nat">
+    <div class="panel">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-3">
+            <span>策略名称：</span>
+          </div>
+          <div class="col-xs-9 padding-left">
+            <input type="text" id="strategy_dnat-dnatName"
+                   ng-model="dnatData.dnatName" maxlength="31"
+                   ng-disabled="isEditing"
+                   class="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength"
+                   ng-change="checkNameVal(dnatData.dnatName)"
+                   placeholder="DNAT名称">
+
+            <div class="input-alert-error" ng-show="!isEditing&&error.dnatName">
+              <span>{{nameValMsg}}</span>
+            </div>
+          </div>
+        </div>
+
+        <br/>
+        <hr class="hr-small-margin">
+        <div class="row">
+          <div class="col-xs-3">
+            <span>目的地址：</span>
+          </div>
+          <div class="col-xs-9">
+            <div class="row">
+              <div class="col-xs-3 padding-left">
+                <input custom-radio type="radio" ng-value=0
+                       ng-change="changeDestType(0)" id="strategy_dnat-destinationAddressType_0"
+                       ng-model="dnatData.destinationAddressType"/><span>按IP地址</span>
+              </div>
+              <div class="col-xs-3 padding-left">
+                <input custom-radio type="radio" ng-value=1
+                       ng-change="changeDestType(1)" id="strategy_dnat-destinationAddressType_1"
+                       ng-model="dnatData.destinationAddressType"/><span>按地址组</span>
+              </div>
+            </div>
+            <br/>
+
+            <div ng-if="dnatData.destinationAddressType!==1" class="row">
+              <input type="text" placeholder="192.168.1.2" maxlength="16"
+                     ng-model="dnatData.destinationAddress" id="strategy_dnat-destinationAddress"
+                     ng-change="validateDestinationAddress(dnatData.destinationAddress)"/>
+
+              <div class="input-alert-error" ng-show="error.destinationAddress"><span>请输入有效的目的地址</span>
+              </div>
+            </div>
+            <div ng-if="dnatData.destinationAddressType===1" class="row margin-left">
+              <div class="row" ng-if="isGettingAddressPools">
+                <div>
+                  <i class="fa fa-spinner fa-spin icon-left"></i>地址组数据同步中...
+                </div>
+              </div>
+              <div class="row" ng-if="!isGettingAddressPools">
+                <div ng-if="securityAreas.length > 0">
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <span>安全区域：</span>
+                    </div>
+                    <div class="col-xs-9">
+                      <div class="dropdown toolbar-dropdown ippool-dropdown" dropdown>
+                        <button id="strategy_dnat-dest_securityAreas" type="button"
+                                class="btn dropdown-toggle dropdown-btn"
+                                dropdown-toggle>
+                          {{securityAreaName}} <span class="caret pull-right"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a id="strategy_dnat-dest_securityAreas_{{$index}}"
+                                 ng-repeat="securityArea in securityAreas"
+                                 ng-class="{active: securityAreaName === securityArea}"
+                                 ng-click="changeSecurityArea($index,securityArea)">{{securityArea}}
+                          </a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <br/>
+
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <span>地址组：</span>
+                    </div>
+                    <div class="col-xs-9">
+                      <div class="dropdown toolbar-dropdown ippool-dropdown" dropdown>
+                        <button id="strategy_dnat-destAddressesName" type="button"
+                                class="btn dropdown-toggle dropdown-btn"
+                                dropdown-toggle>
+                          {{destAddressesName}} <span class="caret pull-right"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a id="strategy_dnat-destAddressesName_{{$index}}"
+                                 ng-repeat="destAddress in destAddresses"
+                                 ng-class="{active: destAddressesName === destAddress}"
+                                 ng-click="changeDestAddress(destAddress)">{{destAddress}}
+                          </a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div ng-if="securityAreas === undefined || securityAreas.length <= 0">
+                  无法获取地址组数据
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br/>
+        <hr class="hr-small-margin">
+        <div class="row">
+          <div class="col-xs-3">
+            <span>应用/服务：</span>
+          </div>
+          <div class="col-xs-9">
+            <div class="row">
+              <div class="col-xs-3 padding-left">
+                <input custom-radio type="radio" ng-value=0 ng-change="dnatData.serversApps=''"
+                       id="strategy_dnat-serversAppsType_0"
+                       ng-model="dnatData.serversAppsType"/><span>按服务</span>
+              </div>
+              <div class="col-xs-3 padding-left">
+                <input custom-radio type="radio" ng-value=1 ng-change="dnatData.serversApps=''"
+                       id="strategy_dnat-serversAppsType_1"
+                       ng-model="dnatData.serversAppsType"/><span>按应用</span>
+              </div>
+            </div>
+            <br/>
+
+            <div class="row">
+              <angucomplete search-str="dnatData.serversApps" id="strategy_dnat-serversApps"
+                            fetch-action="searchServiceApps(str)"
+                            placeholder="{{dnatData.serversAppsType === 1 ? '请输入应用名称' : '请输入服务名称'}}"
+                            pause="500" minlength="1"
+                            selectedObject="selectedObj"
+                            searchfields="name" titlefield="name"
+                            inputclass="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength margin-right-default"></angucomplete>
+              <div class="input-alert-error"
+                   ng-hide="error.serversApps=!dnatData.serversApps || selectedObj">
+                <span>未找到该名称{{dnatData.serversAppsType === 1 ?'应用' : '服务'}}，请重新输入有效的名称</span>
+              </div>
+              <div class="input-alert-error" ng-show="!dnatData.serversApps">
+                <span>{{dnatData.serversAppsType === 1 ? '应用' : '服务'}}名称不能为空</span>
+              </div>
+            </div>
+          </div>
+          <br/>
+        </div>
+
+        <br/>
+        <hr class="hr-small-margin">
+        <div class="row">
+          <div class="col-xs-3">
+            <span>映射地址：</span>
+          </div>
+          <div class="col-xs-9">
+            <div class="row">
+              <div class="col-xs-3 padding-left">
+                <input custom-radio type="radio" ng-value=0 ng-change="changeMappingType(0)"
+                       id="strategy_dnat-mappingAddressType_0"
+                       ng-model="dnatData.mappingAddressType"/><span>按IP地址</span>
+              </div>
+              <div class="col-xs-3 padding-left">
+                <input custom-radio type="radio" ng-value=1 ng-change="changeMappingType(1)"
+                       id="strategy_dnat-mappingAddressType_1"
+                       ng-model="dnatData.mappingAddressType"/><span>按地址组</span>
+              </div>
+            </div>
+            <br/>
+
+            <div ng-if="dnatData.mappingAddressType!==1" class="row">
+              <input type="text" placeholder="192.168.1.2" maxlength="16"
+                     ng-model="dnatData.mappingAddress" id="strategy_dnat-mappingAddress"
+                     ng-change="validateMappingAddress(dnatData.mappingAddress)"/>
+
+              <div class="input-alert-error" ng-show="error.mappingAddress"><span>请输入有效的映射地址</span></div>
+            </div>
+            <div ng-if="dnatData.mappingAddressType===1" class="row margin-left">
+              <div class="row" ng-if="isGettingAddressPools">
+                <div>
+                  <i class="fa fa-spinner fa-spin icon-left"></i>地址组数据同步中...
+                </div>
+              </div>
+              <div class="row" ng-if="!isGettingAddressPools">
+                <div ng-if="securityAreas.length > 0">
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <span>安全区域：</span>
+                    </div>
+                    <div class="col-xs-9">
+                      <div class="dropdown toolbar-dropdown ippool-dropdown" dropdown>
+                        <button id="strategy_dnat-mapping_securityAreas" type="button"
+                                class="btn dropdown-toggle dropdown-btn"
+                                dropdown-toggle>
+                          {{mappingSecurityAreaName}} <span class="caret pull-right"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a id="strategy_dnat-mapping_securityAreas_{{$index}}"
+                                 ng-repeat="securityArea in securityAreas"
+                                 ng-class="{active: mappingSecurityAreaName === securityArea}"
+                                 ng-click="changeMappingSecurityArea($index,securityArea)">{{securityArea}}
+                          </a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <br/>
+
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <span>地址组：</span>
+                    </div>
+                    <div class="col-xs-9">
+                      <div class="dropdown toolbar-dropdown ippool-dropdown" dropdown>
+                        <button id="strategy_dnat-mappingAddressesName" type="button"
+                                class="btn dropdown-toggle dropdown-btn"
+                                dropdown-toggle>
+                          {{mappingAddressesName}} <span class="caret pull-right"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a id="strategy_dnat-mappingAddressesName_{{$index}}"
+                                 ng-repeat="mappingAddress in mappingAddresses"
+                                 ng-class="{active: mappingAddressesName === destAddress}"
+                                 ng-click="changeMappingAddress(mappingAddress)">{{mappingAddress}}
+                          </a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div ng-if="securityAreas === undefined || securityAreas.length <= 0">
+                  无法获取地址组数据
+                </div>
+              </div>
+            </div>
+          </div>
+          <br/>
+        </div>
+
+        <br/>
+        <hr class="hr-small-margin">
+        <div class="row">
+          <div class="col-xs-3">
+            <span>映射端口：</span>
+          </div>
+          <div class="col-xs-9 padding-left">
+            <input ng-model="dnatData.mappingPort" maxlength="5"
+                   type="text" placeholder="0-65535" id="strategy_dnat-mappingPort"
+                   ng-change="validateMappingPort(dnatData.mappingPort)"
+                   class="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength"
+                   onkeyup="this.value=this.value.replace(/\D/g,'')"
+                   onafterpaste="this.value=this.value.replace(/\D/g,'')">
+
+            <div class="input-alert-error" ng-show="error.mappingPort">
+              <span>请输入有效端口号0-65535</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <a id="strategy_dnat-cancel" class="btn btn-default pull-left" ng-click="cancel()"><i
+      class="fa fa-times icon-left"></i>取消</a>
+    <a id="strategy_dnat-ok" class="btn btn-default pull-right" ng-click="ok()"
+       ng-disabled="error.dnatName||error.destinationAddress||!selectedObj||error.mappingAddress||error.mappingPort"><i
+      class="fa fa-check text-lime icon-left"></i>保存</a>
+  </div>
+</div>

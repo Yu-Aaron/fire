@@ -1,0 +1,71 @@
+<div id="custom-network-rule-editor">
+  <div class="row" ng-repeat="rule in ruleList">
+    <div class="col-md-3">
+      <label>协议名称</label>
+      <select ng-model="rule.protocol" class="select-styled protocal-selector" id="protocal-selector_{{$index}}">
+        <option value='TCP'>TCP</option>
+        <option value='UDP'>UDP</option>
+      </select>
+    </div>
+    <div class="col-md-4 source-ip-column">
+      <div class="row">
+        <label>起源IP</label>
+        <div class="select-styled input-stacked">
+          <div class="input-stacked-wrap">
+            <input class="acl-ip acl-input" ng-class="rule.sourceIp.option ? 'focus':''" type="text"
+                   placeholder="{{rule.sourceIp.placeHolder}}" ng-model="rule.sourceIp.value"
+                   ng-disabled="!rule.sourceIp.option"/>
+          </div>
+          <select ng-model="rule.sourceIp.option"
+                  ng-options="o.v as o.n for o in [{ n: '任意', v: false }, { n: '填写范围', v: true }]"
+                  ng-change="optionSelected($event, rule.sourceIp)">
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <label>目标IP</label>
+        <div class="select-styled input-stacked">
+          <div class="input-stacked-wrap">
+            <input class="acl-ip acl-input" ng-class="rule.desIp.option ? 'focus':''" type="text"
+                   placeholder="{{rule.desIp.placeHolder}}" ng-model="rule.desIp.value"
+                   ng-disabled="!rule.desIp.option"/>
+          </div>
+          <select ng-model="rule.desIp.option"
+                  ng-options="o.v as o.n for o in [{ n: '任意', v: false }, { n: '填写范围', v: true }]"
+                  ng-change="optionSelected($event, rule.desIp)">
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 source-ip-column">
+      <div class="row">
+        <label>起源端口</label>
+        <div class="select-styled input-stacked">
+          <div class="input-stacked-wrap">
+            <input class="acl-ip acl-input" ng-class="rule.sourcePort.option ? 'focus':''" type="text"
+                   placeholder="{{rule.sourcePort.placeHolder}}" ng-model="rule.sourcePort.value"
+                   ng-disabled="!rule.sourcePort.option"/>
+          </div>
+          <select ng-model="rule.sourcePort.option"
+                  ng-options="o.v as o.n for o in [{ n: '任意', v: false }, { n: '填写范围', v: true }]"
+                  ng-change="optionSelected($event, rule.sourcePort)">
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <label>目标端口</label>
+        <div class="select-styled input-stacked">
+          <div class="input-stacked-wrap">
+            <input class="acl-ip acl-input" ng-class="rule.desPort.option ? 'focus':''" type="text"
+                   placeholder="{{rule.desPort.placeHolder}}" ng-model="rule.desPort.value"
+                   ng-disabled="!rule.desPort.option"/>
+          </div>
+          <select ng-model="rule.desPort.option"
+                  ng-options="o.v as o.n for o in [{ n: '任意', v: false }, { n: '填写范围', v: true }]"
+                  ng-change="optionSelected($event, rule.desPort)">
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

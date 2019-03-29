@@ -1,0 +1,29 @@
+<div>
+  <div class="alert-info" ng-show="dtable.table.length===0">未发现有实时流量设备。</div>
+  <table class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th order-by="totalBytes"></th>
+      <th order-by="deviceName">设备名称</th>
+      <th order-by="ipAddr">IP地址</th>
+      <th order-by="macAddr">MAC地址</th>
+      <th order-by="recvSpeed">输入流量</th>
+      <th order-by="sendSpeed">输出流量</th>
+      <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="devicedata in dtable.table">
+      <td><span class="error" ng-show="devicedata.totalBytes === 0"><i class="fa fa-warning text-red"> </i> 无流量</span>
+      </td>
+      <td>{{devicedata.deviceName}}</td>
+      <td>{{devicedata.ipAddr}}</td>
+      <td>{{devicedata.macAddr}}</td>
+      <td>{{devicedata.recvBytes}}</td>
+      <td>{{devicedata.sendBytes}}</td>
+      <td><a class="btn btn-default" ng-click="showStats(devicedata)">查看 <i
+        class="fa fa-chevron-circle-right icon-right"></i></a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

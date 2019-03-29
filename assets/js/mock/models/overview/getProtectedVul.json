@@ -1,0 +1,9 @@
+{
+    "dashBoardId": "7f67b686-e37a-448c-bbfd-e22373a7dbf8",
+    "sourceId": "999c3f9c-d209-417b-9694-62e464534b0f",
+    "dashBoardType": "VULNERABILITY",
+    "dashBoardTypeDetail": "NO_PROTECTED_VULNERABILITY",
+    "statsString": "{\"COVERAGE\":0.0,\"VULNERABILITY_COUNT\":0}",
+    "statsValue": 0,
+    "updatedAt": "2015-11-26T19:42:38Z"
+}

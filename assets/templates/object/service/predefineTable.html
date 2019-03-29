@@ -1,0 +1,56 @@
+<div class="service-predefine-container">
+    <table class="table table-hover icon-hidden">
+        <thead>
+        <tr>
+            <!--<th class="text-center">-->
+                <!--<label>-->
+                    <!--<input custom-checkbox type="checkbox" ng-model="dtable.selectAllValue"-->
+                           <!--ng-click="dtable.selectAll()"/>-->
+                <!--</label>-->
+            <!--</th>-->
+            <th></th>
+            <th>序号</th>
+            <th order-by="name">服务名称</th>
+            <th>网络层协议</th>
+            <th>目的端口号</th>
+            <th>源端口号</th>
+            <th order-by="description">描述</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat-start="svc in dtable.table track by $index" ng-click="accordion.current = !accordion.current" fade-in-list>
+            <!--<td class="text-center"><label>-->
+                <!--<input custom-checkbox type="checkbox" id="selected-item-{{$index}}"-->
+                       <!--ng-checked="dtable.selectedItems[svc.name]"-->
+                       <!--ng-model="dtable.selectedItems[svc.name]"/>-->
+                <!--</label></td>-->
+            <td class="table-accordion-chevron">
+                <i class="fa {{accordion.current ? 'fa-chevron-down' : 'fa-chevron-right'}}"
+                   ng-if="svc.serverRules.length > 1"></i></td>
+            <td>{{skip + $index + 1}}</td>
+            <td>{{svc.name}}</td>
+            <td>{{svc.serverRules.length === 1 ? svc.serverRules[0].type : '--'}}</td>
+            <td>{{svc.serverRules.length === 1 ? svc.serverRules[0].minDstPort +
+                (svc.serverRules[0].maxDstPort>0 ? ', ' + svc.serverRules[0].maxDstPort : '') : '--'}}</td>
+            <td>{{svc.serverRules.length === 1 ? svc.serverRules[0].minSrcPort +
+                (svc.serverRules[0].maxSrcPort>0 ? ', ' + svc.serverRules[0].maxSrcPort : '') : '--'}}</td>
+            <td class="describe">
+                <span class="describe-ellipsis" tooltip="{{svc.description}}" tooltip-placement="bottom"
+                      ng-show="svc.description">
+                    {{svc.description}}
+                </span>
+                <div ng-hide="svc.description">--</div>
+            </td>
+        </tr>
+        <tr ng-if="accordion.current && svc.serverRules.length > 1" ng-repeat="rule in svc.serverRules"
+            class="angular-animate show-hide show-hide-table-row table-accordion-bk">
+            <td colspan="3"></td>
+            <td>{{rule.type}}</td>
+            <td>{{rule.minDstPort + (rule.maxDstPort>0 ? ', ' + rule.maxDstPort : '')}}</td>
+            <td>{{rule.minSrcPort + (rule.maxSrcPort>0 ? ', ' + rule.maxSrcPort : '')}}</td>
+            <td></td>
+        </tr>
+        <tr ng-repeat-end ng-if="false"></tr>
+        </tbody>
+    </table>
+</div>

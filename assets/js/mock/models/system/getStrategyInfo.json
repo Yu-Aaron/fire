@@ -1,0 +1,319 @@
+[
+    {
+        "strategyInfo": {
+            "strategyInfoId": "37a55da0-db93-4077-bfd4-2188b7a5c400",
+            "strategyName": "IpTraffic管理",
+            "strategyCode": "IP_TRAFFIC_MANAGEMENT",
+            "strategyRuleSetId": "33bd3fd2-34b8-4c08-9095-e8138abf40c6",
+            "strategyActionSetId": "428d36d1-91ed-417e-ad4f-91d820def292",
+            "matchOption": "OR",
+            "createdAt": "2015-11-25T18:47:31Z",
+            "updatedAt": "2015-11-25T18:47:31Z",
+            "disabled": false
+        },
+        "strategyRules": [
+            {
+                "strategyRuleId": "b9195e35-74cb-4c5c-8e58-03453dd3482c",
+                "strategyRuleSetId": "33bd3fd2-34b8-4c08-9095-e8138abf40c6",
+                "strategyRuleCode": "GE",
+                "ruleData": "60",
+                "strategyRuleName": "大于等于",
+                "rulePriority": 0,
+                "disabled": false,
+                "strategyRuleIdentifier": "IP_TRAFFIC_INTERVAL"
+            }
+        ],
+        "strategyActions": [
+            {
+                "strategyActionId": "4bc11c89-4707-4725-af46-b9a7f9b00f81",
+                "strategyActionSetId": "428d36d1-91ed-417e-ad4f-91d820def292",
+                "strategyActionCode": "ALERT",
+                "strategyActionName": "告警",
+                "actionPriority": 0,
+                "disabled": false
+            }
+        ]
+    },
+    {
+        "strategyInfo": {
+            "strategyInfoId": "39f82960-bab6-4b0c-9db9-fc49b60cf9cd",
+            "strategyName": "加密管理",
+            "strategyCode": "ENCRYPTION_MANAGEMENT",
+            "strategyRuleSetId": "2c8ebc71-3e38-454f-87c6-bb5ac4b25df7",
+            "strategyActionSetId": "c3d407d3-37dc-4cf5-8858-aabde37ddb3c",
+            "matchOption": "OR",
+            "createdAt": "2015-11-25T18:47:31Z",
+            "updatedAt": "2015-11-25T18:47:31Z",
+            "disabled": false
+        },
+        "strategyRules": [
+            {
+                "strategyRuleId": "3cee6ed9-1b21-471c-bc30-0de5a33d5c9b",
+                "strategyRuleSetId": "2c8ebc71-3e38-454f-87c6-bb5ac4b25df7",
+                "strategyRuleCode": "EQ",
+                "ruleData": "false",
+                "strategyRuleName": "等于",
+                "rulePriority": 0,
+                "disabled": false,
+                "strategyRuleIdentifier": "ENCRYPTION_TYPE"
+            }
+        ],
+        "strategyActions": [
+            {
+                "strategyActionId": "d2882d2a-0c29-4415-8e62-e8428f3dd784",
+                "strategyActionSetId": "c3d407d3-37dc-4cf5-8858-aabde37ddb3c",
+                "strategyActionCode": "ALERT",
+                "actionData": "",
+                "strategyActionName": "告警",
+                "actionPriority": 0,
+                "disabled": false
+            }
+        ]
+    },
+    {
+        "strategyInfo": {
+            "strategyInfoId": "544b7107-1b1b-4cf5-9daa-31f2f5c43d72",
+            "strategyName": "存储管理",
+            "strategyCode": "STORAGE_MANAGEMENT",
+            "strategyRuleSetId": "291d7ef3-61e8-48af-9dfb-041e788bb5f6",
+            "strategyActionSetId": "9bbd4ce9-48d7-4001-a6ca-f28733357bb3",
+            "matchOption": "OR",
+            "createdAt": "2015-11-25T18:47:31Z",
+            "updatedAt": "2015-11-25T18:47:31Z",
+            "disabled": false
+        },
+        "strategyRules": [
+            {
+                "strategyRuleId": "cda7daa0-907a-427b-a223-acece39cd497",
+                "strategyRuleSetId": "291d7ef3-61e8-48af-9dfb-041e788bb5f6",
+                "strategyRuleCode": "GE",
+                "ruleData": "80",
+                "strategyRuleName": "大于等于",
+                "rulePriority": 0,
+                "disabled": false,
+                "strategyRuleIdentifier": "STORAGE_THRESHOLD"
+            }
+        ],
+        "strategyActions": [
+            {
+                "strategyActionId": "2b8743db-35d1-4fce-966d-63b6f51f5b82",
+                "strategyActionSetId": "9bbd4ce9-48d7-4001-a6ca-f28733357bb3",
+                "strategyActionCode": "ALERT",
+                "strategyActionName": "告警",
+                "actionPriority": 0,
+                "disabled": false
+            }
+        ]
+    },
+    {
+        "strategyInfo": {
+            "strategyInfoId": "95cc7f5a-9158-4c8c-a797-f3c2f618a7fa",
+            "strategyName": "超时管理",
+            "strategyCode": "TIMEOUT_MANAGEMENT",
+            "strategyRuleSetId": "c3a0edf4-6306-420e-a884-11383639060a",
+            "strategyActionSetId": "3c1c3811-bcfd-414a-9044-46adfa0cc116",
+            "matchOption": "OR",
+            "createdAt": "2015-11-25T18:47:31Z",
+            "updatedAt": "2015-11-25T18:47:31Z",
+            "disabled": false
+        },
+        "strategyRules": [
+            {
+                "strategyRuleId": "1a875952-6fd9-4c0d-aa03-260efa78482d",
+                "strategyRuleSetId": "c3a0edf4-6306-420e-a884-11383639060a",
+                "strategyRuleCode": "EQ",
+                "ruleData": "60",
+                "strategyRuleName": "等于",
+                "rulePriority": 0,
+                "disabled": false,
+                "strategyRuleIdentifier": "IDLE_TIME"
+            }
+        ],
+        "strategyActions": [
+            {
+                "strategyActionId": "96bf33f3-7b48-4335-8144-90782f9a631b",
+                "strategyActionSetId": "3c1c3811-bcfd-414a-9044-46adfa0cc116",
+                "strategyActionCode": "TIMEOUT",
+                "strategyActionName": "超时",
+                "actionPriority": 0,
+                "disabled": false
+            }
+        ]
+    },
+    {
+        "strategyInfo": {
+            "strategyInfoId": "b8bdff55-9fb9-4687-aa3e-4033b2604970",
+            "strategyName": "IpTraffic切换",
+            "strategyCode": "IP_TRAFFIC_TOGGLE",
+            "strategyRuleSetId": "1f7ef1be-47fa-4af2-bd05-b9f10a8a9a20",
+            "strategyActionSetId": "d033f02a-c834-437a-8cc2-cfa1c66285cf",
+            "matchOption": "OR",
+            "createdAt": "2015-11-25T18:47:31Z",
+            "updatedAt": "2015-11-25T18:47:31Z",
+            "disabled": false
+        },
+        "strategyRules": [
+            {
+                "strategyRuleId": "c0b7783a-e6a4-45cf-a622-f62fac7c11f7",
+                "strategyRuleSetId": "1f7ef1be-47fa-4af2-bd05-b9f10a8a9a20",
+                "strategyRuleCode": "EQ",
+                "ruleData": "1",
+                "strategyRuleName": "等于",
+                "rulePriority": 0,
+                "disabled": false,
+                "strategyRuleIdentifier": "IP_TRAFFIC_TOGGLE"
+            }
+        ],
+        "strategyActions": [
+            {
+                "strategyActionId": "f3f91eb8-1c73-4b38-9018-6a8a7f75d962",
+                "strategyActionSetId": "d033f02a-c834-437a-8cc2-cfa1c66285cf",
+                "strategyActionCode": "ALERT",
+                "strategyActionName": "告警",
+                "actionPriority": 0,
+                "disabled": false
+            }
+        ]
+    },
+    {
+        "strategyInfo": {
+            "strategyInfoId": "c2f93c19-148b-4af5-b9af-c81141b77b28",
+            "strategyName": "通知管理",
+            "strategyCode": "NOTIFICATION_MANAGEMENT",
+            "strategyRuleSetId": "1fb8c31d-3b23-465d-a5b3-fc651cab6357",
+            "strategyActionSetId": "f40372d3-6dc5-4261-add3-5f97cb8b538f",
+            "matchOption": "OR",
+            "createdAt": "2015-11-25T18:47:31Z",
+            "updatedAt": "2015-11-25T18:47:31Z",
+            "disabled": false
+        },
+        "strategyRules": [
+            {
+                "strategyRuleId": "c2b72228-4e69-40e7-a708-e0500f7141ae",
+                "strategyRuleSetId": "1fb8c31d-3b23-465d-a5b3-fc651cab6357",
+                "strategyRuleCode": "EQ",
+                "ruleData": "incident",
+                "strategyRuleName": "等于",
+                "rulePriority": 0,
+                "disabled": false,
+                "strategyRuleIdentifier": "NOTIFICATIOIN_TYPE"
+            }
+        ],
+        "strategyActions": [
+            {
+                "strategyActionId": "680581b5-9c04-4cc6-bdf8-be5eff86783e",
+                "strategyActionSetId": "f40372d3-6dc5-4261-add3-5f97cb8b538f",
+                "strategyActionCode": "ALERT",
+                "actionData": "visual_audio",
+                "strategyActionName": "告警",
+                "actionPriority": 0,
+                "disabled": false
+            }
+        ]
+    },
+    {
+        "strategyInfo": {
+            "strategyInfoId": "cf418180-f9eb-465f-8b99-3e622a6de346",
+            "strategyName": "最大登录次数管理",
+            "strategyCode": "MAX_LOGIN_TRY_MANAGEMENT",
+            "strategyRuleSetId": "c41378fb-b259-41d5-827a-c5e81155f7a9",
+            "strategyActionSetId": "cbecfef1-686b-471e-b6f2-453d672412f0",
+            "matchOption": "OR",
+            "createdAt": "2015-11-25T18:47:31Z",
+            "updatedAt": "2015-11-25T18:47:31Z",
+            "disabled": false
+        },
+        "strategyRules": [
+            {
+                "strategyRuleId": "3b38adf8-ea0a-4643-b761-e0b62f06c308",
+                "strategyRuleSetId": "c41378fb-b259-41d5-827a-c5e81155f7a9",
+                "strategyRuleCode": "EQ",
+                "ruleData": "5",
+                "strategyRuleName": "等于",
+                "rulePriority": 0,
+                "disabled": false,
+                "strategyRuleIdentifier": "MAX_LOGIN_TRY"
+            }
+        ],
+        "strategyActions": [
+            {
+                "strategyActionId": "add13bdd-2036-4245-8245-ef34d31c008a",
+                "strategyActionSetId": "cbecfef1-686b-471e-b6f2-453d672412f0",
+                "strategyActionCode": "REJECTBOTH",
+                "strategyActionName": "阻断",
+                "actionPriority": 0,
+                "disabled": false
+            }
+        ]
+    },
+    {
+        "strategyInfo": {
+            "strategyInfoId": "e239876d-da60-4070-a8a1-760cb227cd42",
+            "strategyName": "IP登录管理",
+            "strategyCode": "IP_LOGIN_MANAGEMENT",
+            "strategyRuleSetId": "5c0fe3fe-c658-4955-aab9-e65bc5e05fee",
+            "strategyActionSetId": "c3a90aef-a21e-4078-8f63-2bddbedb29aa",
+            "matchOption": "OR",
+            "createdAt": "2015-11-25T18:47:31Z",
+            "updatedAt": "2015-11-25T18:47:31Z",
+            "disabled": false
+        },
+        "strategyRules": [
+            {
+                "strategyRuleId": "3fe6d776-81ab-4ee8-9dee-ee4fb2c5537c",
+                "strategyRuleSetId": "5c0fe3fe-c658-4955-aab9-e65bc5e05fee",
+                "strategyRuleCode": "EQ",
+                "ruleData": "0.0.0.0/0",
+                "strategyRuleName": "",
+                "rulePriority": 0,
+                "disabled": false,
+                "strategyRuleIdentifier": "VALID_IP"
+            }
+        ],
+        "strategyActions": [
+            {
+                "strategyActionId": "c4e9912c-66ff-4539-bb3d-1db76e3112a1",
+                "strategyActionSetId": "c3a90aef-a21e-4078-8f63-2bddbedb29aa",
+                "strategyActionCode": "ALLOW",
+                "strategyActionName": "允许",
+                "actionPriority": 0,
+                "disabled": false
+            }
+        ]
+    },
+    {
+        "strategyInfo": {
+            "strategyInfoId": "fff56b9c-1dee-4dfb-92b8-6cc81e0836e0",
+            "strategyName": "密码强度管理",
+            "strategyCode": "PASSWORD_COMPLEXITY_MANAGEMENT",
+            "strategyRuleSetId": "2c07d611-64d6-4cf5-88a8-09830a46e04a",
+            "strategyActionSetId": "36fd37f7-23b6-408d-ab61-da3454d2d958",
+            "matchOption": "OR",
+            "createdAt": "2015-11-25T18:47:31Z",
+            "updatedAt": "2015-11-25T18:47:31Z",
+            "disabled": false
+        },
+        "strategyRules": [
+            {
+                "strategyRuleId": "5a3358f4-6173-4e00-9627-2f01e919ef93",
+                "strategyRuleSetId": "2c07d611-64d6-4cf5-88a8-09830a46e04a",
+                "strategyRuleCode": "EQ",
+                "ruleData": "中",
+                "strategyRuleName": "等于",
+                "rulePriority": 0,
+                "disabled": false,
+                "strategyRuleIdentifier": "PASSWORD_COMPLEXITY"
+            }
+        ],
+        "strategyActions": [
+            {
+                "strategyActionId": "fcd331f7-e6aa-49cd-996f-b92e1504ee36",
+                "strategyActionSetId": "36fd37f7-23b6-408d-ab61-da3454d2d958",
+                "strategyActionCode": "ALLOW",
+                "strategyActionName": "允许",
+                "actionPriority": 0,
+                "disabled": false
+            }
+        ]
+    }
+]

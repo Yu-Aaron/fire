@@ -1,0 +1,182 @@
+<div>
+  <div class="margin-bottom-default object-new-delete-container">
+    <a id="object-securityarea-add" class="btn btn-default" ng-click="dtable.addNewSecurityArea()"
+       setting-privilege privilege-name="OBJECT_ASSET" privilege-require="MIXED" privilege-handle="hidden">
+      &nbsp;<i class="fa fa-file-o fa-after-blue fa-plus-overlay icon-left"></i> 新增&nbsp;</a>
+    <a id="object-securityarea-delete" class="btn btn-default" ng-click="dtable.deleteSecurityArea()"
+       setting-privilege privilege-name="OBJECT_ASSET" privilege-require="MIXED" privilege-handle="hidden">
+      &nbsp;<i class="fa fa-trash-o icon-left"></i> 删除&nbsp;</a>
+  </div>
+  <table class="table table-hover icon-hidden"
+         cg-busy="{promise:$root.secAreaDeleteTaskPromise,message:'安全区域删除中，请稍侯...'}">
+    <thead>
+    <tr>
+      <th class="text-center">
+        <label>
+          <input id="selected-item-all" custom-checkbox tri-state-checkbox type="checkbox"
+                 ng-model="dtable.selectAllValue"
+                 ng-click="dtable.selectAll()"/>
+        </label>
+      </th>
+      <th>序号</th>
+      <th order-by="name">安全区域名</th>
+      <th order-by="_interfaceNames">接口</th>
+      <th order-by="_policyRefers">策略引用</th>
+      <th order-by="_addressRefers">地址池引用</th>
+      <th order-by="enable">启动</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="area in dtable.table" fade-in-list>
+      <td class="text-center">
+        <label>
+          <input custom-checkbox type="checkbox" id="selected-item-{{$index}}"
+                 ng-checked="dtable.selectedItems[area.name]"
+                 ng-change="dtable.selectedChanged()"
+                 ng-model="dtable.selectedItems[area.name]"/>
+        </label></td>
+      <td>{{skip + $index + 1}}</td>
+      <td>{{area.name}}</td>
+      <td>{{area._interfaceNames}}</td>
+      <td>{{area._policyRefers | convertNullBlank:'--'}}</td>
+      <td>{{area._addressRefers | convertNullBlank:'--'}}</td>
+      <td class="switch-toggle-td">
+        <switch-toggle status="area.enable" change="dtable.changeStartStatus(area)"
+                       disabled="isNoEditPri || isSwitchArea[area.name]"></switch-toggle>
+        <span ng-show="isSwitchArea[area.name]">
+                    <i class="fa fa-spinner fa-spin icon-left"></i>{{switchAreaMsg[area.name]}}中
+                </span>
+      </td>
+      <td>
+        <a id="object-securityarea-view" class="btn btn-sm btn-default"
+           ng-click="dtable.viewSecurityArea(area)" ng-if="isNoEditPri">查看</a>
+        <a id="object-securityarea-edit" class="btn btn-sm btn-default"
+           ng-click="dtable.editSecurityArea(area)" title="编辑" setting-privilege
+           privilege-name="{{privilegeName}}" privilege-require="MIXED" privilege-handle="hidden">
+          <i class="fa fa-edit"></i></a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <script type="text/ng-template" id="security-area-add-new.html">
+    <div class="modal-securityarea-info" global-events>
+      <form name="newSecurityAreaForm" ng-submit="ok(newSecurityAreaForm.$valid)">
+        <div class="modal-header">
+          <h4 class="modal-header-title">新增安全区域</h4>
+        </div>
+        <div class="modal-body">
+          <div class="modal-body-securityarea-info">
+            <div class="row">
+              <div class="row row-container">
+                <div class="col-xs-2">安全区域名 ：</div>
+                <div class="col-xs-10">
+                  <input name="name" type="text" custom-val="nameval" validator="checkNameVal"
+                         ng-model="newSecurityArea.name" ng-model-options="{ updateOn: 'blur' }"
+                         maxlength="20" placeholder="AREA1" required>
+                  <div class="input-alert-error" ng-show="newSecurityAreaForm.name.$error.nameval">
+                    {{nameValMsg}}
+                  </div>
+                </div>
+              </div>
+              <div class="row interface-container">
+                <div class="col-xs-2">选择接口 ：</div>
+                <div class="col-xs-10" ng-if="isGettingInterfaces">
+                  <div>
+                    <i class="fa fa-spinner fa-spin icon-left"></i>接口数据同步中...
+                  </div>
+                </div>
+                <div class="col-xs-10" ng-if="!isGettingInterfaces">
+                  <div class="col-xs-3" ng-repeat="interface in interfaces" ng-if="interfaces.length > 0">
+                    <label>
+                      <input custom-checkbox type="checkbox" id="selected-interface-{{$index}}"
+                             ng-checked="selectedInterfaces[interface.interfaceName]"
+                             ng-model="selectedInterfaces[interface.interfaceName]"
+                             ng-disabled="interface.dmz||
+                                                    briInterfaceNames.indexOf(interface.interfaceName)>=0"/>{{interface.interfaceName}}
+                    </label>
+                  </div>
+                  <div ng-if="interfaces === undefined || interfaces.length <= 0">
+                    无法获取接口数据
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default pull-right" ng-hide="isAddingArea">
+            <i class="fa fa-check text-lime icon-left"></i>确定
+          </button>
+          <button class="btn btn-default pull-right" ng-disabled="true" ng-show="isAddingArea">
+            <i class="fa fa-spinner fa-spin icon-left"></i>添加中
+          </button>
+          <button type="button" class="btn btn-default pull-left" ng-click="cancel()">
+            <i class="fa fa-times icon-left"></i>取消
+          </button>
+        </div>
+      </form>
+    </div>
+  </script>
+  <script type="text/ng-template" id="security-area-edit.html">
+    <div class="modal-securityarea-info" global-events>
+      <form name="editSecurityAreaForm" ng-submit="ok(editSecurityAreaForm.$valid)">
+        <div class="modal-header">
+          <h4 class="modal-header-title">编辑安全区域</h4>
+        </div>
+        <div class="modal-body">
+          <div class="modal-body-securityarea-info">
+            <div class="row">
+              <div class="row row-container">
+                <div class="col-xs-2">安全区域名 ：</div>
+                <div class="col-xs-10">
+                  <input name="name" type="text" custom-val="nameval" validator="checkNameVal"
+                         ng-model="editSecurityArea.name" ng-model-options="{ updateOn: 'blur' }"
+                         maxlength="20" placeholder="AREA1" required ng-disabled="isViewOnly||isEditDisabled">
+                  <div class="input-alert-error" ng-show="editSecurityAreaForm.name.$error.nameval">
+                    {{nameValMsg}}
+                  </div>
+                </div>
+              </div>
+              <div class="row interface-container">
+                <div class="col-xs-2">选择接口 ：</div>
+                <div class="col-xs-10" ng-if="isGettingInterfaces">
+                  <div>
+                    <i class="fa fa-spinner fa-spin icon-left"></i>接口数据同步中...
+                  </div>
+                </div>
+                <div class="col-xs-10" ng-if="!isGettingInterfaces">
+                  <div class="col-xs-3" ng-repeat="interface in interfaces" ng-if="interfaces.length > 0">
+                    <label>
+                      <input custom-checkbox type="checkbox" id="selected-interface-{{$index}}"
+                             ng-checked="selectedInterfaces[interface.interfaceName]"
+                             ng-model="selectedInterfaces[interface.interfaceName]"
+                             ng-disabled="isViewOnly ||
+                                                (interface.dmz && interface.dmz!==editSecurityArea.name)||
+                                                    briInterfaceNames.indexOf(interface.interfaceName)>=0"/>
+                      {{interface.interfaceName}}
+                    </label>
+                  </div>
+                  <div ng-if="interfaces === undefined || interfaces.length <= 0">
+                    无法获取接口数据
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default pull-right" ng-hide="isEdittingArea">
+            <i class="fa fa-check text-lime icon-left"></i>确定
+          </button>
+          <button class="btn btn-default pull-right" ng-disabled="true" ng-show="isEdittingArea">
+            <i class="fa fa-spinner fa-spin icon-left"></i>修改中
+          </button>
+          <button type="button" class="btn btn-default pull-left" ng-click="cancel()">
+            <i class="fa fa-times icon-left"></i>取消
+          </button>
+        </div>
+      </form>
+    </div>
+  </script>
+</div>

@@ -1,0 +1,271 @@
+/* ----------------------------------------
+  New Header
+---------------------------------------- */
+
+.top-bar {
+  position: relative;
+  padding-top: 6px;
+  min-width: @min-topbar-width;
+  height: 78px;
+  background-color: @bg-gray-dark;
+  border: none;
+  // background: linear-gradient(@bg-gray-light, @bg-gray-dark);
+  box-shadow: 0px 10px 4px @bg-gray-dark;
+  z-index: 11; // The top-bar should be above all other sections
+}
+
+.logo {
+  background-image: none;
+  padding: 0 24px 0 33px;
+  img {
+    width: 200px;
+    height: auto;
+    margin-top: -10px;
+    margin-left: -18px;
+  }
+}
+
+.header-nav {
+  background-image: none;
+  .header-nav-right {
+    padding: 20px 30px 24px 0;
+    .header-nav-right-item {
+      padding: 0;
+      + .header-nav-right-item {
+        margin-left: 20px;
+      }
+    }
+  }
+  .header-nav-icon {
+    color: @txt-light-gray;
+    font-size: 20px;
+    padding: 0;
+  }
+}
+
+a#header_a_navBell {
+  padding: 7px 10px;
+}
+
+.navbar {
+  margin-left: 0;
+
+  li#header_li_monitor {
+    a {
+      .navbar-border-left {
+        position: absolute;
+        top: 14px;
+        left: -5px;
+        height: 44px;
+        border-left: 1px solid @bg-gray;
+      }
+    }
+    a:hover {
+      .navbar-border-left {
+        position: absolute;
+        border: none;
+      }
+      .navbar-border-right {
+        position: absolute;
+        border: none;
+      }
+    }
+    &.active a,
+    &.active a:hover {
+      .navbar-border-left {
+        position: absolute;
+        border: none;
+      }
+      .navbar-border-right {
+        position: absolute;
+        border: none;
+      }
+    }
+
+    &.blurred a,
+    &.blurred a:hover {
+      background: linear-gradient(@bg-gray-light, @bg-gray-light);
+      background: @bg-gray-dark;
+      // box-shadow: inset -1px 0px 0px 0px rgba(0,0,0,0.50),
+      //             inset 1px 0px 0px 0px rgba(204,204,204,0.10);
+      color: @txt-light-gray;
+
+      .navbar-border-left {
+        position: absolute;
+        top: 14px;
+        left: -5px;
+        height: 44px;
+        border-left: 1px solid @bg-gray;
+      }
+      .navbar-border-right {
+        position: absolute;
+        top: 14px;
+        left: 78px;
+        height: 44px;
+        border-left: 1px solid @bg-gray;
+      }
+      opacity: 1;
+    }
+  }
+
+  .navbar-divider {
+    border-right: 1px solid @bg-gray;
+    height: 56px;
+    margin-top: 8px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+  }
+  .navbar-item {
+    width: 82px;
+    height: @topbar-height;
+    padding-left: 3px;
+    padding-right: 1px;
+
+    // border-right: 1px solid @bg-gray;
+
+    .navbar-item-divider {
+      border-left: 1px solid @bg-gray;
+      height: 56px;
+      margin-top: 8px;
+      position: absolute;
+      left: 0px;
+      top: 0px;
+    }
+
+    a {
+      padding: 14px 0 8px;
+      // background-color: @bg-gray;
+      // background: linear-gradient(@bg-gray-light, @bg-gray-darker);
+      // box-shadow: inset -1px 0px 0px 0px rgba(0,0,0,0.50),
+      //             inset 1px 0px 0px 0px rgba(204,204,204,0.10);
+      border: none;
+      border-radius: 0;
+      color: @txt-light-gray;
+      font-size: 12px;
+      &:hover:enabled {
+        background: @bg-gray;
+        border-radius: 4px;
+        box-shadow: none;
+        color: @txt-white-gray;
+      }
+      .navbar-item-icon {
+        margin: -8px auto 0px;
+        width: 35px;
+        height: 35px;
+      }
+      .navbar-item-title {
+        position: static;
+        display: block;
+        width: 100%;
+        margin: 0;
+        text-align: center;
+        text-shadow: none;
+      }
+      .navbar-border-left {
+        position: absolute;
+        border: none;
+        //border-left: 1px solid #ff0000;
+      }
+      .navbar-border-right {
+        position: absolute;
+        top: 14px;
+        left: 78px;
+        height: 44px;
+        border-left: 1px solid @bg-gray;
+      }
+    }
+
+    a:hover {
+      .navbar-border-left {
+        position: absolute;
+        top: 14px;
+        left: -5px;
+        height: 44px;
+        border: 1px solid @bg-gray-dark;
+      }
+      .navbar-border-right {
+        position: absolute;
+        border: none;
+      }
+    }
+    &.active a,
+    &.active a:hover {
+      // height: 77px;
+      padding-top: 13px;
+      background: linear-gradient(@bg-gray-light, @bg-gray-light);
+
+      box-shadow: 5px 5px 2px @bg-gray-darker;
+      box-shadow: none;
+      border-radius: 4px;
+      // border: 1px solid @bg-gray-dark;
+      color: @primary;
+      line-height: 12px;
+      .navbar-item-icon {
+        margin-bottom: 6px;
+      }
+      .navbar-item-title {
+        text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.50);
+      }
+
+      .navbar-border-left {
+        position: absolute;
+        top: 14px;
+        left: -5px;
+        height: 44px;
+        border: 1px solid @bg-gray-dark;
+      }
+      .navbar-border-right {
+        position: absolute;
+        border: none;
+      }
+    }
+    &.blurred a,
+    &.blurred a:hover {
+      background: linear-gradient(@bg-gray-light, @bg-gray-light);
+      background: @bg-gray-dark;
+      // box-shadow: inset -1px 0px 0px 0px rgba(0,0,0,0.50),
+      //             inset 1px 0px 0px 0px rgba(204,204,204,0.10);
+      color: @txt-light-gray;
+
+      .navbar-border-left {
+        position: absolute;
+        border: none;
+        //border-left: 1px solid #ff0000;
+      }
+      .navbar-border-right {
+        position: absolute;
+        top: 14px;
+        left: 78px;
+        height: 44px;
+        border-left: 1px solid @bg-gray;
+      }
+      opacity: 1;
+    }
+  }
+}
+
+.menubar {
+  .menubar-top {
+    overflow: hidden;
+    height: 72px;
+    position: relative;
+    width: 810px;
+    margin: auto;
+  }
+  .menubar-topmenu {
+    overflow: hidden;
+    height: 72px;
+    position: relative;
+    float: left;
+    width: 750px;
+  }
+  .menubar-span {
+    float: left;
+    height: 72px;
+    line-height: 72px;
+    font-size: 15px;
+    width: 30px;
+    text-align: center;
+  }
+}

@@ -1,0 +1,52 @@
+<div id="ipmac_rule_sync_panel_container"
+     cg-busy="{promise: ipmacsyncCtrl.syncTaskPromise, message: '同步中...',templateUrl:'templates/rule/ipmacsync/deploying.html'}">
+  <div ng-init="ipmacsyncCtrl.checkSyncInitial()">
+    <div id="rule_sync_syncing_div" class="panel" ng-if="ipmacsyncCtrl.hasSyncingTask()">
+      <div class="panel-heading">
+        <h5><i class="fa fa-search-plus"></i>正在进行规则同步</h5>
+      </div>
+    </div>
+    <div id="rule_sync_div" ng-if="!ipmacsyncCtrl.hasSyncingTask()">
+      <div class="panel panel-default-threat-main">
+        <div class="panel-heading">
+          <h5><i class="fa fa-default fa-exchange"></i> 规则同步 <span style="float:right"><i class="fa fa-info-circle"></i> 同步规则会把DPI设备上部署的规则和监管平台上的规则进行比较，然后可以将DPI设备上多出来的规则添加到IPMAC绑定设备列表中</span>
+          </h5>
+        </div>
+        <div class="panel-body panel-body-light" ng-if="ipmacsyncCtrl.isDPIUpgrading">
+          <div>
+            <span class="warning">&nbsp; (DPI设备升级中，无法同步规则)</span>
+          </div>
+        </div>
+        <div id="rule_sync_task_div" ng-if="ipmacsyncCtrl.hasSyncedTask()">
+          <h5 class="last-update">最新规则同步检测完成时间：{{ipmacsyncCtrl.syncTask.endDatetime | date:'yyyy-MM-dd HH:mm:ss'}}</h5>
+          <div class="display-inline-block btn-group" id="sync_btn_group" dropdown ng-if="ipmacsyncCtrl.editRight">
+            <button id="rule_sync_restart_button" type="button" class="btn btn-default pull-right"
+                    ng-if="ipmacsyncCtrl.editRight" ng-click="ipmacsyncCtrl.start(true)"><i
+              class="fa fa-search-plus icon-left"></i>重新同步规则
+            </button>
+          </div>
+          <br/><br/>
+          <div id="rule_sync_result_div" ng-if="ipmacsyncCtrl.hasSyncResult()">
+            <div ng-include class="inner-wrap" src="'templates/rule/ipmacsync/syncResultTab.html'"></div>
+          </div>
+          <div id="rule_sync_no_result_div" ng-if="!ipmacsyncCtrl.hasSyncResult()">
+            <div class="panel-heading">
+              <h4 ng-if="ipmacsyncCtrl.lastSyncSuccess()" class="no-result-message">
+                同步过的DPI设备上的IPMAC规则全部包含在监管平台上，或者DPI设备上多出来的规则已经被添加到IPMAC绑定设备列表中。</h4>
+              <h4 ng-if="!ipmacsyncCtrl.lastSyncSuccess()&& !ipmacsyncCtrl.hasSyncingTask" class="no-result-message">
+                上次同步失败，请重新同步。</h4>
+            </div>
+          </div>
+        </div>
+        <div id="rule_sync_no_task_div" ng-if="!ipmacsyncCtrl.hasSyncedTask()">
+          <div class="panel-heading" ng-if="ipmacsyncCtrl.editRight">
+            <h4>请开始同步规则</h4>
+            <button id="rule_sync_start_button" type="button" class="btn btn-default"
+                    ng-click="ipmacsyncCtrl.start(false)"><i class="fa fa-search-plus icon-left"></i>同步规则
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

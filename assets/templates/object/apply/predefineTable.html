@@ -1,0 +1,138 @@
+<div class="apply-predefine-container">
+    <table class="table table-hover icon-hidden">
+        <thead>
+        <tr>
+            <!--<th class="text-center">-->
+                <!--<label>-->
+                    <!--<input custom-checkbox type="checkbox" ng-model="dtable.selectAllValue"-->
+                           <!--id="selected-item-all" ng-click="dtable.selectAll()"/>-->
+                <!--</label>-->
+            <!--</th>-->
+            <th>序号</th>
+            <th order-by="name">应用名</th>
+            <th order-by="appId">应用Id</th>
+            <th order-by="description">描述</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="app in dtable.table" fade-in-list>
+            <!--<td class="text-center">-->
+                <!--<label>-->
+                    <!--<input custom-checkbox type="checkbox" id="selected-item-{{$index}}"-->
+                           <!--ng-checked="dtable.selectedItems[app.name]"-->
+                           <!--ng-model="dtable.selectedItems[app.name]"/>-->
+                <!--</label></td>-->
+            <td>{{skip + $index + 1}}</td>
+            <td>{{app.name}}</td>
+            <td>{{app.appId}}</td>
+            <td class="describe">
+                <span class="describe-ellipsis" tooltip="{{app.description}}" tooltip-placement="bottom"
+                      ng-show="app.description">
+                    {{app.description}}
+                </span>
+                <div ng-hide="app.description">--</div>
+            </td>
+            <td>
+                <button id="object-applypredefine-view" class="btn btn-sm btn-default"
+                        ng-click="dtable.viewApply(app)">查看
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <script type="text/ng-template" id="apply-predefine-view.html">
+    <div class="modal-apply-customize-info">
+    <div class="modal-header">
+        <h4 class="modal-header-title">查看预定义应用</h4>
+    </div>
+    <div class="modal-body">
+    <div class="modal-body-apply-customize-info">
+    <div class="row">
+    <div class="row">
+        <div class="app-basic-info-container">
+            <div class="row row-container">
+                <div class="col-xs-2">应用名称 ：</div>
+                <div class="col-xs-10">
+                    <input name="name" type="text" ng-model="viewApply.name" maxlength="20" class="basic-input"
+                           ng-disabled="true"/>
+                </div>
+            </div>
+            <div class="row row-container">
+                <div class="col-xs-2">承载协议 ：</div>
+                <div class="col-xs-10">
+                    <select class="select-styled" id="view-protocol"
+                            ng-model="viewApply.type"
+                            ng-options="protocol for protocol in protocols"
+                            ng-change="changeProtocol()"
+                            ng-disabled="!viewApply.tcpPort || !viewApply.udpPort">
+                    </select>
+                </div>
+            </div>
+            <div class="row row-container">
+                <div class="col-xs-2">服务端口 ：</div>
+                <div class="col-xs-10">
+                    <input name="tcpudpport" type="text" ng-model="tcpudpPort" maxlength="255"
+                           class="basic-input" ng-disabled="true"/>
+                </div>
+            </div>
+            <!--<div class="row row-container">-->
+                <!--<div class="col-xs-2">服务端口 ：</div>-->
+                <!--<div class="col-xs-10">-->
+                    <!--<input name="serverport" type="text" ng-model="viewApply.serverPort" maxlength="255"-->
+                           <!--class="basic-input" ng-disabled="true"/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row row-container">-->
+                <!--<div class="col-xs-2">客户端口 ：</div>-->
+                <!--<div class="col-xs-10">-->
+                    <!--<input name="clientport" type="text" ng-model="viewApply.clientPort" maxlength="255"-->
+                           <!--class="basic-input" ng-disabled="true"/>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+        <div class="row">
+            <div class="app-signature-container">
+                <div class="row">
+                    <div class="col-xs-2">应用特征 ：</div>
+                    <div class="col-xs-10">
+                        <div class="col-xs-10">
+                            <div class="row row-container signature-manual-row" ng-repeat="signature in signatures">
+                                <div class="row signature-manual-row-input">
+                                    <div class="col-xs-4">
+                                        偏移&nbsp;&nbsp;
+                                        <input type="text" ng-model="signature.toffset" ng-disabled="true"
+                                               maxlength="3" class="manual-input"/>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        特征&nbsp;&nbsp;
+                                        <input type="text" ng-model="signature.trait" ng-disabled="true"
+                                               maxlength="5" class="manual-input">
+                                    </div>
+                                    <div class="col-xs-4">
+                                        深度&nbsp;&nbsp;
+                                        <input type="text" ng-model="signature.depth" ng-disabled="true"
+                                               maxlength="5" class="manual-input"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button id="btn_predefined_view_ok" type="button" class="btn btn-default pull-right" ng-click="ok()">
+            <i class="fa fa-check text-lime icon-left"></i>确定
+        </button>
+        <button id="btn_predefined_view_cancel" type="button" class="btn btn-default pull-left" ng-click="cancel()">
+            <i class="fa fa-times icon-left"></i>取消
+        </button>
+    </div>
+    </div>
+    </script>
+</div>

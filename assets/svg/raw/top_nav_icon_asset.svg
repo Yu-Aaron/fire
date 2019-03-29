@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12081) - http://www.bohemiancoding.com/sketch -->
+    <title>top_nav_icon_asset</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#DDE1D8" offset="0%"></stop>
+            <stop stop-color="#A4A4A4" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="-93.6470389%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#11311B10A" offset="0%"></stop>
+            <stop stop-color="#DDE1D8" offset="17.7166981%"></stop>
+            <stop stop-color="#BFC1BD" offset="68.9220847%"></stop>
+            <stop stop-color="#A4A4A4" offset="100%"></stop>
+        </linearGradient>
+        <radialGradient cx="33.3374023%" cy="18.347168%" fx="33.3374023%" fy="18.347168%" r="81.652832%" id="radialGradient-3">
+            <stop stop-color="#B4EE42" offset="0%"></stop>
+            <stop stop-color="#466D01" offset="100%"></stop>
+        </radialGradient>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-5">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <radialGradient cx="55.5443108%" cy="50%" fx="55.5443108%" fy="50%" r="64.5648887%" id="radialGradient-6">
+            <stop stop-color="#A0D790" stop-opacity="0.833305027" offset="0%"></stop>
+            <stop stop-color="#66CC00" offset="100%"></stop>
+        </radialGradient>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-7">
+            <feOffset dx="2" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.35 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="TopNav" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="top_nav_icon_asset" sketch:type="MSArtboardGroup">
+            <g id="Group" sketch:type="MSLayerGroup" transform="translate(20.000000, 23.000000)">
+                <path d="M52.5741328,10.2541053 L59.904,39.963286 L0,39.963286 L7.32986719,10.2541053 L52.5741328,10.2541053 Z" id="Rectangle-99" fill="url(#linearGradient-1)" sketch:type="MSShapeGroup"></path>
+                <rect id="Rectangle-99-Copy" fill="url(#linearGradient-2)" sketch:type="MSShapeGroup" x="0" y="34.9814019" width="59.904" height="19.9275362" rx="4.98188406"></rect>
+                <ellipse id="Oval-84-Copy-3" fill="url(#radialGradient-3)" filter="url(#filter-4)" sketch:type="MSShapeGroup" cx="8.736" cy="44.94517" rx="2.496" ry="2.49094203"></ellipse>
+                <ellipse id="Oval-84-Copy-4" fill="url(#radialGradient-3)" filter="url(#filter-5)" sketch:type="MSShapeGroup" cx="18.72" cy="44.94517" rx="2.496" ry="2.49094203"></ellipse>
+                <path d="M49.4011675,18.311316 C49.0776847,16.7209502 48.450551,15.2406259 47.5827887,13.9332379 L47.5827887,13.9332379 L50.6811132,10.8349134 L47.1583892,7.31218939 L44.0570413,10.4135374 C42.7461994,9.54641614 41.2617301,8.9197823 39.6668127,8.59668721 L39.6668127,8.59668721 L39.6668127,5.85660585 L34.6748127,5.85660585 L34.6748127,8.59668721 C33.0816414,8.91942857 31.5986765,9.54504443 30.2888901,10.4106903 L27.1903892,7.31218939 L23.6605122,10.8420664 L26.7559838,13.9375381 L26.7559838,13.9375381 C25.8896998,15.2438716 25.263586,16.7226936 24.9404579,18.311316 L22.1948127,18.311316 L22.1948127,23.2932001 L24.9404579,23.2932001 L24.9404579,23.2932001 C25.2639406,24.8835659 25.8910744,26.3638901 26.7588367,27.6712781 L26.7588367,27.6712781 L23.6605122,30.7696027 L27.1832362,34.2923267 L30.2845841,31.1909787 C31.595426,32.0580999 33.0798953,32.6847338 34.6748127,33.0078288 L34.6748127,35.7479102 L39.6668127,35.7479102 L39.6668127,33.0078288 C41.259984,32.6850875 42.7429489,32.0594716 44.0527353,31.1938258 L47.1512362,34.2923267 L50.6811132,30.7624496 L47.5856416,27.666978 L47.5856416,27.666978 C48.4519256,26.3606445 49.0780393,24.8818225 49.4011675,23.2932001 L52.1468127,23.2932001 L52.1468127,18.311316 L49.4011675,18.311316 Z M37.1708127,28.2750841 C41.3063209,28.2750841 44.6588127,24.9293859 44.6588127,20.802258 C44.6588127,16.6751301 41.3063209,13.3294319 37.1708127,13.3294319 C33.0353045,13.3294319 29.6828127,16.6751301 29.6828127,20.802258 C29.6828127,24.9293859 33.0353045,28.2750841 37.1708127,28.2750841 Z" id="Oval-82" fill="url(#radialGradient-6)" filter="url(#filter-7)" sketch:type="MSShapeGroup" transform="translate(36.441165, 20.802258) rotate(-315.000000) translate(-36.441165, -20.802258) "></path>
+            </g>
+        </g>
+    </g>
+</svg>

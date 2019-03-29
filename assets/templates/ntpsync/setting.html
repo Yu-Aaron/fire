@@ -1,0 +1,111 @@
+<div class="tab-container margin-top-medium system-config-page system-upgrade" ng-controller="TabCtrl as tab">
+  <ul class="nav nav-tabs nav-tabs-lime" ng-init="tab.active || tab.activatePanel('SYSTEM_SETTING')">
+    <li id="setting-systemconsole_li_systemSetting" ng-class="{ active: tab.isActive('SYSTEM_SETTING') }"
+        privilege="SETTINGS_POLICY" disable="true">
+      <a href="#" ng-click="tab.activatePanel('SYSTEM_SETTING')">
+        <span>策略配置</span>
+      </a>
+    </li>
+  </ul>
+  <div ng-switch on="tab.active">
+    <div class="tab-container-body" ng-switch-when="SYSTEM_SETTING" privilege="SETTINGS_POLICY" disable="true">
+      <div class="row">
+        <div class="panel-title">
+          <h3>基本设置</h3>
+        </div>
+        <div class="col-md-6">
+          <div id="setting_systemconsole_container_editNtpSync" class="panel panel-lg padding-zero"
+               ng-if="$root.userRoleTypeC05!==1">
+            <div class="panel-header panel-header-border">
+              <span class="panel-header-title">时钟同步<i class="fa fa-info-circle fa-beside-button-left"></i></span>
+              <button id="setting-systemconsole_button_editNtpSync"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-hide="sysconsole.editMode.ntpSync||!sysconsole.editRight"
+                      ng-disabled="sysconsole.disableEditTimeSyncButton" ng-click="sysconsole.editNtpSync()"><i
+                class="fa fa-pencil-square-o"></i></button>
+              <button id="setting-systemconsole_button_changeNtpSync"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.ntpSync" ng-click="sysconsole.changeNtpSync()"
+                      ng-disabled="sysconsole.disableNtpSubmit"><i class="fa fa-check text-lime"></i></button>
+              <button id="setting-systemconsole_button_cancelNtpSync"
+                      class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.ntpSync" ng-click="sysconsole.cancelNtpSync()"><i
+                class="fa fa-remove"></i></button>
+            </div>
+            <div class="panel-body">
+              <form name="timeConf">
+                <div class="row">
+                  <div class="col-md-3 system-time-sync-option">
+                    <div class="radio-button"><input ng-class="{checked:!sysconsole.setActivateNtp}" type="radio"
+                                                     ng-model="sysconsole.setActivateNtp" ng-value="false"
+                                                     ng-disabled="!sysconsole.editMode.ntpSync"></div>
+                    <div class="option-title">手动输入时间</div>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="row">
+                      <div class="col-md-3 margin-top-zero">系统时间:</div>
+                      <div class="col-md-6 margin-top-zero"
+                           ng-hide="!sysconsole.editMode.ntpSync || sysconsole.setActivateNtp">
+                        <date-picker ng-model="sysconsole.systemDateInput" ng-change="sysconsole.validateSystemTime()"
+                                     placeholder="sysconsole.serverTime"
+                                     ng-disabled="!sysconsole.editMode.ntpSync || sysconsole.setActivateNtp"
+                                     click="sysconsole.stopTimeout()" control="sysconsole.datePickerCtrl"></date-picker>
+                        <time-picker ng-model="sysconsole.systemTimeInput" ng-change="sysconsole.validateSystemTime()"
+                                     placeholder="sysconsole.serverTime"
+                                     ng-disabled="!sysconsole.editMode.ntpSync || sysconsole.setActivateNtp"
+                                     click="sysconsole.stopTimeout()" control="sysconsole.timePickerCtrl"></time-picker>
+                      </div>
+                      <div class="col-md-3 margin-top-zero import-button"
+                           ng-show="sysconsole.editMode.ntpSync && !sysconsole.setActivateNtp">
+                        <button id="import_system_time" class="btn btn-default btn-sm"
+                                ng-click="sysconsole.importLocalTime();sysconsole.validateSystemTime()">导入本机时间
+                        </button>
+                      </div>
+                      <div class="col-md-9 margin-top-zero"
+                           ng-show="!sysconsole.editMode.ntpSync || sysconsole.setActivateNtp">
+                        {{sysconsole.serverTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3 margin-top-zero">本机时间:</div>
+                      <div class="col-md-9 margin-top-zero local-time">{{sysconsole.localTime | date: 'yyyy-MM-dd
+                        HH:mm:ss'}}
+                      </div>
+                    </div>
+                    <div class="row" ng-show="sysconsole.editMode.ntpSync">
+                      <i class="fa fa-exclamation-triangle"
+                         style="color:#fe540f;margin-left:13px;margin-right:4px;"></i>手动更改系统时间会导致{{$root.PLATFORM_NAME}}重启
+                    </div>
+                  </div>
+                </div>
+                <div class="row ntp-row">
+                  <div class="col-md-3 system-time-sync-option">
+                    <div class="radio-button"><input ng-class="{checked:sysconsole.setActivateNtp}" type="radio"
+                                                     ng-model="sysconsole.setActivateNtp" ng-value="true"
+                                                     ng-disabled="!sysconsole.editMode.ntpSync"></div>
+                    <div class="option-title">NTP自动同步</div>
+                  </div>
+                  <div class="col-md-9" ng-show="sysconsole.setActivateNtp">
+                    <div class="row">
+                      <div class="col-md-3 margin-top-zero">服务器IP地址:</div>
+                      <div class="col-md-9 margin-top-zero">
+                        <span ng-show="sysconsole.setActivateNtp && sysconsole.editMode.ntpSync"><input
+                          style="width:52%" id="setting-systemconsole_text_ntpIp" name="ntpIp" type="text"
+                          ng-model="sysconsole.ntpIpEnter" class="input-md"
+                          ng-change="sysconsole.validateNtpIP(sysconsole.ntpIpEnter)"/></span>
+                        <div ng-hide="sysconsole.editMode.ntpSync">{{sysconsole.ntpIp || ''}}</div>
+                        <span class="input-alert-error"
+                              ng-show="sysconsole.editMode.ntpSync && !sysconsole.validNtpIP && sysconsole.ntpIpEnter.length">请输入合法IP地址</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

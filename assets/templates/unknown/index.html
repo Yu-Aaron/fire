@@ -1,0 +1,28 @@
+<div class="domain-selector topo-toolbar" ng-if="$root.MW_SETTING==='remote'">
+  当前保护平台： &nbsp;
+  <select class="select-default margin-right-default" ng-model="$root.currentIp"
+          ng-change="$root.$broadcast('refreshRuleCurrentIp', $root.currentIp)"
+          ng-options="domain.ip as domain.ip for domain in $root.ucdInfo" ng-disabled="$root.isDeployingAll"
+          ng-focus="$root.lastIp = $root.currentIp">
+    <option value="">所有{{'数控审计保护平台'|resFilter:'slideAuditTitle'}}</option>
+  </select>
+</div>
+
+<nav class="left-navbar" ng-class="{'left-navbar-collapsed': unknown.expanded}">
+  <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat="tab in $root.rootMenu.getChild('UNKNOWN_DEVICE_PROTECTION').getChilds()"
+        ng-if="unknown.leftNavItemEnabled(tab)" disable="true" class="highlight">
+      <a id="rule_a_{{tab.getState()}}" class="left-navbar-item left-navbar-item-{{tab.getState()}} highlight"
+         ng-click="unknown.entry(tab.getState())" ng-class="{active: unknown.isActive(tab.getState())}"
+         ui-sref-opts="{{tab.getOptions()}}">
+        <span
+          class="svg-side_nav_icons_{{tab.getIcon()}} svg-side_nav_icons_{{tab.getIcon()}}-dims left-navbar-item-icon"></span>
+        <div class="left-navbar-item-name">{{tab.getDescription()}}</div>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<div class="main-content main-content-with-nav" ng-class="{'navbar-collapsed': unknown.expanded}" ui-view></div>
+
+<div class="clearfix"></div>

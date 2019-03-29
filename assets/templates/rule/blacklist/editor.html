@@ -1,0 +1,82 @@
+<div class="padding-default signature-top">
+  <div ng-show="editor.hasPolicies">
+    <a class="display-inline-block" ng-click="editor.goBack()">
+      <button id="rule-blackList-editor_button_cancel" class="btn btn-default"><i
+        class="fa fa-arrow-circle-left icon-left"></i>返回
+      </button>
+    </a>
+    <h5 class="text-lime margin-left-default display-inline-block">规则编辑</h5>
+  </div>
+  <div ng-hide="editor.hasPolicies">
+    <h5>当前没有防护任何已知漏洞，请添加漏洞信息到黑名单</h5>
+  </div>
+</div>
+
+
+<div class="detail-page-wrapper signature-wrapper-left rule-container">
+  <div class="tab-container" cg-busy="{promise:$root.unlockPromise,message:'工作中...'}" ng-controller="TabCtrl as tab">
+
+    <div class="row">
+
+      <!-- SIGNATURE RULE LIBRARY -->
+      <div class="col-xs-6">
+        <div class="signature-tab">
+
+          <h4>漏洞库</h4>
+          <div class="clearfix"></div>
+
+          <hr class="hr-small-margin">
+
+          <!-- TAB CONTENT -->
+          <div ng-switch on="tab.activeTab" class="panel panel-gradient padding-default">
+            <div ng-switch-when="signatures" class="signature-tab-signature" signature-rules>
+
+              <div cg-busy="{promise:$root.uploadSignaturePromise,message:'上传中...'}">
+                <!-- UPLOAD -->
+                <div class="upload display-inline-block">
+                  <button id="rule-blackList-editor_button_upload" type="button"
+                          class="btn btn-default btn-file ng-binding" setting-privilege privilege-name="RULE_BLACKLIST" privilege-require="MIXED"><i
+                    class="fa fa-cloud-upload icon-left"></i>上传<input class="signature" type="file"></button>
+                </div>
+
+                <button id="rule-blackList-editor_button_selectAll" class="btn btn-default signature-btn-select-all"
+                        ng-click="dtable.selectAllSignature()" setting-privilege privilege-name="RULE_BLACKLIST" privilege-require="MIXED">
+                  {{dtable.selectAllSigsText}}
+                </button>
+                <button id="dtable-toolbar_button_highAdvancedSearch" class="btn btn-default margin-left-default"
+                        style="float: right; margin-right: 8px;" type="button" ng-class="{'active': dtable.advancedSearch.enable}"
+                        ng-click="dtable.disableToolbar =!dtable.disableToolbar;dtable.advancedSearch.enable=!dtable.advancedSearch.enable" setting-privilege privilege-name="RULE_BLACKLIST" privilege-require="MIXED"><i
+                  class="fa fa-filter icon-left"></i>过滤条件
+                </button>
+
+                <dtable>
+                  <blacklist-signature-table policy-id="editor.getPolicyId"
+                                             move="editor.refreshPreDeployTable(block)"></blacklist-signature-table>
+                </dtable>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- SIGNATURE RULE PASS BUTTON -->
+      <div class="col-xs-1 text-center signature-padding-zero">
+        <div class="signature-rule-pass-button" ng-click="editor.moveToPreDeployTable()" setting-privilege privilege-name="RULE_BLACKLIST"
+             privilege-require="MIXED">
+          <span><i id="rule-blackList-editor_i_movePreDep" class="fa fa-plus-circle fa-3x"></i></span><br><br>
+          <span class="font-bigger">添加</span>
+        </div>
+      </div>
+
+      <!-- SIGNATURE RULE WAITING LIST -->
+      <div class="col-xs-5">
+        <div class="signature-rule-waiting-list" setting-privilege privilege-name="RULE_BLACKLIST" privilege-require="MIXED">
+          <blacklist-pre-deploy-table policy-id="editor.getPolicyId"></blacklist-pre-deploy-table>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

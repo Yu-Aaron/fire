@@ -1,0 +1,209 @@
+<div cg-busy="{promise:$root.deployTaskPromise,message:'部署中...'}">
+  <div class="">
+    <div class="pull-left">
+      <h4 class="display-inline-block">编辑工作区</h4>
+    </div>
+    <div class="pull-right">
+      <span ng-if="policyblocks.isDPIUpgrading" class="warning">(防火墙设备升级中，无法部署规则) &nbsp;</span>
+      <button id="rule-whiteList-editor_button_deploy" class="btn btn-default btn-deploy"
+              ng-if="!policyblocks.alreadyDeployed"
+              ng-disabled="$root.disableDeploy||(!policyblocks.table.length)||policyblocks.isDPIUpgrading"
+              ng-click="policyblocks.deploy()"><i class="fa fa-cloud-download icon-left"
+              setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED" ></i>部署规则
+      </button>
+      <button class="btn btn-default" ng-if="policyblocks.alreadyDeployed" ng-disabled="true"><i
+        class="fa fa-check-circle icon-left text-lime"></i>已部署规则
+      </button>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+
+  <hr class="hr-small-margin">
+
+  <div class="pull-left">
+    <input id="rule-whiteList-editor_text_changeName" maxlength="25" type="text" ng-blur="policyblocks.changeName()"
+           ng-model="policyblocks.policy.name">
+    <span style="color: #878787;">（长度：不超过25个字符）</span>
+  </div>
+
+  <div class="pull-right">
+    <button id="rule-whiteList-editor_button_delete" ng-click="policyblocks.deleteSelectPredeployPolicy()"
+            class="btn btn-default" ng-disabled="policyblocks.selectedPolicyBlocks.length === 0"
+            setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED"><i class="fa fa-trash-o icon-left"></i>
+      删除
+    </button>
+    <button id="rule-whiteList-editor_button_deleteAll" ng-click="policyblocks.deleteAllPredeployPolicy()"
+            class="btn btn-default" ng-disabled="!policyblocks.table.length"
+            setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED"><i class="fa fa-trash-o icon-left"></i>
+      删除所有
+    </button>
+  </div>
+  <div class="clearfix"></div>
+  <hr>
+  <div class="spacing-small"></div>
+
+  <div class="policy-detail-table panel panel-edit panel-gradient padding-default">
+    <div id="whitelist_pre_deploy_table" class="table-scroll-wrapper table-scroll-wrapper-striped">
+      <div class="container-fluid">
+
+        <div class="row">
+          <div class="col-xs-2">选择</div>
+          <div class="col-xs-2">优先级</div>
+          <div class="col-xs-6">规则组名称</div>
+          <div class="col-xs-2">编辑</div>
+        </div>
+
+        <div id="whitelist_pre_deploy_table_row_{{$index}}" data-index="0" ng-repeat="policy in policyblocks.table"
+             class="row angular-animate fade-in-left" fade-in-list>
+          <div class="col-xs-2">
+            <input custom-checkbox type="checkbox" ng-change="policyblocks.countSelected(policy,policy.select,(policyblocks.currentPage-1)*10+$index+1)" ng-model="policy.select">
+          </div>
+          <div class="col-xs-2">{{(policyblocks.currentPage-1)*10+$index+1}}</div>
+          <!--<div class="col-xs-1"><input type="checkbox" ng-model="policy.checked" ng-disabled="policy.disabled" ng-change="policyblocks.toggle($index, policy)"></div>-->
+          <div class="col-xs-6">
+            {{policy.name}}
+          </div>
+          <div class="col-xs-2">
+            <button id="rule-whiteList-editor_button_showDetail-{{(policyblocks.currentPage-1)*10+$index+1}}"
+                    ng-click="policyblocks.showDetail(policy, policy.status=='ACTIVE')" class="btn btn-sm btn-default"
+                    ng-disabled="false"><i class="fa fa-edit"></i></button>
+          </div>
+          <!--<div class="col-xs-1">
+            <button id="rule-whiteList-editor_button_deletePre-{{(policyblocks.currentPage-1)*10+$index+1}}"
+                    ng-click="policyblocks.deletePredeployPolicy(policy)"
+                    class="btn btn-sm btn-default whitelist-predeploy-error"><i class="fa fa-trash"></i></button>
+          </div>-->
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <div id="rule_whitelist_predeploy_totalnum">总共 {{policyblocks.totalNum}} 组规则</div>
+    </div>
+
+    <div id="whitelist_pre_deploy_table_pagination" class="text-center">
+      <pagination ng-model="policyblocks.currentPage"
+                  class="pagination-sm"
+                  boundary-links="true"
+                  total-items="policyblocks.totalNum"
+                  items-per-page="policyblocks.numPerPage"
+                  max-size="5"
+                  num-pages="policyblocks.numPages"
+                  previous-text="&lsaquo;"
+                  next-text="&rsaquo;"
+                  first-text="&laquo;"
+                  last-text="&raquo;"
+                  ng-change="policyblocks.pageChanged()"
+      ></pagination>
+
+    </div>
+
+    <div class="action-wrap">
+      <a ng-disabled="!policyblocks.tt || policyblocks.policyPriority" class="btn btn-default" ng-click="policyblocks.updatePriority('t')">
+        <i class="fa fa-angle-double-up"></i>
+      </a>
+      <a ng-disabled="!policyblocks.ut || policyblocks.policyPriority" class="btn btn-default" ng-click="policyblocks.updatePriority('u')">
+        <i class="fa fa-level-up"></i>
+      </a>
+      <a ng-disabled="!policyblocks.lt || policyblocks.policyPriority" class="btn btn-default" ng-click="policyblocks.updatePriority('l')">
+        <i class="fa fa-level-down"></i>
+      </a>
+      <a ng-disabled="!policyblocks.bt || policyblocks.policyPriority" class="btn btn-default" ng-click="policyblocks.updatePriority('b')">
+        <i class="fa fa-angle-double-down"></i>
+      </a>
+    </div>
+  </div>
+
+  <div ng-if="policyblocks.enableDefaultRuleEdit">
+    <div class="policy-detail-table panel panel-gradient-ops padding-default">
+      <div>
+        所有规则之外的行为规范
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-xs-6 text-center">
+          <span class="display-inline-block">不在规则内的行为：</span>
+          <!-- dropdown -->
+          <div class="dropdown display-inline-block" dropdown>
+            <button id="whitelist_pre_deploy_table_unsupportrule_action_button" type="button"
+                    class="btn dropdown-toggle" dropdown-toggle>
+              <i ng-if="policyblocks.policy.supportRuleAction =='REJECTBOTH'" class="fa fa-ban text-red"></i>
+              <i ng-if="policyblocks.policy.supportRuleAction =='DROP'" class="fa fa-remove text-red"></i>
+              <i ng-if="policyblocks.policy.supportRuleAction =='ALERT'"
+                 class="fa fa-exclamation-triangle text-yellow"></i>
+              <i ng-if="policyblocks.policy.supportRuleAction =='ALLOW'" class="fa fa-check text-green"></i>
+              {{policyblocks.policy.supportRuleAction |actionName}}
+            </button>
+            <ul id="whitelist_pre_deploy_table_unsupportrule_action_list"
+                class="dropdown-menu pull-left whitelist-dropdown" role="menu" aria-labelledby="signature-drop-down">
+              <li id="whitelist_pre_deploy_table_unsupportrule_action_rejectboth"
+                  ng-click="policyblocks.changeDefaultRuleAction(policyblocks.policy, 'supportRuleAction', 'REJECTBOTH')"
+                  role="presentation"><a class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                class="fa fa-ban text-red"></i> 阻断</a></li>
+              <li id="whitelist_pre_deploy_table_unsupportrule_action_deny"
+                  ng-click="policyblocks.changeDefaultRuleAction(policyblocks.policy, 'supportRuleAction', 'DROP')"
+                  role="presentation"><a class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                class="fa fa-remove text-red"></i> 丢弃</a></li>
+              <li id="whitelist_pre_deploy_table_unsupportrule_action_alert"
+                  ng-click="policyblocks.changeDefaultRuleAction(policyblocks.policy, 'supportRuleAction', 'ALERT')"
+                  role="presentation"><a class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                class="fa fa-exclamation-triangle text-yellow"></i> 警告</a></li>
+              <li id="whitelist_pre_deploy_table_unsupportrule_action_pass"
+                  ng-click="policyblocks.changeDefaultRuleAction(policyblocks.policy, 'supportRuleAction', 'ALLOW')"
+                  role="presentation"><a class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                class="fa fa-check text-green"></i> 允许</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-xs-6 text-center">
+          <span class="display-inline-block">来自未知来源的行为：</span>
+          <!-- dropdown -->
+          <div class="dropdown display-inline-block" dropdown>
+            <button id="whitelist_pre_deploy_table_unkownsource_action_button" type="button" class="btn dropdown-toggle"
+                    dropdown-toggle>
+              <i ng-if="policyblocks.policy.unknownRuleAction =='REJECTBOTH'" class="fa fa-ban text-red"></i>
+              <i ng-if="policyblocks.policy.unknownRuleAction =='DROP'" class="fa fa-remove text-red"></i>
+              <i ng-if="policyblocks.policy.unknownRuleAction =='ALERT'"
+                 class="fa fa-exclamation-triangle text-yellow"></i>
+              <i ng-if="policyblocks.policy.unknownRuleAction =='ALLOW'" class="fa fa-check text-green"></i>
+              {{policyblocks.policy.unknownRuleAction |actionName}}
+            </button>
+            <ul id="whitelist_pre_deploy_table_unkownsource_action_list"
+                class="dropdown-menu pull-left whitelist-dropdown" role="menu" aria-labelledby="signature-drop-down">
+              <li id="whitelist_pre_deploy_table_unkownsource_action_rejectboth"
+                  ng-click="policyblocks.changeDefaultRuleAction(policyblocks.policy, 'unknownRuleAction', 'REJECTBOTH')"
+                  role="presentation"><a class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                class="fa fa-ban text-red"></i> 阻断</a></li>
+              <li id="whitelist_pre_deploy_table_unkownsource_action_deny"
+                  ng-click="policyblocks.changeDefaultRuleAction(policyblocks.policy, 'unknownRuleAction', 'DROP')"
+                  role="presentation"><a class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                class="fa fa-remove text-red"></i> 阻断</a></li>
+              <li id="whitelist_pre_deploy_table_unkownsource_action_alert"
+                  ng-click="policyblocks.changeDefaultRuleAction(policyblocks.policy, 'unknownRuleAction', 'ALERT')"
+                  role="presentation"><a class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                class="fa fa-exclamation-triangle text-yellow"></i> 警告</a></li>
+              <li id="whitelist_pre_deploy_table_unkownsource_action_pass"
+                  ng-click="policyblocks.changeDefaultRuleAction(policyblocks.policy, 'unknownRuleAction', 'ALLOW')"
+                  role="presentation"><a class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                class="fa fa-check text-green"></i> 允许</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/ng-template" id="moveTo.html">
+  <div class="modal-header">
+    <h3>移至特定点</h3>
+  </div>
+  <div class="modal-body alart-body">
+    <b>移动选择规则至优先级<input type="number" ng-model="priority" min="1" , max="{{max}}" , required></b>
+
+    <div class="modal-footer">
+      <button class="btn btn-warning" ng-click="cancel()"><i class="fa fa-times icon-left"></i>取消</button>
+      <button class="btn btn-primary" ng-click="ok()"><i class="fa fa-check icon-left"></i>移动</button>
+    </div>
+  </div>
+</script>

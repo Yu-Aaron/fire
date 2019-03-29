@@ -1,0 +1,28 @@
+{
+    "topologyId": "999c3f9c-d209-417b-9694-62e464534b0f",
+    "name": "ehan-simulator-topo-jul28",
+    "_nodescount": 0,
+    "_linkscount": 0,
+    "_zoneCount": 4,
+    "updatedAt": "2015-11-25T19:03:16Z",
+    "currentTopology": false,
+    "_nodesRef": {
+        "baseUrl": "/999c3f9c-d209-417b-9694-62e464534b0f/nodes",
+        "type": "nodes"
+    },
+    "_linksRef": {
+        "baseUrl": "/999c3f9c-d209-417b-9694-62e464534b0f/links",
+        "type": "links"
+    },
+    "_devicesRef": {
+        "baseUrl": "/999c3f9c-d209-417b-9694-62e464534b0f/devices",
+        "type": "devices"
+    },
+    "defaultTopology": false,
+    "_devicescount": 6,
+    "_securitydevicescount": 2,
+    "_usedDevicescount": 6,
+    "_usedSecurityDevicescount": 2,
+    "createdAt": "2015-11-25T19:03:16Z",
+    "sourceType": 0
+}

@@ -1,0 +1,10 @@
+[
+    {
+        "localizedStrId": 4,
+        "intValue": 0,
+        "stringValue": "NEW",
+        "displayValue": "未读",
+        "localeId": 0,
+        "typeName": "com.istuary.common.idl.Status"
+    }
+]

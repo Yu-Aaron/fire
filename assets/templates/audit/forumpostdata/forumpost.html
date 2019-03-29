@@ -1,0 +1,57 @@
+<div>
+  <style type="text/css">
+    .showDateTimeRange {
+      position: static;
+      margin-top: 0;
+    }
+
+    .hideDateTimeRange {
+      position: absolute;
+      margin-top: -52px;
+    }
+  </style>
+  <div class="padding-default"
+       ng-class="dtable.dateTimeRange && dtable.dateTimeRange.enable ? 'showDateTimeRange' : 'hideDateTimeRange'">
+    <button id="audit_audittab_refresh_button" type="button" class="btn btn-default" style="margin-left:10px"
+            ng-click="dtable.refresh()"><i class="fa fa-refresh text-lime icon-left"></i>刷新
+    </button>
+    <button id="audit_audittab_button_openExportPanelFalse" type="button" class="btn btn-default"
+            ng-click="openExportPanel(false)" ng-if="!(dtable.advancedSearch && dtable.advancedSearch.enable)"
+            ng-disabled="!dtable.table.length"><i class="fa fa-download text-lime icon-left"></i>导出全部
+    </button>
+    <button id="audit_audittab_button_openExportPanelTrue" type="button" class="btn btn-default"
+            ng-click="openExportPanel(true)" ng-disabled="!dtable.table.length"
+            ng-if="(dtable.advancedSearch && dtable.advancedSearch.enable)"><i
+      class="fa fa-download text-lime icon-left"></i>导出当前记录
+    </button>
+  </div>
+  <table id="audit_audittab_table" class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th>
+        <span>&nbsp;</span>
+      </th>
+      <th order-by="packetTimestamp">起始时间</th>
+      <th order-by="usrIp">IP地址</th>
+      <th order-by="usrMac">MAC地址</th>
+      <th order-by="forumName">论坛名称</th>
+      <th>查看</th>
+      <th>时光轴</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="audit_audittab_table_row_{{$index}}" ng-repeat="forumpost in dtable.table">
+      <td><span>&nbsp;</span></td>
+      <td>{{forumpost.postTimestamp | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+      <td>{{forumpost.usrIp}}</td>
+      <td>{{forumpost.usrMac}}</td>
+      <td>{{forumpost.forumName}}</td>
+      <td><a class="btn btn-default" ng-click="dtable.showDetailWindow(forumpost)">查看 <i
+        class="fa fa-chevron-circle-right icon-right"></i></a></td>
+      <td><a class="btn btn-default" ng-click="forumpostdata.gotoTimeControl('forumpost')"
+             ui-sref="audit.timecontrol({usrIp:forumpost.usrIp})">时光轴 <i
+        class="fa fa-chevron-circle-right icon-right"></i></a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

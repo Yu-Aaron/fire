@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12081) - http://www.bohemiancoding.com/sketch -->
+    <title>side_nav_icons_syslog</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50.1967789%" y1="0.0192197222%" x2="50.1967789%" y2="100.736889%" id="linearGradient-1">
+            <stop stop-color="#90D54A" offset="0%"></stop>
+            <stop stop-color="#85C948" offset="8.002409%"></stop>
+            <stop stop-color="#6DB042" offset="28.5%"></stop>
+            <stop stop-color="#5FA13F" offset="47.23%"></stop>
+            <stop stop-color="#5A9C3E" offset="62.44%"></stop>
+            <stop stop-color="#59963E" offset="67.97%"></stop>
+            <stop stop-color="#588B3D" offset="82.77%"></stop>
+            <stop stop-color="#57883D" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Side-Nav" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="side_nav_icons_syslog" sketch:type="MSArtboardGroup">
+            <g sketch:type="MSLayerGroup" transform="translate(26.000000, 26.000000)" id="Layer_1_1_">
+                <g sketch:type="MSShapeGroup">
+                    <g id="Group">
+                        <g id="Shape" fill="#CCCCCC">
+                            <path d="M24,46.3304348 C11.6869565,46.3304348 1.66956522,36.3130435 1.66956522,24 C1.66956522,11.6869565 11.6869565,1.66956522 24,1.66956522 C36.3130435,1.66956522 46.3304348,11.6869565 46.3304348,24 C46.3304348,36.3130435 36.3130435,46.3304348 24,46.3304348 L24,46.3304348 Z M24,5.63478261 C13.5652174,5.63478261 5.42608696,13.9826087 5.42608696,24.2086957 C5.42608696,34.4347826 13.5652174,42.9913043 24,42.9913043 C34.4347826,42.9913043 42.573913,34.6434783 42.573913,24.4173913 C42.573913,14.1913043 34.4347826,5.63478261 24,5.63478261 L24,5.63478261 Z"></path>
+                        </g>
+                        <path d="M24.626087,11.2695652 L20.6608696,11.2695652 L20.6608696,25.0434783 L29.6347826,33.8086957 L32.3478261,31.0956522 L24.4173913,23.373913 L24.4173913,11.2695652 L24.626087,11.2695652 L24.626087,11.2695652 Z" id="Shape" fill="url(#linearGradient-1)"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

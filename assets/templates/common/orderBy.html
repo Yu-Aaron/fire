@@ -1,0 +1,9 @@
+<div ng-click="sort()">
+  <span ng-transclude></span>
+  <span>
+        <i class="fa"
+           ng-class="{false: 'fa-caret-up', true: 'fa-caret-down'}[order.reverse]"
+           ng-if="order.predicate == orderBy"
+        ></i>
+    </span>
+</div>

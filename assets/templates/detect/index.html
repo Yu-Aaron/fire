@@ -1,0 +1,305 @@
+<script>
+  $(document).ready(function () {
+    setTimeout(function () {
+      // hack for making the "Zoom" text custom
+      $(".highcharts-range-selector-buttons > text").text("查看");
+    }, 200);
+  });
+</script>
+
+<div class="main-content main-content-with-nav report-content">
+
+  <div class="detect-container">
+    <div ng-if="!detect.BlackListDeployed" class="panel warning-container">
+      <div class="detect-header-box">
+        <h4>没有检测到任何已部署黑名单。</h4><br/>
+        <h4>请先前往规则管理页面，部署黑名单。</h4>
+      </div>
+      <br/>
+
+      <div class="warning-btn-container">
+        <a href="rule/blacklist/">
+          <button class="btn btn-default text-lime btn-group-column-button warning-btn">
+            <span>部署黑名单</span>
+          </button>
+        </a>
+      </div>
+    </div>
+    <div ng-if="detect.BlackListDeployed" class="tab-container" ng-controller="TabCtrl as tab">
+      <ul class="nav nav-tabs nav-tabs-inverted nav-tabs-lg nav-tabs-lime"
+          ng-init="tab.active || tab.activatePanel('offline')">
+        <li id="detect_a_online" ng-class="{ active: tab.isActive('online') }"
+            ng-if="detect.lv2MenuEnabledByTarget('ONLINE_DETECTION') && false">
+          <a ui-sref="detect({panel: 'online'})" ng-click="tab.activatePanel('online')"><i
+            class="fa fa-gear nav-tab-icon"></i>
+            <span>实时检测 </span>
+            <span class="badge text-red" ng-show="event.incidentTabNum"></span>
+          </a>
+        </li>
+        <li id="detect_a_offline" ng-class="{ active: tab.isActive('offline') }"
+            ng-if="detect.lv2MenuEnabledByTarget('OFFLINE_DETECTION')">
+          <a ui-sref="detect({panel: 'offline'})" ng-click="tab.activatePanel('offline')"><i
+            class="fa fa-dashboard nav-tab-icon"></i>
+            <span>离线检测</span>
+            <span class="badge text-red" ng-show="event.eventTabNum"></span>
+          </a>
+        </li>
+      </ul>
+      <div ng-switch on="tab.active" class="tab-container-body">
+
+        <!-- 实时入侵检测 -->
+        <div ng-switch-when="online" ng-if="detect.lv2MenuEnabledByTarget('ONLINE_DETECTION') && false">
+          <div ng-if="!detect.showRealtimeGraph" class="btn-group-column-wrapper detect-header">
+            <div class="detect-header-box">
+
+              <div class="detect-option" ng-if="detect.canEdit">
+                <h4>请开始查看网络实时入侵检测</h4>
+              </div>
+              <div class="detect-option" ng-if="!detect.canEdit">
+                <h4>网络实时入侵检测尚未开始</h4>
+              </div>
+
+              <div privilege class="btn-group btn-group-column">
+                <button class="text-lime btn-group-column-button" style="position: relative"
+                        ng-click="startRealtimeDetect()">
+                  <span>开始入侵检测</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div ng-if="detect.showRealtimeGraph" class="btn-group-column-wrapper detect-header">
+            <div ng-hide="PatternDetailPanel" class="detect-panel-view detect-panel">
+
+              <div privilege class="menu">
+                <div class="pull-right" ng-if="detect.inUse">
+                  <i class="fa fa-circle fa-large fa-flashing-orange"></i> 实时检测中
+                  <button class="btn-round" ng-click="stopDetect()"><i class="fa fa-stop"></i></button>
+                </div>
+                <div class="pull-right" ng-if="!detect.inUse">
+                <span>开始实时检测
+                  <button class="btn-round btn-round-green" ng-click="startDetect()"><i class="fa fa-play"></i></button>
+                </span>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+
+              <div ng-show="showNotification" class="detect-warning alert-warning">
+                <span ng-if="eth1Error && $root.MW_SETTING==='normal'">当前设备没有配置威胁检测管理口，实时入侵检测无法运作。</span>
+                <span ng-if="eth1Error && $root.MW_SETTING!=='normal'">当前系统状态异常，实时入侵检测无法运作。</span>
+                <span ng-if="eth1Down">当前威胁检测管理口状态异常 ，实时入侵检测无法运作。</span>
+              </div>
+
+              <div ng-show="detect.showStopNotification" class="detect-warning alert-warning">
+                <span class="detect-disconnect-warning-text">实时检测已被{{ppl}}停止。</span>
+              </div>
+
+              <div cg-busy="{promise:waitingSSEPromise,message:'工作中...'}" class="detect-graph"
+                   ng-if="graphConfigOnline">
+                <highchart id="detectGraph" config="graphConfigOnline"></highchart>
+              </div>
+
+              <div class="detect-pattern">
+                <div class="detect-pattern-header">
+                  <h5>怀疑入侵规律
+                    <!--<span>按名称排序 <i class="fa fa-caret-down"></i></span>-->
+                  </h5>
+                </div>
+
+                <div class="detect-pattern-content row">
+                  <div class="col-md-4 col-xs-4" ng-repeat="pattern in intrusionPattern" style="margin-bottom: 20px">
+                    <div class="detect-pattern-box" ng-class="pattern.level === 'warning' ? 'orange' : 'red'">
+                      <div class="pattern-left-panel">
+                        <span class="pattern-counter-num"
+                              ng-class="{'counter-num-3-digits': pattern.count > 99, 'counter-num-4-digits': pattern.count > 999, 'counter-num-5-digits': pattern.count > 9999, 'counter-num-5-digits': pattern.count > 99999}">{{pattern.count}}</span>
+                        <span class="pattern-counter-text">次报警</span>
+                      </div>
+
+                      <div class="pattern-right-panel">
+                        <a class="pattern-name" ng-click="showPatternDetail(pattern.signatureId)">
+                          <span>怀疑攻击：</span>
+                          <span>{{pattern.threadName}}</span>
+                          <i class="fa fa-angle-right pull-right"></i>
+                        </a>
+
+                        <div class="pattern-level">
+                          <span>危险级别：</span>
+                          <span class="pattern-level-type">{{pattern.severity === 2 ? '高危': '警告'}}</span>
+                        </div>
+
+                        <!--<div class="pattern-button">-->
+                        <!--<button type="button" class="btn btn-default">发生事件</button>-->
+                        <!--</div>-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div ng-show="PatternDetailPanel" class="detect-panel-pattern">
+              <div class="pattern-detail" ng-include="'templates/detect/pattern/index.html'"></div>
+            </div>
+          </div>
+        </div>
+        <!-- 离线入侵检测 -->
+        <div ng-switch-when="offline" ng-if="detect.lv2MenuEnabledByTarget('OFFLINE_DETECTION')">
+          <div ng-if="!detect.showGraph" class="btn-group-column-wrapper detect-header">
+            <div class="detect-header-box">
+              <div class="detect-option" ng-class="{'detect-option-left': detect.fileUploaded}">
+                <h4>请上传新数据进行检测</h4>
+
+                <div class="btn-group btn-group-column" privilege>
+                  <button type="button" class="btn-group-column-button" style="position: relative">
+                    <i class="fa fa-upload"></i>
+                    <input type="file" id="recordSelector" name="recordSelector" nv-file-select
+                           uploader="detect.uploader" multiple> 上传离线检测文件</input>
+                  </button>
+                </div>
+                <div class="">
+                  <span>每文件最大250MB</span>
+                </div>
+              </div>
+              <div class="detect-option" ng-class="{'detect-option-right': detect.fileUploaded}"
+                   ng-show="detect.fileUploaded">
+                <h4>显示上次检测结果</h4>
+
+                <div class="btn-group btn-group-column" privilege>
+                  <button type="button" class="btn-group-column-button" style="position: relative"
+                          ng-click="detect.showGraph = true; detect.startOffLine();">
+                    <i class="fa fa-area-chart"></i>
+                    显示上次检测结果
+                  </button>
+                </div>
+                <div class="">
+                  <span>检测文件上传时间: {{detect.lastOffLineUpdate}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div ng-if="detect.showGraph" class="detect-panel">
+
+            <div ng-hide="PatternDetailPanel" class="detect-panel-view">
+              <div class="menu">
+                <button class="btn btn-default go-back-button" ng-click="detect.goBack()"><i
+                  class="fa fa-arrow-circle-left icon-left"></i>返回
+                </button>
+                <button type="btn" class="btn btn-default" ng-disabled="true" style="opacity: 0; margin: 3px"><i
+                  class="fa fa-floppy-o"></i>保存
+                </button>
+                <!-- The following hidden button is used by jQuery code inside the detect controller -->
+                <button class="btn-re-upload display-hidden-on-purpose">
+                  <input type="file" id="reUploadSelector" name="recordSelector" nv-file-select
+                         uploader="detect.uploader" multiple> 上传离线检测文件</input>
+                </button>
+              </div>
+              <div cg-busy="{promise:offlinePromise,message:'工作中...'}" class="detect-graph">
+                <div class="detect-graph" ng-if="graphConfigOffline">
+                  <highchart id="detectGraph" config="graphConfigOffline"></highchart>
+                </div>
+              </div>
+
+              <div class="detect-pattern" ng-if="!detect.noVulnerability">
+                <div class="detect-pattern-header">
+                  <h5>怀疑入侵规律
+                    <span>按名称排序</span>
+                  </h5>
+                </div>
+
+                <div class="detect-pattern-content row">
+                  <div class="col-md-4 col-xs-4" ng-repeat="pattern in intrusionPattern" style="margin-bottom: 20px">
+                    <div class="detect-pattern-box" ng-class="pattern.level === 'warning' ? 'orange' : 'red'">
+                      <div class="pattern-left-panel">
+                        <span class="pattern-counter-num"
+                              ng-class="{'counter-num-3-digits': pattern.count > 99, 'counter-num-4-digits': pattern.count > 999, 'counter-num-5-digits': pattern.count > 9999, 'counter-num-5-digits': pattern.count > 99999}">{{pattern.count}}</span>
+                        <span class="pattern-counter-text">次报警</span>
+                      </div>
+
+                      <div class="pattern-right-panel">
+                        <a class="pattern-name" ng-click="showPatternDetail(pattern.signatureId)">
+                          <span>怀疑攻击：</span>
+                          <span>{{pattern.threadName}}</span>
+                          <i class="fa fa-angle-right pull-right"></i>
+                        </a>
+
+                        <div class="pattern-level">
+                          <span>危险级别：</span>
+                          <span class="pattern-level-type">{{pattern.severity === 2 ? '高危': '警告'}}</span>
+                        </div>
+
+                        <!--<div class="pattern-button">-->
+                        <!--<button type="button" class="btn btn-default">发生事件</button>-->
+                        <!--</div>-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div ng-if="detect.noVulnerability">
+                <div class="detect-no-vulnerability">
+                  <h4>上传数据进行检测后，没有任何怀疑入侵。</h4>
+                </div>
+              </div>
+            </div>
+
+            <div ng-show="PatternDetailPanel" class="detect-panel-pattern">
+              <div class="pattern-detail" ng-include="'templates/detect/pattern/index.html'"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="reUpload.html">
+  <div class="modal-header">
+    <h3 class="modal-header-title">重新开始离线检测</h3>
+  </div>
+  <div class="modal-body-no-frame">
+    <p>
+      选择重新开始离线检测将会清除之前上传的数据。</br>
+      此动作将无法还原，请确定你要重新开始吗？
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default modal-footer-cancel" ng-click="cancel()"><i class="fa fa-times icon-left"></i>取消
+    </button>
+    <button class="btn btn-default" ng-click="ok()"><i class="fa fa-check text-green icon-left"></i>确定</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="redirect.html">
+  <div class="modal-header">
+    <h3 class="modal-header-title">实时监测设置</h3>
+  </div>
+  <div class="modal-body-no-frame">
+    <p>
+      <i class="fa fa-exclamation-triangle text-yellow"></i> 目前系统没有输入漏洞库无法开始入侵监测。请至实时监控中的规则库上传漏洞信息。
+    </p>
+  </div>
+  <div class="modal-footer">
+    <!--<button class="btn btn-default modal-footer-cancel" ng-click="cancel()"><i class="fa fa-times icon-left"></i>取消</button>-->
+    <button class="btn btn-default" ng-click="ok()">离开入侵监测 <i class="fa fa-chevron-circle-right"></i></button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="stopDetectConfirm.html">
+  <div class="modal-header">
+    <h3 class="modal-header-title">实时检测关闭</h3>
+    <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+  </div>
+  <div class="modal-body-no-frame">
+    <p>
+      关闭实时检测将会停止所有使用者观看此数据。你确定要关闭？
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default modal-footer-cancel" ng-click="cancel()"><i class="fa fa-times icon-left"></i>取消
+    </button>
+    <button class="btn btn-default" ng-click="ok()"><i class="fa fa-check"></i> 关闭检测</button>
+  </div>
+</script>

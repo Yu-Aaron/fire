@@ -1,0 +1,40 @@
+<div ng-hide="noTopo" class="view-control">
+  <div class="topo-header">
+    <div class="row">
+      <div class="col-xs-5">
+        <ol ng-show="topologyHasNode" privilege class="margin-left-default dropdown display-inline-block breadcrumb">
+          <li ng-scope ng-repeat="n in topoCtrl.level" ng-click="topoCtrl.crumbClick($index)" ng-if="!$last">
+            {{n.name}}
+          </li>
+          <li ng-scope ng-repeat="n in topoCtrl.level" class="active" ng-if="$last">{{n.name}}</li>
+        </ol>
+      </div>
+
+      <div class="col-xs-5 text-right pull-right">
+        <div privilege class="margin-right-default dropdown display-inline-block">
+          <button id="topology/singleTopo_button_showSideBar" type="button" class="btn btn-default"
+                  ng-class="{'active': hasSidebar}" ng-click="hasSidebar = !hasSidebar"
+                  ng-show="topologyHasNode && topoCtrl.level.length > 1" title="设备信息">
+            <i style="font-size:1.5em" class="fa fa-info-circle icon-left" ng-class="{'text-lime': hasSidebar}"></i>设备信息
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="upload-confirmation.html">
+  <div class="modal-header">
+    <h5 class="modal-title">替换网络拓扑</h5>
+  </div>
+  <div class="modal-body">
+    <span>替换拓扑后所有分析，评估，事件，与审计也会跟随拓扑改变移除。请在替换使用拓扑前完成日志归档，确保信息不会丢失。</span>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default pull-right" style="position: relative;"><i
+      class="fa fa-cloud-upload text-lime icon-left"></i>
+      <input type="file" id="topologySelector" name="topologySelector" nv-file-select uploader="uploader">选择新拓扑</input>
+    </button>
+    <button class="btn btn-default pull-left" ng-click="cancel()">取消</button>
+  </div>
+</script>

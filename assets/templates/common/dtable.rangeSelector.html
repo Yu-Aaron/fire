@@ -1,0 +1,31 @@
+<form class="form-inline text-right" name="myForm">
+
+  <span style="display:inline-block; vertical-align:top">
+    <label>查看：开始日期</label>
+    <input type="date" name="startDate" id="startDate" class="date-range-selector margin-right-default"
+           ng-model="dtable.dateTimeRange.startDate" ng-change="validateTimePeriod(dtable.dateTimeRange, 'startdate')"
+           placeholder="yyyy-MM-dd"/>
+    <label>开始时间</label>
+    <input type="time" name="startTime" id="startTime" class="time-range-selector margin-right-default"
+           ng-model="dtable.dateTimeRange.startTime" ng-change="validateTimePeriod(dtable.dateTimeRange, 'starttime')"
+           placeholder="HH:mm:ss"/>
+    <br>
+    <span style="float:left">
+      <span class="margin-left-default error input-alert-error" ng-show="invalidStartTime">{{invalidStartTime}}</span>
+    </span>
+  </span>
+  <span style="display:inline-block; vertical-align:top">
+    <label>结束日期</label>
+    <input type="date" name="endDate" id="endDate" class="date-range-selector margin-right-default"
+           ng-model="dtable.dateTimeRange.endDate" ng-change="validateTimePeriod(dtable.dateTimeRange, 'enddate')"
+           placeholder="yyyy-MM-dd"/>
+    <label>结束时间</label>
+    <input type="time" name="endTime" id="endTime" class="time-range-selector" ng-model="dtable.dateTimeRange.endTime"
+           ng-change="validateTimePeriod(dtable.dateTimeRange, 'endtime')" placeholder="HH:mm:ss"/>
+  	<label>关键字</label>
+    <br>
+    <span style="float:left">
+      <span class="margin-left-default error input-alert-error" ng-show="invalidEndTime">{{invalidEndTime}}</span>
+    </span>
+  </span>
+</form>

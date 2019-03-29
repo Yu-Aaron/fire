@@ -1,0 +1,29 @@
+[  
+   {  
+      "policyBlockId":"510e20ce-09b8-4c5a-94b1-099978250d79",
+      "priority":0,
+      "name":"HMI到Server(OPC)",
+      "status":"INACTIVE",
+      "targetStatus":"INACTIVE",
+      "type":"LEARN",
+      "_rulesRef":{  
+         "baseUrl":"/policies/block/510e20ce-09b8-4c5a-94b1-099978250d79/rules",
+         "type":"rule"
+      },
+      "lockedStatus":"NODEPLOY",
+      "policyId":"be717090-f0b3-4785-82bf-aece068b9c76",
+      "_sourceZoneName":"HMI",
+      "_destinationZoneName":"Server(OPC)",
+      "_rulesCount":8,
+      "sourceZoneId":"e7075c51-f875-4939-b88a-a53479c55d61",
+      "destinationZoneId":"5cf13606-bac6-4c4e-9b1f-e3465b69eea3",
+      "_signaturesCount":0,
+      "taskId":"1218786c-264b-451c-887f-a008a40a5cfe",
+      "createdAt":"2016-01-28T18:35:49Z",
+      "updatedAt":"2016-01-28T18:35:49Z",
+      "revision":0,
+      "_policyBlockId":916,
+      "_sid":0,
+      "_typeDisplay":"学习"
+   }
+]

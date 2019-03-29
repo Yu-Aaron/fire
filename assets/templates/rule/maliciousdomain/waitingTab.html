@@ -1,0 +1,149 @@
+<div id="rule_maliciousdomain_tab_waitingTab">
+  <div class="padding-default"
+       ng-class="dtable.dateTimeRange && dtable.dateTimeRange.enable ? 'showDateTimeRange' : 'hideDateTimeRange'">
+    <button id="rule_maliciousdomain_waitingTab_button_add" type="button" class="btn btn-default"
+            style="margin-left:10px" ng-click="maliciousdomain.new(dtable)" ng-if="maliciousdomain.editRight"><i
+      class="fa fa-file-o fa-plus-overlay fa-after-lime icon-left"></i>新增规则
+    </button>
+    <button id="rule_maliciousdomain_waitingTab_button_selectAll" type="button" class="btn btn-default"
+            style="margin-left:10px" ng-if="maliciousdomain.editRight" ng-disabled="dtable.totalNum < 1"
+            ng-click="dtable.selectAllDomain()">{{dtable.selectAllDomainsText}}
+    </button>
+    <div class="dropdown display-inline-block" dropdown style="margin-left:10px">
+      <button id="rule_maliciousdomain_waitingTab_button_changeSelected" type="button"
+              class="btn btn-default dropdown-toggle" ng-if="maliciousdomain.editRight"
+              ng-disabled="dtable.selectedDomainCount < 1" dropdown-toggle>
+        处理选中规则 <span class="caret"></span>
+      </button>
+      <ul id="rule_maliciousdomain_waitingTab_action_list_selected" class="dropdown-menu" role="menu"
+          aria-labelledby="signature-drop-down">
+        <li role="presentation"><a id="rule_maliciousdomain_waitingTab_button_denySelected" class="dropdown-menu-item"
+                                   role="menuitem" tabindex="-1" href="#"
+                                   ng-click="maliciousdomain.changeSelected(dtable, 'DENY')"><i
+          class="fa fa-ban text-red"></i> 阻断</a></li>
+        <li role="presentation"><a id="rule_maliciousdomain_waitingTab_button_alertSelected" class="dropdown-menu-item"
+                                   role="menuitem" tabindex="-1" href="#"
+                                   ng-click="maliciousdomain.changeSelected(dtable, 'ALERT')"><i
+          class="fa fa-exclamation-triangle text-yellow"></i> 警告</a></li>
+        <li role="presentation"><a id="rule_maliciousdomain_waitingTab_button_allowSelected" class="dropdown-menu-item"
+                                   role="menuitem" tabindex="-1" href="#"
+                                   ng-click="maliciousdomain.changeSelected(dtable, 'ALLOW')"><i
+          class="fa fa-check text-green"></i> 允许</a></li>
+      </ul>
+    </div>
+    <button id="rule_maliciousdomain_waitingTab_button_deleteSelected" type="button" class="btn btn-default"
+            style="margin-left:10px" ng-if="maliciousdomain.editRight" ng-disabled="dtable.selectedDomainCount < 1"
+            ng-click="maliciousdomain.changeStatusSelected(dtable, 'INACTIVATED')"><i
+      class="fa fa-times-circle-o text-red"></i>忽略选中规则
+    </button>
+    <button id="rule_maliciousdomain_waitingTab_button_active_Selected" type="button" class="btn btn-default"
+            style="margin-left:10px" ng-if="maliciousdomain.editRight" ng-disabled="dtable.selectedDomainCount < 1"
+            ng-click="maliciousdomain.changeStatusSelected(dtable, 'ACTIVATED')"><i
+      class="fa fa-check-circle-o text-lime"></i>激活选中规则
+    </button>
+    <button id="rule_maliciousdomain_waitingTab_button_deploy" type="button" class="btn btn-default btn-deploy"
+            style="margin-left:10px" ng-if="maliciousdomain.editRight"
+            ng-disabled="maliciousdomain.isDPIUpgrading || dtable.selectedDomainCount < 1 || dtable.selectedActivatedDomainCount < 1"
+            ng-click="maliciousdomain.deploy(dtable)"><i class="fa fa-cloud-download icon-left"></i>部署规则
+    </button>
+    <div ng-if="maliciousdomain.isDPIUpgrading"><p class="warning pull-right"><br/>(DPI设备升级中，无法部署)</p></div>
+  </div>
+  <table class="table table-hover icon-hidden rule_maliciousdomain_waiting_table">
+    <thead>
+    <tr>
+      <th style="width: 5%">
+        <input id="rule_maliciousdomain_waitingTab_checkbox_selectAll" type="checkbox"
+               ng-disabled="dtable.selectAllDomains" ng-change="dtable.toggle()" ng-model="dtable.selectAll"/>
+      </th>
+      <th style="width: 10%">状态</th>
+      <th style="width: 35%" order-by="domainName">域名</th>
+      <!-- We might need this in the future
+	  <th style="width: 10%" order-by="domainProtocolType">协议名称</th>
+	  -->
+      <th style="width: 15%" order-by="createdAt">创建时间</th>
+      <th style="width: 10%" order-by="action">处理方式</th>
+      <th style="width: 5%" order-by="maliciousDomainStatus">规则状态</th>
+      <th style="width: 10%">
+        <span>&nbsp;</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="domain in dtable.table" class="status-{{domain.maliciousDomainStatus}}">
+      <td>
+        <input id="rule_maliciousdomain_waitingTab_checkbox_check_{{(dtable.currentPage-1)*dtable.numPerPage+$index+1}}"
+               type="checkbox" ng-disabled="dtable.selectAllDomains || domain.isdoing"
+               ng-change="dtable.countSelected(domain)" ng-model="domain.checked"/>
+      </td>
+      <td class="text-red">待处理</td>
+      <td>{{domain.domainName}}</td>
+      <!-- We might need this in the future
+	  <td>{{domain.domainProtocolType}}</td>
+	  -->
+      <td>{{domain.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+      <td class="td-action">
+        <div class="dropdown display-inline-block" dropdown ng-if="domain.maliciousDomainStatus === 'ACTIVATED'">
+          <button id="rule_maliciousdomain_waitingTab_action_dropdown_{{$index}}" type="button"
+                  ng-if="maliciousdomain.editRight" ng-disabled="domain.isdoing" class="btn btn-default dropdown-toggle"
+                  dropdown-toggle>
+            <i ng-if="domain.action === 'DENY'" class="fa fa-ban text-red"></i>
+            <i ng-if="domain.action === 'ALERT'" class="fa fa-exclamation-triangle text-yellow"></i>
+            <i ng-if="domain.action === 'ALLOW'" class="fa fa-check text-green"></i>
+            {{domain.action | actionName}}
+          </button>
+          <ul id="rule_maliciousdomain_waitingTab_action_list_{{$index}}" class="dropdown-menu" role="menu"
+              aria-labelledby="signature-drop-down">
+            <li id="rule_maliciousdomain_waitingTab_action_list_{{$index}}_deny"
+                ng-click="maliciousdomain.change(domain, 'DENY')" role="presentation"><a class="dropdown-menu-item"
+                                                                                         role="menuitem" tabindex="-1"
+                                                                                         href="#"><i
+              class="fa fa-ban text-red"></i> 阻断</a></li>
+            <li id="rule_maliciousdomain_waitingTab_action_list_{{$index}}_alert"
+                ng-click="maliciousdomain.change(domain, 'ALERT')" role="presentation"><a class="dropdown-menu-item"
+                                                                                          role="menuitem" tabindex="-1"
+                                                                                          href="#"><i
+              class="fa fa-exclamation-triangle text-yellow"></i> 警告</a></li>
+            <li id="rule_maliciousdomain_waitingTab_action_list_{{$index}}_allow"
+                ng-click="maliciousdomain.change(domain, 'ALLOW')" role="presentation"><a class="dropdown-menu-item"
+                                                                                          role="menuitem" tabindex="-1"
+                                                                                          href="#"><i
+              class="fa fa-check text-green"></i> 允许</a></li>
+          </ul>
+        </div>
+        <div class="action-wrap" ng-if="domain.maliciousDomainStatus === 'INACTIVATED'">
+          <div ng-if="domain.action === 'DENY'"><i class="fa fa-ban text-red"></i> 阻断</div>
+          <div ng-if="domain.action === 'ALERT'"><i class="fa fa-exclamation-triangle text-yellow"></i> 警告</div>
+          <div ng-if="domain.action === 'ALLOW'"><i class="fa fa-check text-green"></i> 允许</div>
+        </div>
+      </td>
+      <td>
+        <span ng-show="domain.maliciousDomainStatus === 'INACTIVATED'">已忽略</span>
+        <span ng-show="domain.maliciousDomainStatus === 'ACTIVATED'" class="text-lime">已激活</span>
+      </td>
+      <td>
+        <button id="rule_maliciousdomain_delete_waiting_domain_button_{{$index}}"
+                class="btn btn-default margin-right-default action-button" ng-if="maliciousdomain.editRight"
+                ng-hide="domain.isdoing || domain.maliciousDomainStatus === 'INACTIVATED'"
+                ng-click="maliciousdomain.changeStatus(domain, 'INACTIVATED')"><i
+          class="fa fa-times-circle-o text-red"></i>忽略
+        </button>
+        <button id="rule_maliciousdomain_active_waiting_domain_button_{{$index}}"
+                class="btn btn-default margin-right-default action-button" ng-if="maliciousdomain.editRight"
+                ng-hide="domain.isdoing || domain.maliciousDomainStatus === 'ACTIVATED'"
+                ng-click="maliciousdomain.changeStatus(domain, 'ACTIVATED')"><i
+          class="fa fa-check-circle-o text-lime"></i>激活
+        </button>
+        <span id="rule_maliciousdomain_waitingTab_isdoing_message_{{$index}}" ng-show="domain.isdoing"
+              class="pull-right" style="padding-right: 16px">
+            <i class="fa fa-spinner fa-spin text-lime"></i> 处理中...
+          </span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="text-center">
+    <p id="rule_maliciousdomain_waitingTab_selectedNum" ng-if="dtable.selectedDomainCount">
+      已选择{{dtable.selectedDomainCount}}/{{dtable.totalNum}}条规则</p>
+    <p id="rule_maliciousdomain_waitingTab_totalnum" ng-if="!dtable.selectedDomainCount">总共{{dtable.totalNum}}条规则</p>
+  </div>
+</div>

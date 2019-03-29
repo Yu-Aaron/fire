@@ -1,0 +1,29 @@
+<!-- LIGHT SWITCH (ON/OFF) -->
+<!-- <label>View</label>
+<label class="switch-light switch-ios" style="width: 100px" onclick="">
+  <input type="checkbox">
+  <span>
+    Wireless
+    <span>Off</span>
+    <span>On</span>
+  </span>
+
+  <a></a>
+</label> -->
+
+<div class="switch-toggle">
+  <form>
+    <input name="view" ng-model="port.mode" type="radio" value="IPS">
+    <label>保护IPS</label>
+
+    <input name="view" ng-model="port.mode" type="radio" value="IDS">
+    <label>监听IDS</label>
+
+    <a></a>
+  </form>
+</div>
+
+<!--
+<label class="toggle-switch-label" ng-model="port.mode" btn-radio="'IPS'">保护IPS</label>
+<label class="toggle-switch-label" ng-model="port.mode" btn-radio="'IDS'">监听IDS</label>
+-->

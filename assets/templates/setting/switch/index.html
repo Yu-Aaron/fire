@@ -1,0 +1,119 @@
+<div id="switchSettingPanel">
+  <div class="second-title">开关设置</div>
+  <div class="panel-content">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="panel panel-lg">
+          <div class="panel-header panel-header-border">
+            <span>流量开关</span>
+
+            <div class="pull-right">
+              <div ng-if="!switch.isEditingTraffic" class="topo-btn-group">
+                <button id="traffic_switch_edit_btn" type="button"
+                        class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                        setting-privilege privilege-name="SETTING_SWITCH" privilege-handle="disabled"
+                        ng-click="switch.editTraffic()"><i class="fa fa-edit"></i></button>
+              </div>
+              <div ng-if="switch.isEditingTraffic" class="topo-btn-group">
+                <button id="traffic_switch_confirm_btn" type="button"
+                        class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                        ng-click="switch.confirmTraffic()"><i class="fa fa-check text-lime"></i></button>
+                <button id="traffic_switch_cancel_btn" type="button"
+                        class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                        ng-click="switch.cancelTraffic()"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body panel-body-light">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="col-md-3">流量开关</div>
+                <div class="col-md-7">
+                  <switch-toggle id="trafficSwitch" status="switch.iptrafficReport" on-label="开启" off-label="关闭"
+                                 disabled="!switch.isEditingTraffic"></switch-toggle>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="panel panel-lg">
+          <div class="panel-header panel-header-border">
+            <span>协议审计开关</span>
+
+            <div class="pull-right">
+              <div ng-if="!switch.isEditingDP" class="topo-btn-group">
+                <button id="protocol_switch_edit_btn" type="button"
+                        class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                        setting-privilege privilege-name="SETTING_SWITCH" privilege-handle="disabled"
+                        ng-click="switch.editDP()"><i class="fa fa-edit"></i>
+                </button>
+              </div>
+              <div ng-if="switch.isEditingDP" class="topo-btn-group">
+                <button id="protocol_switch_confirm_btn" type="button"
+                        class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                        ng-click="switch.showConfirm()"><i class="fa fa-check text-lime"></i>
+                </button>
+                <button id="protocol_switch_cancel_btn" type="button"
+                        class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                        ng-click="switch.cancelDP()"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="row margin-left-default" ng-show="switch.isEditingDP">
+              <button class="btn btn-default" ng-click="switch.enableAllDP()">启用全部协议</button>
+              <button class="btn btn-default" ng-click="switch.disableAllDP()">禁用全部协议</button>
+            </div>
+            <div class="row margin-top-lg">
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-4 margin-left-default"><h5>&nbsp; &nbsp;启用状态</h5></div>
+                  <div class="col-md-6"><h5>协议名</h5></div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-4"><h5>&nbsp; &nbsp; 启用状态</h5></div>
+                  <div class="col-md-6"><h5>协议名</h5></div>
+                </div>
+              </div>
+            </div>
+
+            <div id="dp_protocol_table" class="row">
+              <div id="dp_protocol_{{$index}}" class="col-md-6 margin-top-lg"
+                   ng-repeat="protocol in switch.DPprotocols" fade-in-list
+                   ng-show="$index!=7 && $index!=8 && $index!=11 && $index!=13">
+                <div class="row">
+                  <div class="col-md-4 margin-left-default">
+                    <switch-toggle status="protocol.status" on-label="开启" off-label="关闭"
+                                   disabled="!switch.isEditingDP"></switch-toggle>
+                  </div>
+                  <div class="col-md-6">
+                    {{protocol.protocolSwitchCN}}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--<div ng-if="!switch.isEditingDP" class="row">
+              <div class="protocol-item col-md-6 row" ng-repeat="protocol in switch.DPprotocols">
+                <div class="protocol-item-status col-md-4">
+                  <label class="label-default label {{protocol.status ? 'label-success' : ''}}">
+                    {{protocol.status ? '开启':'关闭'}}
+                  </label>
+                </div>
+                <div class="protocol-item-name-noedit col-md-6">{{protocol.protocolSwitchCN}}</div>
+              </div>
+            </div>-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

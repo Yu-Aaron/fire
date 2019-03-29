@@ -1,0 +1,71 @@
+<div>
+  <div class="pull-right margin-bottom-default">
+    <a class="btn btn-default" ng-click="dtable.collectDpiDebugInfo(dtable.selectedItems);$event.stopPropagation();">
+      &nbsp;<i class="fa fa-download icon-left"></i> 批量收集&nbsp;</a>
+  </div>
+  <table class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th class="text-center"><input type="checkbox" ng-model="dtable.selectAllValue" ng-click="dtable.selectAll()"/>
+      </th>
+      <th order-by="name">名称</th>
+      <th order-by="deviceOnline">设备状态</th>
+      <th order-by="serialNumber">序列号</th>
+      <th>最近收集时间</th>
+      <th order-by="result">收集结果</th>
+      <th order-by="directory">收集目录</th>
+      <th>
+        <span>&nbsp;</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="device in dtable.table">
+      <td class="text-center"><input type="checkbox" id="selected-item-{{$index}}"
+                                     ng-checked="dtable.selectedItems[device.deviceId]"
+                                     ng-model="dtable.selectedItems[device.deviceId]"
+                                     ng-disabled="dtable.isDeviceOffline(device)"/></td>
+      <td>{{device.name}}</td>
+      <td class="table-col-online">
+        <div class="bullet bullet-online" title="连线"
+             ng-if="device.deviceOnline===1&&device.deviceSource==='DISCOVERY'"></div>
+        <div class="bullet bullet-offline" title="掉线"
+             ng-if="device.deviceOnline!==1&&device.deviceSource==='DISCOVERY'"></div>
+        <div class="bullet bullet-unactivated" title="未激活" ng-if="device.deviceSource!=='DISCOVERY'"></div>
+      </td>
+      <td class="table-col-serial">{{device.serialNumber}}</td>
+      <td>{{(device.debuginfo.endTimestamp | date:'yyyy-MM-dd HH:mm:ss') || '无'}}</td>
+      <td>{{(device.debuginfo.result | deviceDebugInfoResult) || '无'}}</td>
+      <td>
+        <div class="text-content-ellipsis" style="max-width:400px" tooltip="{{device.debuginfo.directory}}"
+             tooltip-placement="bottom">{{device.debuginfo.directory}}
+        </div>
+        <div ng-hide="device.debuginfo.directory">无</div>
+      </td>
+      <td>
+        <a class="btn btn-default" ng-if="$root.dpiCollecting[device.deviceId]" ng-disabled="true"><i
+          class="fa fa-spinner fa-spin icon-left"></i>收集中</a>
+        <a class="btn btn-default" ng-click="dtable.collectDpiDebugInfo([device.deviceId]);$event.stopPropagation();"
+           ng-disabled="dtable.isDeviceOffline(device)" ng-if="!$root.dpiCollecting[device.deviceId]">&nbsp;<i
+          class="fa fa-download icon-left"></i> 收集&nbsp;</a>
+        <a style="display:inline-block" class="input-alert-error" ng-show="$root.dpiCollectingError[device.deviceId]">{{$root.dpiCollectingMessage[device.deviceId]}}</a>
+        <a style="display:inline-block" class="text-lime" ng-show="!$root.dpiCollectingError[device.deviceId]">{{$root.dpiCollectingMessage[device.deviceId]}}</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <script type="text/ng-template" id="debuginfo-dpi-collection-confirmation.html">
+    <div class="modal-header">
+      <h3 class="modal-header-title">调试信息收集</h3>
+    </div>
+    <div class="modal-body">
+      安全设备调试信息收集将会持续较长时间，确认开始信息收集？
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default pull-right" ng-click="ok()"><i class="fa fa-check text-lime icon-left"></i>确定
+      </button>
+      <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times-circle icon-left"></i>取消
+      </button>
+    </div>
+  </script>
+</div>

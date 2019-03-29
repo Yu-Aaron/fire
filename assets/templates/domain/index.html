@@ -1,0 +1,328 @@
+<div class="main-content">
+  <!--<div class="domain-init" ng-show="domain.noDomain">-->
+  <!--请添加分区<br/><br/><br/>-->
+  <!--<div class="row">-->
+  <!--<div class="col-sm-3">-->
+  <!--</div>-->
+  <!--<div class="col-sm-6">-->
+  <!--<div class="domain-init-option">-->
+  <!--<label><input type="radio" ng-model="domain.initOption" value="single"> &nbsp;添加单个分区</label><br/>-->
+  <!--<div class="domain-init-info">（自动添加唯一的默认分区。该分区的管理员将拥有管理所有网段的权限）</div>-->
+  <!--<br/><br/>-->
+  <!--<label><input type="radio" ng-model="domain.initOption" value="multiple"> &nbsp;添加多个分区</label><br/>-->
+  <!--<div class="domain-init-info">（手动添加一或多个的分区。手动分配各分区的管理员的管理权限）</div>-->
+  <!--</div>-->
+  <!--<br/><br/><br/>-->
+  <!--<a class="btn btn-default add-domain-btn" ng-click="domain.addSelectedDomain()"><i class="fa fa-thumbs-up"></i>-->
+  <!--&nbsp;下一步 </a>-->
+  <!--</div>-->
+  <!--<div class="col-sm-2">-->
+  <!--</div>-->
+  <!--<div class="col-sm-4">-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <div ng-show="domain.isOnlyDomain&&!domain.noDomain">
+    <div class="panel panel-lg">
+      <div class="panel-header panel-header-border">
+        <span><i class="fa fa-gears icon-left"></i>分区管理</span>
+        <span ng-hide="domain.updatingUser">
+          <button id="domain_button_editUser" class="btn btn-default btn-sm pull-right"
+                  ng-hide="domain.editingUser||domain.creatingDomain" ng-click="domain.editUser()"><i
+            class="fa fa-pencil-square-o"></i></button>
+          <button id="domain_button_saveUser" class="btn btn-default btn-sm pull-right"
+                  ng-show="domain.editingUser||domain.creatingDomain" ng-click="domain.confirmDomainEdit()"
+                  ng-disabled="(!domain.validation.password)||domain.DomainCreating||!domain.modified"><i
+            class="fa fa-check text-lime"></i></button>
+          <button class="btn btn-default btn-sm pull-right" style="margin-right:10px"
+                  ng-show="domain.editingUser||domain.creatingDomain" ng-click="domain.cancelOnlyUserEdit()"><i
+            class="fa fa-remove"></i></button>
+        </span>
+        <span ng-show="domain.updatingUser" class="pull-right" style="padding-right: 16px">
+          <i class="fa fa-spinner fa-spin text-lime"></i> 更新中...
+        </span>
+      </div>
+      <div class="panel-body">
+        <div class="domain-right-col-dn" ng-hide="domain.editingUser||domain.creatingDomain">
+          <table class="table table-hover icon-hidden">
+            <thead>
+            <tr>
+              <th>用户名</th>
+              <th>用户组</th>
+              <th>上次更新时间</th>
+              <th>用户状态</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{domain.currentEditDomain.user.name}}</td>
+              <td>{{domain.currentEditDomain.user._roles[0].name}}</td>
+              <td>{{domain.currentEditDomain.user.updatedAt}}</td>
+              <td>
+                  <span ng-show="domain.currentEditDomain.user.locked">
+                    <i class="fa fa-lock"></i> &nbsp; 锁定
+                  </span>
+                <span ng-hide="domain.currentEditDomain.user.locked">
+                    <i class="fa fa-unlock"></i> &nbsp; 解锁
+                  </span>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="domain-right-col-dn-edit" ng-show="domain.editingUser||domain.creatingDomain">
+          <table class="table table-hover icon-hidden">
+            <thead>
+            <tr>
+              <th>
+                分区管理员
+              </th>
+              <th>
+              </th>
+            </tr>
+            </thead>
+            <tr>
+              <td>分区管理员:</td>
+              <td>admin<span ng-hide="domain.isOnlyDomain">@{{domain.currentEditDomain.domainInfo.domainCode}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td>管理员密码:</td>
+              <td><input id="domain_password_newPassword" type="password" autofocus maxlength="25"
+                         ng-model="domain.currentEditDomain.user.password"
+                         ng-change="domain.checkPassword();domain.modified=true">
+                <span ng-show="domain.validation.newPassword===1" class="input-alert-error">{{domain.passwordErrormessages.newPass}}</span>
+                <span class="input-valid" ng-show="domain.validation.newPassword===2"><i
+                  class="fa fa-check text-lime"></i></span>
+                &nbsp; <br><span class="fa-beside-button-left ng-binding"><i
+                  class="fa fa-info-circle fa-beside-button-right"></i>{{domain.passwordComplexityMessage}}</span><span
+                  ng-hide="domain.creatingDomain">(不填则保留原密码)</span></td>
+            </tr>
+            <tr>
+              <td>确认密码:</td>
+              <td>
+                <input id="domain_password_confPassword" type="password" maxlength="25"
+                       ng-model="domain.currentEditDomain.user.checkpassword"
+                       ng-change="domain.checkPassword();domain.modified=true">
+                <span ng-show="domain.validation.confirmPassword===1" class="input-alert-error">{{domain.passwordErrormessages.confirmPass}}</span>
+                <span class="input-valid" ng-show="domain.validation.confirmPassword===2"><i
+                  class="fa fa-check text-lime"></i></span>
+              </td>
+            </tr>
+            <tr>
+              <td width="120px">管理员状态:</td>
+              <td width="600px">
+                <div class="toggle-container">
+                  <span class="toggle-bg toggle-alternate {{domain.currentEditDomain.user.locked}}">
+                    <label class="{{domain.currentEditDomain.user.locked}}">{{domain.currentEditDomain.user.locked
+                      ==='off' ? '解锁': '锁定'}}</label>
+                    <input id="domain_radio_toggleOff" type="radio" name="toggle" value="off"
+                           ng-model="domain.currentEditDomain.user.locked" ng-change="domain.modified = true">
+                    <input id="domain_radio_toggleOn" type="radio" name="toggle" value="on"
+                           ng-model="domain.currentEditDomain.user.locked" ng-change="domain.modified = true">
+                    <span class="switch {{domain.currentEditDomain.user.locked}}"></span>
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row domain-row" ng-hide="domain.noDomain||domain.isOnlyDomain" ng-if="">
+    <div ng-class="domain.leftColClass">
+      <a class="btn btn-default add-domain-btn" ng-disabled="!domain.currentEditDomain.domainInfo.isMultiDomains"
+         ng-hide="!domain.currentEditDomain.domainInfo.isMultiDomains" ng-click="domain.addDomain()"><i
+        class="fa fa-plus-circle icon-right"></i> &nbsp;添加分区 </a>
+      <a class="btn btn-default" ng-click="domain.deleteDomain()" ng-hide="true"><i
+        class="fa fa-trash-o icon-right"></i> &nbsp;删除 </a>
+      <div class="table-search"><input class="table-search-text" type="text" ng-model="domain.searchWord"
+                                       placeholder="搜索">
+        <button class="btn btn-default margin-left-default" ng-click="domain.setSearchWord()"><i
+          class="fa fa-search"></i><span>搜索</span>
+        </button>
+      </div>
+      <table class="table table-hover icon-hidden">
+        <thead>
+        <tr>
+          <th ng-hide="true"><input type="checkbox" ng-click="domain.selectAll()" ng-model="domain.selectAllValue"></th>
+          <th ng-click="domain.setTableOrder('name')">分区名称</th>
+          <th ng-click="domain.setTableOrder('admin')">分区负责人</th>
+          <th ng-click="domain.setTableOrder('lastUpdate')">上次更新时间</th>
+          <!--<th>子网IP/子网掩码</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="domainData in domain.domainDatas" ng-click="domain.showRightCol(domainData, $index)"
+            ng-class="domain.seletedDomain[$index]?'domain-left-col-item-select':'domain-left-col-item'">
+          <td ng-hide="true"><input type="checkbox" ng-click="selectDomain($index)" ng-model="domainData.selected"></td>
+          <td>{{domainData.domainInfo.domainName}}</td>
+          <td>{{domainData.user.name}}</td>
+          <td>{{domainData.domainInfo.updatedAt}}{{domainData.select}}</td>
+          <!--<td><span ng-repeat="subnet in domainData.domainInfo._subnets">{{subnet.domainIp}}/{{subnet.domainSubnetMask}}<br /></span></td>-->
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div ng-class="domain.rightColClass">
+      <div class="panel-title">
+        <span ng-hide="domain.creatingDomain">
+          分区信息
+        </span>
+        <span ng-show="domain.creatingDomain">
+          创建分区
+          <button class="btn btn-default btn-sm pull-right" ng-show="domain.creatingDomain"
+                  ng-click="domain.confirmDomainEdit()"
+                  ng-disabled="!domain.validation.all||!domain.validation.password"><i
+            class="fa fa-check text-lime"></i> &nbsp;确认
+          </button>
+          <button class="btn btn-default btn-sm icon-left pull-right" ng-show="domain.creatingDomain"
+                  ng-click="domain.cancelDomainEdit()"><i class="fa fa-remove"></i> &nbsp;取消
+          </button>
+        </span>
+      </div>
+      <form name="domainEdit">
+        <div class="panel-header panel-header-border">
+          分区:
+          <i class="fa fa-info-circle icon-right"></i>
+          <button class="btn btn-default btn-sm pull-right" ng-hide="domain.editingDomain||domain.creatingDomain"
+                  ng-click="domain.editDomain()" ng-disabled="!domain.currentEditDomain"><i
+            class="fa fa-pencil-square-o"></i></button>
+          <button class="btn btn-default btn-sm pull-right" ng-show="domain.editingDomain"
+                  ng-click="domain.confirmDomainEdit()"
+                  ng-disabled="!domain.validation.all||!domain.validation.password"><i
+            class="fa fa-check text-lime"></i> &nbsp;确认
+          </button>
+          <button class="btn btn-default btn-sm icon-left pull-right" ng-show="domain.editingDomain"
+                  ng-click="domain.cancelDomainEdit()"><i class="fa fa-remove"></i> &nbsp;取消
+          </button>
+        </div>
+        <div class="panel-body">
+          <div class="domain-right-col-up" ng-hide="domain.editingDomain||domain.creatingDomain">
+            <p>分区名称: &nbsp; {{domain.currentEditDomain.domainInfo.domainName}}</p>
+            <p>分区缩写: &nbsp; {{domain.currentEditDomain.domainInfo.domainCode}}</p>
+          </div>
+          <div class="domain-right-col-up" ng-show="domain.editingDomain||domain.creatingDomain">
+            <p ng-show="domain.domainDatas.length==0&&domain.creatingDomain&&false"><input type="checkbox"
+                                                                                           ng-model="domain.isOnlyDomain"
+                                                                                           ng-click="domain.switchOnlyDomain()">
+              &nbsp;创建唯一分区</p>
+            <p>分区名称: <input type="text" ng-disabled="domain.isOnlyDomain" maxlength="20" minlength="5"
+                            ng-model="domain.currentEditDomain.domainInfo.domainName"
+                            ng-keyup="domain.checkName(domain.currentEditDomain.domainInfo.domainName)">（*必填）</p>
+            <p ng-hide="domain.validation.name||domain.currentEditDomain.domainInfo.domainName.length==0"
+               class="error-info">分区名称长度必须在5-20之间</p>
+            <p>分区缩写: <input type="text" ng-disabled="domain.isOnlyDomain" maxlength="10" minlength="1"
+                            ng-model="domain.currentEditDomain.domainInfo.domainCode"
+                            ng-keyup="domain.checkCode(domain.currentEditDomain.domainInfo.domainCode)">（*必填）</p>
+          </div>
+          <br/>
+          <div class="panel-body">
+            <div class="domain-right-col-dn" ng-hide="domain.editingUser||domain.creatingDomain">
+              <table class="table table-hover icon-hidden">
+                <thead>
+                <tr>
+                  <th>用户名</th>
+                  <th>用户组</th>
+                  <th>上次更新时间</th>
+                  <th>状态</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td>{{domain.currentEditDomain.user.name}}</td>
+                  <td>{{domain.currentEditDomain.user.group}}</td>
+                  <td>{{domain.currentEditDomain.user.updatedAt}}</td>
+                  <td>
+                    <span ng-show="domain.currentEditDomain.user.locked">
+                      <i class="fa fa-lock icon-left"></i>锁定
+                    </span>
+                    <span ng-hide="domain.currentEditDomain.user.locked">
+                      <i class="fa fa-unlock icon-left"></i>解锁
+                    </span>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="domain-right-col-dn-edit" ng-show="domain.editingUser||domain.creatingDomain">
+              <div class="domain-right-col-title-edit">分区管理员</div>
+              <table class="table table-hover icon-hidden">
+                <tr>
+                  <td>分区管理员:</td>
+                  <td>admin<span
+                    ng-hide="domain.isOnlyDomain">@{{domain.currentEditDomain.domainInfo.domainCode}}</span></td>
+                </tr>
+                <tr>
+                  <td>管理员密码:</td>
+                  <td><input type="password" maxlength="20" ng-model="domain.currentEditDomain.user.password"
+                             ng-change="domain.checkPassword();domain.modified = true"> &nbsp; <span
+                    ng-hide="domain.creatingDomain">(不填则保留原密码)</span></td>
+                </tr>
+                <tr>
+                  <td width="100px">确认密码:</td>
+                  <td>
+                    <input type="password" maxlength="20" ng-model="domain.currentEditDomain.user.checkpassword"
+                           ng-change="domain.checkPassword();domain.modified = true">
+                    <span class="error-info"
+                          ng-hide="domain.currentEditDomain.user.password==domain.currentEditDomain.user.checkpassword"><span
+                      ng-show="domain.currentEditDomain.user.checkpassword.length">密码输入不一致</span>
+                  </span>
+                  </td>
+                  </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>管理员状态:</td>
+                  <td>
+                    <div class="toggle-container">
+                    <span class="toggle-bg toggle-alternate {{domain.currentEditDomain.user.locked}}">
+                      <label class="{{domain.currentEditDomain.user.locked}}">{{domain.currentEditDomain.user.locked
+                        ==='off' ? '解锁': '锁定'}}</label>
+                      <input type="radio" name="toggle" value="off" ng-model="domain.currentEditDomain.user.locked">
+                      <input type="radio" name="toggle" value="on" ng-model="domain.currentEditDomain.user.locked">
+                      <span class="switch {{domain.currentEditDomain.user.locked}}"></span>
+                    </span>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script type="text/ng-template" id="domainConfirmPanel.html">
+  <div class="modal-header">
+    <h3 class="modal-header-title"><i class="fa fa-exclamation-triangle icon-left"></i>警告</h3>
+  </div>
+  <div class="modal-body">
+    <div class="modal-container">
+      <p>切换至其他分区将会损失所有尚未保存的编辑信息</p><br/>
+      <h5 class="modal-header-title">确定要切换至目标分区吗？</h5>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-close icon-left"></i>取消</button>
+    <button class="btn btn-default" ng-click="ok()"><i class="fa fa-check text-green icon-left"></i>确认</button>
+  </div>
+</script>
+
+<!--<script type="text/ng-template" id="domainInformPanel.html">
+  <div class="modal-header">
+    <h3 class="modal-header-title"><i class="fa fa-exclamation-triangle icon-left"></i>信息</h3>
+  </div>
+  <div class="modal-body">
+    <div class="modal-container">
+      <p>{{info}}</p>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default" ng-click="ok()"><i class="fa fa-check text-green icon-left"></i>确认</button>
+  </div>
+</script>-->
+

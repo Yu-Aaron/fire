@@ -1,0 +1,219 @@
+<div>
+    <div class="margin-bottom-default object-new-delete-container">
+        <a id="object-ippool-add" class="btn btn-default" ng-click="dtable.addNewIp()" setting-privilege
+           privilege-name="OBJECT_ASSET" privilege-require="MIXED" privilege-handle="hidden">
+            &nbsp;<i class="fa fa-file-o fa-after-blue fa-plus-overlay icon-left"></i> 新增&nbsp;</a>
+        <a id="object-ippool-delete" class="btn btn-default" ng-click="dtable.deleteIp()" setting-privilege
+           privilege-name="OBJECT_ASSET" privilege-require="MIXED" privilege-handle="hidden">
+            &nbsp;<i class="fa fa-trash-o icon-left"></i> 删除&nbsp;</a>
+    </div>
+    <table class="table table-hover icon-hidden" cg-busy="{promise:$root.ipPoolDeleteTaskPromise,message:'地址池删除中，请稍侯...'}">
+        <thead>
+        <tr>
+            <th class="text-center">
+                <label>
+                    <input id="selected-item-all"  custom-checkbox tri-state-checkbox type="checkbox"
+                           ng-model="dtable.selectAllValue" ng-click="dtable.selectAll()"/>
+                </label>
+            </th>
+            <th>序号</th>
+            <th order-by="name">地址池名称</th>
+            <th order-by="interfaceName">接口</th>
+            <th order-by="ipAddress">IP段</th>
+            <th order-by="_policyRefers">策略引用</th>
+            <th order-by="enable">启动</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="ip in dtable.table" fade-in-list>
+            <td class="text-center">
+                <label>
+                    <input custom-checkbox type="checkbox" id="selected-item-{{$index}}"
+                           ng-checked="dtable.selectedItems[ip.name]"
+                           ng-change="dtable.selectedChanged()"
+                           ng-model="dtable.selectedItems[ip.name]"/>
+                </label></td>
+            <td>{{skip + $index + 1}}</td>
+            <td>{{ip.name}}</td>
+            <td>{{ip.interfaceName}}</td>
+            <td>{{ip.ipAddress}}</td>
+            <td>{{ip._policyRefers | convertNullBlank:'--'}}</td>
+            <td class="switch-toggle-td">
+                <switch-toggle status="ip.enable" change="dtable.changeStartStatus(ip)"
+                               disabled="isNoEditPri || isSwitchIpPool[ip.name]"></switch-toggle>
+                <span ng-show="isSwitchIpPool[ip.name]">
+                    <i class="fa fa-spinner fa-spin icon-left"></i>{{switchIpPoolMsg[ip.name]}}中
+                </span>
+            </td>
+            <td>
+                <a id="object-ippool-view" class="btn btn-sm btn-default"
+                   ng-click="dtable.viewIp(ip)" ng-if="isNoEditPri">查看</a>
+                <a id="object-ippool-edit" class="btn btn-sm btn-default" ng-click="dtable.editIp(ip)" title="编辑"
+                   setting-privilege privilege-name="{{privilegeName}}" privilege-require="MIXED"
+                   privilege-handle="hidden">
+                    <i class="fa fa-edit"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <script type="text/ng-template" id="ip-pool-add-new.html">
+        <div class="modal-ippool-info" global-events>
+            <form name="newIpPoolForm" ng-submit="ok(newIpPoolForm.$valid)">
+            <div class="modal-header">
+                <h4 class="modal-header-title">新增IP地址池</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body-ippool-info">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-xs-3">地址池名称 ：</div>
+                            <div class="col-xs-9">
+                                <input name="ipPoolName" type="text" custom-val="nameval" validator="checkNameVal"
+                                       ng-model="newIpPool.name" ng-model-options="{ updateOn: 'blur' }" maxlength="20"
+                                       placeholder="ADDRESS1" required>
+                                <div class="input-alert-error" ng-show="newIpPoolForm.ipPoolName.$error.nameval">
+                                    {{nameValMsg}}</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">类型 ：</div>
+                            <div class="col-xs-9">
+                                <div class="col-xs-3 dropdown toolbar-dropdown ippool-dropdown" dropdown>
+                                    <button type="button" class="btn dropdown-toggle" dropdown-toggle>
+                                        {{newIpPool.type | ipPoolTypes}} <span class="caret pull-right"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a ng-repeat="type in types" ng-class="{active: newIpPool.type == type}"
+                                               ng-click="changeType(type)">{{type | ipPoolTypes}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">子网IP范围 ：</div>
+                            <div class="col-xs-9">
+                                <input name="iprange" type="text" custom-val="iprangeval" validator="checkIpRangeVal"
+                                       ng-model="newIpPool.ipAddress" maxlength="31"
+                                       ng-model-options="{ updateOn: 'blur', allowInvalid: true }"
+                                       placeholder="{{placeHolder}}" required>
+                                <div class="input-alert-error" ng-show="newIpPoolForm.iprange.$error.iprangeval">
+                                  子网IP/范围输入不合法</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">接口 ：</div>
+                            <div class="col-xs-9">
+                                <div class="col-xs-3 dropdown toolbar-dropdown ippool-dropdown" dropdown>
+                                    <button id="interfaceDropdown" type="button" class="btn dropdown-toggle" dropdown-toggle>
+                                        {{newIpPool.interfaceName | ipPoolInterfaces}} <span class="caret pull-right"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a id="ipPoolInterface{{$index}}" ng-repeat="interface in interfaces"
+                                               ng-class="{active: newIpPool.interfaceName == interface}"
+                                               ng-click="changeInterface(interface)">{{interface | ipPoolInterfaces}}
+                                        </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default pull-right" ng-hide="isAddingIpPool">
+                    <i class="fa fa-check text-lime icon-left"></i>确定
+                </button>
+                <button class="btn btn-default pull-right" ng-disabled="true" ng-show="isAddingIpPool">
+                    <i class="fa fa-spinner fa-spin icon-left"></i>添加中
+                </button>
+                <button type="button" class="btn btn-default pull-left" ng-click="cancel()">
+                    <i class="fa fa-times icon-left"></i>取消
+                </button>
+            </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="ip-pool-edit.html">
+        <div class="modal-ippool-info" global-events>
+            <form name="editIpPoolForm" ng-submit="ok(editIpPoolForm.$valid)">
+                <div class="modal-header">
+                    <h4 class="modal-header-title">编辑IP地址池</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-ippool-info">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-xs-3">地址池名称 ：</div>
+                                <div class="col-xs-9">
+                                    <input name="ipPoolName" type="text" custom-val="nameval" validator="checkNameVal"
+                                           ng-model="ipPool.name" ng-model-options="{ updateOn: 'blur' }" maxlength="20"
+                                           placeholder="ADDRESS1" required ng-disabled="isViewOnly||isEditDisabled">
+                                    <div class="input-alert-error" ng-show="editIpPoolForm.name.$error.nameval">
+                                        {{nameValMsg}}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">类型 ：</div>
+                                <div class="col-xs-9">
+                                    <div class="col-xs-3 dropdown toolbar-dropdown ippool-dropdown" dropdown>
+                                        <button type="button" class="btn dropdown-toggle"
+                                                ng-disabled="isViewOnly" dropdown-toggle>
+                                            {{ipPool.type | ipPoolTypes}} <span class="caret pull-right"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a ng-repeat="type in types" ng-class="{active: ipPool.type == type}"
+                                                   ng-click="changeType(type)">{{type | ipPoolTypes}}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">子网IP范围 ：</div>
+                                <div class="col-xs-9">
+                                    <input name="iprange" type="text" custom-val="iprangeval" validator="checkIpRangeVal"
+                                           ng-model="ipPool.ipAddress" maxlength="31"
+                                           ng-model-options="{ updateOn: 'blur', allowInvalid: true }"
+                                           placeholder="{{placeHolder}}" required ng-disabled="isViewOnly">
+                                    <div class="input-alert-error" ng-show="editIpPoolForm.iprange.$error.iprangeval">
+                                        子网IP范围输入不合法</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">接口 ：</div>
+                                <div class="col-xs-9">
+                                    <div class="col-xs-3 dropdown toolbar-dropdown ippool-dropdown" dropdown>
+                                        <button type="button" class="btn dropdown-toggle"
+                                                ng-disabled="isViewOnly" dropdown-toggle>
+                                            {{ipPool.interfaceName | ipPoolInterfaces}}
+                                            <span class="caret pull-right"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a ng-repeat="interface in interfaces"
+                                                   ng-class="{active: ipPool.interfaceName == interface}"
+                                                   ng-click="changeInterface(interface)">{{interface | ipPoolInterfaces}}
+                                            </a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default pull-right" ng-hide="isEdittingIpPool">
+                        <i class="fa fa-check text-lime icon-left"></i>确定
+                    </button>
+                    <button class="btn btn-default pull-right" ng-disabled="true" ng-show="isEdittingIpPool">
+                        <i class="fa fa-spinner fa-spin icon-left"></i>修改中
+                    </button>
+                    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">
+                        <i class="fa fa-times icon-left"></i>取消
+                    </button>
+                </div>
+            </form>
+        </div>
+    </script>
+</div>

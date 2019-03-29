@@ -1,0 +1,39 @@
+.sortable {
+  padding-left: 0;
+  list-style-type: none;
+
+  .sortable-item {
+    width: 250px;
+    height: 230px;
+    margin: 7px;
+    padding: 0px;
+    // float: left;
+    // display: inline-block;
+
+    .sortable-item-content {
+      width: 100%;
+      height: 100%;
+      background-color: @gray80;
+    }
+
+    .sortable-item-header {
+      background-color: @gray90;
+      padding: @spacing-default;
+
+      .sortable-item-header-detail {
+        padding: 2px;
+        margin: 0px;
+      }
+      .sortable-item-icon {
+        position: relative;
+        top: -5px;
+        right: -8px;
+      }
+    }
+
+    .sortable-item-footer {
+      border-top: 1px solid @black;
+      padding-top: @spacing-default;
+    }
+  }
+}

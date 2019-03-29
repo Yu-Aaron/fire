@@ -1,0 +1,120 @@
+<hr class="hr-small-margin">
+<div class="spacing"></div>
+
+
+<div class="table-scroll-wrapper table-scroll-wrapper-striped">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-1 padding-zero">
+        <input type="checkbox" ng-change="dtable.toggle()" ng-model="dtable.selectAll"/>
+      </div>
+      <div class="col-xs-6">
+        <span>名称</span>
+      </div>
+      <div class="col-xs-2 padding-sm">
+        <span>规则项</span>
+      </div>
+      <div class="col-xs-2 padding-sm">
+        <span>来源</span>
+      </div>
+      <div class="col-xs-1">
+      </div>
+    </div>
+    <div class="row" data-index="0" ng-repeat="row in dtable.table">
+      <div class="col-xs-1 padding-zero">
+        <div class="row padding-sm">
+          <div class="col-xs-6">
+            <input type="checkbox" ng-hide="row.deployed" ng-disabled="row.deployed"
+                   ng-change="dtable.countSelected(row)" ng-model="row.checked">
+          </div>
+          <div class="col-xs-6 padding-sm">
+            <span class="fa-stack fa-small">
+              <i class="fa fa-pencil fa-stack-2x text-white"></i>
+              <div ng-show="row.deployed" class="fa-position-bottom-right">
+                <span class="fa-stack fa-stack-sm">
+                  <i class="fa fa-circle fa-stack-2x text-lime"></i>
+                  <i class="fa fa-circle-o fa-stack-2x text-black"></i>
+                  <i class="fa fa-check fa-stack-1x text-black"></i>
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-6">
+        {{row.name}}
+      </div>
+      <div class="col-xs-2 padding-sm">
+        {{row._rulesCount}}
+      </div>
+      <div class="col-xs-2 padding-sm">
+        {{row._typeDisplay}}
+      </div>
+      <div class="col-xs-1">
+        <span><button ng-click="dtable.showDetail(row)" class="btn btn-sm btn-default"><i class="fa fa-file-text-o"></i></button></span>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!--
+<table class="table table-hover icon-hidden">
+  <thead>
+  <tr>
+    <th style="width: 25px">
+      <span><input type="checkbox" ng-change="dtable.toggle()" ng-model="dtable.selectAll" /></span>
+    </th>
+    <th>
+      <span>名称</span>
+    </th>
+    <th>
+      <span>规则项</span>
+    </th>
+    <th>
+      <span>来源</span>
+    </th>
+    <th>
+      <span>明细</span>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr data-index="0"
+      ng-repeat="custom in dtable.table"
+    >
+    <td>
+      <div class="col-md-3">
+          <input type="checkbox" ng-hide="custom.deployed" ng-disabled="custom.deployed" ng-change="dtable.countSelected(custom)" ng-model="custom.checked">
+      </div>
+        <div class="col-md-3">
+            <span class="fa-stack">
+              <i class="fa fa-bullseye fa-stack-1x text-red"></i>
+              <div ng-show="custom.deployed" class="fa-position-bottom-right">
+                <span class="fa-stack fa-stack-sm">
+                  <i class="fa fa-circle fa-stack-2x text-lime"></i>
+                  <i class="fa fa-circle-o fa-stack-2x text-black"></i>
+                  <i class="fa fa-check fa-stack-1x text-black"></i>
+                </span>
+              </div>
+            </span>
+        </div>
+      <div class="col-md-6">
+        <span>{{$index+1}}</span>
+      </div>
+    </td>
+    <td>{{custom.name}}</td>
+    <td>{{custom._rulesCount}}</td>
+    <td>{{custom._typeDisplay}}</td>
+    <td><button class="btn btn-default" ng-click="dtable.showDetail(custom)">明细</button></td>
+  </tr>
+  </tbody>
+</table>
+-->
+
+<div class="text-center">
+  <p id="rule_blacklist_customtable_totalnum" ng-if="!dtable.selectedBlockCount">总共{{dtable.totalNum}}条规则</p>
+  <!--<p ng-if="!dtable.selectedBlockCount">总共{{dtable.table.length}}条规则，{{dtable.blockCount}}条规则项</p>-->
+  <p id="rule_blacklist_customtable_selectednum" ng-if="dtable.selectedBlockCount">
+    已选择{{dtable.selectedBlockCount}}/{{dtable.totalNum}}条规则</p>
+  <!--<p ng-if="dtable.selectedBlockCount">已选择{{dtable.selectedBlockCount}}/{{dtable.table.length}}条规则，{{dtable.selectedSignatureCount}}/{{dtable.blockCount}}条规则项</p>-->
+</div>

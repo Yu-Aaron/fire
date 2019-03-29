@@ -1,0 +1,340 @@
+<div class='infsafety-container'>
+  <div class="infsafety-sidebar sidebar analyze-options fade-out-right" ng-if="!infsafety.showResult">
+    <div class="options-header">
+      <h5>分析选项</h5>
+    </div>
+
+    <div class="options-source">
+      <button class="option-button" ng-click="infsafety.selectOption('source')">
+        <div class="row">
+          <div class="option-button-left col-md-4"
+               ng-class="{'highlight':options.source.length || infsafety.selected==='source'}">
+            <span class="infsafety-options-number">1</span>
+          </div>
+
+          <div class="col-md-8 option-button-right" ng-class="{'highlight' : infsafety.selected==='source'}">
+            <!--                 <div class="infsafety-vertical-color-line"></div> -->
+            <div class="option-button-right-top" ng-if="!options.source.length">
+              选择攻击界面方案
+            </div>
+            <div class="option-button-right-top" ng-if="options.source.length">
+              {{options.source.length}}个设备
+            </div>
+            <div class="option-button-right-buttom">
+              <i class="fa fa-hdd-o"></i> 攻击界面
+            </div>
+            <div class="option-button-right-buttom-alert pull-right">
+              <span style="color: #838383">*须选择</span>
+            </div>
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div class="options-target">
+      <button class="option-button" ng-click="infsafety.selectOption('target')">
+        <div class="row">
+          <div class="option-button-left col-md-4"
+               ng-class="{'highlight':options.target.length || infsafety.selected==='target'}">
+            <span class="infsafety-options-number">2</span>
+          </div>
+
+          <div class="option-button-right col-md-8" ng-class="{'highlight' : infsafety.selected==='target'}">
+            <!--                 <div class="infsafety-vertical-color-line"></div> -->
+            <div class="option-button-right-top" ng-if="!options.target.length">
+              选择攻击目标方案
+            </div>
+            <div class="option-button-right-top" ng-if="options.target.length">
+              {{options.target.length}}个设备
+            </div>
+            <div class="option-button-right-buttom">
+              <i class="fa fa-hdd-o"></i> 攻击目标
+            </div>
+            <div class="option-button-right-buttom-alert pull-right">
+              <span style="color: #838383">*须选择</span>
+            </div>
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div class="options-analyze-options">
+      <button class="option-button" ng-click="infsafety.selectOption('analyze')">
+        <div class="row">
+          <div class="option-button-left col-md-4 highlight">
+            <span class="infsafety-options-number">3</span>
+          </div>
+
+          <div class="option-button-right col-md-8" ng-class="{'highlight' : infsafety.selected==='analyze'}">
+            <!--                 <div class="infsafety-vertical-color-line"></div> -->
+            <div class="option-button-right-top">
+              分析方法
+            </div>
+
+            <!--                <div class="option-button-right-top" ng-if="options.analyze.length">
+							  {{options.analyze.length}}个选项
+							</div>-->
+            <div class="option-button-right-buttom">
+              <i class="fa fa-bar-chart"></i> 分析选项
+            </div>
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div class="calculate-button">
+      <button class="btn btn-primary" ng-disabled="disableCalculation.value" ng-click="infsafety.startCalculation()"><i
+        class="fa fa-calculator icon-left"></i>开始计算
+      </button>
+    </div>
+
+  </div>
+
+  <div class="analyze-result infsafety-sidebar sidebar" ng-if="infsafety.showResult">
+    <div class="infsafety-result-left-bar">
+      <div class="result-header row">
+        <div class="col-md-4">
+          <button class="btn btn-default btn-sm btn-reset-infsafety"
+                  ng-click="infsafety.showResult = false; infsafety.resetResult();"><i
+            class="fa fa-reply icon-left"></i>重设
+          </button>
+        </div>
+        <div class="col-md-8">
+          <span class="infsafety-result-heading">目标安全评分</span>
+        </div>
+      </div>
+
+      <div class="result-graph">
+        <highchart id="chart1" config="chartConfig"></highchart>
+      </div>
+
+      <div class="result-table">
+        <div class="shortest-path infsafety-result-list">
+          <div class="infsafet-result-bar" ng-click="infsafety.showResultOption('shortestPath')">
+
+            <div class="row">
+              <div class="col-md-7">
+                <i class="fa icon-left"
+                   ng-class="{true: 'fa-caret-down', false: 'fa-caret-right'}[infsafety.resultOptions.shortestPath.dropDown]"></i>
+                <span>所有路径</span>
+              </div>
+              <div class="col-md-4">
+                <span>{{result.pathSafetyLength}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="shortest-path-dropDown angular-animate dropDown-fade-in"
+             ng-if="infsafety.resultOptions.shortestPath.dropDown">
+          <!--<div>-->
+          <!--<span>平均路径漏洞</span>-->
+          <!--<span>5</span>-->
+          <!--</div>-->
+
+          <div>
+            <div class="row">
+              <div class="col-md-7">
+                <span class="infsafety-result-padding-left">平均跳转次数</span>
+              </div>
+              <div class="col-md-4">
+                <span>{{result.averagePathLength}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="row">
+              <div class="col-md-7">
+                <span class="infsafety-result-padding-left">危险路径</span>
+              </div>
+              <div class="col-md-4">
+                <span ng-style="{color: pathSafetyData[2].y > 0 ? '#eca65e' : 'white'}">{{pathSafetyData[2].y}}/{{result.pathSafetyLength}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-in-thread  infsafety-result-list">
+          <div class="infsafet-result-bar" ng-click="infsafety.showResultOption('itemInThread')">
+            <div class="row">
+              <div class="col-md-7">
+                <i class="fa icon-left"
+                   ng-class="{true: 'fa-caret-down', false: 'fa-caret-right'}[infsafety.resultOptions.itemInThread.dropDown]"></i>
+                <span>危险目标</span>
+              </div>
+              <div class="col-md-4">
+                <span>{{dangerousNode}}/{{nodeSafety.length}}</span>
+              </div>
+              <div class="col-md-1">
+                <!--               <div ng-if="!infsafety.resultOptions.itemInThread.table && infsafety.resultOptions.itemInThread.dropDown">
+								<button ng-click="infsafety.showResultOptionTable('itemInThread')"><i class="fa fa-table"></i></button>
+							  </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="item-in-thread-dropDown angular-animate dropDown-fade-in"
+             ng-if="infsafety.resultOptions.itemInThread.dropDown" style="z-index:5;">
+          <div>
+            <div class="row">
+              <div class="col-md-7">
+                <span class="infsafety-result-padding-left">目标最高安全值</span>
+              </div>
+              <div class="col-md-4">
+                <span
+                  ng-style="{color: nodeSafety[nodeSafety.length-1] <= 60 ? '#FF6D28' : nodeSafety[nodeSafety.length-1] >= 80 ? '#92D219' : '#FFF319', 'font-size' : '18px'}">{{nodeSafety[nodeSafety.length-1]}}</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="row">
+              <div class="col-md-7">
+                <span class="infsafety-result-padding-left">目标最低安全值</span>
+              </div>
+              <div class="col-md-4">
+                <span
+                  ng-style="{color: nodeSafety[0] <= 60 ? '#FF6D28' : nodeSafety[0] >= 80 ? '#92D219' : '#FFF319', 'font-size' : '18px'}">{{nodeSafety[0]}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="optimization-plan  infsafety-result-list">
+          <div class="infsafet-result-bar"
+               ng-click="infsafety.showResultOption('optimizationPlan'); infsafety.toggleSuggestedPosition()">
+            <div class="row">
+              <div class="col-md-7">
+                <i class="fa icon-left"
+                   ng-class="{true: 'fa-caret-down', false: 'fa-caret-right'}[infsafety.resultOptions.optimizationPlan.dropDown]"></i>
+                <span>建议优化方法</span>
+              </div>
+              <div class="col-md-2">
+                <span>{{optimizationPlanCount}}</span>
+              </div>
+              <div class="col-md-2">
+                <!--               <div ng-if="!infsafety.resultOptions.optimizationPlan.table && infsafety.resultOptions.optimizationPlan.dropDown">
+								<button ng-click="infsafety.showResultOptionTable('optimizationPlan')"><i class="fa fa-table"></i></button>
+							  </div> -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="optimization-plan-dropDown angular-animate dropDown-fade-in"
+             ng-if="infsafety.resultOptions.optimizationPlan.dropDown">
+          <div ng-if="result.mostImprLink.length">
+            <div class="row">
+              <div class="col-md-7">
+                <span class="infsafety-result-padding-left">增加安全设备方案</span>
+              </div>
+              <div class="col-md-4">
+                <span>1</span>
+              </div>
+            </div>
+          </div>
+
+          <div ng-if="result.mostImprNode !== undefined && nodeMap[result.mostImprNode]">
+            <div class="row">
+              <div class="col-md-7">
+                <span class="infsafety-result-padding-left">设备升级方案</span>
+              </div>
+              <div class="col-md-4">
+                <span>1</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div ng-if="result.usbNode.length">
+            <div class="row">
+              <div class="col-md-7">
+                <span class="infsafety-result-padding-left">禁用USB设备</span>
+              </div>
+              <div class="col-md-4">
+                <span>{{result.usbNode.length}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div ng-if="result.cloudNode.length">
+            <div class="row">
+              <div class="col-md-7">
+                <span class="infsafety-result-padding-left">更改外网接入模式</span>
+              </div>
+              <div class="col-md-4">
+                <span>{{result.cloudNode.length}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="infsafety-result-table-group">
+    <div class="shortest-path-table infsafety-result-table angular-animate result-fade-in"
+         ng-if="infsafety.showResult && infsafety.resultOptions.shortestPath.table">
+      <shortest-path-table></shortest-path-table>
+    </div>
+    <div class="item-in-thread-table infsafety-result-table angular-animate result-fade-in"
+         ng-if="infsafety.showResult && infsafety.resultOptions.itemInThread.table">
+      <item-in-thread-table></item-in-thread-table>
+    </div>
+    <div class="optimization-plan-table infsafety-result-table angular-animate result-fade-in"
+         ng-if="infsafety.showResult && infsafety.resultOptions.optimizationPlan.table">
+      <optimization-plan-table></optimization-plan-table>
+    </div>
+  </div>
+
+  <div class="optimization-table" ng-switch on="infsafety.selected">
+    <div class="optimization-table-interface angular-animate analyze-option-fade-in" ng-switch-when="source">
+      <source-table></source-table>
+    </div>
+    <div class="optimization-table-interface angular-animate analyze-option-fade-in" ng-switch-when="target">
+      <target-table></target-table>
+    </div>
+    <div class="optimization-table-interface angular-animate analyze-option-fade-in" ng-switch-when="analyze">
+      <analyze-table></analyze-table>
+    </div>
+  </div>
+
+  <cdiagram>
+    <infsafety-new-diagram></infsafety-new-diagram>
+  </cdiagram>
+
+  <div class="clearfix"></div>
+
+</div>
+
+<script type="text/ng-template" id="calculationError.html">
+  <div class="modal-header">
+    <h3 class="modal-header-title">选项错误</h3>
+    <a class="modal-close" ng-click="ok()"><i class="fa fa-times"></i></a>
+  </div>
+  <div class="modal-body-no-frame">
+    <p><i class="fa fa-exclamation-triangle text-red-orange icon-left"></i>
+      没有找到攻击路径，无法分析。请重新选择攻击界面与目标。
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default" ng-click="ok()"><i class="fa fa-check text-green icon-left"></i>确定</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="selectionError.html">
+  <div class="modal-header">
+    <h3 class="modal-header-title">选项错误</h3>
+    <a class="modal-close" ng-click="ok()"><i class="fa fa-times"></i></a>
+  </div>
+  <div class="modal-body-no-frame">
+    <p><i class="fa fa-exclamation-triangle text-red-orange icon-left"></i>
+      没有选择攻击界面设备或目标设备，系统无法分析。请选择攻击界面设备与目标设备。
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default" ng-click="ok()"><i class="fa fa-check text-green icon-left"></i>确定</button>
+  </div>
+</script>

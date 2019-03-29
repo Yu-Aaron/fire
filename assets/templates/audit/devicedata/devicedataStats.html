@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">设备名称： {{deviceName}}</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body">
+  <div class="modal-container">
+    <h4 class="text-center" ng-show="noPoint">检测实时流量中<i class="fa fa-spinner fa-spin"></i></h4>
+    <div class="highchart-container" style="margin-right:4px">
+      <div id="devicedata-stats-line-chart"></div>
+    </div>
+  </div>
+</div>

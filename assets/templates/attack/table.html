@@ -1,0 +1,60 @@
+<table class="table table-hover icon-hidden">
+  <thead>
+  <tr>
+    <th>
+      <span>&nbsp;</span>
+    </th>
+    <th>
+      <span>设备名</span>
+      <i class="fa"
+         ng-class="{false: 'fa-caret-up', true: 'fa-caret-down'}[dtable.reverse]"
+         ng-show="dtable.predicate == ''"
+      ></i>
+    </th>
+    <th>
+      <span>IP地址</span>
+      <i class="fa"
+         ng-class="{false: 'fa-caret-up', true: 'fa-caret-down'}[dtable.reverse]"
+         ng-show="dtable.predicate == ''"
+      ></i>
+    </th>
+    <th>
+      <span>厂商</span>
+      <i class="fa"
+         ng-class="{false: 'fa-caret-up', true: 'fa-caret-down'}[dtable.reverse]"
+         ng-show="dtable.predicate == ''"
+      ></i>
+    </th>
+    <th>
+      <span>型号</span>
+      <i class="fa"
+         ng-class="{false: 'fa-caret-up', true: 'fa-caret-down'}[dtable.reverse]"
+         ng-show="dtable.predicate == ''"
+      ></i>
+    </th>
+    <th>
+      <span>漏洞数量</span>
+      <i class="fa"
+         ng-class="{false: 'fa-caret-up', true: 'fa-caret-down'}[dtable.reverse]"
+         ng-show="dtable.predicate == ''"
+      ></i>
+    </th>
+    <!--             <th>
+					<span>查看漏洞</span>
+				</th> -->
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="device in attack.attackDevice">
+    <td><input class="attack-table-radio" type="radio" name="SelectedDevice" ng-model="attackDirective.selectedDevice"
+               ng-change="attack.getInputDevice(device)" ng-value="device.nodeId">
+    </td>
+    <td>{{device.nodeName}}</td>
+    <td>{{device.ip}}</td>
+    <td>{{device.make}}</td>
+    <td>{{device.model}}</td>
+    <td>{{device.vulnerabilityCount}}个</td>
+    <!-- <td><a class="btn btn-default" href="/monitor/device/{{device.ID}}">查看</a></td> -->
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,420 @@
+// ==========================
+// BOOTSTRAP BUTTON VARIABLES
+// ==========================
+@btn-font-weight: normal;
+@btn-default-color: @color-font;
+// this is the font color
+@btn-default-bg: @gray80;
+@btn-default-border: @black;
+@btn-primary-color: @white;
+@btn-primary-bg: @brand-primary;
+@btn-primary-border: @black;
+@btn-success-color: @color-font;
+@btn-success-bg: @brand-success;
+@btn-success-border: darken(@btn-success-bg, 5%);
+@btn-info-color: @color-font;
+@btn-info-bg: @brand-info;
+@btn-info-border: darken(@btn-info-bg, 5%);
+@btn-warning-color: @color-font;
+@btn-warning-bg: @brand-warning;
+@btn-warning-border: darken(@btn-warning-bg, 5%);
+@btn-danger-color: @color-font;
+@btn-danger-bg: @brand-danger;
+@btn-danger-border: darken(@btn-danger-bg, 5%);
+@btn-deploy-color: @white;
+@btn-deploy-bg: @brand-primary;
+@btn-deploy-border: @black;
+@btn-link-disabled-color: @gray-light;
+// ======================
+// CUSTOM BUTTON STYLES
+// ======================
+// SINGLE BUTTONS
+//==================
+.btn-default,
+.dropdown-toggle {
+  #gradient > .vertical(#282c37, #1e2128);
+  padding: 6px 13px;
+  border-radius: @border-radius-base;
+  .box-shadow(inset 0 2px 2px -2px fade(@gray30, 30%));
+  &:hover {
+    #gradient > .vertical(#1e2128, #282c37);
+  }
+}
+.open > .dropdown-toggle.btn-default {
+  background: linear-gradient(#292d38, #232730);
+}
+// MEDIUM BUTTON
+.btn-md {
+  padding: 4px 8px;
+}
+
+// LARGE BUTTON
+.btn-lg {
+  padding: 4px 13px;
+}
+
+// LARGE BUTTON
+.btn-xlg {
+  padding: 14px 24px;
+}
+
+// WIDE BUTTON
+.btn-wide {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.btn-wider {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+// ROUND BUTTON
+.btn-round {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  border: 1px solid @gray90;
+  background: @gray85;
+  background-image: -webkit-linear-gradient(top, @gray70, @gray90);
+  background-image: linear-gradient(top, @gray70, @gray90);
+}
+
+.btn-round-green {
+  background-image: -webkit-linear-gradient(top, @lime, @lime-dark);
+  background-image: linear-gradient(top, @lime, @lime-dark);
+}
+
+.btn-selected {
+  #gradient > .vertical(@gray88, @gray95);
+}
+
+//  FILE BUTTON
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+// BUTTON GROUPS
+// ================
+// button group with label
+.btn-group-column-wrapper {
+  padding: 20px 0;
+  .btn-group-column {
+    width: 400px;
+    display: block;
+    margin: 20px auto;
+    .btn-group-column-button,
+    .btn-group-column-label {
+      height: 60px;
+    }
+    .btn-group-column-label {
+      float: left;
+      background-color: @gray85;
+      width: 25%;
+      border-top-left-radius: @border-radius-base;
+      border-bottom-left-radius: @border-radius-base;
+      border: 1px solid @black;
+      border-right: 0;
+      position: relative;
+      .btn-group-column-label-small {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+      }
+      .btn-group-column-label-number {
+        font-size: 3em;
+        margin-left: 30px;
+      }
+    }
+    .btn-group-column-button {
+      color: @lime;
+      width: 75%;
+      #gradient > .vertical(@gray80, @gray85);
+      border-top-right-radius: @border-radius-base;
+      border-bottom-right-radius: @border-radius-base;
+      border: 1px solid @black;
+    }
+  }
+}
+
+.btn-group-pull-right {
+  margin-right: 10px;
+}
+
+.btn-in-panel-header-sm {
+  margin-top: -7px;
+}
+
+.btn-in-panel-header {
+  margin-top: -11px;
+}
+
+.tiny-button {
+  background: @gray-darker;
+  border: 0;
+  border-top: 1px @gray-dark solid;
+  width: 50px;
+  padding: 5px;
+  margin-left: 2px;
+  margin-top: 10px;
+}
+
+.tiny-button.pull-right {
+  margin-right: 10px;
+}
+
+.small-button {
+  background: @gray-darker;
+  border: 0;
+  border-top: 1px @gray-dark solid;
+  width: 120px;
+  padding: 5px;
+  margin-left: 2px;
+  margin-top: 10px;
+}
+
+.large-button {
+  background: @gray-darker;
+  border: 0;
+  border-top: 1px @gray-dark solid;
+  width: 100px;
+  height: 70px;
+  padding: 5px;
+  i {
+    color: @brand-primary;
+  }
+}
+
+.save-button {
+  background: @gray-darker;
+  border: 0;
+  border-top: 1px @gray-dark solid;
+  width: 60px;
+  padding: 5px;
+  margin-left: 2px;
+  margin-top: 10px;
+  i {
+    color: @brand-primary;
+  }
+}
+
+.btn-edit {
+  position: relative;
+
+  &:before {
+    content: "\f040";
+    position: absolute;
+    font-family: FontAwesome;
+    font-size: 60px;
+    top: -13px;
+    right: 10px;
+    z-index: 0;
+    opacity: 0.2;
+    color: @gray60;
+  }
+}
+
+.btn-flash-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.btn-flash {
+  pointer-events: none;
+  border-radius: @border-radius-base;
+  opacity: 0.2;
+  position: absolute;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+}
+
+.btn-top-pull-right-margin-back {
+  margin-top: -4px;
+}
+
+.btn-editRight, .btn-viewRight, .btn-forbidden {
+  #gradient > .vertical(@gray80, @gray85);
+  color: @gray60;
+}
+
+.btn-disabled {
+  #gradient > .vertical(@gray85, @gray90);
+}
+
+.btn-editRight:hover {
+  #gradient > .vertical(@primary-light, @primary);
+  color: white;
+}
+
+.btn-viewRight:hover {
+  #gradient > .vertical(#E2C305, #C2A305);
+  color: white;
+}
+
+.btn-forbidden:hover {
+  #gradient > .vertical(#C73410, #971900);
+  color: white;
+}
+
+.btn-editRight.active {
+  #gradient > .vertical(@primary, @primary-dark);
+  color: white;
+}
+
+.btn-viewRight.active {
+  #gradient > .vertical(#B29305, #927305);
+  color: white;
+}
+
+.btn-forbidden.active {
+  #gradient > .vertical(#971900, #671000);
+  color: white;
+}
+
+/* ----------------------------------
+  New buttons
+---------------------------------- */
+.btn-base {
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px 0 rgba(228, 228, 228, 0.1);
+  font-size: 12px;
+  line-height: 12px;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+  i {
+    display: inline-block;
+    bottom: 0;
+    font-size: 14px;
+  }
+}
+
+.btn {
+  &:extend(.btn-base all);
+  height: 30px;
+  padding: 8px 12px; //8px 12px;
+  i {
+    &.icon-left {
+      margin-right: 10px;
+    }
+    &.icon-right {
+      margin-left: 10px;
+    }
+  }
+}
+
+.btn-sm {
+  &:extend(.btn-base all);
+  height: 26px;
+  padding: 5px 10px 7px;
+  i {
+    &.icon-left {
+      margin-right: 8px;
+    }
+    &.icon-right {
+      margin-left: 8px;
+    }
+  }
+}
+
+.btn-default {
+  background: linear-gradient(to right, @btn-light, @btn-darker);
+  color: @white;
+  .icon-lime {
+    color: @primary;
+  }
+  &:hover,
+  &:hover:enabled,
+  &:focus {
+    background: linear-gradient(#292d38, #333742);
+    color: @txt-white-gray;
+    .icon-lime {
+      color: @primary-light;
+    }
+  }
+  &:active {
+    background: linear-gradient(#292d38, #232730);
+    color: @txt-white-gray;
+    .icon-lime {
+      color: @primary;
+    }
+  }
+  &[disabled] {
+    color: @txt-dark-gray;
+    .icon-lime {
+      color: @txt-dark-gray;
+    }
+  }
+  &:not(.btn-primary):not(.btn-deploy) .icon-left:not([class*=" text-"]):not([class^="text-"]){
+    color: @white;
+    &.fa-trash-o{
+      color: @danger;
+    }
+  }
+}
+
+.btn-dropdown-report {
+  padding: 0px 12px;
+}
+
+.btn-primary {
+  background: linear-gradient(@primary, @primary-dark);
+  color: @txt-white-gray;
+  &:hover:enabled,
+  &:focus {
+    background: linear-gradient(@primary-light, @primary-dark);
+    color: @txt-white;
+    i {
+      color: @txt-white;
+    }
+  }
+  &:active {
+    background: linear-gradient(@primary-dark, @primary);
+    color: @txt-white-gray;
+  }
+  &:disabled {
+    background: linear-gradient(@primary-dark, @green-dark);
+    color: @txt-gray;
+    i {
+      color: @txt-gray;
+    }
+  }
+}
+
+.btn-deploy {
+  background: linear-gradient(@primary, @primary-dark);
+  color: @txt-white-gray;
+  &:hover:enabled,
+  &:focus {
+    background: linear-gradient(@primary-light, @primary-dark);
+    color: @txt-white;
+    i {
+      color: @txt-white;
+    }
+  }
+  &:active {
+    background: linear-gradient(@primary-dark, @primary);
+    color: @txt-white-gray;
+  }
+  &:disabled {
+    background: linear-gradient(@bg-gray-lighter, @bg-gray);
+    color: @txt-dark-gray;
+    i {
+      color: @primary;
+    }
+  }
+}
+
+
+// Wrap buttons above a table with .btn-toolbar to
+// get proper spacing between buttons and other controls
+.btn-toolbar {
+  margin-left: -10px;
+
+  > .btn,
+  > .btn-group,
+  > select,
+  > .input-group {
+    margin-left: 10px;
+  }
+}

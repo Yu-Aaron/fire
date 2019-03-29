@@ -1,0 +1,64 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">部署规则</h3>
+  <a id="rule-blackList-editor_a_deployExit" class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body-no-frame">
+  <br>
+  <div>
+    <div>{{msg.text}}</div>
+  </div>
+  <div ng-if="!(msg.isShowDeviceConnectedCnt === 0 || msg.isShowDeviceUpgradingMsg)"
+       ng-show="IDSPool.length||noProtocolWarningDevicePool.length||deviceDisconnetedPool.length">
+    <div ng-if="IDSPool.length||noProtocolWarningDevicePool.length||deviceDisconnetedPool.length"
+         style="margin-top:10px;">
+      <i class="fa fa-exclamation-triangle icon-left text-red"></i>请确认以下警告<br>
+    </div>
+    <div style="border: 2px solid black; margin-top:10px; margin-bottom:10px; padding: 10px;"
+         id="rule_blacklist_confirmDeploy">
+      <div ng-if="deviceDisconnetedPool.length">
+        <div>
+          <span><input type="checkbox" ng-model="check.checkDisconnect"
+                       id="rule_blacklist_confirmDeploy_disconnect"/></span>
+          <span style="margin-left:5px">{{msg.isShowDeviceDisconnectedText}}</span>
+        </div>
+        <span style="margin-left:20px;">
+          {{deviceDisconnetedPool.toString()}}
+        </span>
+      </div>
+      <div ng-if="noProtocolWarningDevicePool.length">
+        <div>
+          <span><input type="checkbox" ng-model="check.checkProtocol"
+                       id="rule_blacklist_confirmDeploy_protocol"/></span>
+          <span style="margin-left:5px">{{msg.noProtocolWarningText}}</span>
+        </div>
+        <span style="margin-left:20px">
+          {{noProtocolWarningDevicePool.toString()}}
+        </span>
+      </div>
+      <div ng-if="IDSPool.length">
+        <div>
+          <span><input type="checkbox" ng-model="check.checkIDS" id="rule_blacklist_confirmDeploy_ids"/></span>
+          <span style="margin-left:5px">{{msg.hasIDSText}}</span>
+        </div>
+        <span style="margin-left:20px">
+          {{IDSPool.toString()}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div>
+    {{msg.qus}}
+  </div>
+</div>
+<div class="modal-footer">
+  <button id="rule-blackList-editor_button_deployCancel" class="btn btn-default pull-left" ng-click="cancel()"
+          ng-if="msg.isShowDeviceConnectedCnt !== 0"><i class="fa fa-times icon-left"></i>取消
+  </button>
+  <button id="rule-blackList-editor_button_deployConfirm" class="btn btn-default"
+          ng-class="{'btn-deploy': msg.fontAwesomeText === 'fa-cloud-download'}" ng-click="ok()"
+          ng-disabled="!(check.checkIDS&&check.checkProtocol&&check.checkDisconnect)&&!(msg.isShowDeviceConnectedCnt === 0)">
+    <i class="fa fa-cloud-download icon-left"
+       ng-if="!(msg.isShowDeviceConnectedCnt === 0 || msg.isShowDeviceUpgradingMsg)"></i>{{msg.buttonText}}
+  </button>
+</div>
+

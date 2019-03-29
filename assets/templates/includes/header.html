@@ -1,0 +1,145 @@
+<div class="top-bar clearfix">
+
+  <div class="logo">
+    <div class="logo-icon">
+      <img ng-src="/images/logo/logo-capstone.png">
+    </div>
+  </div>
+  <nav class="header-nav">
+
+    <div class="pull-left">
+
+      <!--ng-if="!dashboard.isRootUser"-->
+      <div class="menubar menubar-top">
+
+        <!--<span class="glyphicon glyphicon-chevron-left menubar menubar-span" ng-click="dashboard.slideTopBar(false)"-->
+        <!--ng-if="!dashboard.isRootUser&&dashboard.getEnableMenus().length > 9"></span>-->
+
+        <div id="topMenu" class="menubar menubar-topmenu">
+          <ul id="topUl" class="nav navbar"
+              ng-class="{'flash':(dashboard.flashes===1), 'red-dot': $root.redDot, 'red-warning': $root.redWarning}"
+              role="tablist">
+            <li id="header_li_{{tab.getState()}}" ng-repeat="tab in $root.rootMenu.getChilds()"
+                class="navbar-item navbar-item-{{tab.getIcon()}}"
+                ng-class="{active: dashboard.isActive(tab), blurred: false}"
+                ng-if="dashboard.menuEnabled(tab)" ng-init="checkLast($last)">
+              <!--<a ng-if="dashboard.isBlurred(tab.getState())">-->
+              <!--<div class="navbar-border-left"></div>-->
+              <!--<div class="navbar-border-right"></div>-->
+              <!--<div class="icon-container">-->
+              <!--<span class="icon icon-{{tab.getIcon()}} navbar-item-icon"></span>-->
+              <!--</div>-->
+              <!--<span class="navbar-item-title">{{tab.getDescription()}}</span>-->
+              <!--</a>-->
+              <a ui-sref="{{dashboard.getTargetUrl(tab)}}" ui-sref-opts="{reload:true}">
+                <!--ui-sref-opts="{{tab.getOptions()}}">-->
+                <div class="navbar-border-left"></div>
+                <div class="navbar-border-right"></div>
+                <div class="icon-container">
+                  <span
+                    class="icon navbar-item-icon icon-{{tab.getIcon()}}-white"></span>
+                </div>
+                <span class="navbar-item-title">{{tab.getDescription()}}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!--<span class="glyphicon glyphicon-chevron-right menubar menubar-span" ng-click="dashboard.slideTopBar(true)"-->
+        <!--ng-if="!dashboard.isRootUser&&dashboard.getEnableMenus().length > 9"></span>-->
+
+      </div>
+
+      <!--<ul class="nav navbar" role="tablist" ng-if="dashboard.isRootUser">-->
+      <!--<li class="navbar-item" ng-class="{active: dashboard.isActive('domain')}" id="header_li_domain">-->
+      <!--<a ui-sref="domain" ui-sref-opts="{reload:true}">-->
+      <!--<div class="navbar-border-left"></div>-->
+      <!--<div class="navbar-border-right"></div>-->
+      <!--<span-->
+      <!--class="svg-top_nav_icon_topology svg-top_nav_icon_topology-dims navbar-item-icon navbar-item-icon"></span>-->
+      <!--<span class="navbar-item-title">分区管理</span>-->
+      <!--</a>-->
+      <!--</li>-->
+      <!--<li class="navbar-item" ng-class="{active: dashboard.isActive('setting')}" id="header_li_setting">-->
+      <!--<a href="/setting/systemconsole">-->
+      <!--<div class="navbar-border-left"></div>-->
+      <!--<div class="navbar-border-right"></div>-->
+      <!--<span-->
+      <!--class="svg-top_nav_icon_system_preference svg-top_nav_icon_system_preference-dims navbar-item-icon navbar-item-icon"></span>-->
+      <!--<span class="navbar-item-title">系统设置</span>-->
+      <!--</a>-->
+      <!--</li>-->
+      <!--</ul>-->
+    </div>
+    <div class="header-nav-right">
+      <div class="header-nav-right-item"  >
+        <a id="header_a_navHelp" href="javascript:;" ng-click="$root.openHelp()" class="header-nav-icon header-nav-icon-user link-white">
+          <span class="badge ng-binding" ng-if="dashboard.alarms.countNew" style="position:absolute;right:0">{{dashboard.alarms.countNew}}</span>
+          <i class="fa fa-question-circle"></i>
+        </a>
+
+      </div>
+      <div class="header-nav-right-item dropdown" dropdown ng-mouseleave="dashboard.updateAlarms()">
+        <a id="header_a_navBell" href class="header-nav-icon header-nav-icon-user link-white" dropdown-toggle
+           ng-click="nav.active = !nav.active">
+          <span class="badge ng-binding" ng-if="dashboard.alarms.countNew" style="position:absolute;right:0">{{dashboard.alarms.countNew}}</span>
+          <i class="fa fa-bell"></i>
+        </a>
+        <ul class="dropdown-menu pull-right dropdown-notification-center"
+            style="width:375px">
+          <li class="dropdown-header">{{$root.PLATFORM_NAME}}通知</li>
+          <li ng-if="dashboard.alarms.list.length">
+            <ul class="notification-list">
+              <li class="dropdown-icon-item notification-item" ng-repeat="list in dashboard.alarms.list"
+                  ng-class="{highlight:list.markAsRead === 0}">
+                <a href="javascript:;">
+                  <span class="pull-right">{{list.timestamp | alarmTimeDiff: dashboard.alarms.currentTime}}</span>
+                  {{list.content}}
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li ng-if="!dashboard.alarms.list.length" class="dropdown-header">当前没有新消息</li>
+        </ul>
+      </div>
+
+      <div class="header-nav-right-item dropdown" dropdown>
+        <a id="header_a_navUser" href class="header-nav-icon header-nav-icon-user link-white" dropdown-toggle
+           ng-click="nav.active = !nav.active">
+          <i class="fa fa-user"></i>
+        </a>
+        <span id="dashboard_header_todoNum" class="badge text-lime todo-num" ng-if="dashboard.todolistNum>0">{{dashboard.todolistNum}}</span>
+        <ul class="dropdown-menu pull-right dropdown-system-user">
+          <li class="dropdown-header border-bottom-line">你好，{{$root.rootMenu.getContentShow('MY_ACCOUNT')}}
+            <span id="current_user_name" class="text-lime">{{dashboard.user()}}</span>
+          </li>
+          <li id="header_li_myAccount" class="dropdown-icon-item border-top-line" ng-if="dashboard.isMyAccountAvailable"><a ui-sref="setting.myaccount"><i
+            class="fa fa-user fa-fw"></i>我的账户</a></li>
+          <!--<li id="header_li_todoList" class="dropdown-icon-item">-->
+          <!--<a ui-sref="todolist">-->
+          <!--<i class="fa fa-tasks fa-fw"></i>待办事宜<span id="dashboard_li_todoNum"-->
+          <!--class="badge text-lime waiting-task-count"-->
+          <!--ng-if="dashboard.todolistNum>0">{{dashboard.todolistNum}}</span>-->
+          <!--</a>-->
+          <!--</li>-->
+          <!--<li ng-if="!dashboard.isRootUser" id="header_li_userManagement"-->
+          <!--class="dropdown-icon-item border-bottom-line"><a-->
+          <!--ui-sref="systemuser"><i class="fa fa-users fa-fw"></i>用户管理</a></li>-->
+          <li id="header_li_version" class="dropdown-icon-item border-top-line">
+            <a href="" ng-click="dashboard.showVersionModal()">
+              <i class="fa fa-flag"></i>
+              <span>系统版本</span>
+            </a>
+          </li>
+          <li id="header_li_lockUser" class="dropdown-icon-item" ng-if="dashboard.lockShow"><a href="javascript:void(0)"
+                                                                                               ng-click="dashboard.lockUsr()"><i
+            class="fa fa-lock fa-fw"></i>锁定用户</a></li>
+          <li id="header_li_logOut" class="dropdown-icon-item"><a href="javascript:void(0)"
+                                                                  ng-click="dashboard.logout()"><i
+            class="fa fa-sign-out fa-fw"></i>退出</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>

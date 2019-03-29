@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--[if lt IE 10 ]>
+<html class="ie">
+<![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="zh-CN">
+<!--<![endif]-->
+
+<head>
+  <base href="/"></base>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title id="tabTitle"></title>
+
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!--[if lt IE 10 ]>
+  <link rel="stylesheet" href="" id="stylesheetMain">
+  <script language="javascript">
+    document.getElementById("stylesheetMain").href = location + "styles/main.css";
+  </script>
+  <![endif]-->
+  <!--[if (gt IE 9)|!(IE)]><!-->
+  <script language="javascript">
+    window.location.href = "https://" + location.host + ":443/index.html";
+  </script>
+  <!--<![endif]-->
+
+</head>
+
+<!--[if lt IE 10 ]>
+<!--[if lt IE 8 ]><body class="page-download ie-lt-8"><![endif]-->
+<!--[if gt IE 7 ]>
+<body class="page-download ie-lt-10"><![endif]-->
+<div class="download-logo"><img src="" id="logoNewImage"/></div>
+<div class="download-product-logo"><img src="" id="productLogoImage"/></div>
+<div class="container">
+  <h2>为保证匡恩网络监测审计平台最佳体验，请下载使用推荐的Chrome浏览器</h2>
+  <div class="margin-top-lg text-center">
+    <a class="download-button" href="" id="chromeExeFile"><img src="" id="downloadImage"/></a>
+  </div>
+</div>
+<script language="javascript">
+  document.getElementById("logoNewImage").src = location + "images/logo-new.png";
+  document.getElementById("productLogoImage").src = location + "images/product-logo.png";
+  document.getElementById("chromeExeFile").href = "http://" + location.host + "/download/ChromeSetup-Chs.zip";
+  document.getElementById("downloadImage").src = location + "images/buttons/download.png";
+</script>
+</body>
+<![endif]-->
+
+</html>

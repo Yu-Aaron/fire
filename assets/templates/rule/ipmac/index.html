@@ -1,0 +1,158 @@
+<div cg-busy="{promise:$root.deployTaskPromise,message:'部署中...'}">
+  <div class="pull-right">
+
+    <div ng-if="ipmac.isDPIUpgrading"><p class="warning pull-right"><br/>(DPI设备升级中，无法部署)</p></div>
+  </div>
+  <div class="clearfix"></div>
+  <!--<hr class="hr-small-margin">-->
+
+  <div class="panel panel-lg">
+    <div class="panel-header panel-header-border">
+      <span class="panel-header-title">IP/MAC绑定处理规则</span>
+      <button id="rule-ipmac_button_enterEdit" class="btn btn-default pull-right" ng-click="ipmac.editIPMAC(dtable.table)"
+              style="margin-bottom: 10px;" ng-show="!ipmac.isEditing" setting-privilege   privilege-name="RULE_IP_MAC"  privilege-handle="hidden"><i
+        class="fa fa-pencil icon-left"></i>编辑
+      </button>
+      <button id="rule-ipmac_button_cancelEdit" class="btn btn-default pull-right" ng-click="ipmac.cancelEdit()"
+              style="margin-bottom: 10px; margin-left: 10px;" ng-show="ipmac.isEditing"><i
+        class="fa fa-remove icon-left text-red"></i>取消编辑
+      </button>
+      <button id="rule-ipmac_button_confirmEdit" class="btn btn-default pull-right" ng-disabled="dtable.table.length < 1"  ng-click="ipmac.confirmEdit(dtable.table)"
+               style="margin-bottom: 10px; margin-left: 10px;"
+              ng-show="ipmac.isEditing"><i class="fa fa-check icon-left text-lime"></i>确认并{{ipmac.ipmac.lockedType ===
+        "DEPLOYED"? '重新' : ''}}部署
+      </button>
+    </div>
+
+    <div class="panel-body panel-body-light">
+      <div class="row">
+        <div class="col-xs-4">
+          <div class="margin-lg">
+            <span>IP/MAC地址绑定</span>
+            <switch-toggle status="ipmac.switchStatus"
+                           disabled="!ipmac.isEditing"
+                           change="dtable.enableIpmac=!dtable.enableIpmac; ipmac.selectNone(dtable, dtable.enableIpmac); ipmac.validateBindingTable(dtable.table); ipmac.enabledUnknowDeviceMonite = dtable.enableIpmac?ipmac.enabledUnknowDeviceMonite:false; ipmac.selectAll(dtable, dtable.enableIpmac); ipmac.validateBindingTable(dtable.table);">
+            </switch-toggle>
+            <!--<span class="toggle-container" style="padding-left: 10px; width: 100px; height: 40px">
+              <div class="toggle-bg toggle-alternate" ng-class="{true: 'on', false: 'off'}[dtable.enableIpmac]">
+                <label
+                  ng-class="{true: 'on', false: 'off'}[dtable.enableIpmac]">{{dtable.enableIpmac? '开启' : '关闭'}}</label>
+                <input id="rule-ipmac_checkbox" type="checkbox" name="toggle" ng-disabled="!ipmac.isEditing"
+                       ng-model="dtable.enableIpmac"
+                       ng-click="ipmac.selectNone(dtable, dtable.enableIpmac); ipmac.validateBindingTable(dtable.table); ipmac.enabledUnknowDeviceMonite = dtable.enableIpmac?ipmac.enabledUnknowDeviceMonite:false; ipmac.selectAll(dtable, dtable.enableIpmac); ipmac.validateBindingTable(dtable.table);">
+                <span class="switch" ng-class="{true: 'on', false: 'off'}[dtable.enableIpmac]"></span>
+              </div>
+            </span>-->
+            <span style="font-size:0.9em" ng-if="dtable.enableIpmac&&ipmac.isEditing">(关闭该选项将关闭其他所有IP/MAC绑定)</span>
+          </div>
+          <div ng-if="ipmac.switchStatus" id="ipmac_action_container">
+            <span ng-show="ipmac.isEditing">请选择当MAC地址不一致时的处理措施:</span>
+            <span ng-show="!ipmac.isEditing">当MAC地址不一致时的处理措施:</span>
+            <div style="margin-top: 20px;;">
+              <span>
+                <label class="label-setting-lime-border" id="rule-ipmac_radio_reject_label">
+                  <input id="rule-ipmac_radio_reject" type="radio" class="input-setting-lime-border"
+                         ng-model="ipmac.ipmac.ipMacAction" value="REJECTBOTH" ng-disabled="!ipmac.isEditing"/>
+                  <span><i class="fa fa-ban icon-left"></i>阻断</span>
+                </label>
+              </span>
+              <span>
+                <label class="label-setting-lime-border" id="rule-ipmac_radio_deny_label">
+                  <input id="rule-ipmac_radio_deny" type="radio" class="input-setting-lime-border"
+                         ng-model="ipmac.ipmac.ipMacAction" value="DROP" ng-disabled="!ipmac.isEditing"/>
+                  <span><i class="fa fa-remove icon-left"></i>丢弃</span>
+                </label>
+              </span>
+              <span>
+                <label class="label-setting-lime-border" id="rule-ipmac_radio_alert_label">
+                  <input id="rule-ipmac_radio_alert" type="radio" class="input-setting-lime-border"
+                         ng-model="ipmac.ipmac.ipMacAction" value="ALERT" ng-disabled="!ipmac.isEditing"/>
+                  <span><i class="fa fa-exclamation-triangle icon-left"></i>警告</span>
+                </label>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="margin-lg">
+            <span>未知设备接入监控:</span>
+            <switch-toggle status="ipmac.enabledUnknowDeviceMonite"
+                           disabled="!ipmac.isEditing"
+                           change="dtable.enableIpmac=ipmac.enabledUnknowDeviceMonite?true:dtable.enableIpmac; ipmac.selectAll(dtable, ipmac.enabledUnknowDeviceMonite); ipmac.validateBindingTable(dtable.table);">
+            </switch-toggle>
+            <!--<span class="toggle-container" style="padding-left: 10px; width: 100px; height: 40px">
+              <div class="toggle-bg toggle-alternate"
+                   ng-class="{true: 'on', false: 'off'}[ipmac.enabledUnknowDeviceMonite]">
+                <label ng-class="{true: 'on', false: 'off'}[ipmac.enabledUnknowDeviceMonite]">{{ipmac.enabledUnknowDeviceMonite? '开启' : '关闭'}}</label>
+                <input id="rule-ipmac_unknowndevice_checkbox" type="checkbox" name="toggle" ng-disabled="!ipmac.isEditing"
+                       ng-model="ipmac.enabledUnknowDeviceMonite"
+                       ng-click="dtable.enableIpmac=ipmac.enabledUnknowDeviceMonite?true:dtable.enableIpmac; ipmac.selectAll(dtable, ipmac.enabledUnknowDeviceMonite); ipmac.validateBindingTable(dtable.table);">
+                <span class="switch" ng-class="{true: 'on', false: 'off'}[ipmac.enabledUnknowDeviceMonite]"></span>
+              </div>
+            </span>-->
+            <br>
+            <span style="font-size:0.9em" ng-if="!ipmac.enabledUnknowDeviceMonite&&ipmac.isEditing">(开启该选项将开启所有设备的IP/MAC绑定)</span>
+          </div>
+          <div ng-if="ipmac.enabledUnknowDeviceMonite">
+            <span ng-show="ipmac.isEditing">请选择当未知设备接入时的处理措施:</span>
+            <span ng-show="!ipmac.isEditing">当未知设备接入时的处理措施:</span>
+            <div style="margin-top: 20px;;">
+              <span>
+                <label class="label-setting-lime-border" id="rule-ipmac_radio_rejectboth_label">
+                  <input id="rule-ipmac_radio_rejectboth" type="radio" class="input-setting-lime-border"
+                         ng-model="ipmac.unknownDeviceAction" value="REJECTBOTH" ng-disabled="!ipmac.isEditing"/>
+                  <span><i class="fa fa-ban icon-left"></i>阻断</span>
+                </label>
+              </span>
+              <span>
+                <label class="label-setting-lime-border" id="rule-ipmac_radio_deny_label">
+                  <input id="rule-ipmac_radio_deny" type="radio" class="input-setting-lime-border"
+                         ng-model="ipmac.unknownDeviceAction" value="DROP" ng-disabled="!ipmac.isEditing"/>
+                  <span><i class="fa fa-remove icon-left"></i>丢弃</span>
+                </label>
+              </span>
+              <span>
+                <label class="label-setting-lime-border" id="rule-ipmac_radio_alert_label">
+                  <input id="rule-ipmac_radio_alert" type="radio" class="input-setting-lime-border"
+                         ng-model="ipmac.unknownDeviceAction" value="ALERT" ng-disabled="!ipmac.isEditing"/>
+                  <span><i class="fa fa-exclamation-triangle icon-left"></i>警告</span>
+                </label>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="margin-lg">
+            <span>ARP欺骗防护:</span>
+            <switch-toggle status="ipmac.enableArpAntiDeception"
+                           disabled="!ipmac.isEditing || dtable.table.length < 1"
+                           change="dtable.enableIpmac=ipmac.enableArpAntiDeception?true:dtable.enableIpmac; ipmac.selectAll(dtable, ipmac.enableArpAntiDeception); ipmac.validateBindingTable(dtable.table);">
+            </switch-toggle>
+            <!--<span class="toggle-container" style="padding-left: 10px; width: 100px; height: 40px">
+              <div class="toggle-bg toggle-alternate"
+                   ng-class="{true: 'on', false: 'off'}[ipmac.enableArpAntiDeception]">
+                <label ng-class="{true: 'on', false: 'off'}[ipmac.enableArpAntiDeception]">{{ipmac.enableArpAntiDeception? '开启' : '关闭'}}</label>
+                <input id="rule-ipmac_arpAntiDeception_checkbox" type="checkbox" name="toggle" ng-disabled="!ipmac.isEditing"
+                       ng-model="ipmac.enableArpAntiDeception"
+                       ng-click="dtable.enableIpmac=ipmac.enableArpAntiDeception?true:dtable.enableIpmac; ipmac.selectAll(dtable, ipmac.enableArpAntiDeception); ipmac.validateBindingTable(dtable.table);">
+                <span class="switch" ng-class="{true: 'on', false: 'off'}[ipmac.enableArpAntiDeception]"></span>
+              </div>
+            </span>-->
+            <br>
+            <span style="font-size:0.9em" ng-if="!ipmac.enableArpAntiDeception&&ipmac.isEditing">(开启该选项将开启所有设备的IP/MAC绑定)</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <hr>
+        <div class="spacing-small"></div>
+        <dtable>
+          <ipmac-table></ipmac-table>
+        </dtable>
+      </div>
+    </div>
+
+  </div>
+
+
+

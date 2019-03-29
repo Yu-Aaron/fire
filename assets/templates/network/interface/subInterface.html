@@ -1,0 +1,140 @@
+<div id="sub-busy-container" cg-busy="{promise:configPromise,message:'正在保存...'}" global-events>
+    <div class="modal-header">
+        <h3 class="modal-header-title">子接口配置</h3>
+    </div>
+
+    <div class="modal-body modal-interface">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <span>绑定接口：</span>
+                    </div>
+
+                    <div class="col-xs-9">
+                        <select id="network_interface-sub_subEthInterfaceName"
+                                class="select-styled" ng-init="setDefaultValue('eth0')"
+                                ng-disabled="!isEditing||!isNew" ng-change="setDefaultValue(interfaceData.subEthInterfaceName)"
+                                ng-model="interfaceData.subEthInterfaceName"
+                                ng-options="interface for interface in interfaceNames">
+                        </select>
+
+                        <div class="input-alert-error"
+                             ng-show="!interfaceData.subEthInterfaceName"><span>没有可用的绑定接口</span></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <span>子接口索引号：</span>
+                    </div>
+
+                    <div class="col-xs-9">
+                        <input id="network_interface-sub_subIndex" ng-model="interfaceData.subIndex"
+                               placeholder="0-253" maxlength="6"
+                               type="text" ng-disabled="!isEditing||!isNew" ng-change="checkNameVal()">
+
+                        <div class="input-alert-error"
+                             ng-show="isEditing && error.interfaceName"><span>该子接口索引号已使用，请更换子接口索引号</span></div>
+                        <div class="input-alert-error" ng-show="isEditing && error.subIndex"><span>请输入有效的子接口索引号</span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="hr-small-margin">
+                <h4>接口IP</h4>
+
+                <div class="row hide">
+                    <div class="col-xs-3">
+                        <label>
+                            <input id="network_interface-sub_ipType_dhcp" custom-radio type="radio" ng-value=1
+                                   ng-model="interfaceData.ipType"
+                                   ng-change="validateIpType()"
+                                  ng-disabled=true /><span>DHCP</span>
+                          <!-- ng-disabled="!isEditing"  目前暂时屏蔽dhcp,需要dpi后续功能开发完成后在实现-->
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <label>
+                            <input id="network_interface-sub_ipType_static" custom-radio type="radio" ng-value=0
+                                   ng-model="interfaceData.ipType"
+                                   ng-change="validateIpType()"
+                                   ng-disabled="!isEditing"/><span>自定义</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <span>IP地址/掩码：</span>
+                    </div>
+                    <div class="col-xs-9">
+                        <input id="network_interface-sub_ipAddressMask" style="width: 200px;" type="text"
+                               ng-model="interfaceData.ipAddressMask" ng-change="validateIpMask()"
+                               ng-disabled="!isEditing || interfaceData.ipType===1"
+                               placeholder="192.168.1.2/255.255.255.0"/>
+
+                        <div class="input-alert-error"
+                             ng-show="isEditing && interfaceData.ipType===0 && error.ipAddressMask">
+                            <span>请输入有效的IP地址/掩码</span></div>
+                    </div>
+                </div>
+
+                <hr class="hr-small-margin">
+                <h4 class="clearfix" ng-init="expanded=true" ng-click="expanded=!expanded;">管理访问
+                    <i class="fa pull-right" aria-hidden="true"
+                       ng-class="{false: 'fa-angle-double-up', true: 'fa-angle-double-down'}[expanded]"></i>
+                </h4>
+
+                <div class="row" collapse="expanded">
+                    <div class="col-xs-3">
+                        <label>
+                            <input id="network_interface-sub_ssh" custom-checkbox name="ssh" type="checkbox"
+                                   ng-value="interfaceData.ssh"
+                                   ng-model="interfaceData.ssh"
+                                   ng-disabled="!isEditing"/><span>ssh</span>
+                        </label>
+                    </div>
+                    <div class="col-xs-3">
+                        <label>
+                            <input id="network_interface-sub_https" custom-checkbox name="https" type="checkbox"
+                                   ng-value="interfaceData.https"
+                                   ng-model="interfaceData.https"
+                                   ng-disabled="!isEditing"/><span>https</span>
+                        </label>
+                    </div>
+                  <!--
+                    <div class="col-xs-3">
+                        <label>
+                            <input id="network_interface-sub_snmp" custom-checkbox name="snmp" type="checkbox"
+                                   ng-value="interfaceData.snmp"
+                                   ng-model="interfaceData.snmp"
+                                   ng-disabled="!isEditing"/><span>snmp</span>
+                        </label>
+                    </div>
+                    -->
+                    <div class="col-xs-3">
+                        <label>
+                            <input id="network_interface-sub_ping" custom-checkbox name="ping" type="checkbox"
+                                   ng-value="interfaceData.ping"
+                                   ng-model="interfaceData.ping"
+                                   ng-disabled="!isEditing"/><span>ping</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <a id="network_interface-sub_cancel" ng-show="isEditing" class="btn btn-default pull-left"
+           ng-click="cancel()"><i
+                class="fa fa-times icon-left"></i>取消</a>
+        <a id="network_interface-sub_ok" ng-show="isEditing" class="btn btn-default pull-right" ng-click="ok()"
+           ng-disabled="!interfaceData.subEthInterfaceName||error.interfaceName||error.subIndex||error.ipAddressMask"><i
+                class="fa fa-check text-lime icon-left"></i>保存</a>
+        <a id="network_interface-sub_close" ng-show="!isEditing" class="btn btn-default pull-middle"
+           ng-click="cancel()"><i
+                class="fa fa-times icon-left"></i>关闭</a>
+    </div>
+</div>

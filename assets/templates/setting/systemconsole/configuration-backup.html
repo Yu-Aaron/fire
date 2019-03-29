@@ -1,0 +1,76 @@
+<div class="configuration-backup-contariner" cg-busy="{promise:$root.mwConfBackUpPromise,message:'备份处理中...'}">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-lg">
+        <div class="panel-header panel-header-border">
+          <h5 class="panel-header-title">{{backup.isMW ? $root.PLATFORM_SHORT_NAME + '配置备份' : '安全设备配置备份'}}</h5>
+        </div>
+        <div class="panel-body panel-dashboard">
+          <div class="row text-right top-bar-height-default">
+            <div class="col-xs-2">
+              <div class="panel-dashboard-title auto-backup-title">自动备份</div>
+              <span class="toggle-bg toggle-alternate {{backup.disabled ? 'off' : 'on'}} auto-backup-toggle">
+                                <label
+                                  class="{{backup.disabled ? 'off' : 'on'}}">{{backup.disabled ? '关闭':'开启'}}</label>
+                                <div ng-if="backup.disabled">
+                                    <input type="radio" name="toggle" value=1 ng-change="backup.switchBackUpStrategy(1)"
+                                           ng-model="backup.disabled">
+                                    <input type="radio" name="toggle" value=0 ng-change="backup.switchBackUpStrategy(0)"
+                                           ng-model="backup.disabled">
+                                </div>
+                                <div ng-if="!backup.disabled">
+                                    <input type="radio" name="toggle" value=0 ng-change="backup.switchBackUpStrategy(0)"
+                                           ng-model="backup.disabled">
+                                    <input type="radio" name="toggle" value=1 ng-change="backup.switchBackUpStrategy(1)"
+                                           ng-model="backup.disabled">
+                                </div>
+                                <span class="switch {{backup.disabled ? 'off' : 'on'}}"></span>
+                            </span>
+            </div>
+            <div class="col-xs-3">
+              <p ng-if="!backup.disabled">*开启自动备份后系统每周执行一次自动备份</p>
+            </div>
+            <div class="col-xs-6" ng-if="backup.isMW">
+              <div class="margin-top-default">
+                <a class="btn btn-default" style="font-size:15px;margin-left:10px" ng-click="backup.doConfBackUp()"
+                   ng-disabled="$root.mwBackingUp">&nbsp;<i class="fa fa-recycle icon-left"></i> 手动备份&nbsp;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-lg">
+        <div class="panel-header panel-header-border">
+          <h5 class="panel-header-title">{{backup.isMW ? $root.PLATFORM_SHORT_NAME + '备份文件' : '安全设备'}}</h5>
+        </div>
+        <div class="panel-body panel-body-light">
+          <dtable ng-if="backup.isMW">
+            <conf-backup-mw-table></conf-backup-mw-table>
+          </dtable>
+          <dtable ng-if="!backup.isMW">
+            <conf-backup-device-table></conf-backup-device-table>
+          </dtable>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/ng-template" id="conf-backup-mw-collection-confirmation.html">
+    <div class="modal-header">
+      <h3 class="modal-header-title">配置信息备份</h3>
+    </div>
+    <div class="modal-body">
+      {{backup.isMW ? $root.PLATFORM_SHORT_NAME : '安全设备'}}配置信息备份将会持续较长时间，确认开始备份？
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default pull-right" ng-click="ok()"><i class="fa fa-check text-lime icon-left"></i>确定
+      </button>
+      <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times-circle icon-left"></i>取消
+      </button>
+    </div>
+  </script>
+</div>

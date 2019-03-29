@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">{{title}}</h3>
+</div>
+
+<div class="modal-body">
+  <div id="system_device_reset_modal_container" class="modal-container">
+    <p>{{info}}</p>
+    <div>
+    	<span ng-repeat="device in deviceList">
+    		{{device.name}} &nbsp;
+    	</span>
+    </div>
+    <br/>
+    {{confirmInfo}}
+  </div>
+</div>
+
+<div id="system_device_reset_modal_footer" class="modal-footer">
+  <button id="system_device_modal_reset_cancel_button" class="btn btn-default pull-left" ng-click="cancel()"><i
+    class="fa fa-close icon-left"></i>取消
+  </button>
+  <button id="system_device_modal_reset_done_button" class="btn btn-default" ng-click="done()"><i
+    class="fa fa-check icon-left"></i>确定
+  </button>
+</div>

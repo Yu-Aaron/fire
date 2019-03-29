@@ -1,0 +1,204 @@
+<div class="detail-page-wrapper content-scrollable bg-gray-85">
+  <div class="detail-page-body">
+    <section id="device-info">
+      <div class="detail-information detail-panel">
+        <div class="detail-information-content">
+          <div class="row">
+            <div class="col-xs-4 col-md-4">
+              <div class="panel">
+                <div class="panel-heading">
+                  <span><i class="fa fa-picture-o icon-left"></i>设备图</span>
+                </div>
+                <div class="panel-body text-center">
+                  <div class="panel-body-device text-center" ng-if="ucddetail.device.category === 'SECURITY_DEVICE'">
+                    <div class="device-image"
+                         ng-style="{'background-image': 'url(/images/devices/security/' + ucddetail.device._iconName + '-icon.png)'}"
+                         ng-if="!ucddetail.isEdited"></div>
+                    <div class="device-image"
+                         ng-style="{'background-image': 'url(/images/devices/security/' + ucddetail.editedInfo.iconType + '-icon.png)'}"
+                         ng-if="ucddetail.isEdited"></div>
+                  </div>
+                  <div class="panel-body-device text-center" ng-if="ucddetail.device.category !== 'SECURITY_DEVICE'">
+                    <div class="device-image"
+                         ng-style="{'background-image': 'url(/images/' + ucddetail.device._iconName + '-icon.png)'}"
+                         ng-if="!ucddetail.isEdited"></div>
+                    <div class="device-image"
+                         ng-style="{'background-image': 'url(/images/' + ucddetail.editedInfo.iconType + '-icon.png)'}"
+                         ng-if="ucddetail.isEdited"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-4 col-md-4">
+              <div class="panel">
+                <div class="panel-heading">
+                  <span><i class="fa fa-folder-open icon-left"></i>设备规格</span>
+                  <div privilege class="pull-right btn-top-pull-right-margin-back">
+                    <button class="btn btn-default btn-sm pull-right" ng-hide="ucddetail.isEdited"
+                            ng-disabled="ucddetail.isIPEdited" ng-click="ucddetail.editDevice()"><i
+                      class="fa fa-pencil-square-o"></i></button>
+                    <button class="btn btn-default btn-sm pull-right" ng-show="ucddetail.isEdited"
+                            ng-disabled="ucddetail.serialError || ucddetail.nameError || ucddetail.modelError"
+                            ng-click="ucddetail.editDone()"><i class="fa fa-check text-lime"></i></button>
+                    <button class="btn btn-default btn-sm margin-right-default pull-right" ng-show="ucddetail.isEdited"
+                            ng-click="ucddetail.editCancel()"><i class="fa fa-remove"></i></button>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title"><span class="text-red" ng-show="ucddetail.isEdited">&#42;</span>设备名称
+                        </h5>
+                        <p ng-hide="ucddetail.isEdited">{{ucddetail.device.name || '未知'}}</p>
+                        <input type="text" ng-show="ucddetail.isEdited" ng-model="ucddetail.editedInfo.name"
+                               ng-change="ucddetail.validateDevice()" maxlength="255" size="15">
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">设备序列号</h5>
+                        <p ng-hide="ucddetail.isEdited">{{ucddetail.device.serialNumber || '未知'}}</p>
+                        <input type="text" ng-show="ucddetail.isEdited" ng-model="ucddetail.editedInfo.serialNumber"
+                               ng-change="ucddetail.serialChange()" maxlength="255" size="15">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title"><span class="text-red" ng-show="ucddetail.isEdited">&#42;</span>设备型号
+                        </h5>
+                        <p ng-hide="ucddetail.isEdited">{{ucddetail.device._model_name || '未知' | deviceModel}}</p>
+                        <div class="select-styled input-stacked"
+                             ng-show="ucddetail.isEdited && ucddetail.editedInfo.category != 'SECURITY_DEVICE'">
+                          <div class="input-stacked-wrap" ng-show="ucddetail.newModel">
+                            <input class="form-control" ng-show="ucddetail.newModel" type="text" placeholder="请输入设备型号名称"
+                                   ng-model="ucddetail.editedInfo._model_name" ng-change="ucddetail.validateDevice()"
+                                   maxlength="255">
+                          </div>
+                          <select class="form-control" ng-model="ucddetail.editedInfo.modelId"
+                                  ng-options="item.modelId as (item.model_name + (item.model && (item.model !== item.model_name) ? ' / ' + item.model : '')) for item in ucddetail.forms.models"
+                                  ng-change="ucddetail.modelChange(ucddetail.editedInfo.modelId)">
+                          </select>
+                        </div>
+                        <div ng-show="ucddetail.isEdited && ucddetail.editedInfo.category == 'SECURITY_DEVICE'">
+                          {{ucddetail.editedInfo._model_name}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">设备厂商</h5>
+                        <p ng-hide="ucddetail.isEdited">{{ucddetail.device.make || '未知'}}</p>
+                        <p ng-show="ucddetail.isEdited && !ucddetail.newModel">{{ucddetail.editedInfo.make || '未知'}}</p>
+                        <input type="text" ng-show="ucddetail.isEdited && ucddetail.newModel"
+                               ng-model="ucddetail.editedInfo.make" ng-change="ucddetail.validateDevice()"
+                               maxlength="255" size="15">
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item" ng-hide="true">
+                        <h5 class="detail-page-list-item-title">设备版本</h5>
+                        <p>{{ucddetail.device.version || '未知'}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">更新时间</h5>
+                        <p>{{ucddetail.device.updatedAt || '未知' | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-4 col-md-4">
+              <div class="panel" ng-hide="true">
+                <div class="panel-heading">
+                  <span><i class="fa fa-cogs icon-left"></i>设备设置</span>
+                </div>
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">安装时间</h5>
+                        <p>{{ucddetail.device.installedAt | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">更新时间</h5>
+                        <p>{{ucddetail.device.updatedAt | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="detail-page-list-item" ng-hide="true">
+                    <h5 class="detail-page-list-item-title">分区</h5>
+                    <p ng-hide="ucddetail.isEdited">{{ucddetail.device._zoneNames | deviceZoneFilter}}</p>
+                    <select class="form-control" ng-show="ucddetail.isEdited" ng-model="ucddetail.editedInfo.zone"
+                            ng-options="zone for zone in ucddetail.forms.setting.zones">
+                      <option value="">-- 请选择分区 --</option>
+                    </select>
+                  </div>
+                  <div class="detail-page-list-item" ng-hide="true">
+                    <h5 class="detail-page-list-item-title">权重</h5>
+                    <p ng-hide="ucddetail.isEdited">{{ucddetail.device.priority}}</p>
+                    <select class="form-control" ng-show="ucddetail.isEdited" ng-model="ucddetail.editedInfo.priority"
+                            ng-options="priority for priority in ucddetail.forms.setting.priorities"></select>
+                  </div>
+                </div>
+              </div>
+              <div class="panel" ng-show="ucddetail.device.nodes[0].type === 'ROUTER'">
+                <div class="panel-heading">
+                  <span><i class="fa fa-cogs icon-left"></i>设备端口</span>
+                  <div privilege class="pull-right btn-top-pull-right-margin-back">
+                    <button class="btn btn-default btn-sm pull-right" ng-hide="ucddetail.isIPEdited"
+                            ng-disabled="ucddetail.isEdited" ng-click="ucddetail.editIP()"><i
+                      class="fa fa-pencil-square-o"></i></button>
+                    <button class="btn btn-default btn-sm pull-right" ng-show="ucddetail.isIPEdited"
+                            ng-disabled="ucddetail.invalidIp || ucddetail.invalidMac" ng-click="ucddetail.editIPDone()">
+                      <i class="fa fa-check text-lime"></i></button>
+                    <button class="btn btn-default btn-sm margin-right-default pull-right"
+                            ng-show="ucddetail.isIPEdited" ng-click="ucddetail.editIPCancel()"><i
+                      class="fa fa-remove"></i></button>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">IP地址</h5>
+                        <p ng-hide="ucddetail.isIPEdited">
+                          <span ng-repeat="port in ucddetail.device.devicePorts | filter:search.isMgmtPort=true">{{port.portIp || '未知'}} </span>
+                        </p>
+                        <input type="text" ng-show="ucddetail.isIPEdited" ng-model="ucddetail.editedInfo.ip"
+                               ng-change="ucddetail.deviceIpChange()" maxlength="255" size="15"><span class="text-red"
+                                                                                                      ng-show="ucddetail.isIPEdited && ucddetail.invalidIp"> 请输入合法IP地址</span>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">MAC地址</h5>
+                        <p ng-hide="ucddetail.isIPEdited">
+                          <span ng-repeat="port in ucddetail.device.devicePorts | filter:search.isMgmtPort=true">{{port.mac || '未知'}} </span>
+                        </p>
+                        <input type="text" ng-show="ucddetail.isIPEdited" ng-model="ucddetail.editedInfo.mac"
+                               ng-change="ucddetail.deviceMacChange()" maxlength="255" size="15"><span class="text-red"
+                                                                                                       ng-show="ucddetail.isIPEdited && ucddetail.invalidMac"> 请输入合法MAC地址</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

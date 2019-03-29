@@ -1,0 +1,52 @@
+<div>
+  <div class="pull-left text-orange table-heading-remark">
+    （注意：每种类型备份文件最多只保留5个，更早的文件会被自动删除）
+  </div>
+  <div class="pull-right margin-bottom-default">
+    <a class="btn btn-default" ng-click="dtable.deleteBackUpFiles(dtable.selectedItems);$event.stopPropagation();">
+      &nbsp;<i class="fa fa-trash-o icon-left"></i> 批量删除&nbsp;</a>
+  </div>
+  <table class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th class="text-center"><input type="checkbox" ng-model="dtable.selectAllValue" ng-click="dtable.selectAll()"/>
+      </th>
+      <th>备份文件类型</th>
+      <th>最近备份时间</th>
+      <th order-by="directory">备份文件</th>
+      <th>
+        <span>&nbsp;</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="file in dtable.table">
+      <td class="text-center"><input type="checkbox" id="selected-item-{{$index}}"
+                                     ng-checked="dtable.selectedItems[file.backupFileInfoId]"
+                                     ng-model="dtable.selectedItems[file.backupFileInfoId]"/></td>
+      <td>{{(file.deviceId|convertBackType) || '无'}}</td>
+      <td>{{(file.backupAt | date:'yyyy-MM-dd HH:mm:ss') || '无'}}</td>
+      <td>{{file.directory || '无'}}</td>
+      <td>
+        <a class="btn btn-default"
+           ng-click="dtable.deleteBackUpFiles([file.backupFileInfoId]);$event.stopPropagation();">&nbsp;<i
+          class="fa fa-trash-o icon-left"></i> 删除&nbsp;</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <script type="text/ng-template" id="conf-backup-mw-delete-confirmation.html">
+    <div class="modal-header">
+      <h3 class="modal-header-title">删除配置信息备份</h3>
+    </div>
+    <div class="modal-body">
+      确定删除选中的备份文件？
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default pull-right" ng-click="ok()"><i class="fa fa-check text-lime icon-left"></i>确定
+      </button>
+      <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times-circle icon-left"></i>取消
+      </button>
+    </div>
+  </script>
+</div>

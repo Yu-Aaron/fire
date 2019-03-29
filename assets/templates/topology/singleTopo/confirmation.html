@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">改变当前使用网络拓扑</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body-no-frame">
+  <br>
+  <div class="modal-container">
+    <div ng-if="hasProcessingLearn">
+      <b>系统正在学习规则，更改使用拓扑将会终止规则学习。<br>
+        你确定要改变当前使用中的拓扑？</b>
+    </div>
+    <div ng-if="!hasProcessingLearn">
+      <p>你确定要改变当前使用中的拓扑？</p>
+    </div>
+    <br>
+    <p class="modal-comment"><i class="fa fa-exclamation-triangle"></i> 改变当前使用拓扑，所有分析，评估，与审计也会跟随拓扑改变。</p>
+  </div>
+  <br>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times icon-left"></i>不改变</button>
+  <button class="btn btn-default" ng-click="confirm()"><i class="fa fa-check text-green icon-left"></i>改变</button>
+</div>

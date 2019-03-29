@@ -1,0 +1,5 @@
+<div class="toggle-bg toggle-alternate" ng-class="{'on': innerStatus, 'off': !innerStatus, disabled: disabled}">
+  <label ng-class="{true: 'on', false: 'off'}[innerStatus]">{{innerStatus ? onLabel : offLabel}}</label>
+  <input type="checkbox" name="toggle" ng-model="innerStatus" ng-change="changeAction()" ng-disabled="disabled">
+  <span class="switch" ng-class="{true: 'on', false: 'off'}[innerStatus]"></span>
+</div>

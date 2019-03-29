@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">{{title}}</h3>
+</div>
+
+<div id="system_device_upgrade_modal_container" class="modal-body">
+  <div class="modal-container">
+    <p>DPI设备升级时，请事先通知其他用户，以确保升级过程中不会有信息丢失。</p>
+    <br/>
+    <p>{{confirmInfo}}</p>
+  </div>
+</div>
+
+<div id="system_device_upgrade_modal_footer" class="modal-footer">
+  <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-close icon-left"></i>取消</button>
+  <button class="btn btn-default" ng-click="done()"><i class="fa fa-check icon-left"></i>确定</button>
+</div>

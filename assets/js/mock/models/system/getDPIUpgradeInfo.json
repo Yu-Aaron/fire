@@ -1,0 +1,23 @@
+[
+    {
+        "upgradeImageId": "42af2f2a-61c7-40f5-a743-c17e3c0199e9",
+        "deviceId": "3f700d23-280c-4dd0-980c-962a47814760",
+        "state": "NONE",
+        "percentage": 0,
+        "error": false
+    },
+    {
+        "upgradeImageId": "407f914a-b817-4bb3-8286-2ceb8d2fddec",
+        "deviceId": "92b1a79c-c98e-4224-a505-a1763f77c814",
+        "state": "NONE",
+        "percentage": 0,
+        "error": false
+    },
+    {
+        "upgradeImageId": "7644026d-a31c-48a3-8cba-e6b8bc6742bb",
+        "deviceId": "c68b3c7f-adc0-4b53-a044-3daad00a2ecf",
+        "state": "NONE",
+        "percentage": 0,
+        "error": false
+    }
+]

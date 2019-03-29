@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12081) - http://www.bohemiancoding.com/sketch -->
+    <title>side_nav_icons_dashboard</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="49.7606383%" y1="34.4954545%" x2="49.8228723%" y2="69.8833333%" id="linearGradient-1">
+            <stop stop-color="#90D54A" offset="0%"></stop>
+            <stop stop-color="#85C948" offset="8.002409%"></stop>
+            <stop stop-color="#6DB042" offset="28.5%"></stop>
+            <stop stop-color="#5FA13F" offset="47.23%"></stop>
+            <stop stop-color="#5A9C3E" offset="62.44%"></stop>
+            <stop stop-color="#59963E" offset="67.97%"></stop>
+            <stop stop-color="#588B3D" offset="82.77%"></stop>
+            <stop stop-color="#57883D" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Side-Nav" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="side_nav_icons_dashboard" sketch:type="MSArtboardGroup">
+            <g sketch:type="MSLayerGroup" transform="translate(30.000000, 33.000000)">
+                <rect id="Rectangle-path" fill="#CCCCCC" sketch:type="MSShapeGroup" x="8.2" y="10.5" width="5.125" height="21.6176471"></rect>
+                <rect id="Rectangle-path" fill="#CCCCCC" sketch:type="MSShapeGroup" x="18.45" y="17.0882353" width="5.125" height="15.2352941"></rect>
+                <rect id="Rectangle-path" fill="#CCCCCC" sketch:type="MSShapeGroup" x="28.7" y="5.97058824" width="5.125" height="26.3529412"></rect>
+                <path d="M1.845,26.3529412 L0.82,24.5 L8.815,18.7352941 L14.555,23.0588235 L25.215,12.7647059 L31.57,20.1764706 L35.055,17.9117647 L39.36,21.8235294 L38.13,23.4705882 L34.85,20.3823529 L31.16,22.8529412 L25.215,15.6470588 L14.555,25.7352941 L8.815,21.2058824 L1.845,26.3529412 Z" id="Shape" fill="url(#linearGradient-1)" sketch:type="MSShapeGroup"></path>
+                <path d="M0.82,1.64705882 L0.82,33.3529412 L38.335,33.3529412" id="Shape" stroke="#CCCCCC" stroke-width="2.57352941" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

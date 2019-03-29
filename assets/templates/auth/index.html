@@ -1,0 +1,93 @@
+<div class="page-login">
+  <div class="page-login-content" id="jumbotron">
+    <div class="login-bg" id="jumbotron-content">
+
+    </div>
+
+    <!-- LOGIN HEADER -->
+    <div class="login-header">
+      <img class="login-header-logo" src="/images/auth/logo.png" width="150"/>
+      <ul class="login-header-info">
+        <li>结构安全</li>
+        <li>/</li>
+        <li>本体安全</li>
+        <li>/</li>
+        <li>行为安全</li>
+        <li>/</li>
+        <li>基因安全</li>
+      </ul>
+    </div>
+
+    <!-- LOGIN INPUTS -->
+    <div class="row login-body">
+      <div class="row">
+        <div class="login-logo">
+          <img src="/images/auth/login_logo.png">
+        </div>
+      </div>
+      <div class="row login-form" ng-if="!auth.isIE">
+        <div class="login-panel">
+          <div class="content">
+            <input id="login_text_username" autofocus class="login-input login-input-username" type="text"
+                   placeholder="用户名" ng-model="auth.user.username" ng-keyup="auth.unKeyPress($event.keyCode)" maxlength="64">
+            <i class="icon icon-user login-input-icon login-input-username-icon"></i>
+            <input id="login_text_password" class="login-input login-input-password" type="password" placeholder="登录密码"
+                   ng-model="auth.user.password" ng-keyup="auth.pwKeyPress($event.keyCode)" maxlength="25">
+            <i class="icon icon-code login-input-icon login-input-password-icon"></i>
+          </div>
+          <div class="footer clearfix">
+            <div class="login-captcha">
+              <input id="login_text_verifycode" class="login-input login-input-captcha" type="text" placeholder="验证码"
+                     ng-model="auth.user.verifycode" ng-keyup="auth.pwKeyPress($event.keyCode)" maxlength="4">
+
+              <div class="captcha">
+                <img ng-click="auth.getVerifyCodeImage()" id="img-captcha" height="20" width="60" src="data:image/png;base64,{{auth.imageData}}" title="点击切换">
+                <!--<a id="a-captcha" ng-click="auth.getVerifyCodeImage()">换一张</a>-->
+              </div>
+            </div>
+
+            <input class="checkbox-login" type="checkbox"><span>{{getName('rememberUser')}}</span>
+            <button id="login_button_loginButton" class="btn btn-primary pull-right btn-login"
+                    ng-click="auth.login()">{{getName('loginButton')}} 登录平台<i
+              class="fa fa-chevron-right login-input-submit-icon"></i></button>
+          </div>
+          <div id="login_err_label" class="login-err">{{auth.error}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="login-info" id="login-info">
+      <img src="/images/auth/logo.png" alt="">
+      <p id="typewriter">全面保护企业网络安全<br>APT2.0时代最智能的工业防火墙</p>
+    </div>
+
+    <!-- DOWNLOAD Chrome -->
+    <div class="col-xs-12 text-center" ng-if="auth.isIE">
+      <br>
+      <h3>为保证匡恩网络监测审计平台的最佳体验，请下载使用推荐的Chrome浏览器</h3><br>
+      <a href="http://{{auth.hostname}}/download/ChromeSetup-Chs.zip" class="btn btn-default btn-wider"><i
+        class="fa fa-download text-lime icon-left"></i>下载推荐的浏览器</a>
+    </div>
+  </div>
+
+  <section id="request-result-popup" class="notification">
+    <div id="include_div_requestResult-{{$index}}" ng-repeat="msg in app.messages"
+         class="angular-animate fade-out-right">
+      <alert id="alert_pop_up_message_{{$index}}" type="{{msg.type}}" class="notification_alert"
+             close="app.closeAlert(msg)"
+      >{{msg.content}}
+      </alert>
+    </div>
+  </section>
+  <section style="position: fixed; top: 6px; left: 500px; width: 700px; z-index: 15">
+    <div ng-repeat="smsg in app.stayMessage" class="angular-animate fade-out-right">
+      <alert type="{{smsg.type}}" class="notification_stay_alert"
+             close="app.closeStayAlert(smsg)"
+      >{{smsg.content}}<span ng-if="smsg.ip">({{smsg.ip}})</span></alert>
+    </div>
+  </section>
+
+  <footer class="login-footer">
+    版权所有&nbsp;&nbsp;&nbsp;2013-{{auth.curYear}}&nbsp;&nbsp;&nbsp;匡恩网络保留所有权利&nbsp;&nbsp;&nbsp;智能工业网络安全专家
+  </footer>
+</div>

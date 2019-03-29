@@ -1,0 +1,191 @@
+<h2 class="title-page-main">新建安全设备</h2>
+
+<div class="modal-body-frame">
+  <div class="modal-container">
+    <div class="row">
+      <div class="col-md-6">
+        <form name="form" class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="new-device-name" class="col-md-3 control-label"><span class="text-red">&#42;</span>设备名称</label>
+            <div class="col-md-9">
+              <input name="name" type="text" autofocus class="form-control" id="new-device-name" ng-model="device.name"
+                     ng-change="newDevice.validateDevice()" maxlength="100">
+              <error-msg ng-show="form.name.$dirty" validator="newDevice" obj="device" type="'name'"></error-msg>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-serial" class="col-md-3 control-label"><span
+              class="text-red">&#42;</span>设备序列号</label>
+            <div class="col-md-9">
+              <input name="serial" type="text" class="form-control" id="new-device-serial"
+                     ng-model="device.serialNumber"
+                     ng-change="newDevice.serialNumberChanged(device.serialNumber);newDevice.validateDevice()"
+                     maxlength="255">
+              <error-msg ng-show="form.serial.$dirty" validator="newDevice" obj="device"
+                         type="'serialNumber'"></error-msg>
+            </div>
+          </div>
+          <div class="form-group" ng-hide="true">
+            <label for="new-device-type" class="col-md-3 control-label"><span class="text-red">&#42;</span>设备类型</label>
+            <div class="col-md-9">
+              <div class="select-styled">
+                <select id="new-device-type" class="form-control" ng-init="device.category = 'SECURITY_DEVICE'"
+                        ng-model="device.category" ng-options="type | deviceCategoryFilter for type in forms.category"
+                        disabled></select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-model-name" class="col-md-3 control-label">设备型号</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px">{{simplifyModelName(device.modelname) || '未知'}}</label>
+            </div>
+          </div>
+          <div class="form-group" ng-show="newDevice.newModel && false">
+            <label for="new-device-model" class="col-md-3 control-label">型号</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="new-device-model" ng-show="newDevice.newModel"
+                     ng-model="device.model" ng-change="newDevice.validateDevice()" maxlength="255">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-model-make" class="col-md-3 control-label">设备厂商</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-hide="newDevice.newModel">{{device.modelmake || '未知'}}</label>
+              <input type="text" class="form-control" id="new-device-model-make" ng-show="newDevice.newModel"
+                     ng-model="device.modelmake" maxlength="255">
+            </div>
+          </div>
+          <div class="form-group" ng-hide="true">
+            <label for="new-device-model-protocol" class="col-md-3 control-label">设备协议</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-hide="newDevice.newModel">{{device.modelprotocol || '未知'}}</label>
+              <input type="text" class="form-control" id="new-device-model-protocol" ng-show="newDevice.newModel"
+                     ng-model="device.modelprotocol" maxlength="255">
+            </div>
+          </div>
+          <div class="form-group" ng-hide="true">
+            <label for="new-device-model-version" class="col-md-3 control-label">软件版本</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-hide="newDevice.newModel">{{device.modelversion || '未知'}}</label>
+              <input type="text" class="form-control" id="new-device-model-version" ng-show="newDevice.newModel"
+                     ng-model="device.modelversion" maxlength="255">
+            </div>
+          </div>
+          <div class="form-group" ng-hide="true">
+            <label for="new-device-model-firmware" class="col-md-3 control-label">硬件版本</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-hide="newDevice.newModel">{{device.modelfirmware || '未知'}}</label>
+              <input type="text" class="form-control" id="new-device-model-firmware" ng-show="newDevice.newModel"
+                     ng-model="device.modelfirmware" maxlength="255">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-model-num-of-ports" class="col-md-3 control-label"><span class="text-red"
+                                                                                            ng-show="newDevice.newModel">&#42;</span>非管理端口数量</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-hide="newDevice.newModel">{{device.modelnumofports > 0 ?
+                device.modelnumofports + '个' : '未知'}}</label>
+              <div class="select-styled" ng-show="newDevice.newModel">
+                <select id="new-device-model-num-of-ports" class="form-control" ng-model="device.modelnumofports"
+                        ng-change="newDevice.validateDevice()">
+                  <option>0</option>
+                  <option>2</option>
+                  <option>4</option>
+                  <option>8</option>
+                  <option>16</option>
+                </select>
+                个
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-hide="true">
+            <label for="new-device-model-serial" class="col-md-3 control-label">型号序列</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-hide="newDevice.newModel">{{device.modelserial || '未知'}}</label>
+              <input type="text" class="form-control" id="new-device-model-serial" ng-show="newDevice.newModel"
+                     ng-model="device.modelserial" maxlength="255">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-model-memo" class="col-md-3 control-label">备注</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-hide="newDevice.newModel">{{device.modelmemo || '未知'}}</label>
+              <input type="text" class="form-control" id="new-device-model-memo" ng-show="newDevice.newModel"
+                     ng-model="device.modelmemo" maxlength="255">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-ip" class="col-md-3 control-label"><span
+              class="text-red">&#42;</span>管理端口IP地址</label>
+            <div class="col-md-9">
+              <input name="ip" type="text" class="form-control" id="new-device-ip" ng-model="device.ip"
+                     ng-change="newDevice.validateDevice()" maxlength="255">
+              <error-msg ng-show="form.ip.$dirty" validator="newDevice" obj="device" type="'ip'"></error-msg>
+              <!-- <span class="text-red" ng-show="device.ip && newDevice.invalidIp"> 请输入合法IP地址</span> -->
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-mac" class="col-md-3 control-label">管理端口MAC地址</label>
+            <div class="col-md-9">
+              <input name="mac" type="text" class="form-control" id="new-device-mac" ng-model="device.mac"
+                     ng-change="newDevice.validateDevice()" maxlength="255">
+              <error-msg ng-show="form.mac.$dirty" validator="newDevice" obj="device" type="'mac'"></error-msg>
+              <!-- <span class="text-red" ng-show="device.mac && newDevice.invalidMac"> 请输入合法MAC地址</span> -->
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-working-mode" class="col-md-3 control-label">设备功能模式</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-if="forms.modes.length === 1">{{forms.modes[0].modename}}</label>
+              <label style="margin-top: 7px" ng-if="!forms || !forms.modes || !forms.modes.length">未知</label>
+              <div class="select-styled" ng-if="forms.modes.length > 1">
+                <select id="new-device-working-mode" class="form-control" ng-model="device.mode"
+                        ng-options="item.mode as item.modename for item in forms.modes"
+                        ng-change="newDevice.validateDevice()">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group" ng-show="false">
+            <label for="new-device-hasusb" class="col-md-3 control-label">USB接口</label>
+            <div class="col-md-9">
+              <input type="checkbox" id="new-device-hasusb" ng-model="device.hasUSB"/>
+            </div>
+          </div>
+          <div class="form-group" ng-show="false">
+            <label for="new-device-haswireless" class="col-md-3 control-label">无线网卡</label>
+            <div class="col-md-9">
+              <input type="checkbox" id="new-device-haswireless" ng-model="device.hasWireless"/>
+            </div>
+          </div>
+          <div class="form-group" ng-show="false">
+            <label for="new-device-hasport" class="col-md-3 control-label">网络端口</label>
+            <div class="col-md-9">
+              <input type="checkbox" id="new-device-hasport" ng-model="device.hasPort"/>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        <div class="panel panel-device">
+          <div class="panel-body">
+            <img ng-src="/images/devices/security/{{device.iconType ? device.iconType : 'unknown-device'}}-icon.png"
+                 width="200"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FOOTER -->
+<div class="modal-footer">
+  <a ui-sref="asset.securitydevice({panel: newDevice.backTo})" class="btn btn-default"><i
+    class="fa fa-times icon-left"></i>取消</a>
+  <button id="new-device-confirm" class="btn btn-default" ng-click="newDevice.done()"
+          ng-disabled="newDevice.nameError || newDevice.modelError || newDevice.makeError || newDevice.portsError || newDevice.serialError || newDevice.serialFormatError || newDevice.hasDuplicateSN || newDevice.modeError || newDevice.invalidIp || newDevice.invalidMac || newDevice.hasDuplicateIP || newDevice.hasDuplicateMAC || newDevice.invalidRange">
+    <i class="fa fa-check icon-left" style="color:#76B900"></i>完成
+  </button>
+</div>

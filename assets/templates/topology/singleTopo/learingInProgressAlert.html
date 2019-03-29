@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h3 class="modal-header-title"><i class="fa fa-exclamation-triangle text-red"></i> &nbsp;警告</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body-no-frame">
+  <br>
+  <div class="modal-container">
+    <div>
+      <p>规则学习进行中，编辑拓扑可能会导致错误。</p>
+    </div>
+    <br/>
+    <div ng-if="!hasProcessingLearn">
+      <b>你确定要编辑当前拓扑？</b>
+    </div>
+  </div>
+  <br>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times icon-left"></i>取消</button>
+  <button class="btn btn-default" ng-click="confirm()"><i class="fa fa-check text-green icon-left"></i>确认</button>
+</div>

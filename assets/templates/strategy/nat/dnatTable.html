@@ -1,0 +1,65 @@
+<div>
+    <div class="router-button-container">
+        <a id="strategy_dnat_add" class="btn btn-default" ng-click="dtable.addNew()" setting-privilege
+           privilege-name="STRATEGY_NAT" privilege-require="MIXED" privilege-handle="hidden">
+            <i class="fa fa-file-o fa-after-blue fa-plus-overlay icon-left"></i>新增</a>
+        <a id="strategy_dnat_delete" class="btn btn-default" ng-click="dtable.delete()"
+           ng-disabled="!dtable.table.length" setting-privilege
+           privilege-name="STRATEGY_NAT" privilege-require="MIXED" privilege-handle="hidden">
+            <i class="fa fa-trash-o icon-left"></i>删除</a>
+    </div>
+    <table class="table table-hover icon-hidden">
+        <thead>
+        <tr>
+            <th class="text-center"><input id="selected-item-all" custom-checkbox tri-state-checkbox type="checkbox"
+                                           ng-model="dtable.selectAllValue"
+                                           ng-click="dtable.selectAll()"/>
+            </th>
+            <!--<th>序号</th>-->
+            <th order-by="dnatName">策略名称</th>
+            <th order-by="destinationAddress">目的地址</th>
+            <th order-by="serversApps">服务/应用</th>
+            <th order-by="mappingAddress">映射地址</th>
+            <th order-by="mappingPort">映射端口</th>
+            <th order-by="status">启用状态</th>
+            <th order-by="logs">输出日志</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="dnatData in dtable.table">
+            <td class="text-center"><input id="selected-item-{{$index}}" custom-checkbox type="checkbox"
+                                           ng-click="dtable.selectItem()"
+                                           ng-model="dtable.selectedItems[dnatData.dnatId]"/></td>
+            <!--<td>{{skip + $index + 1}}</td>-->
+            <td>{{dnatData.dnatName}}</td>
+            <td>{{dnatData.destinationAddress}}</td>
+            <td>{{dnatData.serversApps}}</td>
+            <td>{{dnatData.mappingAddress}}</td>
+            <td>{{dnatData.mappingPort}}</td>
+            <td class="switch-toggle-td">
+                <switch-toggle status="dnatData.status" change="dtable.changeStatus(dnatData,'status')"
+                               on-label="开启" id="strategy_dnat-switching_status_{{$index}}"
+                               disabled="isSwitching['status'][dnatData.dnatName]"></switch-toggle>
+                  <span ng-show="isSwitching['status'][dnatData.dnatName]">
+                      <i class="fa fa-spinner fa-spin icon-left"></i>{{switchMsg}}中
+                  </span>
+            </td>
+
+            <td class="switch-toggle-td">
+                <switch-toggle status="dnatData.logs" change="dtable.changeStatus(dnatData,'logs')"
+                               on-label="开启" id="strategy_dnat-switching_logs_{{$index}}"
+                               disabled="isSwitching['logs'][dnatData.dnatName]"></switch-toggle>
+                  <span ng-show="isSwitching['logs'][dnatData.dnatName]">
+                      <i class="fa fa-spinner fa-spin icon-left"></i>{{switchMsg}}中
+                  </span>
+            </td>
+            <td>
+                <a id="strategy_dnat_edit" class="btn btn-sm btn-default" ng-click="dtable.edit(dnatData)"
+                   title="编辑" setting-privilege privilege-name="STRATEGY_NAT" privilege-require="MIXED"
+                   privilege-handle="hidden"><i class="fa fa-edit"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

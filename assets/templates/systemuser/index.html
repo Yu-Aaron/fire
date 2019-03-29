@@ -1,0 +1,234 @@
+<div class="full-height"
+     ng-if="!(systemuser.showCreateUserGroup||systemuser.showEditUserGroup||systemuser.showCreateUser||systemuser.showEditUser)">
+  <div class="row no-padding full-height">
+    <div class="left-part">
+      <div class="panel margin-top-medium full-height">
+        <div class="panel-header">
+          <!--<span class="page-header-icon icon-left"><i class="fa fa-users"></i></span>-->
+          <span class="panel-header-title">用户组</span>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="margin-top-medium">
+              <div disable=true>
+                <div class="user-group-table-container">
+                  <ul class="ul-head">
+
+                    <li class="row li-body" ng-click="systemuser.getUserByUserGroupId(systemuser.currentRole)">
+                        <span class="col-xs-6 li-body-col">
+                          <i
+                            ng-click="systemuser.userGroupTree[0].showSubRoles=!systemuser.userGroupTree[0].showSubRoles"
+                            class="{{systemuser.userGroupTree[0].showSubRoles?'fa fa-chevron-up':'fa fa-chevron-down'}} user-group-li-expend-btn"></i>{{systemuser.currentRole.name.length>10?systemuser.currentRole.name.substring(0,10):systemuser.currentRole.name}}
+                        </span>
+                      <span class="col-xs-6 li-body-col" disable=true>
+                        <button id="user_group_edit_currentRole" class="btn btn-default user_group_edit"
+                                setting-privilege privilege-name="USER_MANAGEMENT" privilege-require="VIEW"
+                                ng-click="systemuser.editUserGroup(systemuser.currentRole)"><i
+                          class="fa fa-pencil"></i></button>
+                        <button id="user_group_add_currentRole"
+                                class="btn btn-default user_group_edit"
+                                setting-privilege privilege-name="USER_MANAGEMENT" privilege-require="MIXED"
+                                ng-click="systemuser.goToCreateUserGroup(systemuser.currentRole)"
+                                ng-disabled="systemuser.currentUserdisabledEditUserGroup"
+                                data-toggle="tooltip" title="添加用户组"><i
+                          class="fa fa-plus"></i></button>
+                      </span>
+                    </li>
+                    <ul class="user-group-ul" ng-repeat="role in systemuser.userGroupTree[0].subRoles"
+                        ng-include="'userGroupTree_renderer.html'"
+                        ng-if="systemuser.userGroupTree[0].showSubRoles"></ul>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right-part">
+      <div class="panel full-height">
+        <div class="panel-header">
+          <span class="panel-header-title">用户列表</span>
+        </div>
+        <div class="system-user-list-container">
+          <div disable=true>
+            <div class="table-wrapper">
+              <table id="users_table" class="table">
+                <thead>
+                <tr>
+                  <th class="table-col-md">用户名</th>
+                  <th class="table-col-md">姓名</th>
+                  <th class="table-col-md">用户组</th>
+                  <th>上次登录时间</th>
+                  <!--<th ng-if="" class="table-col-md">账户状态</th>-->
+                  <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="user_table_row_{{$index}}" class="user_table_row_tr" ng-repeat="user in systemuser.table">
+                  <td>{{user.name}} <span ng-if="user.locked==='on'" class="systemuser-lock"><i
+                    class="fa fa-lock"></i></span>
+                  </td>
+                  <td>{{user.name==='admin'?'管理员':user.stuffName}}</td>
+                  <td><i class="fa {{user.privilege === 'ADMIN' ? 'fa-wrench' : 'fa-user'}}"></i>
+                    {{user._roles[0].name | translateUserpril}}
+                  </td>
+                  <td>{{user.lastLogin | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td class="text-right" disable=true>
+                    <div class="toggle-container">
+                      <div class="toggle-bg toggle-alternate" ng-class="{true: 'off', false: 'on'}[user.locked]">
+                        <label ng-class="{true: 'off', false: 'on'}[user.locked]">{{user.locked?'锁定':'正常'}}</label>
+                        <input type="checkbox" id="setting_{{$index}}" name="toggle"
+                               ng-disabled="systemuser.currentUserdisabledEditUser||user.name===systemuser.getCurrentUserName() ||user._roles[0].roleId===systemuser.currentRole.roleId|| user._roles[0].defaultRole"
+                               ng-model="user.locked"
+                               ng-change="systemuser.userLockedChanged(user)">
+                        <span class="switch" ng-class="{true: 'off', false: 'on'}[user.locked]"></span>
+                      </div>
+                    </div>
+                    <button class="btn btn-default user_delete"
+                            ng-click="systemuser.deleteConfirmPopup(user)"
+                            ng-disabled="systemuser.currentUserdisabledEditUser||user.name===systemuser.getCurrentUserName() ||user._roles[0].roleId===systemuser.currentRole.roleId|| user._roles[0].defaultRole"
+                    ><i class="fa fa-trash-o"></i></button>
+                    <button class="btn btn-default" ng-click="systemuser.editUser($index)"
+                            ng-disabled="systemuser.currentUserdisabledEditUser||user.name===systemuser.getCurrentUserName() ||user._roles[0].roleId===systemuser.currentRole.roleId|| user._roles[0].defaultRole"
+                    ><i class="fa fa-pencil"></i></button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="full-height"
+     ng-if="systemuser.showCreateUserGroup||systemuser.showEditUserGroup||systemuser.showCreateUser||systemuser.showEditUser">
+  <div class="row no-padding full-height">
+    <div class="col-md-12 full-height" ng-if="systemuser.showCreateUser||systemuser.showEditUser">
+      <div class="panel full-height" style="overflow-y: auto;">
+        <div class="panel-header">
+          <span class="panel-header-title" ng-if="systemuser.showCreateUser">创建用户</span>
+          <span class="panel-header-title" ng-if="systemuser.showEditUser">编辑用户</span>
+        </div>
+        <div class="system-user-list-container">
+          <div ng-if="systemuser.showCreateUser" ng-include src="'templates/systemuser/user-create.html'"></div>
+          <div ng-if="systemuser.showEditUser" ng-include src="'templates/systemuser/user-edit.html'"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 full-height"
+         ng-if="systemuser.showCreateUserGroup||systemuser.showEditUserGroup">
+      <div class="panel full-height">
+        <div class="panel-header">
+          <span class="panel-header-title" ng-if="systemuser.showCreateUserGroup">新增用户组</span>
+          <span class="panel-header-title" ng-if="systemuser.showEditUserGroup">修改用户组</span>
+        </div>
+        <div class="panel-body" ng-if="systemuser.showCreateUserGroup" ng-include
+             src="'templates/systemuser/user-group-add.html'"></div>
+        <div class="panel-body" ng-if="systemuser.showEditUserGroup" ng-include
+             src="'templates/systemuser/user-group-edit.html'"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="delete-popup.html">
+  <div class="modal-header">
+    <h3 class="modal-header-title"><i class="icon icon-left icon-delete-mark"></i><span>删除用户</span></h3>
+    <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+  </div>
+  <div class="modal-body modal-body-warn">
+    <div class="modal-container">
+      删除用户将无法还原，确定要删除 {{name}} 用户？
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times-circle icon-left"></i>取消
+    </button>
+    <button id="user_delete_confirm" class="btn btn-default pull-right" ng-click="ok()"><i
+      class="fa fa-check text-lime icon-left"></i>确认
+    </button>
+  </div>
+</script>
+
+
+<!-------------------------------------- User Group Tree Recursive ul -------------------------------------->
+<script type="text/ng-template" id="userGroupTree_renderer.html">
+  <li id="user_group_{{role.name}}" class="row li-body" ng-click="systemuser.getUserByUserGroupId(role)">
+    <span class="col-xs-6 li-body-col">
+      <span class="pull-left" style="width: {{role.groupLevel*24}}px; height: 16px;"></span>
+      <i class="{{role.showSubRoles?'fa fa-chevron-up':'fa fa-chevron-down'}} user-group-li-expend-btn"
+         ng-click="role.showSubRoles=!role.showSubRoles; systemuser.showSubRoles(role);"></i>
+      <span title="{{role.name}}">{{role.name.length>10?role.name.substring(0,10)+"...":role.name}}</span>
+    </span>
+    <span class="col-xs-6 li-body-col" disable=true>
+      <button id="user_group_edit_currentRole_{{role.name}}" class="btn btn-default user_group_edit"
+              setting-privilege privilege-name="USER_MANAGEMENT" privilege-require="VIEW"
+              ng-click="systemuser.editUserGroup(role)"><i
+        class="fa fa-pencil" title="编辑用户组"></i></button>
+
+      <button id="user_group_add_currentRole_{{role.name}}" class="btn btn-default user_group_edit"
+              setting-privilege privilege-name="USER_MANAGEMENT" privilege-require="MIXED"
+              ng-click="systemuser.goToCreateUserGroup(role)" ng-disabled="systemuser.currentUserdisabledEditUserGroup"
+              title="添加用户组"><i
+        class="fa fa-plus"></i></button>
+      <button id="user_list_create_sub_{{role.name}}" class="btn btn-default user_group_edit"
+              setting-privilege privilege-name="USER_MANAGEMENT" privilege-require="MIXED"
+              ng-click="systemuser.goToCreateUser(role)" ng-disabled="systemuser.currentUserdisabledEditUserGroup"
+              style="width: 40px" title="添加用户"><i
+        class="fa fa-user fa-after-lime fa-plus-overlay icon-left"></i>
+      </button>
+      <button id="user_group_delete_{{role.name}}" class="btn btn-default user_group_delete" ng-class=""
+              ng-click="systemuser.deleteGroupConfirmPopup(role.roleId,role.name)"
+              setting-privilege privilege-name="USER_MANAGEMENT" privilege-require="MIXED"
+              ng-disabled="systemuser.currentUserdisabledEditUserGroup||role._userIds.length || role._roleIds.length"><i
+        class="fa fa-trash-o"></i></button>
+    </span>
+  </li>
+  <ul class="user-group-ul" ng-if="role.subRoles&&role.showSubRoles">
+    <li ng-repeat="role in role.subRoles" ng-include="'userGroupTree_renderer.html'"></li>
+  </ul>
+</script>
+
+<script type="text/ng-template" id="deleteUserGroup-popup.html">
+  <div class="modal-header">
+    <h3 class="modal-header-title"><i class="icon icon-left icon-delete-mark"></i><span>删除用户组</span></h3>
+    <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+  </div>
+  <div class="modal-body modal-body-warn">
+    <div class="modal-container">
+      删除用户组将无法还原，确定要删除 {{name}} 用户组？
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times-circle icon-left"></i>取消
+    </button>
+    <button id="user_group_delete_confirm" class="btn btn-default pull-right" ng-click="ok()"><i
+      class="fa fa-check text-lime icon-left"></i>确认
+    </button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="changePrivilegeToForbidWarning.html">
+  <div class="modal-header">
+    <h3 class="modal-header-title"><i class="icon icon-left icon-delete-mark"></i><span>权限设置警告</span></h3>
+    <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+  </div>
+  <div class="modal-body modal-body-warn">
+    <div class="modal-container">
+      <span class="text-red-orange">{{privileges}}</span>&nbsp;&nbsp;权限被禁用或关闭，其子组的权限也会被禁用或者关闭,是否继续修改?
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times-circle icon-left"></i>取消
+    </button>
+    <button id="usergroup_setting_confirm" class="btn btn-default pull-right" ng-click="ok()"><i
+      class="fa fa-check text-lime icon-left"></i>确认
+    </button>
+  </div>
+</script>
+

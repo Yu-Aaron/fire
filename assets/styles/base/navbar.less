@@ -1,0 +1,214 @@
+// ========================
+// NAVBARS
+// ========================
+
+.nav-top-bar {
+  padding-top: 5px;
+  background-color: @gray80;
+}
+
+// Nav tabss
+.navbar {
+  border-bottom: 0px solid black;
+  margin-bottom: 0px;
+  border: 0;
+
+  .navbar-item {
+    position: relative;
+    width: 100px;
+    height: 78px;
+    margin-right: -1px;
+    float: left;
+    &:after{
+      position: absolute;
+      content: '';
+      width: 1px;
+      height: 62px;
+      top: 8px;
+      right: 0;
+      background-image: linear-gradient(to bottom, @bg-top-bar 0%, rgba(48,48,48,1) 15%, rgba(48,48,48,1) 85%, @bg-top-bar 100%);
+    }
+    &.disabled {
+      opacity: 0.3;
+    }
+    // active nav tab
+    &.active, &:hover{
+      a {
+        font-weight: bold;
+        background: #1e293b;
+      }
+    }
+    &.active{
+      background: @bg-top-bar;
+      z-index: 100;
+      &:after{
+        display: none;
+      }
+      a {
+        border-color: #045bbc;
+      }
+    }
+    //blurred nav tab
+    &.blurred {
+      opacity: 0.3;
+    }
+    a {
+      margin: 6px;
+      padding: 4px 0 4px;
+      color: @color-font;
+      text-align: center;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      transition: all 0.3s ease 0s;
+      .icon-container{
+        height: 30px;
+        line-height: 30px;
+        .icon{
+          vertical-align: middle;
+        }
+      }
+      // nav bar title
+      .navbar-item-title {
+        display: block;
+        margin-top: 6px;
+        font-size: 14px;
+      }
+      &:hover:enabled {
+        //.box-shadow(inset 0 3px 0 0 @lime);
+      }
+    }
+  }
+
+  // red toggle button on monitoring nav item
+  &.red-warning {
+    .navbar-item-attack_discovery {
+      &:after {
+        content: "\f071";
+        position: absolute;
+        font-family: FontAwesome;
+        font-size: 10px;
+        top: 5px;
+        right: 8px;
+        width: 8px;
+        height: 8px;
+        color: @red;
+        text-shadow: 0px 2px 2px @black;
+      }
+    }
+  }
+
+  // red toggle button on monitoring nav item
+  &.red-dot {
+    .navbar-item-monitoring {
+      &:before {
+        position: absolute;
+        content: "";
+        top: 5px;
+        right: 5px;
+        width: 10px;
+        height: 10px;
+        background-color: @black;
+        border-radius: 2px;
+        z-index: 8;
+      }
+
+      &:after {
+        position: absolute;
+        content: "";
+        top: 6px;
+        right: 6px;
+        width: 8px;
+        height: 8px;
+        background-color: @red;
+        border-left: 1px solid fade(@orange, 20%);
+        border-right: 1px solid fade(@orange, 20%);
+        border-bottom: 1px solid fade(@orange, 20%);
+        border-top: 1px inset fade(@white, 50%);
+        border-radius: 2px;
+        .box-shadow(0px 2px 4px @gray60);
+        z-index: 9;
+      }
+    }
+  }
+
+  &.flash {
+    @flash1: #8B1515;
+    @flash2: #FF0000;
+    .navbar-item-monitoring {
+      &:after {
+        .animation(glowing, 800ms, 10);
+      }
+      @-webkit-keyframes glowing {
+        0% {
+          background-color: @flash1;
+          -webkit-box-shadow: 0 0 3px @flash1;
+        }
+        50% {
+          background-color: @flash2;
+          -webkit-box-shadow: 0 0 10px @flash2;
+        }
+        100% {
+          background-color: @flash1;
+          -webkit-box-shadow: 0 0 3px @flash1;
+        }
+      }
+
+      @-moz-keyframes glowing {
+        0% {
+          background-color: @flash1;
+          -moz-box-shadow: 0 0 3px @flash1;
+        }
+        50% {
+          background-color: @flash2;
+          -moz-box-shadow: 0 0 10px @flash2;
+        }
+        100% {
+          background-color: @flash1;
+          -moz-box-shadow: 0 0 3px @flash1;
+        }
+      }
+
+      @-o-keyframes glowing {
+        0% {
+          background-color: @flash1;
+          box-shadow: 0 0 3px @flash1;
+        }
+        50% {
+          background-color: @flash2;
+          box-shadow: 0 0 10px @flash2;
+        }
+        100% {
+          background-color: @flash1;
+          box-shadow: 0 0 3px @flash1;
+        }
+      }
+
+      @keyframes glowing {
+        0% {
+          background-color: @flash1;
+          box-shadow: 0 0 3px @flash1;
+        }
+        50% {
+          background-color: @flash2;
+          box-shadow: 0 0 10px @flash2;
+        }
+        100% {
+          background-color: @flash1;
+          box-shadow: 0 0 3px @flash1;
+        }
+      }
+    }
+  }
+
+  //blurred nav tab
+  .navbar-item.blurred {
+    opacity: 0.3;
+  }
+}
+
+
+// view control
+.view-control {
+  padding: 5px;
+  background-color: @gray75;
+}

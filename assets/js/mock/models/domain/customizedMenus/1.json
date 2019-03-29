@@ -1,0 +1,90 @@
+[
+    {
+        "customizedMenuId": 1,
+        "description": "实时监控",
+        "target": "REAL_TIME_PROTECTION",
+        "parentTarget": "",
+        "menuLevel": 1,
+        "active": true
+    },
+    {
+        "customizedMenuId": 6,
+        "description": "资产管理",
+        "target": "ASSET_MANAGEMENT",
+        "parentTarget": "",
+        "menuLevel": 1,
+        "active": true
+    },
+    {
+        "customizedMenuId": 12,
+        "description": "规则管理",
+        "target": "RULE",
+        "parentTarget": "",
+        "menuLevel": 1,
+        "active": true
+    },
+    {
+        "customizedMenuId": 16,
+        "description": "网络拓扑",
+        "target": "TOPOLOGY",
+        "parentTarget": "",
+        "menuLevel": 1,
+        "active": true
+    },
+    {
+        "customizedMenuId": 17,
+        "description": "结构安全性",
+        "target": "STRUCTURE_SAFETY",
+        "parentTarget": "",
+        "menuLevel": 1,
+        "active": true
+    },
+    {
+        "customizedMenuId": 18,
+        "description": "攻击路径",
+        "target": "ATTACK_PATH",
+        "parentTarget": "",
+        "menuLevel": 1,
+        "active": true
+    },
+    {
+        "customizedMenuId": 19,
+        "description": "入侵监测",
+        "target": "INTRUSION_DETECTION",
+        "parentTarget": "",
+        "menuLevel": 1,
+        "active": true
+    },
+    {
+        "customizedMenuId": 22,
+        "description": "系统记录",
+        "target": "SYSTEM_LOG",
+        "parentTarget": "",
+        "menuLevel": 1,
+        "active": true
+    },
+    {
+        "customizedMenuId": 23,
+        "description": "网络审计",
+        "target": "AUDIT",
+        "parentTarget": "",
+        "menuLevel": 1,
+        "active": true
+    },
+    {
+        "customizedMenuId": 27,
+        "description": "系统管理",
+        "target": "SYSTEM_MANAGEMENT",
+        "parentTarget": "",
+        "menuLevel": 1,
+        "active": true
+    },
+    {
+        "customizedMenuId": 32,
+        "description": "定期报告",
+        "target": "REPORT",
+        "parentTarget": "",
+        "menuLevel": 1,
+        "active": false
+    }
+]

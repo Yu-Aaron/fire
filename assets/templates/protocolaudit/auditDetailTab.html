@@ -1,0 +1,12 @@
+<table id="audit_auditdetailtab_table" class="table table-striped table-bordered">
+  <thead>
+  <tr>
+    <th style="text-align:left" ng-repeat="head in listInfoHead">{{head}}</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr id="audit_auditdetailtab_table_row_{{$index}}" ng-repeat="infoRow in dtable.table">
+    <td style="text-align:left; min-width: 133px;" ng-repeat="info in infoRow track by $index">{{info}}</td>
+  </tr>
+  </tbody>
+</table>

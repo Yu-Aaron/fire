@@ -1,0 +1,111 @@
+<div>
+  <table class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th>
+        <span>&nbsp;</span>
+      </th>
+      <th order-by="name">名称</th>
+      <th order-by="deviceOnline">设备状态</th>
+      <th order-by="serialNumber">序列号</th>
+      <th order-by="version">版本</th>
+      <th order-by="make">厂商</th>
+      <th>型号</th>
+      <th>管理端口IP</th>
+      <th>管理端口MAC</th>
+      <th>端口数量</th>
+      <th>
+        <span>&nbsp;</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="securitydevice-securityDCDeviceTable_tr_accordionToggle" ng-repeat-start="device in dtable.table"
+        ng-click="accordion.current = !accordion.current">
+      <td class="table-col-xs">
+        <i class="fa {{accordion.current ? 'fa-chevron-down' : 'fa-chevron-right'}}"></i>
+      </td>
+      <td class="table-col-device-name">{{device.name}}</td>
+      <td class="table-col-online">
+        <div class="bullet bullet-online" title="连线"
+             ng-if="device.deviceOnline===1&&device.deviceSource==='DISCOVERY'"></div>
+        <div class="bullet bullet-offline" title="掉线"
+             ng-if="device.deviceOnline!==1&&device.deviceSource==='DISCOVERY'"></div>
+        <div class="bullet bullet-unactivated" title="未激活" ng-if="device.deviceSource!=='DISCOVERY'"></div>
+      </td>
+      <td class="table-col-serial">{{device.serialNumber}}</td>
+      <td class="table-col-version">{{device.version}}</td>
+      <td class="table-col-make">{{device.make}}</td>
+      <td class="table-col-model">{{device._model_name | deviceModel}}</td>
+      <td class="table-col-ip">
+        <span ng-repeat="port in device.devicePorts | filter:search.isMgmtPort=true">{{port.portIp}} </span>
+      </td>
+      <td class="table-col-mac">
+        <span ng-repeat="port in device.devicePorts | filter:search.isMgmtPort=true">{{port.mac}} </span>
+      </td>
+      <td>{{device.devicePorts.length}}个</td>
+      <td>
+        <a id="securitydevice-securityDCDeviceTable_a_showDetails_{{index+1}}" class="btn btn-default"
+           ui-sref="asset.securitydevice.detail({deviceID: device.deviceId, subCategory: 'DATA_COLLECTION_DEVICE'})"
+           ng-click="$event.stopPropagation()">查看 <i class="fa fa-chevron-circle-right icon-right"></i></a>
+      </td>
+    </tr>
+    <tr ng-repeat-end ng-if="accordion.current" class="angular-animate show-hide show-hide-table-row"
+        style="border-left: 3px solid rgb(117, 184, 0)">
+      <td colspan="100%" style="background-color: rgb(19, 19, 19)">
+        <div class="row">
+          <div class="col-xs-2 text-center">
+            <h5>匡恩设备</h5>
+            <img ng-src="/images/devices/security/{{device._iconName}}-icon.png" width="60"
+                 class="display-block margin-center margin-bottom-default"/>
+          </div>
+          <div class="col-xs-10">
+            <table class="table table-black-rows">
+              <thead>
+              <tr>
+                <th>端口</th>
+                <th>允许协议</th>
+                <th>更新时间</th>
+                <th>
+                  <span>&nbsp;</span>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="node in device.nodes">
+                <td>{{node.ports.toString()}}</td>
+                <td>
+                      <span ng-hide="node.isEdited">
+                        <div ng-dropdown-multiselect="" options="forms.protocols" selected-model="node.protocols"
+                             checkboxes="false" translation-texts="noProtocolTexts" readonly="true"></div>
+                      </span>
+                  <span ng-show="node.isEdited">
+                        <div ng-dropdown-multiselect="" options="forms.protocols" selected-model="node.protocols"
+                             checkboxes="false"></div>
+                      </span>
+                </td>
+                <td>{{node.updatedAt | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>
+                  　　
+                  <button id="securitydevice-securityDCDeviceTable_button_editNode" type="button"
+                          class="btn btn-default" ng-hide="node.isEdited" ng-click="editNode(node)">编辑
+                  </button>
+                  <span ng-show="node.isEdited">
+                        <button id="securitydevice-securityDCDeviceTable_button_editNodeCancel" type="button"
+                                class="btn btn-default btn-group-pull-right" ng-click="editNodeCancel(node)"><i
+                          class="fa fa-times icon-left"></i>取消</button>
+                        <button id="securitydevice-securityDCDeviceTable_button_editNodeDone" type="button"
+                                class="btn btn-default" ng-click="editNodeDone(node)"><i
+                          class="fa fa-check icon-left text-lime"></i>确认修改</button>
+                      </span>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

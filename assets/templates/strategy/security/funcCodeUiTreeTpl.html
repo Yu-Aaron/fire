@@ -1,0 +1,40 @@
+<div class="tree-node"
+     ng-init="node.nodeIndex = (node.nodeIndex ? node.nodeIndex + $index.toString() : $index.toString())">
+    <div class="row tree-node-content">
+        <div class="col-xs-3">
+            <i ng-if="node.nodes.length > 0"
+               class="fa {{collapsed ? 'fa-chevron-right' : 'fa-chevron-down'}} fa-blue tree-toggle"
+               ng-click="toggle(this)"></i>
+            <i ng-if="node.nodes.length <= 0" class="fa fa-chevron-right tree-toggle"></i>
+            <span class="info-label">功能码</span>
+            <select id="func-code-options" class="select-styled" ng-model="node.funcCode"
+                    ng-change="selectFuncCode(node)" ng-disabled="isViewOnly"
+                    ng-options="funcCode | protocolTranslation:appProtocolType for funcCode in node.funcCodes">
+            </select>
+        </div>
+        <div class="col-xs-6 value-container">
+            <div ng-include="appProtocolType | protocolValueTemplate"></div>
+        </div>
+        <div class="col-xs-2 action-container">
+            <span class="info-label">动作</span>
+            <select id="action-options" class="select-styled" ng-model="node.action"
+                    ng-options="action | strategyAction for action in actions" ng-disabled="isViewOnly">
+            </select>
+        </div>
+        <div class="col-xs-1 button-container">
+            <button type="button" class="btn btn-default pull-right" data-nodrag
+                    ng-click="remove(this)" ng-disabled="isViewOnly">
+                <i class="fa fa-trash-o"></i>
+            </button>
+            <button type="button" class="btn btn-default pull-right" data-nodrag
+                    ng-click="newSubNode(this)" ng-disabled="isViewOnly"
+                    ng-if="node.isHavingSubFunc">
+                <i class="fa fa-plus text-lime"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+    <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'/templates/strategy/security/funcCodeUiTreeTpl.html'">
+    </li>
+</ol>

@@ -1,0 +1,59 @@
+/* ----------------------------------------
+  New Pagination
+---------------------------------------- */
+
+.pagination {
+  padding: 10px;
+  margin: 0;
+
+  li a {
+    min-width: 30px;
+    height: 26px;
+    margin: 0;
+    background: linear-gradient(@bg-gray-lighter, @bg-gray);
+    border: 1px solid @bg-gray-dark;
+    box-shadow: inset 0px 1px 2px 0px rgba(227, 227, 227, 0.10);
+    border-radius: 2px;
+    font-size: 12px;
+    color: @txt-light-gray;
+    line-height: 15px;
+    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.50);
+    i {
+      font-size: 14px;
+    }
+    &:hover,
+    &:focus {
+      border: 1px solid @primary;
+      color: @txt-white-gray;
+    }
+  }
+
+  li:first-child,
+  li:nth-of-type(2),
+  li:nth-last-of-type(2),
+  li:last-child {
+    a {
+      font-size: 14px;
+    }
+  }
+
+  > .disabled > a {
+    border-color: #212121;
+    color: @txt-dark-gray;
+    &:focus {
+      border-color: @bg-gray-dark;
+      color: @txt-dark-gray;
+    }
+    &:hover {
+      border-color: @bg-gray-dark;
+    }
+  }
+
+  .active a,
+  a:active,
+  .selectedPage {
+    background: @bg-gray-darker !important;
+    color: @primary !important;
+    cursor: default;
+  }
+}

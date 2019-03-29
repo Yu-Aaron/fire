@@ -1,0 +1,400 @@
+<div class="object-schedule-container">
+    <div class="margin-bottom-default object-new-delete-container">
+        <a id="object-schedule-add" class="btn btn-default" ng-click="expanded=!expanded" setting-privilege
+           privilege-name="OBJECT_SCHEDULE" privilege-require="MIXED" privilege-handle="hidden">
+            &nbsp;<i class="fa fa-file-o fa-after-blue fa-plus-overlay icon-left"></i> 新增&nbsp;</a>
+        <a id="object-schedule-delete" class="btn btn-default" ng-click="dtable.deleteSchedule()" setting-privilege
+           privilege-name="OBJECT_SCHEDULE" privilege-require="MIXED" privilege-handle="hidden">
+            &nbsp;<i class="fa fa-trash-o icon-left"></i> 删除&nbsp;</a>
+        <ul id="object-schedule-add-option" class="addScheduleMenu" collapse="expanded"
+            ng-init="expanded=true" ng-mouseleave="expanded=true">
+            <li ng-click="dtable.addSingleSchedule()">
+                <span>单次时间</span>
+            </li>
+            <li ng-click="dtable.addLoopSchedule()">
+                <span>循环时间</span>
+            </li>
+        </ul>
+    </div>
+    <table class="table table-hover icon-hidden" cg-busy="{promise:$root.scheduleDeleteTaskPromise,message:'时间表删除中，请稍侯...'}">
+        <thead>
+        <tr>
+            <th class="text-center">
+                <label>
+                    <input id="selected-item-all" custom-checkbox type="checkbox" ng-model="dtable.selectAllValue"
+                           ng-click="dtable.selectAll()"/>
+                </label>
+            </th>
+            <th>序号</th>
+            <th order-by="name">名称</th>
+            <th order-by="start">开始</th>
+            <th order-by="finish">结束</th>
+            <th order-by="type">循环</th>
+            <th order-by="_policyRefers">策略引用</th>
+            <th order-by="description">描述</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="schedule in dtable.table">
+            <td class="text-center">
+                <label>
+                    <input custom-checkbox type="checkbox" id="selected-item-{{$index}}"
+                           ng-checked="dtable.selectedItems[schedule.name]"
+                           ng-model="dtable.selectedItems[schedule.name]"/>
+                </label></td>
+            <td>{{skip + $index + 1}}</td>
+            <td>{{schedule.name}}</td>
+            <td ng-if="schedule.type !== 'LOOP'">{{schedule.start | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td ng-if="schedule.type === 'LOOP'">{{schedule.start | date : 'HH:mm:ss'}}</td>
+            <td ng-if="schedule.type !== 'LOOP'">{{schedule.finish | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td ng-if="schedule.type === 'LOOP'">{{schedule.finish | date : 'HH:mm:ss'}}</td>
+            <td>{{schedule.type | objScheduleTypes}}</td>
+            <td>{{schedule._policyRefers | convertNullBlank:'--'}}</td>
+            <td class="describe">
+                <span class="describe-ellipsis" tooltip="{{schedule.description}}" tooltip-placement="bottom"
+                      ng-show="schedule.description">
+                    {{schedule.description}}
+                </span>
+                <div ng-hide="schedule.description">--</div>
+            </td>
+            <td>
+                <a id="object-schedule-view" class="btn btn-sm btn-default" ng-click="schedule.type === 'LOOP' ?
+                    dtable.viewLoopSchedule(schedule) : dtable.viewSingleSchedule(schedule)" ng-if="isNoEditPri">
+                    查看</a>
+                <a id="object-schedule-edit" class="btn btn-sm btn-default" ng-click="schedule.type === 'LOOP' ?
+                    dtable.editLoopSchedule(schedule) : dtable.editSingleSchedule(schedule)" title="编辑"
+                   setting-privilege privilege-name="{{privilegeName}}" privilege-require="MIXED"
+                   privilege-handle="hidden">
+                    <i class="fa fa-edit"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <script type="text/ng-template" id="object-schedule-single-new.html">
+        <div class="modal-schedule-single-info" global-events>
+            <form name="newScheduleForm" ng-submit="ok(newScheduleForm.$valid &&
+                    invalidStartDateTime==='' && invalidEndDateTime==='')">
+                <div class="modal-header">
+                    <h4 class="modal-header-title">单次时间</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-schedule-info">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-xs-3">名称 ：</div>
+                                <div class="col-xs-9">
+                                    <input name="name" type="text" custom-val="nameval" validator="checkNameVal"
+                                           ng-model="newSchedule.name" ng-model-options="{ updateOn: 'blur' }"
+                                           maxlength="20" placeholder="时间表名称" required>
+                                    <div class="input-alert-error" ng-show="newScheduleForm.name.$error.nameval">
+                                        {{nameValMsg}}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">开始 ：</div>
+                                <div class="col-xs-9 date-time-input">
+                                    <date-picker id="scheduleTimePicker_date_start" name="starDate"
+                                                 ng-model="newSchedule.startDate"
+                                                 ng-change="checkDateTimeVal('startdate')"></date-picker>
+                                    <time-picker id="scheduleTimePicker_date_start" name="startTime"
+                                                 ng-model="newSchedule.startTime"
+                                                 ng-change="checkDateTimeVal('starttime')"></time-picker>
+                                    <div class="input-alert-error" ng-show="invalidStartDateTime">
+                                        {{invalidStartDateTime}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">结束 ：</div>
+                                <div class="col-xs-9 date-time-input">
+                                    <date-picker id="scheduleTimePicker_date_end" name="endDate"
+                                                 ng-model="newSchedule.endDate"
+                                                 ng-change="checkDateTimeVal('enddate')"></date-picker>
+                                    <time-picker id="scheduleTimePicker_date_end" name="endTime"
+                                                 ng-model="newSchedule.endTime"
+                                                 ng-change="checkDateTimeVal('endtime')"></time-picker>
+                                    <div class="input-alert-error" ng-show="invalidEndDateTime">
+                                        {{invalidEndDateTime}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">描述 ：</div>
+                                <div class="col-xs-9 description">
+                                        <textarea name="description" ng-model="newSchedule.description"
+                                               ng-model-options="{ updateOn: 'blur' }" maxlength="255" rows="4"/>
+                                        <span>&nbsp;(&nbsp;0-255&nbsp;)&nbsp;字符</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default pull-right" ng-hide="isAddingSchedule">
+                        <i class="fa fa-check text-lime icon-left"></i>确定
+                    </button>
+                    <button class="btn btn-default pull-right" ng-disabled="true" ng-show="isAddingSchedule">
+                        <i class="fa fa-spinner fa-spin icon-left"></i>添加中
+                    </button>
+                    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">
+                        <i class="fa fa-times icon-left"></i>取消
+                    </button>
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="object-schedule-single-edit.html">
+        <div class="modal-schedule-single-info" global-events>
+            <form name="editScheduleForm" ng-submit="ok(editScheduleForm.$valid &&
+                    invalidStartDateTime==='' && invalidEndDateTime==='')">
+                <div class="modal-header">
+                    <h4 class="modal-header-title">单次时间</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-schedule-info">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-xs-3">名称 ：</div>
+                                <div class="col-xs-9">
+                                    <input name="name" type="text" custom-val="nameval" validator="checkNameVal"
+                                           ng-model="editSchedule.name" ng-model-options="{ updateOn: 'blur' }"
+                                           maxlength="20" placeholder="时间表名称" required ng-disabled="isViewOnly">
+                                    <div class="input-alert-error" ng-show="editScheduleForm.name.$error.nameval">
+                                        {{nameValMsg}}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">开始 ：</div>
+                                <div class="col-xs-9 date-time-input">
+                                    <date-picker id="scheduleTimePicker_date_start" name="starDate"
+                                                 ng-model="editSchedule.startDate"
+                                                 ng-change="checkDateTimeVal('startdate')"
+                                                 ng-disabled="isViewOnly"></date-picker>
+                                    <time-picker id="scheduleTimePicker_date_start" name="startTime"
+                                                 ng-model="editSchedule.startTime"
+                                                 ng-change="checkDateTimeVal('starttime')"
+                                                 ng-disabled="isViewOnly"></time-picker>
+                                    <div class="input-alert-error" ng-show="invalidStartDateTime">
+                                        {{invalidStartDateTime}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">结束 ：</div>
+                                <div class="col-xs-9 date-time-input">
+                                    <date-picker id="scheduleTimePicker_date_end" name="endDate"
+                                                 ng-model="editSchedule.endDate"
+                                                 ng-change="checkDateTimeVal('enddate')"
+                                                 ng-disabled="isViewOnly"></date-picker>
+                                    <time-picker id="scheduleTimePicker_date_end" name="endTime"
+                                                 ng-model="editSchedule.endTime"
+                                                 ng-change="checkDateTimeVal('endtime')"
+                                                 ng-disabled="isViewOnly"></time-picker>
+                                    <div class="input-alert-error" ng-show="invalidEndDateTime">
+                                        {{invalidEndDateTime}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">描述 ：</div>
+                                <div class="col-xs-9 description">
+                                    <textarea name="description" ng-model="editSchedule.description"
+                                              ng-model-options="{ updateOn: 'blur' }" maxlength="255" rows="4"
+                                              ng-disabled="isViewOnly"/>
+                                    <span>&nbsp;(&nbsp;0-255&nbsp;)&nbsp;字符</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default pull-right" ng-hide="isEdittingSchedule">
+                        <i class="fa fa-check text-lime icon-left"></i>确定
+                    </button>
+                    <button class="btn btn-default pull-right" ng-disabled="true" ng-show="isEdittingSchedule">
+                        <i class="fa fa-spinner fa-spin icon-left"></i>修改中
+                    </button>
+                    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">
+                        <i class="fa fa-times icon-left"></i>取消
+                    </button>
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="object-schedule-loop-new.html">
+        <div class="modal-schedule-loop-info" global-events>
+            <form name="newScheduleForm" ng-submit="ok(newScheduleForm.$valid &&
+                    invalidStartTime==='' && invalidEndTime==='')">
+                <div class="modal-header">
+                    <h4 class="modal-header-title">循环时间</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-schedule-info">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-xs-2">名称 ：</div>
+                                <div class="col-xs-10">
+                                    <input name="name" type="text" custom-val="nameval" validator="checkNameVal"
+                                           ng-model="newSchedule.name" ng-model-options="{ updateOn: 'blur' }"
+                                           maxlength="20" placeholder="时间表名称" required>
+                                    <div class="input-alert-error" ng-show="newScheduleForm.name.$error.nameval">
+                                        {{nameValMsg}}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-10 col-xs-offset-2">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary" ng-model="loop.mon" btn-checkbox>星期一</label>
+                                        <label class="btn btn-primary" ng-model="loop.tue" btn-checkbox>星期二</label>
+                                        <label class="btn btn-primary" ng-model="loop.wed" btn-checkbox>星期三</label>
+                                        <label class="btn btn-primary" ng-model="loop.thu" btn-checkbox>星期四</label>
+                                        <label class="btn btn-primary" ng-model="loop.fri" btn-checkbox>星期五</label>
+                                        <label class="btn btn-primary" ng-model="loop.sat" btn-checkbox>星期六</label>
+                                        <label class="btn btn-primary" ng-model="loop.sun" btn-checkbox>星期日</label>
+                                    </div>
+                                    <div class="input-alert-error" ng-show="!isLoopChecked && loopValMsg!==''">
+                                        {{loopValMsg}}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">开始 ：</div>
+                                <div class="col-xs-10 date-time-input">
+                                    <time-picker id="scheduleTimePicker_date_start" name="startTime"
+                                                 ng-model="newSchedule.startTime"
+                                                 ng-change="checkTimeVal('starttime')"></time-picker>
+                                    <div class="input-alert-error" ng-show="invalidStartTime">
+                                        {{invalidStartTime}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">结束 ：</div>
+                                <div class="col-xs-10 date-time-input">
+                                    <time-picker id="scheduleTimePicker_date_end" name="endTime"
+                                                 ng-model="newSchedule.endTime"
+                                                 ng-change="checkTimeVal('endtime')"></time-picker>
+                                    <div class="input-alert-error" ng-show="invalidEndTime">
+                                        {{invalidEndTime}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">描述 ：</div>
+                                <div class="col-xs-10 description">
+                                    <textarea name="description" ng-model="newSchedule.description"
+                                              ng-model-options="{ updateOn: 'blur' }" maxlength="255" rows="4"/>
+                                    <span>&nbsp;(&nbsp;0-255&nbsp;)&nbsp;字符</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default pull-right" ng-hide="isAddingSchedule">
+                        <i class="fa fa-check text-lime icon-left"></i>确定
+                    </button>
+                    <button class="btn btn-default pull-right" ng-disabled="true" ng-show="isAddingSchedule">
+                        <i class="fa fa-spinner fa-spin icon-left"></i>添加中
+                    </button>
+                    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">
+                        <i class="fa fa-times icon-left"></i>取消
+                    </button>
+                </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="object-schedule-loop-edit.html">
+        <div class="modal-schedule-loop-info">
+            <form name="editScheduleForm" ng-submit="ok(editScheduleForm.$valid &&
+                    invalidStartTime==='' && invalidEndTime==='')">
+                <div class="modal-header">
+                    <h4 class="modal-header-title">循环时间</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-schedule-info">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-xs-2">名称 ：</div>
+                                <div class="col-xs-10">
+                                    <input name="name" type="text" custom-val="nameval" validator="checkNameVal"
+                                           ng-model="editSchedule.name" ng-model-options="{ updateOn: 'blur' }"
+                                           maxlength="20" placeholder="时间表名称" required
+                                           ng-disabled="isViewOnly">
+                                    <div class="input-alert-error" ng-show="editScheduleForm.name.$error.nameval">
+                                        {{nameValMsg}}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-10 col-xs-offset-2">
+                                    <div class="btn-group">
+                                        <label class="btn btn-primary" ng-model="loop.mon" btn-checkbox
+                                               ng-disabled="isViewOnly">星期一</label>
+                                        <label class="btn btn-primary" ng-model="loop.tue" btn-checkbox
+                                               ng-disabled="isViewOnly">星期二</label>
+                                        <label class="btn btn-primary" ng-model="loop.wed" btn-checkbox
+                                               ng-disabled="isViewOnly">星期三</label>
+                                        <label class="btn btn-primary" ng-model="loop.thu" btn-checkbox
+                                               ng-disabled="isViewOnly">星期四</label>
+                                        <label class="btn btn-primary" ng-model="loop.fri" btn-checkbox
+                                               ng-disabled="isViewOnly">星期五</label>
+                                        <label class="btn btn-primary" ng-model="loop.sat" btn-checkbox
+                                               ng-disabled="isViewOnly">星期六</label>
+                                        <label class="btn btn-primary" ng-model="loop.sun" btn-checkbox
+                                               ng-disabled="isViewOnly">星期日</label>
+                                    </div>
+                                    <div class="input-alert-error" ng-show="!isLoopChecked && loopValMsg!==''">
+                                        {{loopValMsg}}</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">开始 ：</div>
+                                <div class="col-xs-10 date-time-input">
+                                    <time-picker id="scheduleTimePicker_date_start" name="startTime"
+                                                 ng-model="editSchedule.startTime"
+                                                 ng-change="checkTimeVal('starttime')"
+                                                 ng-disabled="isViewOnly"></time-picker>
+                                    <div class="input-alert-error" ng-show="invalidStartTime">
+                                        {{invalidStartTime}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">结束 ：</div>
+                                <div class="col-xs-10 date-time-input">
+                                    <time-picker id="scheduleTimePicker_date_end" name="endTime"
+                                                 ng-model="editSchedule.endTime"
+                                                 ng-change="checkTimeVal('endtime')"
+                                                 ng-disabled="isViewOnly"></time-picker>
+                                    <div class="input-alert-error" ng-show="invalidEndTime">
+                                        {{invalidEndTime}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">描述 ：</div>
+                                <div class="col-xs-10 description">
+                                    <textarea name="description" ng-model="editSchedule.description"
+                                              ng-model-options="{ updateOn: 'blur' }" maxlength="255" rows="4"
+                                              ng-disabled="isViewOnly"/>
+                                    <span>&nbsp;(&nbsp;0-255&nbsp;)&nbsp;字符</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default pull-right" ng-hide="isEdittingSchedule">
+                        <i class="fa fa-check text-lime icon-left"></i>确定
+                    </button>
+                    <button class="btn btn-default pull-right" ng-disabled="true" ng-show="isEdittingSchedule">
+                        <i class="fa fa-spinner fa-spin icon-left"></i>修改中
+                    </button>
+                    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">
+                        <i class="fa fa-times icon-left"></i>取消
+                    </button>
+                </div>
+            </form>
+        </div>
+    </script>
+</div>

@@ -1,0 +1,382 @@
+<div ng-class="{'active': topoCtrl.EditMode}" class="topology-left-sidebar">
+  <topo-palette></topo-palette>
+</div>
+<div ng-show="noTopo" class="node-panel">
+  <span>当前没有应用的拓扑图</span>
+</div>
+
+<div id="sidePanelButton" class="side-panel-button" ng-show="topologyHasNode" ng-class="{'active': hasSidebar}"
+     ng-click="hasSidebar = !hasSidebar"></div>
+<div ng-init="hasSidebar = true" ng-show="topologyHasNode" ng-class="{'active': hasSidebar}"
+     class="topology-right-sidebar">
+  <div class="panel">
+    <div class="panel-heading">
+      <h5>设备信息</h5>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="device-info" ng-style="{'background-image': 'url(' + selectedDeviceInTable.img + ')'}"></div>
+      </div>
+      <div class="col-sm-6">
+        <div ng-show="selectedDeviceInTable.statusText">
+          <h6 class="text-light-gray">设备状态</h6>
+          <span class="device-badge">
+            <div class="pull-left">
+              <span class="bullet bullet-online" title="连线" ng-if="selectedDeviceInTable.statusText === '连线'"></span>
+              <span class="bullet bullet-offline" title="掉线" ng-if="selectedDeviceInTable.statusText === '掉线'"></span>
+              <span class="bullet bullet-unactivated" title="未激活"
+                    ng-if="selectedDeviceInTable.statusText === '未激活'"></span>
+              {{selectedDeviceInTable.statusText}}
+            </div>
+          </span>
+        </div>
+        <div ng-show="selectedDeviceInTable && selectedDeviceInTable.category === 'SECURITY_DEVICE'">
+          <h6 class="text-light-gray margin-top-default"><span class="text-red" ng-show="topoCtrl.EditMode">&#42;</span>功能模式
+          </h6>
+          <span class="device-badge" id="device_info_function_mode"
+                ng-hide="topoCtrl.EditMode && (selectedDeviceInTable.deviceOnline === 0) && !selectedDeviceInTable.deviceId">{{selectedDeviceInTable.modeDescription}}</span>
+          <div class="select-styled input-stacked"
+               ng-show="topoCtrl.EditMode && (selectedDeviceInTable.deviceOnline === 0) && !selectedDeviceInTable.deviceId"
+               style="width:90%">
+            <select class="form-control" ng-model="selectedDeviceInTable.modeDescription"
+                    ng-options="item.modename as item.modename for item in forms.modes"
+                    ng-change="modeChange(selectedDeviceInTable)"></select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <accordion close-others="false">
+      <!-- accordion group -->
+      <accordion-group is-open="status.open1" ng-init="status.open1 = true">
+        <accordion-heading>
+          <i class="fa" ng-class="{'fa-caret-down': status.open1, 'fa-caret-right': !status.open1}"></i> 设备规格
+        </accordion-heading>
+
+        <div class="row">
+          <div class="col-sm-6 form-group">
+            <h5 class="sidebar-subheader margin-top-zero"><span class="text-red"
+                                                                ng-show="topoCtrl.EditMode && selectedDeviceInTable.nodeType !== 'CLOUD'">&#42;</span>设备名称
+            </h5>
+            <div
+              ng-hide="topoCtrl.EditMode && (selectedDeviceInTable.nodeType !== 'CLOUD' || selectedDeviceInTable.isGroup )">
+              <span ng-if="selectedDeviceInTable.nameError" tooltip="请输入设备名称" tooltip-placement="right"><i
+                class="fa fa-times-circle text-red"></i> 未知 </span>
+              <span ng-if="!selectedDeviceInTable.nameError">{{selectedDeviceInTable.nameInDetail}}</span>
+            </div>
+            <input type="text" class="form-control"
+                   ng-show="topoCtrl.EditMode && selectedDeviceInTable.nodeType !== 'CLOUD'"
+                   ng-model="selectedDeviceInTable.nameInDetail"
+                   ng-change="topoCtrl.saveData('basic');validateDevice(selectedDeviceInTable);topoCtrl.createSnap(selectedDeviceInTable);"
+                   maxlength="20">
+            <input type="text" class="form-control" ng-show="topoCtrl.EditMode && selectedDeviceInTable.isGroup"
+                   ng-model="selectedDeviceInTable.nameInDetail"
+                   ng-change="validateDevice(selectedDeviceInTable);topoCtrl.groupNameEdit()" maxlength="50">
+            <error-msg ng-show="topoCtrl.EditMode" validator="selectedDeviceInTable" obj="selectedDeviceInTable"
+                       type="'name'"></error-msg>
+          </div>
+          <div class="col-sm-6 form-group" ng-show="['cloud', 'subnet'].indexOf(selectedDeviceInTable.iconType) === -1">
+            <h5 class="sidebar-subheader margin-top-zero"><span class="text-red"
+                                                                ng-show="topoCtrl.EditMode && selectedDeviceInTable.category === 'SECURITY_DEVICE'">&#42;</span>设备序列号
+            </h5>
+            <div ng-hide="topoCtrl.EditMode && (selectedDeviceInTable.deviceOnline == 0)">
+              <span ng-if="selectedDeviceInTable.serialError" tooltip="请输入序列号" tooltip-placement="right"><i
+                class="fa fa-times-circle text-red"></i> 未知 </span>
+              <span ng-if="!selectedDeviceInTable.serialError">{{selectedDeviceInTable.serialNumber || '未知'}}</span>
+            </div>
+            <input class="form-control" type="text"
+                   ng-show="topoCtrl.EditMode && (selectedDeviceInTable.deviceOnline == 0)"
+                   ng-model="selectedDeviceInTable.serialNumber"
+                   ng-change="topoCtrl.saveData('basic');serialNumberChanged(selectedDeviceInTable.serialNumber);validateDevice(selectedDeviceInTable)"
+                   maxlength="255">
+            <error-msg ng-show="topoCtrl.EditMode && (selectedDeviceInTable.deviceOnline == 0)"
+                       validator="selectedDeviceInTable" obj="selectedDeviceInTable" type="'serialNumber'"></error-msg>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 form-group"
+               ng-show="selectedDeviceInTable.category !== 'SECURITY_DEVICE' && ['cloud', 'subnet'].indexOf(selectedDeviceInTable.iconType) === -1">
+            <h5 class="sidebar-subheader"><span class="text-red" ng-show="topoCtrl.EditMode ">&#42;</span>设备型号</h5>
+            <div ng-hide="topoCtrl.EditMode && (selectedDeviceInTable.deviceOnline === 0)">
+              {{selectedDeviceInTable.modelInDetail | deviceModel}}
+            </div>
+            <div class="select-styled input-stacked"
+                 ng-show="topoCtrl.EditMode && (selectedDeviceInTable.deviceOnline == 0)">
+              <select class="form-control" id="topology-device-model-list" ng-model="selectedDeviceInTable.modelId"
+                      ng-options="item.modelId as (item.model_name + (item.model && (item.model !== item.model_name) ? ' / ' + item.model : '')) for item in forms.models"
+                      ng-change="modelChange(selectedDeviceInTable);">
+              </select>
+            </div>
+            <error-msg ng-show="topoCtrl.EditMode" validator="selectedDeviceInTable" obj="selectedDeviceInTable"
+                       type="'model'"></error-msg>
+          </div>
+          <div class="col-sm-12 form-group" ng-show="selectedDeviceInTable.category === 'SECURITY_DEVICE'">
+            <h5 class="sidebar-subheader">设备型号</h5>
+            <div>{{topoCtrl.simplifyModelName(selectedDeviceInTable.modelInDetail) || '未知' | deviceModel}}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 form-group" ng-show="['cloud', 'subnet'].indexOf(selectedDeviceInTable.iconType) === -1">
+            <h5 class="sidebar-subheader">设备厂商</h5>
+            <div>{{selectedDeviceInTable.manufacturerInDetail || '未知'}}</div>
+          </div>
+          <div class="col-sm-6 form-group" ng-show="selectedDeviceInTable.category === 'SECURITY_DEVICE'">
+            <h5 class="sidebar-subheader">端口数量</h5>
+            <div>{{selectedDeviceInTable.numPorts || '未知'}}</div>
+          </div>
+          <div class="col-sm-12 form-group"
+               ng-show="selectedDeviceInTable.category === 'SECURITY_DEVICE' && selectedDeviceInTable.versionInDetail">
+            <h5 class="sidebar-subheader">设备版本</h5>
+            <div>{{selectedDeviceInTable.versionInDetail || '未知'}}</div>
+          </div>
+        </div>
+        <div class="row" ng-show="selectedDeviceInTable.category !== 'FACTORY_DEVICE'">
+          <div class="col-sm-6 form-group"
+               ng-show="['cloud', 'switch', 'unknown-device'].indexOf(selectedDeviceInTable.iconType) === -1">
+            <h5 class="sidebar-subheader"><span class="text-red"
+                                                ng-show="topoCtrl.EditMode && selectedDeviceInTable.category !== 'NETWORK_DEVICE'">&#42;</span>IP地址
+            </h5>
+            <div ng-hide="topoCtrl.EditMode && (selectedDeviceInTable.deviceOnline === 0)">
+              <span ng-if="selectedDeviceInTable.invalidIp" tooltip="请输入IP地址" tooltip-placement="right"><i
+                class="fa fa-times-circle text-red"></i> 未知 </span>
+              <span ng-if="!selectedDeviceInTable.invalidIp">{{selectedDeviceInTable.ip || '未知'}}</span>
+            </div>
+            <input type="text" class="form-control"
+                   ng-show="topoCtrl.EditMode && (selectedDeviceInTable.deviceOnline === 0) && (selectedDeviceInTable.iconType !== 'subnet')"
+                   ng-model="selectedDeviceInTable.ip"
+                   ng-change="topoCtrl.saveData('ipmac');validateDevice(selectedDeviceInTable);topoCtrl.createSnap(selectedDeviceInTable);"
+                   maxlength="255">
+            <error-msg ng-show="topoCtrl.EditMode && (selectedDeviceInTable.deviceOnline === 0)"
+                       validator="selectedDeviceInTable" obj="selectedDeviceInTable" type="'ip'"></error-msg>
+          </div>
+          <div class="col-sm-6 form-group"
+               ng-show="['cloud', 'switch', 'unknown-device'].indexOf(selectedDeviceInTable.iconType) === -1">
+            <h5 class="sidebar-subheader">MAC地址</h5>
+            <div ng-hide="topoCtrl.EditMode && (selectedDeviceInTable.deviceOnline === 0)">{{selectedDeviceInTable.mac
+              || '未知'}}
+            </div>
+            <input type="text" class="form-control"
+                   ng-show="topoCtrl.EditMode && (selectedDeviceInTable.deviceOnline === 0)"
+                   ng-model="selectedDeviceInTable.mac"
+                   ng-change="topoCtrl.saveData('ipmac');validateDevice(selectedDeviceInTable);topoCtrl.createSnap(selectedDeviceInTable);"
+                   maxlength="255">
+            <error-msg ng-show="topoCtrl.EditMode && (selectedDeviceInTable.deviceOnline === 0)"
+                       validator="selectedDeviceInTable" obj="selectedDeviceInTable" type="'mac'"></error-msg>
+          </div>
+        </div>
+        <div class="row"
+             ng-show="selectedDeviceInTable.category === 'FACTORY_DEVICE' && selectedDeviceInTable.iconType === 'subnet'">
+          <div class="col-md-6 form-group">
+            <h5 class="sidebar-subheader"><span class="text-red" ng-show="topoCtrl.EditMode">&#42;</span>子网地址</h5>
+            <div ng-hide="topoCtrl.EditMode">
+              <span ng-if="selectedDeviceInTable.invalidIp" tooltip="请输入IP地址" tooltip-placement="right"><i
+                class="fa fa-times-circle text-red"></i> 未知 </span>
+              <span ng-if="!selectedDeviceInTable.invalidIp">{{selectedDeviceInTable.subnetIp || '未知'}}</span>
+            </div>
+            <input type="text" class="form-control" ng-show="topoCtrl.EditMode"
+                   ng-model="selectedDeviceInTable.subnetIp"
+                   ng-change="topoCtrl.saveData('ipmac');validateDevice(selectedDeviceInTable);topoCtrl.createSnap(selectedDeviceInTable);"
+                   maxlength="255">
+            <error-msg ng-show="topoCtrl.EditMode" validator="selectedDeviceInTable" obj="selectedDeviceInTable"
+                       type="'ip'"></error-msg>
+          </div>
+        </div>
+        <div class="row"
+             ng-show="selectedDeviceInTable.category === 'FACTORY_DEVICE' && selectedDeviceInTable.iconType !== 'subnet'"
+             ng-repeat="port in selectedDeviceInTable.ports | filter:search.isMgmtPort=true">
+          <div class="col-md-5 form-group">
+            <h5 class="sidebar-subheader" ng-show="$index === 0"><span class="text-red" ng-show="topoCtrl.EditMode">&#42;</span>IP地址
+            </h5>
+            <div ng-hide="topoCtrl.EditMode">
+              <span ng-if="selectedDeviceInTable.invalidIp" tooltip="请输入IP地址" tooltip-placement="right"><i
+                class="fa fa-times-circle text-red"></i> 未知 </span>
+              <span ng-if="!selectedDeviceInTable.invalidIp">{{port.portIp || '未知'}}</span>
+            </div>
+            <input type="text" class="form-control" ng-show="topoCtrl.EditMode" ng-model="port.portIp"
+                   ng-change="topoCtrl.saveData('ipmac');validateDevice(selectedDeviceInTable);topoCtrl.createSnap(selectedDeviceInTable);"
+                   maxlength="255">
+            <error-msg ng-show="topoCtrl.EditMode" validator="port" obj="selectedDeviceInTable" type="'ip'"></error-msg>
+          </div>
+          <div class="col-md-5 form-group padding-left-zero">
+            <h5 class="sidebar-subheader" ng-show="$index === 0"><span class="text-red"
+                                                                       ng-show="topoCtrl.EditMode&&topoCtrl.needMac">&#42;</span>MAC地址
+            </h5>
+            <div ng-hide="topoCtrl.EditMode">{{port.mac || '未知'}}</div>
+            <input type="text" class="form-control" ng-show="topoCtrl.EditMode" ng-model="port.mac"
+                   ng-change="topoCtrl.saveData('ipmac');validateDevice(selectedDeviceInTable);topoCtrl.createSnap(selectedDeviceInTable);"
+                   maxlength="255">
+            <error-msg ng-show="topoCtrl.EditMode" validator="port" obj="selectedDeviceInTable"
+                       type="'mac'"></error-msg>
+          </div>
+          <div class="col-sm-2"
+               ng-show="topoCtrl.EditMode && $index > 0 && selectedDeviceInTable.iconType !== 'subnet'">
+            <h5 class="sidebar-subheader" ng-show="$index === 0">　</h5>
+            <button class="btn btn-default pull-right"
+                    ng-click="topoCtrl.saveData('ipmac');removeIpMac($index);validateDevice(selectedDeviceInTable);"
+                    ng-disabled="$index < selectedDeviceInTable.ports.length - 1"><i class="fa fa-trash"></i></button>
+          </div>
+        </div>
+        <div class="row"
+             ng-show="topoCtrl.EditMode && selectedDeviceInTable.category === 'FACTORY_DEVICE' && selectedDeviceInTable.iconType !== 'subnet'">
+          <button class="btn btn-default pull-right" ng-disabled="selectedDeviceInTable.invalid"
+                  ng-click="topoCtrl.saveData('ipmac');addIpMac();validateDevice(selectedDeviceInTable);">添加端口
+          </button>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 form-group">
+            <h5 class="sidebar-subheader">更新时间</h5>
+            <div>{{selectedDeviceInTable.updateTime || '未知' | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+          </div>
+        </div>
+      </accordion-group>
+      <!-- accordion group -->
+      <accordion-group is-open="status.open2" ng-if="selectedDeviceInTable.category === 'SECURITY_DEVICE'">
+        <accordion-heading>
+          <i class="fa" ng-class="{'fa-caret-down': status.open2, 'fa-caret-right': !status.open2}"></i> 设备详情
+        </accordion-heading>
+        <div class="row">
+          <div class="col-sm-6">
+            <h5 class="sidebar-subheader margin-top-zero">设备启动时间</h5>
+            <div>{{selectedDeviceInTable.startDatetime || '未知' | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+          </div>
+          <div class="col-sm-6" ng-if="selectedDeviceInTable.statusText">
+            <h5 class="sidebar-subheader margin-top-zero">状态</h5>
+            <div><span class="text-{{selectedDeviceInTable.statusColor}}">{{selectedDeviceInTable.statusText}}</span>
+            </div>
+          </div>
+        </div>
+      </accordion-group>
+
+      <accordion-group ng-if="hasacltable" is-open="status.open3">
+        <accordion-heading>
+          <i class="fa" ng-class="{'fa-caret-down': status.open3, 'fa-caret-right': !status.open3}"></i> 访问控制表
+        </accordion-heading>
+        <div class="panel" ng-repeat="acl in acltable">
+          <div class="panel-heading">
+            <h6>表项编号{{acl._aclNumber}}</h6>
+          </div>
+          <div class="panel-body second-level-panel">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5 class="sidebar-subheader margin-top-zero">操作</h5>
+                <div>{{acl.aclAction==='permit' ? "允许" : "阻断"}}</div>
+
+                <div>
+                  <h5 class="sidebar-subheader">起源地址</h5>
+                  <div><span>{{acl.sourceIp}}</span></div>
+                </div>
+
+                <h5 class="sidebar-subheader">起源端口</h5>
+                <div>{{acl.sourcePort}}</div>
+              </div>
+              <div class="col-sm-6">
+                <h5 class="sidebar-subheader margin-top-zero">协议</h5>
+                <div>{{acl.protocolType}}</div>
+
+                <h5 class="sidebar-subheader">目标地址</h5>
+                <div>{{acl.destinationIp}}</div>
+
+                <h5 class="sidebar-subheader">目标端口</h5>
+                <div>{{acl.destinationPort}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </accordion-group>
+
+      <accordion-group is-open="status.open4" ng-show="(selectedDeviceInTable.category === 'SECURITY_DEVICE')">
+        <accordion-heading>
+          <i class="fa" ng-class="{'fa-caret-down': status.open4, 'fa-caret-right': !status.open4}"></i>
+          端口{{selectedDeviceInTable.modeDescription === '路由' ? '路由' : ''}}配置
+        </accordion-heading>
+        <div class="panel">
+          <div class="panel-heading">
+            <span>管理端口</span>
+          </div>
+          <div class="panel-body second-level-panel">
+            <div class="row">
+              <div class="col-sm-6">
+                <h5 class="sidebar-subheader margin-top-zero">端口连接状态</h5>
+                <div><i class="fa fa-circle icon-left"
+                        ng-class="{'text-lime': selectedDeviceInTable.statusText === '连线','text-gray': selectedDeviceInTable.mmgtPort != '连线' }"></i>{{selectedDeviceInTable.statusText}}
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <h5 class="sidebar-subheader margin-top-zero">IP地址</h5>
+                <div>{{selectedDeviceInTable.ip}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="margin-top-default"></div>
+
+        <div ng-controller="TabCtrl as tab" ng-show="(selectedDeviceInTable.category === 'SECURITY_DEVICE')">
+          <div class="panel">
+            <div class="panel-heading">
+              <span>选择端口</span>
+            </div>
+            <div>
+            </div>
+            <div class="panel-body second-level-panel">
+              <div class="tab-container">
+                <ul class="nav nav-tabs nav-tabs-small nav-tabs-top-border lime"
+                    ng-init="tab.active || tab.activatePanel('p0')">
+                  <li ng-repeat="port in selectedDeviceInTable.ports | orderBy:'index'" ng-if="!port.isMgmtPort"
+                      ng-class="{ active: tab.isActive(port.portName), oneEighth: selectedDeviceInTable.ports.length === 16, oneQuarter: selectedDeviceInTable.ports.length !== 16}">
+                    <a ng-click="tab.activatePanel(port.portName)">
+                      <span
+                        ng-class="{'text-lime': ((selectedDeviceInTable.statusText === '连线')&&(port.linkState === 1)),'text-gray': !((selectedDeviceInTable.statusText === '连线')&&(port.linkState === 1)) }">
+                        {{port.portName | uppercase}}
+                        <i class="fa fa-circle"
+                           ng-class="{'text-lime': ((selectedDeviceInTable.statusText === '连线')&&(port.linkState === 1)),'text-gray': !((selectedDeviceInTable.statusText === '连线')&&(port.linkState === 1)) }"></i>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="panel" ng-repeat="port in selectedDeviceInTable.ports" ng-show="tab.active == port.portName">
+            <div class="panel-heading">
+              <span>{{port.portName | uppercase }}端口</span>
+            </div>
+            <div class="panel-body second-level-panel">
+              <div ng-switch on="tab.active" class="tab-container-body">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <h5 class="sidebar-subheader margin-top-zero">端口连接状态</h5>
+                    <div><i class="fa fa-circle icon-left"
+                            ng-class="{'text-lime': ((selectedDeviceInTable.statusText === '连线')&&(port.linkState === 1)),'text-gray': !((selectedDeviceInTable.statusText === '连线')&&(port.linkState === 1)) }"></i>
+                      {{(selectedDeviceInTable.statusText === '连线') ? (port.linkState === 1 ? '连线' : (port.linkState ===
+                      -1 ? '掉线' : '未知')) : (selectedDeviceInTable.statusText === '未激活' ? '未知' : '掉线')}}
+                    </div>
+                  </div>
+                  <div class="col-sm-6" ng-if="port.portIp">
+                    <h5 class="sidebar-subheader">IP地址</h5>
+                    <div>{{port.portIp}}</div>
+                  </div>
+                  <div class="col-sm-6" ng-if="port.portIp && port.netMask && port.netMask !== '0'">
+                    <h5 class="sidebar-subheader">IP掩码</h5>
+                    <div>{{forms.netMasks[port.netMask]}}</div>
+                  </div>
+                  <div class="col-sm-12" ng-if="selectedDeviceInTable.modeDescription === '路由'">
+                    <h5 class="sidebar-subheader">通信端口</h5>
+                    <div>{{port.connection[0] || '无'}}</div>
+                  </div>
+                  <div class="col-sm-12" ng-if="selectedDeviceInTable.modeDescription === '路由'">
+                    <h5 class="sidebar-subheader">隔离端口</h5>
+                    <div>{{port.connection[1] || '无'}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </accordion-group>
+    </accordion>
+  </div>
+</div>
+<div id="topologySingle" class="position-relative"
+     style="margin:0 0;width:100vw;height:100vh;background-color:#262626;"></div>

@@ -1,0 +1,71 @@
+<div class="policy-detail-table">
+  <div class="margin-bottom-default">
+    <!--
+	  <div class="pull-right">
+		<input type="text" placeholder="搜索">
+		<span><button class="btn btn-default"><i class="fa fa-gear"></i></button></span>
+	  </div>
+	-->
+    <div class="clearfix"></div>
+  </div>
+
+  <table class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th class="table-col-sm">
+        <span>优先级</span>
+      </th>
+      <th>
+        <span>规则组名称</span>
+      </th>
+      <th>
+        <span>规则来源</span>
+      </th>
+      <th>
+        <span>规则项数量</span>
+      </th>
+      <th>
+        <span>基本描述</span>
+      </th>
+      <th>
+        <span>&nbsp;&nbsp;</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-index="0"
+        ng-repeat="policy in policyItem.table"
+    >
+      <td>{{(policyItem.currentPage-1)*policyItem.numPerPage+$index+1}}</td>
+      <td>{{policy.name}}</td>
+      <td>{{policy._typeDisplay}}</td>
+      <td ng-if="policy.type!='SIGNATURE'">{{policy['_rulesCount']}}</td>
+      <td ng-if="policy.type =='SIGNATURE'">{{policy['_signaturesCount']}}</td>
+      <td>{{policy.description}}</td>
+      <td>
+        <button
+          id="rule-whiteList-policyDetail_button_showDetail1{{(policyItem.currentPage-1)*policyItem.numPerPage+$index+1}}"
+          ng-click="policyItem.showDetail(policy)" class="btn btn-small btn-default"><i
+          class="fa fa-file-text-o icon-left"></i> 详情
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="text-center">
+  <pagination ng-model="policyItem.currentPage"
+              class="pagination-sm"
+              boundary-links="true"
+              total-items="policyItem.totalNum"
+              items-per-page="policyItem.numPerPage"
+              max-size="5"
+              num-pages="policyItem.numPages"
+              previous-text="&lsaquo;"
+              next-text="&rsaquo;"
+              first-text="&laquo;"
+              last-text="&raquo;"
+              ng-change="policyItem.pageChanged()"
+  ></pagination>
+</div>

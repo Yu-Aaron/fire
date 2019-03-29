@@ -1,0 +1,46 @@
+<div>
+  <style type="text/css">
+    .showDateTimeRange {
+      position: static;
+      margin-top: 0;
+    }
+
+    .hideDateTimeRange {
+      position: absolute;
+      margin-top: -52px;
+    }
+  </style>
+  <div class="padding-default"
+       ng-class="dtable.dateTimeRange && dtable.dateTimeRange.enable ? 'showDateTimeRange' : 'hideDateTimeRange'">
+    <button type="button" class="btn btn-default" style="margin-left:10px" ng-click="refresh()"><i
+      class="fa fa-refresh text-lime icon-left"></i>刷新{{dtable.test}}
+    </button>
+  </div>
+  <table class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th>&nbsp;</th>
+      <th order-by="flowTimestamp">起始时间</th>
+      <th order-by="sourceIp">IP地址</th>
+      <th order-by="sourceMac">MAC地址</th>
+      <th order-by="sourcePort">端口</th>
+      <th order-by="protocolSourceName">协议类型</th>
+      <th order-by="packetLenth">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="audit in dtable.table | filter: dtable.protocolSourceName"
+        ng-click="dtable.showDetailWindow(audit.flowdataHeadId, audit.protocolSourceName)">
+      <td></td>
+      <td>{{audit.flowTimestampLocal | date:'yyyy-MM-dd'}}</td>
+      <td>{{audit.sourceIp}} <=> {{audit.destinationIp}}</td>
+      <td>{{audit.sourceMac}} <=> {{audit.destinationMac}}</td>
+      <td>{{audit.sourcePort}} <=> {{audit.destinationPort}}</td>
+      <td>{{audit.protocolSourceName === 'ftpcontrol'?'ftp':audit.protocolSourceName}}</td>
+      <td>
+        <button class="btn btn-default pull-left">详细<i class="fa fa-chevron-circle-right icon-right"></i>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

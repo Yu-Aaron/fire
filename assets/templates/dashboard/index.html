@@ -1,0 +1,56 @@
+<!-- INCLUDE HEADER -->
+<header ng-include src="'templates/includes/header.html'"></header>
+
+<!--<main class="main-container" ng-class="dashboard.getClass()">-->
+  <!--<nav-left ng-include src="'templates/includes/nav-left.html'"></nav-left>-->
+  <!--<ui-view></ui-view>-->
+<!--</main>-->
+
+<main class="main-container" ui-view ng-class="dashboard.getClass()"></main>
+
+<div ng-if="$root.userlock === '1'" ng-include="'templates/dashboard/lock-user.html'"></div>
+
+<section id="request-result-popup" class="notification">
+  <div id="include_div_requestResult-{{$index}}" ng-repeat="msg in app.messages" class="angular-animate fade-out-right">
+    <alert id="alert_pop_up_message_{{$index}}" type="{{msg.type}}" class="notification_alert"
+           close="app.closeAlert(msg)"
+    >{{msg.content}}
+    </alert>
+  </div>
+</section>
+<section style="position: fixed; top: 6px; left: 500px; width: 700px; z-index: 15">
+  <div ng-repeat="smsg in app.stayMessage" class="angular-animate fade-out-right">
+    <alert type="{{smsg.type}}" class="notification_stay_alert"
+           close="app.closeStayAlert(smsg)"
+    >{{smsg.content}}<span ng-if="smsg.ip">({{smsg.ip}})</span></alert>
+  </div>
+</section>
+<script type="text/ng-template" id="InitializedModal.html">
+  <div class="modal-header">
+    <span>提示</span>
+  </div>
+  <div class="modal-body">
+    <div>
+      <span>{{items.message}}IP({{items.ip}})。</span>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button id="dashboard_modal_footer_ok_button" class="btn btn-default pull-right" ng-click="ok()">确定</button>
+    <!--<button id="dashboard_modal_footer_cancel_button" class="btn btn-default pull-left" ng-click="cancel()">取消</button>-->
+  </div>
+</script>
+
+<script type="text/ng-template" id="disconnectModal.html">
+  <div class="modal-header">
+    <h3 class="modal-header-title">服务器连接中断</h3>
+  </div>
+  <div class="modal-body">
+    <div style="text-align:center;">
+      <div>无法连接到{{$root.PLATFORM_NAME}}服务器</div>
+      <div>
+        <i class="fa fa-spinner fa-spin" style="font-size:2em; padding: 20px;"></i><br/>
+        正在尝试重新连接
+      </div>
+    </div>
+  </div>
+</script>

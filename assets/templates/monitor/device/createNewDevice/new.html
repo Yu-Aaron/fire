@@ -1,0 +1,94 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">新建设备</h3>
+  <a class="modal-close" ng-click="newDevice.cancel()"><i class="fa fa-times"></i></a>
+</div>
+
+<div class="modal-body">
+  <div class="modal-container">
+    <div class="row">
+      <div class="col-xs-6">
+        <strong>设备规格</strong>
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="new-device-type" class="col-xs-3 control-label"><span class="text-red">&#42;</span> 设备类型</label>
+            <div class="col-xs-9">
+              <div class="select-styled">
+                <select id="new-device-type" class="form-control" ng-model="device.category"
+                        ng-options="type | deviceCategoryFilter for type in forms.category"
+                        ng-change="newDevice.select('category')"></select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-name" class="col-xs-3 control-label"><span class="text-red">&#42;</span> 设备名称</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" id="new-device-name" ng-model="device.name" value="匡恩安全设备01"
+                     style="padding-left: 13px">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-make" class="col-xs-3 control-label"><span class="text-red">&#42;</span> 设备厂商</label>
+            <div class="col-xs-9">
+              <div class="select-styled">
+                <select id="new-device-make" class="form-control" ng-model="device.make"
+                        ng-options="make for make in forms.make" ng-change="newDevice.select('make')">
+                  <option value="">-- 请选择 --</option>
+                </select>
+              </div>
+              <div ng-if="">
+                <input type="text" class="form-control" style="margin-top:8px" placeholder="型号"
+                       style="padding-left: 13px">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-code" class="col-xs-3 control-label"><span class="text-red">&#42;</span> 设备型号</label>
+            <div class="col-xs-9">
+              <div class="select-styled">
+                <select id="new-device-code" class="form-control" ng-model="device.model"
+                        ng-options="code for code in forms.model" ng-change="newDevice.select('model')">
+                  <option value="">-- 请选择 --</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-version" class="col-xs-3 control-label"><span class="text-red">&#42;</span>
+              设备版本</label>
+            <div class="col-xs-9">
+              <div class="select-styled">
+                <select id="new-device-version" class="form-control" ng-model="device.version"
+                        ng-options="version for version in forms.version">
+                  <option value="">-- 请选择 --</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-serial" class="col-xs-3 control-label">设备序列号</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" id="new-device-serial" placeholder="设备序列号"
+                     ng-model="device.serialNumber" style="padding-left: 13px">
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-xs-6">
+        <div class="panel panel-device">
+          <div class="panel-body">
+            <img ng-src="/images/{{device.category == 'SECURITY_DEVICE' ? 'ips-icon' : 'plc-icon'}}.png" height="150"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL FOOTER -->
+<div class="modal-footer">
+  <button class="btn btn-default" ng-click="newDevice.done()"><i class="fa fa-check icon-left"
+                                                                 style="color:#76B900"></i>完成
+  </button>
+</div>

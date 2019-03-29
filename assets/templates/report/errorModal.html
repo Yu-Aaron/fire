@@ -1,0 +1,15 @@
+<div>
+  <div class="modal-header">
+    <h3 id="report_errormodal_header_title" class="modal-header-title"><i
+      class="fa fa-exclamation-triangle text-red icon-left"></i>错误信息</h3>
+    <a class="modal-close" ng-click="ok()"><i class="fa fa-times"></i></a>
+  </div>
+  <div class="modal-body-no-frame" style="padding-top: 10px">
+    <p id="report_errormodal_body_error">{{error}}</p>
+  </div>
+  <div class="modal-footer text-center">
+    <button id="report_errormodal_footer_ok_button" ng-show="!device.length" class="btn btn-default" ng-click="ok()">
+      确定
+    </button>
+  </div>
+</div>

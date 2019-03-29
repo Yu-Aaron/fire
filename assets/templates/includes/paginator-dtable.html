@@ -1,0 +1,28 @@
+<!-- PAGINATION -->
+<div class="row">
+  <div ng-if class="col-xs-4">
+    <div class="page-number-show" style="display:none">
+      <span>每页显示:</span>
+      <select ng-model="dtable.numPerPage" ng-options="pageNum for pageNum in [20, 40, 60]"
+              ng-change="dtable.updateNumPerPage()"></select>
+      <span>条</span>
+    </div>
+  </div>
+
+  <div class="text-center col-xs-12" ng-if="dtable.pagination">
+    <pagination ng-model="dtable.currentPage"
+                class="pagination-sm"
+                boundary-links="true"
+                total-items="dtable.totalNum"
+                items-per-page="dtable.numPerPage"
+                max-size="5"
+                num-pages="dtable.numPages"
+                previous-text="&lsaquo;"
+                next-text="&rsaquo;"
+                first-text="&laquo;"
+                last-text="&raquo;"
+                ng-change="dtable.pageChanged()"
+    ></pagination>
+    <span id="includes_paginator_dtable_totalcount" ng-if="dtable.totalCount" class="count-show">总共 {{dtable.totalNum}} {{dtable.name | tableUnit}}</span>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="input-append date-picker">
+  <input class="date-picker-input" ng-disabled="ngdisabled" data-format="yyyy-MM-dd" type="text" name="{{name}}"
+         id="{{id}}" placeholder="{{placeholder|date:'yyyy-MM-dd'}}" ng-model="time" maxlength="10"
+         ng-focus="click();setTime();showWidget();"></input>
+  <div class="add-on" ng-click="click();setTime();" ng-show="!ngdisabled">
+    <i data-time-icon="fa fa-clock-o" data-date-icon="fa fa-calendar">
+    </i>
+  </div>
+  <div class="add-on-show-only" ng-if="ngdisabled">
+    <i class="fa fa-calendar">
+    </i>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div>
+  <div class="pull-right margin-bottom-default">
+    <a class="btn btn-default" ng-click="dtable.doConfBackUps(dtable.selectedItems);$event.stopPropagation();">&nbsp;<i
+      class="fa fa-recycle icon-left"></i> 批量备份&nbsp;</a>
+  </div>
+  <table class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th class="text-center"><input type="checkbox" ng-model="dtable.selectAllValue" ng-click="dtable.selectAll()"/>
+      </th>
+      <th order-by="name">名称</th>
+      <th order-by="deviceOnline">设备状态</th>
+      <th order-by="serialNumber">序列号</th>
+      <th>
+        <span>&nbsp;</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="device in dtable.table">
+      <td class="text-center"><input type="checkbox" id="selected-item-{{$index}}"
+                                     ng-checked="dtable.selectedItems[device.deviceId]"
+                                     ng-model="dtable.selectedItems[device.deviceId]"
+                                     ng-disabled="dtable.isDeviceOffline(device)"/></td>
+      <td>{{device.name}}</td>
+      <td class="table-col-online">
+        <div class="bullet bullet-online" title="连线"
+             ng-if="device.deviceOnline===1&&device.deviceSource==='DISCOVERY'"></div>
+        <div class="bullet bullet-offline" title="掉线"
+             ng-if="device.deviceOnline!==1&&device.deviceSource==='DISCOVERY'"></div>
+        <div class="bullet bullet-unactivated" title="未激活" ng-if="device.deviceSource!=='DISCOVERY'"></div>
+      </td>
+      <td class="table-col-serial">{{device.serialNumber}}</td>
+      <td>
+        <a class="btn btn-default" ng-if="$root.dpiBackingUp[device.deviceId]" ng-disabled="true"><i
+          class="fa fa-spinner fa-spin icon-left"></i>备份中</a>
+        <a class="btn btn-default" ng-click="dtable.doConfBackUps([device.deviceId]);$event.stopPropagation();"
+           ng-disabled="dtable.isDeviceOffline(device)" ng-if="!$root.dpiBackingUp[device.deviceId]">&nbsp;<i
+          class="fa fa-recycle icon-left"></i> 备份&nbsp;</a>
+        <a class="btn btn-default"
+           ui-sref="setting.systemdevice.backup({deviceid: device.deviceId, deviceName: device.name})"
+           ng-click="$event.stopPropagation();">&nbsp;<i class="fa fa-chevron-circle-right icon-left"></i> 查看&nbsp;</a>
+        <a style="display:inline-block" class="input-alert-error" ng-show="$root.dpiBackingUpError[device.deviceId]">{{$root.dpiBackingUpMessage[device.deviceId]}}</a>
+        <a style="display:inline-block" class="text-lime" ng-show="!$root.dpiBackingUpError[device.deviceId]">{{$root.dpiBackingUpMessage[device.deviceId]}}</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <script type="text/ng-template" id="configuration-backup-device-confirmation.html">
+    <div class="modal-header">
+      <h3 class="modal-header-title">配置信息备份</h3>
+    </div>
+    <div class="modal-body">
+      安全设备配置信息备份将会持续较长时间，确认开始备份？
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default pull-right" ng-click="ok()"><i class="fa fa-check text-lime icon-left"></i>确定
+      </button>
+      <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times-circle icon-left"></i>取消
+      </button>
+    </div>
+  </script>
+</div>

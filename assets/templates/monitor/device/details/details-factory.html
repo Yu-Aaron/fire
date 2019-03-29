@@ -1,0 +1,80 @@
+<!-- TABLE ACCORDION -->
+<div ng-include="'templates/includes/table-accordion.html'"></div>
+
+
+<!-- SECTION: DEVICE EQUIPMENT -->
+<section id="device-equipment">
+
+  <!-- detail title -->
+  <div class="detail-title">
+    <div class="row">
+      <div class="col-xs-6">
+        <h4 class="pull-left">设备漏洞</h4>
+      </div>
+      <div class="col-xs-6 text-right">
+        <button type="button" class="btn btn-default pull-right">去规则页面部署</button>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hr-lime hr-thick margin-bottom-zero">
+
+  <div class="panel">
+
+    <!-- INCLUDE TOOLBAR -->
+    <div class="padding-default" ng-include src="'templates/includes/toolbar.html'"></div>
+
+
+    <!-- SECOND TABLE -->
+    <table class="table table-hover icon-hidden">
+      <thead>
+      <tr>
+        <th>
+          <span>名称</span>
+        </th>
+        <th>
+          <span>序列号</span>
+        </th>
+        <th>
+          <span>厂商</span>
+        </th>
+        <th>
+          <span>型号</span>
+        </th>
+        <th>
+          <span>分区</span>
+        </th>
+        <th>
+          <span>IP</span>
+        </th>
+        <th>
+          <span>应用版本</span>
+        </th>
+        <th>
+          <span>已知漏洞</span>
+        </th>
+        <th>
+          <span>保护漏洞</span>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>设备名称1</td>
+        <td>AN-1002</td>
+        <td>西门子</td>
+        <td>S-7000</td>
+        <td>表面处理车间</td>
+        <td>123.99.20</td>
+        <td>V3.5.113A</td>
+        <td>3</td>
+        <td>3</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="text-right padding-default">
+      <span>总共 3条事件</span>
+    </div>
+  </div>
+  </div>
+</section>

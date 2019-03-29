@@ -1,0 +1,325 @@
+<!--<div class="panel panel-lg padding-zero" ng-if="!rlogger.viewDetail">-->
+  <!--<div class="panel-header panel-header-border">-->
+    <!--定期日志报告设置-->
+    <!--<button id="report_logger_setting_edit_button"-->
+            <!--class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"-->
+            <!--ng-hide="rlogger.logger.editMode" ng-click="rlogger.logger.editSetting()"><i-->
+      <!--class="fa fa-pencil-square-o"></i></button>-->
+    <!--<button id="report_logger_setting_confirm_button"-->
+            <!--class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"-->
+            <!--ng-show="rlogger.logger.editMode" ng-click="rlogger.logger.confirmSetting()"><i-->
+      <!--class="fa fa-check text-lime"></i></button>-->
+    <!--<button id="report_logger_setting_cancel_button"-->
+            <!--class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"-->
+            <!--ng-show="rlogger.logger.editMode" ng-click="rlogger.logger.cancelSetting()"><i class="fa fa-remove"></i>-->
+    <!--</button>-->
+  <!--</div>-->
+  <!--<div class="panel-body">-->
+    <!--<div ng-show="rlogger.logger.editMode">-->
+      <!--<div class="row report-setting-padding">-->
+        <!--<div class="col-xs-2 setting-tag">-->
+          <!--频率-->
+        <!--</div>-->
+        <!--<div class="col-xs-3">-->
+          <!--<select id="report_logger_frequency_select"-->
+                  <!--class="select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"-->
+                  <!--ng-model="rlogger.logger.tempSetting.frequency">-->
+            <!--<option id="report_logger_frequency_everyday" class="btn btn-default" value="daily">每天</option>-->
+            <!--<option id="report_logger_frequency_everyweek" class="btn btn-default" value="weekly">每周</option>-->
+            <!--<option id="report_logger_frequency_everymonthfirstday" class="btn btn-default" value="monthly">每月一号-->
+            <!--</option>-->
+          <!--</select>-->
+          <!--<select id="report_logger_weekly_select"-->
+                  <!--class="select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"-->
+                  <!--ng-model="rlogger.logger.tempSetting.weekday"-->
+                  <!--ng-show="rlogger.logger.tempSetting.frequency==='weekly'">-->
+            <!--<option id="report_logger_weekly_mon" class="btn btn-default" value="星期一">星期一</option>-->
+            <!--<option id="report_logger_weekly_tue" class="btn btn-default" value="星期二">星期二</option>-->
+            <!--<option id="report_logger_weekly_wed" class="btn btn-default" value="星期三">星期三</option>-->
+            <!--<option id="report_logger_weekly_thu" class="btn btn-default" value="星期四">星期四</option>-->
+            <!--<option id="report_logger_weekly_fri" class="btn btn-default" value="星期五">星期五</option>-->
+            <!--<option id="report_logger_weekly_sat" class="btn btn-default" value="星期六">星期六</option>-->
+            <!--<option id="report_logger_weekly_sun" class="btn btn-default" value="星期天">星期天</option>-->
+          <!--</select>-->
+        <!--</div>-->
+        <!--<div class="col-xs-6 setting-tag">-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div ng-hide="rlogger.logger.editMode">-->
+      <!--<div class="row report-setting-padding">-->
+        <!--<div class="col-xs-2 setting-tag">-->
+          <!--频率-->
+        <!--</div>-->
+        <!--<div class="col-xs-3 setting-tag">-->
+          <!--{{rlogger.logger.setting.frequency==='daily'?'每天':rlogger.logger.setting.frequency==='weekly'?('每周' +-->
+          <!--rlogger.logger.setting.weekday):'每月一号'}}-->
+        <!--</div>-->
+        <!--<div class="col-xs-6 setting-tag">-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<!--<div class="panel panel-lg padding-zero bottom-Table" ng-if="!rlogger.viewDetail">-->
+  <!--<div class="panel-header panel-header-border">-->
+    <!--日志报告一览-->
+  <!--</div>-->
+  <!--<div class="panel-body">-->
+    <!--<table id="report_logger_table" class="table table-hover icon-hidden">-->
+      <!--<thead>-->
+      <!--<tr>-->
+        <!--<th class="table-col-sm"></th>-->
+        <!--<th class="table-col-20">报告名称</th>-->
+        <!--<th>报告日期</th>-->
+        <!--<th></th>-->
+      <!--</tr>-->
+      <!--</thead>-->
+      <!--<tbody>-->
+      <!--<tr id="report_logger_table_row_{{$index}}" ng-repeat="event in rlogger.logger.curData">-->
+        <!--<td></td>-->
+        <!--<td>-->
+          <!--日志_每{{rlogger.logger.setting.frequency==='daily'?'日':rlogger.logger.setting.frequency==='weekly'?'周':'月'}}报告_{{event.start-->
+          <!--| date: 'yyyy-MM-dd'}}-->
+        <!--</td>-->
+        <!--<td>-->
+          <!--<span ng-if="rlogger.logger.setting.frequency==='daily'">{{event.start | date: 'yyyy-MM-dd'}}</span>-->
+          <!--<span ng-if="rlogger.logger.setting.frequency==='weekly'">{{event.start | date: 'yyyy-MM-dd'}} - {{event.end | date: 'yyyy-MM-dd'}}</span>-->
+          <!--<span ng-if="rlogger.logger.setting.frequency==='monthly'">{{event.start | date: 'yyyy-MM'}}</span>-->
+        <!--</td>-->
+        <!--<td>-->
+          <!--<button id="report_logger_table_row_detail_button_{{$index}}" class="btn btn-default" privilege-->
+                  <!--ng-click="rlogger.logger.showDetail(event)">-->
+            <!--查看 <i class="fa fa-chevron-circle-right icon-right"></i>-->
+          <!--</button>-->
+        <!--</td>-->
+      <!--</tr>-->
+      <!--</tbody>-->
+    <!--</table>-->
+    <!--<br/>-->
+    <!--<div class="text-center">-->
+      <!--<ul id="report_logger_table_pagination" class="pagination-sm pagination ng-isolate-scope ng-valid">-->
+        <!--<li>-->
+          <!--<a href="" ng-click="rlogger.logger.gotoPageHead()" class="ng-binding">«</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="" ng-click="rlogger.logger.changePage(-1)" class="ng-binding"-->
+             <!--ng-disabled="rlogger.logger.curPage<=0">‹</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="" class="ng-binding" ng-click="rlogger.logger.changePage(-4)"-->
+             <!--ng-hide="rlogger.logger.curPage <= 3 || rlogger.logger.curPage < rlogger.logger.maxPage-2">{{rlogger.logger.curPage-3}}</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="" class="ng-binding" ng-click="rlogger.logger.changePage(-3)"-->
+             <!--ng-hide="rlogger.logger.curPage <= 2 || rlogger.logger.curPage < rlogger.logger.maxPage-1">{{rlogger.logger.curPage-2}}</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="" class="ng-binding" ng-click="rlogger.logger.changePage(-2)" ng-hide="rlogger.logger.curPage <= 1">{{rlogger.logger.curPage-1}}</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="" class="ng-binding" ng-click="rlogger.logger.changePage(-1)" ng-hide="rlogger.logger.curPage <= 0">{{rlogger.logger.curPage}}</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="" class="selectedPage">{{rlogger.logger.curPage+1}}</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="" class="ng-binding" ng-click="rlogger.logger.changePage(1)"-->
+             <!--ng-hide="rlogger.logger.curPage >= rlogger.logger.maxPage-1">{{rlogger.logger.curPage+2}}</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="" class="ng-binding" ng-click="rlogger.logger.changePage(2)"-->
+             <!--ng-hide="rlogger.logger.curPage >= rlogger.logger.maxPage-2">{{rlogger.logger.curPage+3}}</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="" class="ng-binding" ng-click="rlogger.logger.changePage(3)"-->
+             <!--ng-hide="rlogger.logger.curPage >= rlogger.logger.maxPage-3 || rlogger.logger.curPage > 1">{{rlogger.logger.curPage+4}}</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="" class="ng-binding" ng-click="rlogger.logger.changePage(4)"-->
+             <!--ng-hide="rlogger.logger.curPage >= rlogger.logger.maxPage-4 || rlogger.logger.curPage > 0">{{rlogger.logger.curPage+5}}</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="" ng-click="rlogger.logger.changePage(1)" class="ng-binding"-->
+             <!--ng-disabled="rlogger.logger.curPage >= rlogger.logger.maxPage-1">›</a>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--<a href="" ng-click="rlogger.logger.gotoPageEnd()" class="ng-binding">»</a>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<!--<div ng-if="rlogger.viewDetail">-->
+  <!--<div class="row margin-bottom-default">-->
+    <!--<div class="col-xs-12">-->
+      <!--<button id="report_logger_detail_return_button" class="btn btn-default pull-left"-->
+              <!--ng-click="rlogger.viewDetail=false;">-->
+        <!--<i class="fa fa-arrow-circle-left icon-left"></i>返回-->
+      <!--</button>-->
+      <!--<h4 class="margin-left-default vertical-mid display-inline-block">日志_{{rlogger.logger.detail.title}}</h4>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="tab-container margin-top-medium" ng-controller="TabCtrl as tab">-->
+    <!--<ul id="report_logger_detail_tab_list" class="nav nav-tabs nav-tabs-lg nav-tabs-lime"-->
+        <!--ng-init="tab.active || tab.activatePanel('ALL')">-->
+      <!--<li id="report_logger_detail_all_tab" ng-class="{ active: tab.isActive('ALL') }">-->
+        <!--<a href="#" ng-click="tab.activatePanel('ALL');">-->
+          <!--<span>全部日志</span>-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--<li id="report_logger_detail_console_login_tab" ng-class="{ active: tab.isActive('MW_LOGIN') }">-->
+        <!--<a href="#" ng-click="tab.activatePanel('MW_LOGIN');">-->
+          <!--<span>{{'监测审计平台'|resFilter:'slideAuditTitle'}}登录日志</span>-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--<li id="report_logger_detail_console_tab" ng-class="{ active: tab.isActive('MW_CMD') }">-->
+        <!--<a href="#" ng-click="tab.activatePanel('MW_CMD');">-->
+          <!--<span>{{'监测审计平台'|resFilter:'slideAuditTitle'}}操作日志</span>-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--<li id="report_logger_detail_login_tab" ng-class="{ active: tab.isActive('LOGIN') }">-->
+        <!--<a href="#" ng-click="tab.activatePanel('LOGIN');">-->
+          <!--<span>终端用户登录日志</span>-->
+        <!--</a>-->
+      <!--</li>-->
+      <!--<li id="report_logger_detail_cmd_tab" ng-class="{ active: tab.isActive('CMD') }">-->
+        <!--<a href="#" ng-click="tab.activatePanel('CMD');">-->
+          <!--<span>终端用户操作日志</span>-->
+        <!--</a>-->
+      <!--</li>-->
+    <!--</ul>-->
+    <!--<div ng-switch on="tab.active">-->
+      <!--<div class="tab-container-body" ng-switch-when="ALL">-->
+        <!--<div class="panel panel-lg">-->
+          <!--<div class="panel-body">-->
+            <!--<div class="row margin-bottom-default">-->
+              <!--<div class="col-xs-9">-->
+                <!--<h4 id="report_logger_detail_all_title" class="vertical-mid display-inline-block">{{alldata.title}}</h4>-->
+              <!--</div>-->
+              <!--<div class="col-xs-3">-->
+                <!--<button id="report_logger_detail_all_downloadhtml_button" class="btn btn-default pull-right"-->
+                        <!--ng-click="rlogger.logger.genPDF(alldata, ['日期','用户','IP','内容'], ['timeFormated','user','user_ip','operationName'], alldata.title, 'html')">-->
+                  <!--<i class="fa fa-download icon-left text-lime"></i>下载 HTML-->
+                <!--</button>-->
+                <!--<button id="report_logger_detail_all_downloadpdf_button" class="btn btn-default pull-right"-->
+                        <!--ng-click="rlogger.logger.genPDF(alldata, ['日期','用户','IP','内容'], ['timeFormated','user','user_ip','operationName'], alldata.title)">-->
+                  <!--<i class="fa fa-download icon-left text-lime"></i>下载 PDF-->
+                <!--</button>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<dtable>-->
+              <!--<all-logs></all-logs>-->
+            <!--</dtable>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="tab-container-body" ng-switch-when="MW_LOGIN">-->
+        <!--<div class="panel panel-lg">-->
+          <!--<div class="panel-body">-->
+            <!--<div class="row margin-bottom-default">-->
+              <!--<div class="col-xs-9">-->
+                <!--<h4 id="report_logger_detail_console_login_title" class="vertical-mid display-inline-block">-->
+                  <!--{{consolelogindata.title}}</h4>-->
+              <!--</div>-->
+              <!--<div class="col-xs-3">-->
+                <!--<button id="report_logger_detail_console_login_downloadhtml_button" class="btn btn-default pull-right"-->
+                        <!--ng-click="rlogger.logger.genPDF(consolelogindata, ['日期','用户','IP','内容'], ['timeFormated','user','user_ip','operationName'], consolelogindata.title, 'html')">-->
+                  <!--<i class="fa fa-download icon-left text-lime"></i>下载 HTML-->
+                <!--</button>-->
+                <!--<button id="report_logger_detail_console_login_downloadpdf_button" class="btn btn-default pull-right"-->
+                        <!--ng-click="rlogger.logger.genPDF(consolelogindata, ['日期','用户','IP','内容'], ['timeFormated','user','user_ip','operationName'], consolelogindata.title)">-->
+                  <!--<i class="fa fa-download icon-left text-lime"></i>下载 PDF-->
+                <!--</button>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<dtable>-->
+              <!--<console-login-logs></console-login-logs>-->
+            <!--</dtable>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="tab-container-body" ng-switch-when="MW_CMD">-->
+        <!--<div class="panel panel-lg">-->
+          <!--<div class="panel-body">-->
+            <!--<div class="row margin-bottom-default">-->
+              <!--<div class="col-xs-9">-->
+                <!--<h4 id="report_logger_detail_console_title" class="vertical-mid display-inline-block">-->
+                  <!--{{consoledata.title}}</h4>-->
+              <!--</div>-->
+              <!--<div class="col-xs-3">-->
+                <!--<button id="report_logger_detail_console_downloadhtml_button" class="btn btn-default pull-right"-->
+                        <!--ng-click="rlogger.logger.genPDF(consoledata, ['日期','用户','IP','内容'], ['timeFormated','user','user_ip','operationName'], consoledata.title, 'html')">-->
+                  <!--<i class="fa fa-download icon-left text-lime"></i>下载 HTML-->
+                <!--</button>-->
+                <!--<button id="report_logger_detail_console_downloadpdf_button" class="btn btn-default pull-right"-->
+                        <!--ng-click="rlogger.logger.genPDF(consoledata, ['日期','用户','IP','内容'], ['timeFormated','user','user_ip','operationName'], consoledata.title)">-->
+                  <!--<i class="fa fa-download icon-left text-lime"></i>下载 PDF-->
+                <!--</button>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<dtable>-->
+              <!--<console-logs></console-logs>-->
+            <!--</dtable>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="tab-container-body" ng-switch-when="LOGIN">-->
+        <!--<div class="panel panel-lg">-->
+          <!--<div class="panel-body">-->
+            <!--<div class="row margin-bottom-default">-->
+              <!--<div class="col-xs-9">-->
+                <!--<h4 id="report_logger_detail_login_title" class="vertical-mid display-inline-block">-->
+                  <!--{{logindata.title}}</h4>-->
+              <!--</div>-->
+              <!--<div class="col-xs-3">-->
+                <!--<button id="report_logger_detail_login_downloadhtml_button" class="btn btn-default pull-right"-->
+                        <!--ng-click="rlogger.logger.genPDF(logindata, ['日期','用户','IP','登录状态','原因','序列号'], ['timeFormated','_user','_user_ip','login_result','reason','boxId'], logindata.title, 'html')">-->
+                  <!--<i class="fa fa-download icon-left text-lime"></i>下载 HTML-->
+                <!--</button>-->
+                <!--<button id="report_logger_detail_login_downloadpdf_button" class="btn btn-default pull-right"-->
+                        <!--ng-click="rlogger.logger.genPDF(logindata, ['日期','用户','IP','登录状态','原因','序列号'], ['timeFormated','_user','_user_ip','login_result','reason','boxId'], logindata.title)">-->
+                  <!--<i class="fa fa-download icon-left text-lime"></i>下载 PDF-->
+                <!--</button>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<dtable>-->
+              <!--<login-logs></login-logs>-->
+            <!--</dtable>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="tab-container-body" ng-switch-when="CMD">-->
+        <!--<div class="panel panel-lg">-->
+          <!--<div class="panel-body">-->
+            <!--<div class="row margin-bottom-default">-->
+              <!--<div class="col-xs-9">-->
+                <!--<h4 id="report_logger_detail_cmd_title" class="vertical-mid display-inline-block">{{cmddata.title}}</h4>-->
+              <!--</div>-->
+              <!--<div class="col-xs-3">-->
+                <!--<button id="report_logger_detail_cmd_downloadhtml_button" class="btn btn-default pull-right"-->
+                        <!--ng-click="rlogger.logger.genPDF(cmddata, ['日期','用户','IP','输入命令','执行结果','序列号'], ['timeFormated','_user','_user_ip','cmd','cmd_result','boxId'], cmddata.title, 'html')">-->
+                  <!--<i class="fa fa-download icon-left text-lime"></i>下载 HTML-->
+                <!--</button>-->
+                <!--<button id="report_logger_detail_cmd_downloadpdf_button" class="btn btn-default pull-right"-->
+                        <!--ng-click="rlogger.logger.genPDF(cmddata, ['日期','用户','IP','输入命令','执行结果','序列号'], ['timeFormated','_user','_user_ip','cmd','cmd_result','boxId'], cmddata.title)">-->
+                  <!--<i class="fa fa-download icon-left text-lime"></i>下载 PDF-->
+                <!--</button>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<dtable>-->
+              <!--<cmd-logs></cmd-logs>-->
+            <!--</dtable>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->

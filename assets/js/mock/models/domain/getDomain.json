@@ -1,0 +1,42 @@
+[
+    {
+        "domainInfo": {
+            "domainInfoId": "8d2879a2-8f4b-4443-9759-5b4201375d18",
+            "domainName": "default",
+            "createdAt": "2015-11-21T02:01:22Z",
+            "updatedAt": "2015-11-21T02:01:22Z",
+            "createdBy": "root",
+            "updatedBy": "root",
+            "currentTopologyId": "4220ded2-73ce-4fa0-baf3-e60d38f446db",
+            "_subnets": [],
+            "domainCode": "default",
+            "isMultiDomains": false
+        },
+        "user": {
+            "userId": "24e81a2e-d9bd-409b-a9b5-7adc0e7397fe",
+            "name": "admin",
+            "salt": "2524e49e-edf1-4345-8d53-aeb9fc1f3d82",
+            "failedLoginAttemptCount": 0,
+            "locked": false,
+            "lastLogin": "2015-11-23T18:23:06Z",
+            "createdBy": "root",
+            "updatedBy": "root",
+            "createdAt": "2015-11-21T02:01:22Z",
+            "updatedAt": "2015-11-23T18:19:59Z",
+            "_roles": [
+                {
+                    "roleId": "4e76b3fc-09d9-48f3-ba28-b657a6cef922",
+                    "name": "default默认管理员",
+                    "createdAt": "2015-11-21T02:01:22Z",
+                    "updatedAt": "2015-11-21T02:01:22Z",
+                    "comment": "default默认管理员",
+                    "priority": 1,
+                    "defaultRole": true,
+                    "roleLevel": "ADMIN"
+                }
+            ],
+            "stuffName": "",
+            "_type": 0
+        }
+    }
+]

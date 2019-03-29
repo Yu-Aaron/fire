@@ -1,0 +1,114 @@
+.form-inline {
+  input {
+    width: 100px;
+    margin-right: 10px;
+
+    &[type=date] {
+      width: 125px;
+    }
+  }
+  label {
+    margin-right: 5px;
+  }
+}
+
+.form-search {
+  text-align: right;
+
+  input {
+    width: 200px;
+  }
+}
+
+// SMALL SCREEN STYLES
+@media (max-width: @screen-xlg) {
+  .form-inline {
+    input {
+      width: 95px;
+
+      &[type=date] {
+        width: 125px;
+      }
+    }
+  }
+
+  .form-search {
+    input {
+      width: 120px;
+    }
+  }
+}
+
+/* ----------------------------------------
+  New Form Styles
+---------------------------------------- */
+
+input[type=text],
+input[type=password] {
+  height: 30px;
+  padding: 8px 10px;
+  background-color: @white;
+  border: 1px solid @border-gray-new;
+  border-radius: @border-radius-base;
+  box-shadow: none;
+  color: @color-font-content;
+  font-size: 12px;
+  &:focus {
+    border: 2px solid @primary;
+    color: @txt-white-gray;
+  }
+  &[disabled] {
+    color: @txt-disable;
+  }
+  &.error {
+    border: 2px solid @error;
+  }
+  &::-webkit-input-placeholder {
+    color: #4d4d4d;
+  }
+}
+.form-control[disabled] {
+  background-color: #24272f;
+}
+.input-alert {
+  color: @secondary;
+  &:before {
+    margin-right: 8px;
+    font-family: FontAwesome;
+    font-size: 14px;
+    line-height: 14px;
+  }
+}
+
+.input-alert-vertical {
+  margin-top: 6px;
+}
+
+.input-alert-horizontal {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+.input-alert-error {
+  &:extend(.input-alert all);
+  &:before {
+    content: "\f06a";
+    color: @error;
+  }
+}
+
+.input-alert-success {
+  &:extend(.input-alert all);
+  &:before {
+    content: "\f058";
+    color: @primary;
+  }
+}
+
+.input-alert-info {
+  &:extend(.input-alert all);
+  &:before {
+    content: "\f05a";
+    color: @info;
+  }
+}

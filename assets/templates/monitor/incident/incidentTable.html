@@ -1,0 +1,83 @@
+<div>
+  <!--<div privilege ng-if="!disableToolbarButtons && !(dtable.advancedSearch && dtable.advancedSearch.enable)" class="padding-default" ng-class="dtable.dateTimeRange && dtable.dateTimeRange.enable ? 'showDateTimeRange' : 'hideDateTimeRange'">-->
+  <!--<div class="btn-flash-wrapper">-->
+  <div ng-if="!disableToolbarButtons" class="padding-default"
+       ng-class="dtable.dateTimeRange && dtable.dateTimeRange.enable ? 'showDateTimeRange' : 'hideDateTimeRange'">
+    <div class="btn-toolbar">
+      <div class="btn-flash-wrapper" style="vertical-align:top">
+        <!-- <div class="btn-flash" ng-class="{'flashing-green-faster': event.shouldFlashIncident}"></div> -->
+        <button id="monitor-event-incident_button_refresh" type="button" class="btn btn-default"
+                ng-click="dtable.refresh();incident.getAllCounts();incident.shouldFlashIncident = false;incident.showRefreshMessage()">
+          <i class="fa fa-refresh text-lime icon-left"></i>刷新
+        </button>
+      </div>
+      <button id="monitor-event-incident_button_markAllRead" type="button" class="btn btn-default"
+              ng-click="markAllRead()" ng-disabled="!dtable.table.length"
+              setting-privilege privilege-name="EVENT" privilege-require="EDIT" privilege-handle="hidden" ><i
+        class="fa fa-adjust text-light-blue icon-left"></i>标记所有未读成已读
+      </button>
+      <button id="monitor-event-incident_button_markAllDeleted" type="button" class="btn btn-default"
+              ng-click="markAllDeleted()" ng-disabled="!dtable.table.length"
+              setting-privilege privilege-name="EVENT" privilege-require="EDIT" privilege-handle="hidden"><i
+        class="fa fa-times-circle-o text-red icon-left"></i>清空所有事件
+      </button>
+
+      <button id="monitor-event-incident_button_openExportPanelFalse" type="button" class="btn btn-default"
+              ng-click="openExportPanel(false)"
+              ng-disabled="!dtable.table.length"><i class="fa fa-download text-lime icon-left"></i>导出全部
+      </button>
+      <button id="monitor-event-incident_button_openExportPanelTrue" type="button" class="btn btn-default"
+              ng-click="openExportPanel(true)"
+              ng-disabled="!dtable.table.length"><i class="fa fa-download text-lime icon-left"></i>导出当前记录
+      </button>
+    </div>
+  </div>
+  <div class="notice-wrap">
+    <div class="refresh-success" ng-show="incident.showRefreshConfirmation">
+      <span class="icon"><i class="fa fa-check-circle text-lime"></i></span>安全事件列表已更新
+      <div class="cancel-button">
+        <i class="fa fa-remove" ng-click="incident.showRefreshConfirmation=false"></i>
+      </div>
+    </div>
+    <div class="new-incident" ng-show="incident.shouldFlashIncident">
+      <span class="icon"><i class="fa fa-times-circle text-red"></i></span>系统监测到新增安全事件，请刷新并查看事件列表
+      <div class="cancel-button">
+        <i class="fa fa-remove" ng-click="incident.shouldFlashIncident=false"></i>
+      </div>
+    </div>
+  </div>
+  <table class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th><span>是否已读</span></th>
+      <th order-by="riskLevel">风险等级</th>
+      <th order-by="incidentId">时间</th>
+      <th order-by="sourceIp">起源IP地址</th>
+      <th order-by="destinationIp">目标IP地址</th>
+      <th order-by="sourcePort">起源端口</th>
+      <th order-by="destinationPort">目标端口</th>
+      <th order-by="matchedKey">规则</th>
+      <th order-by="action">处理措施</th>
+      <th><span>查看详细</span></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="monitor-event-incident_tr_clickEventRow_{{$index+1}}" ng-repeat="inc in dtable.table" fade-in-list
+        ng-class="{'new': inc.status == 'NEW'}" ng-click="incident.clickIncRow(inc)">
+      <td style="width: 76px">
+        <span class="status">未读</span>
+      </td>
+      <td>{{inc.riskLevel | eventRiskLevel}}</td>
+      <td>{{inc.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+      <td>{{inc.sourceIp}}</td>
+      <td>{{inc.destinationIp}}</td>
+      <td>{{inc.sourcePort}}</td>
+      <td>{{inc.destinationPort}}</td>
+      <td>{{inc.matchedKey}}</td>
+      <td>{{inc.action | eventAction}}</td>
+      <td><a ui-sref="monitor.incident.detail({eventId:inc.incidentId})" class="btn btn-default">详细 <i
+        class="fa fa-chevron-circle-right icon-right"></i></a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

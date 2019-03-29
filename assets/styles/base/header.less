@@ -1,0 +1,165 @@
+// ==================
+// LOGO AND SUBLOGO
+// ==================
+
+.top-bar {
+  height: 78px;
+  background: @bg-top-bar;
+  position: relative;
+  box-shadow: 0 4px 8px -5px #000;
+  z-index: 1005;
+}
+
+// ==================
+// LOGO AND SUBLOGO
+// ==================
+.logo {
+  float: left;
+  width: 158px;
+  line-height: 78px;
+  text-align: center;
+  .logo-icon {
+    display: inline-block;
+    img {
+      width: 130px;
+      height: auto;
+    }
+  }
+}
+
+// ===============================
+// VERSION MODAL WINDOW
+// ===============================
+
+.version-modal-window .modal-dialog {
+  width: 325px;
+  margin: 60px 0 auto -162px;
+}
+
+.version-modal-backdrop {
+  background: none;
+}
+
+.version-image {
+  padding-left: 10px;
+  margin-bottom: 10px;
+  border-right: 1px black solid;
+}
+
+// ===============================
+// HEADER NAVIGATION AND DROPDOWNS
+// ===============================
+
+.header-nav {
+  padding: 0;
+  height: 100%;
+
+  .header-nav-dropdown {
+    float: left;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 15px;
+    height: inherit;
+
+    .header-nav-dropdown-title {
+      margin-top: 8px;
+      float: left;
+      color: @gray30;
+    }
+  }
+
+  // HEADER NAV RIGHT SIDE (THE ICONS)
+  .header-nav-right {
+    float: right;
+    margin-right: 20px;
+    .header-nav-right-item {
+      float: left;
+      height: 32px;
+      margin-top: 23px;
+      margin-right: 10px;
+      &:hover .dropdown-menu {
+        display: block;
+      }
+
+      .dropdown-header {
+        font-size: 13px;
+      }
+
+      .dropdown-notification-center {
+        border: 1px solid black !important;
+        padding: 0px;
+        li {
+          margin: 0px;
+          line-height: 30px;
+          border-top: 1px solid #383838;
+          border-bottom: 1px solid black;
+        }
+      }
+      .dropdown-system-user {
+        border: 1px solid #0c0c0e;
+        padding: 18px 0;
+        background: #1b1f28;
+        li {
+          position: relative;
+          margin: 4px 0 0;
+          line-height: 30px;
+          &:hover{
+            &:before{
+              position: absolute;
+              content: '';
+              display: block;
+              top: 0;
+              left: 0;
+              height: 100%;
+              width: 2px;
+              background: #4898ef;
+            }
+          }
+          a:hover{
+            background: #243142;
+          }
+        }
+      }
+
+    }
+  }
+
+  // HEADER NAV ICONS
+  .header-nav-icon {
+    font-size: 24px;
+    // margin-left: 15px;
+    padding: 7px 10px 7px 10px;
+    // background: #3d3d3d;
+  }
+
+  // HEADER NAV USER ICON
+  .header-nav-icon-user {
+    // margin-right: 20px;
+    position: relative;
+
+    // &:after {
+    //   position: absolute;
+    //   font-family: FontAwesome;
+    //   right: -20px;
+    //   content: "\f0d7";
+    // }
+
+    // &[aria-expanded="true"]{
+    //   &:after {
+    //     content: "\f0d8";
+    //   }
+    // }
+  }
+}
+
+//
+// GoJS config header for water proof
+//
+.gshHeader {
+  border-color: #efdec7;
+  font-size: 16px;
+  margin-bottom: 7;
+}
+
+
+

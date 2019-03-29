@@ -1,0 +1,104 @@
+<div class="detail-page-wrapper pattern-detail-page content-scrollable">
+  <div class="toolbar padding-default">
+    <a href="javascript:;" ng-click="goBack()" class="btn btn-default"><i class="fa fa-arrow-circle-left icon-left"></i>返回</a>
+    <h5 class="margin-left-default display-inline-block">{{patternDetail.name}}行为特征匹配</h5>
+  </div>
+
+  <div class="figure-print-image">
+    <img id="touch-logo" src="images/exact-touchid-logo-animation.gif">
+  </div>
+
+  <div class="pattern-matching-content">
+    <div>入侵行为特征匹配完毕</div>
+    <br>
+    <div class="pattern-matching btn btn-default unclickable" ng-repeat="(key, value) in patternDetail">
+      <div ng-if="key === 'signatureMsg'">
+        <span>漏洞名称：</span>
+        <span>{{value}}</span>
+        <span><i class="fa fa-check" style="color: lime"></i></span>
+      </div>
+      <div ng-if="key === 'appLayerProtocol'">
+        <span>发现{{value}}行为特征</span>
+        <span><i class="fa fa-check" style="color: lime"></i></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pattern-table">
+    <div>入侵事件详情</div>
+    <table class="table table-hover icon-hidden">
+      <thead>
+      <tr>
+        <th>日期</th>
+        <th>时间</th>
+        <th>起始设备</th>
+        <th>目标设备</th>
+        <th>协议</th>
+        <th>协议细节</th>
+        <th>&nbsp</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!--<tr ng-repeat-start="item in patternTable" ng-click="accordion.current = !accordion.current">-->
+      <tr ng-repeat="item in patternTable">
+        <!--<td><i class="fa {{accordion.current ? 'fa-chevron-down' : 'fa-chevron-right'}}"></i></td>-->
+        <td>{{item.timestamp | date:'yyyy-MM-dd'}}</td>
+        <td>{{item.timestamp | date:'HH:mm:ss'}}</td>
+        <td>{{item.sourceName}}</td>
+        <td>{{item.destinationName}}</td>
+        <td>{{item.protocol}}</td>
+        <td>{{item.matchedKey}}</td>
+        <td>
+          <button type="button" class="btn btn-default" ng-click="showDetail(item.intrusionIncidentId)">详情</button>
+        </td>
+      </tr>
+      <!--<tr ng-repeat-end ng-if="accordion.current">-->
+      <!--<td colspan="100%" style="background-color: rgb(19, 19, 19)">-->
+      <!--<div class="row">-->
+      <!--<table>-->
+      <!--<thead>-->
+      <!--<tr>-->
+      <!--<th>日期</th>-->
+      <!--<th>时间</th>-->
+      <!--<th>起始设备</th>-->
+      <!--<th>目标设备</th>-->
+      <!--<th>协议</th>-->
+      <!--<th>协议细节</th>-->
+      <!--<th>&nbsp;</th>-->
+      <!--</tr>-->
+      <!--</thead>-->
+      <!--<tbody>-->
+      <!--<tr ng-repeat="device in item.device" >-->
+      <!--<td>fake {{device.timestamp}}</td>-->
+      <!--<td>fake {{device.timestamp}}</td>-->
+      <!--<td>{{device.source}}</td>-->
+      <!--<td>{{device.target}}</td>-->
+      <!--<td>{{device.protocol}}</td>-->
+      <!--<td>{{device.protocolDetail}}</td>-->
+      <!--<td><button ng-click="showDetail()">详情</button></td>-->
+      <!--</tr>-->
+      <!--</tbody>-->
+      <!--</table>-->
+      <!--</div>-->
+      <!--</td>-->
+      <!--</tr>-->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="text-center">
+    <pagination ng-model="currentPage.value"
+                class="pagination-sm"
+                boundary-links="true"
+                total-items="totalNum"
+                items-per-page="numPerPage"
+                max-size="5"
+                num-pages="numPages"
+                previous-text="&lsaquo;"
+                next-text="&rsaquo;"
+                first-text="&laquo;"
+                last-text="&raquo;"
+                ng-change="pageChanged(currentPage)"
+    ></pagination>
+  </div>
+</div>

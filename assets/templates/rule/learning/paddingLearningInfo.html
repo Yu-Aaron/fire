@@ -1,0 +1,40 @@
+<div ng-init="learningCtrl.stopCountDown()" class="signature-learning-detail">
+  <div class="learning-detail-name">
+    <span ng-class="learningCtrl.detailPanel.status" ng-show="learningCtrl.detailPanelItem.state == 'PENDING'"><i
+      class="fa fa-clock-o text-lime"></i>&nbsp;</span>
+    <span>{{learningCtrl.detailPanelItem.taskName}}</span>
+  </div>
+
+  <div ng-if="!learningCtrl.editLearningDetail" class="learning-detail">
+    <span>开始学习：{{learningCtrl.detailPanelItem.startDatetimeLocal}}</span>
+    <br>
+    <span>停止学习：{{learningCtrl.detailPanelItem.endDatetimeLocal}}</span>
+    <br>
+    <span>学习长度：{{learningCtrl.detailPanelItem.difference.days}}天{{learningCtrl.detailPanelItem.difference.hours}}小时{{learningCtrl.detailPanelItem.difference.mins | number:0}}分</span>
+    <br>
+    <br>
+
+    <button class="btn btn-default"
+            ng-click="learningCtrl.remove(learningCtrl.detailPanelItem);learningCtrl.showDetailPanel=false; learningCtrl.editLearningDetail = false">
+      取消预设
+    </button>
+    <button class="btn btn-default pull-right"
+            ng-click="learningCtrl.editLearningDetail=!learningCtrl.editLearningDetail">更改预设
+    </button>
+  </div>
+  <div ng-if="learningCtrl.editLearningDetail" class="edit-learning-detail">
+
+    <div ng-include src="'templates/includes/learning-time-picker.html'"
+         onload="learningCtrl.initTimePicker(learningCtrl.detailPanelItem)"></div>
+    <br>
+
+    <button class="btn btn-default"
+            ng-click="learningCtrl.remove(learningCtrl.detailPanelItem);learningCtrl.showDetailPanel=false; learningCtrl.editLearningDetail = false">
+      取消预设
+    </button>
+    <button class="btn btn-default pull-right"
+            ng-click="!learningCtrl.intervalError && learningCtrl.changeLearningInterval(learningCtrl.detailPanelItem)">
+      完成设置
+    </button>
+  </div>
+</div>

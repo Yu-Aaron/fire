@@ -1,0 +1,33 @@
+<div ng-if="type=='name'">
+  <span class="input-alert-error name-error" ng-show="validator.nameError">设备名称不能为空</span>
+</div>
+<div ng-if="type=='serialNumber'">
+  <span class="input-alert-error serial-empty" ng-show="validator.serialError">序列号不能为空</span>
+  <span class="input-alert-error serial-dup" ng-show="validator.hasDuplicateSN">序列号不能重复</span>
+  <span class="input-alert-error serial-invalid"
+        ng-show="(validator.modelError || validator.serialFormatError) && obj.serialNumber && obj.category === 'SECURITY_DEVICE'">序列号不符合规则</span>
+</div>
+<div ng-if="type=='model'">
+  <span class="input-alert-error model-empty" ng-show="validator.modelError">设备型号不能为空</span>
+</div>
+<div ng-if="type=='ip'">
+  <span class="input-alert-error ip-dup" ng-show="validator.hasDuplicateIP">IP地址不能重复</span>
+  <div ng-if="obj.iconType != 'subnet' && !validator.hasDuplicateIP">
+    <span class="input-alert-error ip-invalid" ng-show="validator.invalidIp ">请输入合法IP地址</span>
+    <span class="input-alert-error ip-conflict" ng-show="!validator.invalidIp && validator.invalidRange">输入的IP地址与系统中的现有设备子网地址冲突</span>
+  </div>
+  <div ng-if="obj.iconType == 'subnet' && !validator.hasDuplicateIP">
+    <span class="input-alert-error subnet-invalid"
+          ng-show="(validator.invalidIp || validator.invalidNetMask)">请输入合法子网地址</span>
+    <span class="input-alert-error subnet-conflict" ng-show="(validator.invalidRange)">输入的子网地址与系统中的现有设备子网地址冲突</span>
+  </div>
+</div>
+<div ng-if="type=='mac'">
+  <span class="input-alert-error mac-invalid" ng-show="validator.invalidMac">请输入合法MAC地址</span>
+  <span class="input-alert-error mac-dup" ng-show="!validator.invalidMac && validator.hasDuplicateMAC">MAC地址不能重复</span>
+</div>
+<div ng-if="type=='domain'">
+  <span class="input-alert-error domain-invalid" ng-show="validator.invalidDomain">请输入合法域名</span>
+  <span class="input-alert-error domain-dup"
+        ng-show="!validator.invalidDomain && validator.hasDuplicateDomain">域名不能重复</span>
+</div>

@@ -1,0 +1,53 @@
+<div>
+    <div class="padding-default"
+         ng-class="dtable.dateTimeRange && dtable.dateTimeRange.enable ? 'showDateTimeRange' : 'hideDateTimeRange'">
+        <div class="btn-toolbar">
+            <button id="monitor-logger-logdcTab_button_refresh" type="button" class="btn btn-default"
+                    ng-click="dtable.refresh()"><i class="fa fa-refresh text-lime icon-left"></i>刷新
+            </button>
+            <button id="monitor-logger-logdcTab_button_openExportPanel" type="button" class="btn btn-default"
+                    ng-click="openExportPanel(true)" ng-disabled="!dtable.table.length"><i
+                    class="fa fa-download text-lime icon-left"></i>导出
+            </button>
+            <button id="monitor-logger-logdcTab_button_deleteSelected" type="button" class="btn btn-default"
+                    ng-click="deleteSelected()" ng-disabled="!dtable.table.length" setting-privilege
+                    privilege-name="LOG_MANAGEMENT" privilege-require="MIXED" privilege-handle="hidden">
+                <i class="fa fa-trash-o icon-left"></i>删除
+            </button>
+            <button id="monitor-logger-logdcTab_button_markAllDeleted" type="button" class="btn btn-default"
+                    ng-click="markAllDeleted()" ng-disabled="!dtable.table.length" setting-privilege
+                    privilege-name="LOG_MANAGEMENT" privilege-require="MIXED"
+                    privilege-handle="hidden"><i class="fa fa-times-circle-o text-red icon-left"></i>清空所有日志
+            </button>
+        </div>
+    </div>
+    <table class="table table-hover icon-hidden">
+        <thead>
+        <tr>
+            <th class="text-center"><input id="selected-item-all" custom-checkbox tri-state-checkbox type="checkbox"
+                                           ng-model="dtable.selectAllValue"
+                                           ng-click="dtable.selectAll()"/>
+            </th>
+            <th order-by="timestamp">日期</th>
+            <th order-by="user">用户</th>
+            <th order-by="user_ip">IP</th>
+            <th order-by="cmd">输入命令</th>
+            <th order-by="cmd_result">执行结果</th>
+            <th order-by="boxId">序列号</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="log in dtable.table" fade-in-list>
+            <td class="text-center"><input id="selected-item-{{$index}}" custom-checkbox type="checkbox"
+                                           ng-click="dtable.selectItem()"
+                                           ng-model="dtable.selectedItems[log.dpiUserCmdLogId]"/></td>
+            <td class="table-col-datetime">{{log.timestamp | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="table-col-username">{{log.user}}</td>
+            <td class="table-col-ip">{{log.user_ip}}</td>
+            <td><span tooltip-append-to-body="true" tooltip="{{log.cmd}}">{{log.cmd | ellipsis:'30'}}</span></td>
+            <td><span tooltip-append-to-body="true" tooltip="{{log.cmd_result}}">{{log.cmd_result | ellipsis:'30'}}</span></td>
+            <td class="table-col-serial">{{log.boxId}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

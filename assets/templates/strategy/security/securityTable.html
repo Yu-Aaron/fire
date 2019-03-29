@@ -1,0 +1,611 @@
+<div>
+    <div class="margin-bottom-default strategy-new-delete-container">
+        <a id="strategy-security-add" class="btn btn-default" ng-click="dtable.addNewStrategy()" setting-privilege
+           privilege-name="STRATEGY_SECURITY" privilege-require="MIXED" privilege-handle="hidden">
+            &nbsp;<i class="fa fa-file-o fa-after-blue fa-plus-overlay icon-left"></i> 新增&nbsp;</a>
+        <a id="strategy-security-delete" class="btn btn-default" ng-click="dtable.deleteStrategy()" setting-privilege
+           privilege-name="STRATEGY_SECURITY" privilege-require="MIXED" privilege-handle="hidden">
+            &nbsp;<i class="fa fa-trash-o icon-left"></i> 删除&nbsp;</a>
+    </div>
+    <table class="table table-hover icon-hidden"
+           cg-busy="{promise:$root.securityStrategyDeleteTaskPromise,message:'安全策略删除中，请稍侯...'}">
+        <thead>
+        <tr>
+            <th class="text-center">
+                <label>
+                    <input id="selected-item-all" custom-checkbox tri-state-checkbox type="checkbox"
+                           ng-model="dtable.selectAllValue" ng-click="dtable.selectAll()"/>
+                </label>
+            </th>
+            <th>序号</th>
+            <th order-by="name">策略名称</th>
+            <th order-by="sourceObjectName">源策略对象</th>
+            <th order-by="targetObjectName">目标策略对象</th>
+            <th order-by="serviceAppName">应用/服务</th>
+            <th order-by="timeObjectName" ng-if="false">生效时间</th>
+            <th order-by="action">动作</th>
+            <th order-by="enable">启用状态</th>
+            <th order-by="enableLog">日志</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="strategy in dtable.table" fade-in-list>
+            <td class="text-center">
+                <label>
+                    <input custom-checkbox type="checkbox" id="selected-item-{{$index}}"
+                           ng-checked="dtable.selectedItems[strategy.name]"
+                           ng-change="dtable.selectChanged()"
+                           ng-model="dtable.selectedItems[strategy.name]"/>
+                </label></td>
+            <td>{{skip + $index + 1}}</td>
+            <td>{{strategy.name}}</td>
+            <td>{{strategy.sourceObjectName}}</td>
+            <td>{{strategy.targetObjectName}}</td>
+            <td>{{strategy.serviceAppName}}</td>
+            <td ng-if="false">{{strategy.timeObjectName}}</td>
+            <td>{{strategy.action | strategyAction}}</td>
+            <td>{{strategy.enable | convertTrueFalse:'启用':'禁用'}}</td>
+            <td>{{strategy.enableLog | convertTrueFalse:'开启':'关闭'}}</td>
+            <td>
+                <a id="strategy-security-view" class="btn btn-sm btn-default"
+                   ng-click="dtable.viewStrategy(strategy)" ng-if="isNoEditPri">查看</a>
+                <a id="strategy-security-edit" class="btn btn-sm btn-default" ng-click="dtable.editStrategy(strategy)"
+                   title="编辑" setting-privilege privilege-name="{{privilegeName}}" privilege-require="MIXED"
+                   privilege-handle="hidden">
+                    <i class="fa fa-edit"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <script type="text/ng-template" id="strategy-security-add-new.html">
+        <div class="modal-security-strategy-info" global-events>
+            <form name="newStrategyForm" ng-submit="ok(newStrategyForm.$valid &&
+                (selectedSourceObject && selectedTargetObject &&
+                    (newStrategy.sourceObjectName !== newStrategy.targetObjectName ||
+                    newStrategy.sourceObjectName === 'any')) && selectedSoftware)">
+            <div class="modal-header">
+                <h4 class="modal-header-title">新增安全策略</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body-security-strategy-info">
+                    <div class="row">
+                        <div class="row">
+                            <div class="col-xs-1 info-title-label">名称</div>
+                            <div class="col-xs-5">
+                                <input name="name" type="text" custom-val="nameval" validator="checkNameVal"
+                                       ng-model="newStrategy.name" ng-model-options="{ updateOn: 'blur' }"
+                                       maxlength="20" placeholder="PLC到HMI" required>
+                                <div class="input-alert-error" ng-show="newStrategyForm.name.$error.nameval">
+                                    {{nameValMsg}}</div>
+                            </div>
+                            <div class="col-xs-6">
+                                <span class="toggle-container">
+                                    开启&nbsp;<switch-toggle status="newStrategy.enable"
+                                                           on-label="" off-label=""></switch-toggle>
+                                </span>
+                                <span class="toggle-container">
+                                    日志&nbsp;<switch-toggle status="newStrategy.enableLog"
+                                                           on-label="" off-label=""></switch-toggle>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-1 info-title-label">动作</div>
+                            <div class="col-xs-6">
+                                <span class="radio-container">
+                                    <label>
+                                        <input name="action" custom-radio id="action_allow"
+                                               ng-model="newStrategy.action"
+                                               type="radio" value="ALLOW">
+                                        <span>放行</span>
+                                    </label>
+                                </span>
+                                <span class="radio-container">
+                                    <label>
+                                        <input name="action" custom-radio id="action_reject"
+                                               ng-model="newStrategy.action"
+                                               type="radio" value="REJECT">
+                                        <span>阻断</span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-1 info-title-label">源对象</div>
+                            <div class="col-xs-5">
+                                <angucomplete id="source-objects" search-str="newStrategy.sourceObjectName"
+                                              fetch-action="searchObjects(str)"
+                                              placeholder="请输入源对象名称" pause="0" minlength="1"
+                                              selectedobject="selectedSourceObject" ng-required="true"
+                                              searchfields="name" titlefield="name"></angucomplete>
+                                <div class="input-alert-error"  ng-hide="!newStrategy.sourceObjectName ||
+                                    selectedSourceObject">未找到该名称对象，请重新输入有效的名称
+                                </div>
+                                <div class="input-alert-error"  ng-show="selectedSourceObject &&
+                                    newStrategy.sourceObjectName === newStrategy.targetObjectName &&
+                                    newStrategy.sourceObjectName !== 'any'">
+                                    源对象不能与目标对象相同，请选择其他对象
+                                </div>
+                            </div>
+                            <div class="col-xs-1 info-label">目标对象</div>
+                            <div class="col-xs-5">
+                                <angucomplete id="target-objects" search-str="newStrategy.targetObjectName"
+                                              fetch-action="searchObjects(str)"
+                                              placeholder="请输入目标对象名称" pause="0" minlength="1"
+                                              selectedObject="selectedTargetObject" ng-required="true"
+                                              searchfields="name" titlefield="name"></angucomplete>
+                                <div class="input-alert-error"  ng-hide="!newStrategy.targetObjectName ||
+                                    selectedTargetObject">未找到该名称对象，请重新输入有效的名称
+                                </div>
+                                <div class="input-alert-error"  ng-show="selectedTargetObject &&
+                                    newStrategy.sourceObjectName === newStrategy.targetObjectName &&
+                                    newStrategy.sourceObjectName !== 'any'">
+                                    目标对象不能与源对象相同，请选择其他对象
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-1 info-title-label">应用/服务</div>
+                            <div class="col-xs-5">
+                                <span class="radio-container">
+                                    <label>
+                                        <input name="software" custom-radio id="software_app" ng-model="software"
+                                               type="radio" value="APPLICATION" ng-change="newStrategy.serviceAppName=''">
+                                        <span>按应用</span>
+                                    </label>
+                                </span>
+                                <span class="radio-container">
+                                    <label>
+                                        <input name="software" custom-radio id="software_svc" ng-model="software"
+                                               type="radio" value="SERVICE"
+                                               ng-change="newStrategy.serviceAppName='';newStrategy.appSetting=false">
+                                        <span>按服务</span>
+                                    </label>
+                                </span>
+                                <div>
+                                    <angucomplete id="software-service-app-search" search-str="newStrategy.serviceAppName"
+                                                  fetch-action="searchServiceApps(str)"
+                                                  placeholder="{{software === 'APPLICATION' ?
+                                                    '请输入应用名称' : '请输入服务名称'}}" pause="0" minlength="1"
+                                                  selectedObject="selectedSoftware" ng-required="true"
+                                                  searchfields="name" titlefield="name"></angucomplete>
+                                    <div class="input-alert-error"  ng-hide="!newStrategy.serviceAppName || selectedSoftware">
+                                        未找到该名称{{software === 'APPLICATION' ?'应用' : '服务'}}，请重新输入有效的名称
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-1 info-label" ng-if="false">生效时间</div>
+                            <div class="col-xs-5" ng-if="false">
+                                <select id="times" class="select-styled" ng-model="newStrategy.timeObjectName"
+                                        ng-options="time for time in times">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 setting-app-label">
+                                <label>
+                                    <input custom-checkbox type="checkbox" id="setting-app-control"
+                                           ng-model="newStrategy.appSetting" ng-disabled="software !== 'APPLICATION'"/>
+                                    <span>设置应用控制</span>
+                                </label>
+                                <div class="setting-app-container" ng-if="newStrategy.appSetting">
+                                    <div ng-hide="appProtocolType">
+                                        无法识别应用协议类型
+                                    </div>
+                                    <div class="common-setting-container" ng-if="appProtocolType && false">
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="col-xs-4 info-label">
+                                                    <label>
+                                                        <input custom-checkbox type="checkbox" id="setting-app-flood"
+                                                               ng-model="newStrategy.enableFlood"/>
+                                                        <span>请求泛洪控制</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <div class="col-xs-3">
+                                                        <span class="info-label">阈值</span>
+                                                    </div>
+                                                    <div class="col-xs-9">
+                                                        <input name="settingFlood" type="text"
+                                                               custom-val="range" validator="checkRangeVal"
+                                                               val-args="{'min': 400, 'max': 3000}"
+                                                               ng-model="newStrategy.floodSetting"
+                                                               ng-model-options="{ updateOn: 'blur' }"
+                                                               ng-pattern="/^\d$|^[1-9]\d{1,3}$/" maxlength="4"
+                                                               ng-disabled="!newStrategy.enableFlood"
+                                                               ng-required="newStrategy.enableFlood">
+                                                        <span class="info-label">个/秒</span>
+                                                        <div class="input-alert-error"
+                                                             ng-show="newStrategyForm.settingFlood.$error.pattern ||
+                                                                newStrategyForm.settingFlood.$error.range">
+                                                            必须输入数字(范围400 - 3000)</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="col-xs-4 info-label">
+                                                    <label>
+                                                        <input custom-checkbox type="checkbox" id="setting-app-transaction"
+                                                               ng-model="newStrategy.enableTransaction"/>
+                                                        <span>应用事务处理限制</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <div class="col-xs-3">
+                                                        <span class="info-label">阈值</span>
+                                                    </div>
+                                                    <div class="col-xs-9">
+                                                        <input name="settingTransaction" type="text"
+                                                               custom-val="range" validator="checkRangeVal"
+                                                               val-args="{'min': 400, 'max': 3000}"
+                                                               ng-model="newStrategy.transactionSetting"
+                                                               ng-model-options="{ updateOn: 'blur' }"
+                                                               ng-pattern="/^\d$|^[1-9]\d{1,3}$/" maxlength="4"
+                                                               ng-disabled="!newStrategy.enableTransaction"
+                                                               ng-required="newStrategy.enableTransaction">
+                                                        <span class="info-label">次/秒</span>
+                                                        <div class="input-alert-error"
+                                                             ng-show="newStrategyForm.settingTransaction.$error.pattern ||
+                                                                newStrategyForm.settingTransaction.$error.range">
+                                                            必须输入数字(范围400 - 3000)</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <div class="col-xs-4 info-label">
+                                                    <label>
+                                                        <input custom-checkbox type="checkbox" id="setting-app-noresponse"
+                                                               ng-model="newStrategy.enableNoresponse"/>
+                                                        <span>累计请求无响应告警</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <div class="col-xs-3">
+                                                        <span class="info-label">阈值</span>
+                                                    </div>
+                                                    <div class="col-xs-9">
+                                                        <input name="settingNoresponse" type="text"
+                                                               custom-val="range" validator="checkRangeVal"
+                                                               val-args="{'min': 5000, 'max': 20000}"
+                                                               ng-model="newStrategy.noresponseSetting"
+                                                               ng-model-options="{ updateOn: 'blur' }"
+                                                               ng-pattern="/^\d$|^[1-9]\d{1,4}$/" maxlength="5"
+                                                               ng-disabled="!newStrategy.enableNoresponse"
+                                                               ng-required="newStrategy.enableNoresponse">
+                                                        <span class="info-label">次</span>
+                                                        <div class="input-alert-error"
+                                                             ng-show="newStrategyForm.settingNoresponse.$error.pattern ||
+                                                                newStrategyForm.settingNoresponse.$error.range">
+                                                            必须输入数字(范围5000 - 20000)</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="func-code-setting-container" ng-if="appProtocolType">
+                                        <hr class="hr-small-margin" ng-if="false">
+                                        <div class="row">
+                                            <div class="col-xs-2 col-xs-offset-10">
+                                                <button type="button" id="setting-app-new-funccode"
+                                                        class="btn btn-default pull-right"
+                                                        ng-click="addNewFuncCode()" setting-privilege
+                                                        privilege-name="STRATEGY_SECURITY" privilege-require="MIXED"
+                                                        privilege-handle="disabled">&nbsp;
+                                                    <i class="fa fa-file-o fa-after-blue fa-plus-overlay icon-left"></i>
+                                                     新增&nbsp;</button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div ui-tree id="func-code-tree-root">
+                                                    <ul ui-tree-nodes="" ng-model="treeNodes">
+                                                        <li ng-repeat="node in treeNodes" ui-tree-node
+                                                            ng-include="'/templates/strategy/security/funcCodeUiTreeTpl.html'">
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-default pull-right" ng-hide="isAddingStrategy">
+                    <i class="fa fa-check text-lime icon-left"></i>确定
+                </button>
+                <button class="btn btn-default pull-right" ng-disabled="true" ng-show="isAddingStrategy">
+                    <i class="fa fa-spinner fa-spin icon-left"></i>添加中
+                </button>
+                <button type="button" class="btn btn-default pull-left" ng-click="cancel()">
+                    <i class="fa fa-times icon-left"></i>取消
+                </button>
+            </div>
+            </form>
+        </div>
+    </script>
+    <script type="text/ng-template" id="strategy-security-edit.html">
+        <div class="modal-security-strategy-info" global-events>
+        <form name="editStrategyForm" ng-submit="ok(editStrategyForm.$valid &&
+                    (selectedSourceObject && selectedTargetObject &&
+                        (editStrategy.sourceObjectName !== editStrategy.targetObjectName ||
+                        editStrategy.sourceObjectName === 'any')) && selectedSoftware)">
+        <div class="modal-header">
+            <h4 class="modal-header-title">编辑安全策略</h4>
+        </div>
+        <div class="modal-body">
+        <div class="modal-body-security-strategy-info">
+        <div class="row">
+        <div class="row">
+            <div class="col-xs-1 info-title-label">名称</div>
+            <div class="col-xs-5">
+                <input name="name" type="text" custom-val="nameval" validator="checkNameVal"
+                       ng-model="editStrategy.name" ng-model-options="{ updateOn: 'blur' }"
+                       maxlength="20" placeholder="PLC到HMI" required ng-disabled="isViewOnly||isEditDisabled">
+                <div class="input-alert-error" ng-show="editStrategyForm.name.$error.nameval">
+                    {{nameValMsg}}</div>
+            </div>
+            <div class="col-xs-6">
+                                    <span class="toggle-container">
+                                        开启&nbsp;<switch-toggle status="editStrategy.enable"
+                                                               on-label="" off-label=""
+                                                               disabled="isViewOnly"></switch-toggle>
+                                    </span>
+                                    <span class="toggle-container">
+                                        日志&nbsp;<switch-toggle status="editStrategy.enableLog"
+                                                               on-label="" off-label=""
+                                                               disabled="isViewOnly"></switch-toggle>
+                                    </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-1 info-title-label">动作</div>
+            <div class="col-xs-6">
+                                    <span class="radio-container">
+                                        <label>
+                                            <input name="action" custom-radio id="action_allow"
+                                                   ng-model="editStrategy.action"
+                                                   type="radio" value="ALLOW" ng-disabled="isViewOnly">
+                                            <span>放行</span>
+                                        </label>
+                                    </span>
+                                    <span class="radio-container">
+                                        <label>
+                                            <input name="action" custom-radio id="action_reject"
+                                                   ng-model="editStrategy.action"
+                                                   type="radio" value="REJECT" ng-disabled="isViewOnly">
+                                            <span>阻断</span>
+                                        </label>
+                                    </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-1 info-title-label">源对象</div>
+            <div class="col-xs-5">
+                <angucomplete id="source-objects" search-str="editStrategy.sourceObjectName"
+                              fetch-action="searchObjects(str)"
+                              placeholder="请输入源对象名称" pause="0" minlength="1"
+                              selectedobject="selectedSourceObject" ng-required="true"
+                              searchfields="name" titlefield="name" ng-disabled="isViewOnly"></angucomplete>
+                <div class="input-alert-error"  ng-hide="!editStrategy.sourceObjectName ||
+                                        selectedSourceObject">未找到该名称对象，请重新输入有效的名称
+                </div>
+                <div class="input-alert-error"  ng-show="selectedSourceObject &&
+                                        editStrategy.sourceObjectName === editStrategy.targetObjectName &&
+                                        editStrategy.sourceObjectName !== 'any'">
+                    源对象不能与目标对象相同，请选择其他对象
+                </div>
+            </div>
+            <div class="col-xs-1 info-label">目标对象</div>
+            <div class="col-xs-5">
+                <angucomplete id="target-objects" search-str="editStrategy.targetObjectName"
+                              fetch-action="searchObjects(str)"
+                              placeholder="请输入目标对象名称" pause="0" minlength="1"
+                              selectedObject="selectedTargetObject" ng-required="true"
+                              searchfields="name" titlefield="name" ng-disabled="isViewOnly"></angucomplete>
+                <div class="input-alert-error"  ng-hide="!editStrategy.targetObjectName ||
+                                        selectedTargetObject">未找到该名称对象，请重新输入有效的名称
+                </div>
+                <div class="input-alert-error"  ng-show="selectedTargetObject &&
+                                        editStrategy.sourceObjectName === editStrategy.targetObjectName &&
+                                        editStrategy.sourceObjectName !== 'any'">
+                    目标对象不能与源对象相同，请选择其他对象
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-1 info-title-label">应用/服务</div>
+            <div class="col-xs-5">
+                                    <span class="radio-container">
+                                        <label>
+                                            <input name="software" custom-radio id="software_app" ng-model="software"
+                                                   type="radio" value="APPLICATION"
+                                                   ng-disabled="isViewOnly" ng-change="editStrategy.serviceAppName=''">
+                                            <span>按应用</span>
+                                        </label>
+                                    </span>
+                                    <span class="radio-container">
+                                        <label>
+                                            <input name="software" custom-radio id="software_svc" ng-model="software"
+                                                   type="radio" value="SERVICE" ng-disabled="isViewOnly"
+                                                   ng-change="editStrategy.serviceAppName='';editStrategy.appSetting=false">
+                                            <span>按服务</span>
+                                        </label>
+                                    </span>
+                <div>
+                    <angucomplete id="software-service-app-search" search-str="editStrategy.serviceAppName"
+                                  fetch-action="searchServiceApps(str)"
+                                  placeholder="{{software === 'APPLICATION' ?
+                                                        '请输入应用名称' : '请输入服务名称'}}" pause="0" minlength="1"
+                                  selectedObject="selectedSoftware" ng-required="true"
+                                  searchfields="name" titlefield="name" ng-disabled="isViewOnly"></angucomplete>
+                    <div class="input-alert-error"  ng-hide="!editStrategy.serviceAppName || selectedSoftware">
+                        未找到该名称{{software === 'APPLICATION' ?'应用' : '服务'}}，请重新输入有效的名称
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-1 info-label" ng-if="false">生效时间</div>
+            <div class="col-xs-5" ng-if="false">
+                <select id="times" class="select-styled" ng-model="editStrategy.timeObjectName"
+                        ng-options="time for time in times" ng-disabled="isViewOnly">
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 setting-app-label">
+                <label>
+                    <input custom-checkbox type="checkbox" id="setting-app-control"
+                           ng-model="editStrategy.appSetting"
+                           ng-disabled="software !== 'APPLICATION' || isViewOnly"/>
+                    <span>设置应用控制</span>
+                </label>
+                <div class="setting-app-container" ng-if="editStrategy.appSetting">
+                    <div ng-hide="appProtocolType">
+                        无法识别应用协议类型
+                    </div>
+                    <div class="common-setting-container" ng-if="appProtocolType && false">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="col-xs-4 info-label">
+                                    <label>
+                                        <input custom-checkbox type="checkbox" id="setting-app-flood"
+                                               ng-model="editStrategy.enableFlood" ng-disabled="isViewOnly"/>
+                                        <span>请求泛洪控制</span>
+                                    </label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="col-xs-3">
+                                        <span class="info-label">阈值</span>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input name="settingFlood" type="text"
+                                               custom-val="range" validator="checkRangeVal"
+                                               val-args="{'min': 400, 'max': 3000}"
+                                               ng-model="editStrategy.floodSetting"
+                                               ng-model-options="{ updateOn: 'blur' }"
+                                               ng-pattern="/^\d$|^[1-9]\d{1,3}$/" maxlength="4"
+                                               ng-disabled="!editStrategy.enableFlood || isViewOnly"
+                                               ng-required="editStrategy.enableFlood">
+                                        <span class="info-label">个/秒</span>
+                                        <div class="input-alert-error"
+                                             ng-show="editStrategyForm.settingFlood.$error.pattern ||
+                                                                    editStrategyForm.settingFlood.$error.range">
+                                            必须输入数字(范围400 - 3000)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="col-xs-4 info-label">
+                                    <label>
+                                        <input custom-checkbox type="checkbox" id="setting-app-transaction"
+                                               ng-model="editStrategy.enableTransaction" ng-disabled="isViewOnly"/>
+                                        <span>应用事务处理限制</span>
+                                    </label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="col-xs-3">
+                                        <span class="info-label">阈值</span>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input name="settingTransaction" type="text"
+                                               custom-val="range" validator="checkRangeVal"
+                                               val-args="{'min': 400, 'max': 3000}"
+                                               ng-model="editStrategy.transactionSetting"
+                                               ng-model-options="{ updateOn: 'blur' }"
+                                               ng-pattern="/^\d$|^[1-9]\d{1,3}$/" maxlength="4"
+                                               ng-disabled="!editStrategy.enableTransaction || isViewOnly"
+                                               ng-required="editStrategy.enableTransaction">
+                                        <span class="info-label">次/秒</span>
+                                        <div class="input-alert-error"
+                                             ng-show="editStrategyForm.settingTransaction.$error.pattern ||
+                                                                    editStrategyForm.settingTransaction.$error.range">
+                                            必须输入数字(范围400 - 3000)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div class="col-xs-4 info-label">
+                                    <label>
+                                        <input custom-checkbox type="checkbox" id="setting-app-noresponse"
+                                               ng-model="editStrategy.enableNoresponse" ng-disabled="isViewOnly"/>
+                                        <span>累计请求无响应告警</span>
+                                    </label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="col-xs-3">
+                                        <span class="info-label">阈值</span>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <input name="settingNoresponse" type="text"
+                                               custom-val="range" validator="checkRangeVal"
+                                               val-args="{'min': 5000, 'max': 20000}"
+                                               ng-model="editStrategy.noresponseSetting"
+                                               ng-model-options="{ updateOn: 'blur' }"
+                                               ng-pattern="/^\d$|^[1-9]\d{1,4}$/" maxlength="5"
+                                               ng-disabled="!editStrategy.enableNoresponse || isViewOnly"
+                                               ng-required="editStrategy.enableNoresponse">
+                                        <span class="info-label">次</span>
+                                        <div class="input-alert-error"
+                                             ng-show="editStrategyForm.settingNoresponse.$error.pattern ||
+                                                                    editStrategyForm.settingNoresponse.$error.range">
+                                            必须输入数字(范围5000 - 20000)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="func-code-setting-container" ng-if="appProtocolType">
+                        <hr class="hr-small-margin" ng-if="false">
+                        <div class="row">
+                            <div class="col-xs-2 col-xs-offset-10">
+                                <button type="button" id="setting-app-new-funccode"
+                                        class="btn btn-default pull-right"
+                                        ng-click="addNewFuncCode()" setting-privilege
+                                        privilege-name="STRATEGY_SECURITY" privilege-require="MIXED"
+                                        privilege-handle="disabled">&nbsp;
+                                    <i class="fa fa-file-o fa-after-blue fa-plus-overlay icon-left"></i>
+                                    新增&nbsp;</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div ui-tree id="func-code-tree-root">
+                                    <ul ui-tree-nodes="" ng-model="treeNodes">
+                                        <li ng-repeat="node in treeNodes" ui-tree-node
+                                            ng-include="'/templates/strategy/security/funcCodeUiTreeTpl.html'">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-default pull-right" ng-hide="isEdittingStrategy">
+                <i class="fa fa-check text-lime icon-left"></i>确定
+            </button>
+            <button class="btn btn-default pull-right" ng-disabled="true" ng-show="isEdittingStrategy">
+                <i class="fa fa-spinner fa-spin icon-left"></i>添加中
+            </button>
+            <button type="button" class="btn btn-default pull-left" ng-click="cancel()">
+                <i class="fa fa-times icon-left"></i>取消
+            </button>
+        </div>
+        </form>
+        </div>
+    </script>
+</div>

@@ -1,0 +1,37 @@
+<div>
+  <table class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th order-by="level">事件等级</th>
+      <th>日期</th>
+      <th>时间</th>
+      <th order-by="sourceName">起源</th>
+      <th order-by="deviceName">保护终端</th>
+      <th order-by="destinationName">目标</th>
+      <th order-by="appLayerProtocol">协议</th>
+      <th>
+        <span></span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-if="detail.incident.incidentId !=inc.incidentId" ng-repeat="inc in dtable.table"
+        ng-class="{'new': inc.status == 'NEW'}" ng-click="event.clickIncRow(inc)">
+      <td>
+        <i class="fa" ng-class="{'REJECTBOTH': 'fa-ban text-red', 'DROP': 'fa-ban text-red', 'WARN': 'fa-warning text-yellow'}[inc.level]"></i>
+        {{inc.level | eventLevel}}
+        <span ng-if="inc.futureAction"
+              ng-class="{'ALLOW': 'green-bottom-right', REJECTBOTH': 'red-bottom-right', 'DROP': 'red-bottom-right', 'ALERT': 'yellow-bottom-right'}[inc.futureAction]"></span>
+      </td>
+      <td>{{inc.timestamp | date: 'yyyy-MM-dd'}}</td>
+      <td>{{inc.timestamp | date: 'HH:mm:ss'}}</td>
+      <td>{{inc.sourceName}}</td>
+      <td>{{inc.deviceName}}</td>
+      <td>{{inc.destinationName}}</td>
+      <td>{{inc.appLayerProtocol}}</td>
+      <td><a href="/monitor/event/{{inc.incidentId}}" class="btn btn-default">详细 <i
+        class="fa fa-chevron-circle-right icon-right"></i></a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

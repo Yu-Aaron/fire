@@ -1,0 +1,136 @@
+<div>
+  <div class="device-view-inner" ng-if="device.iconType === 'ips8'">
+    <div class="device-view-inner-main ips8">
+      <img src="/images/devices/ips8.png" alt="device">
+
+      <div class="device-cable cable-p0"
+           ng-class="{'visible': true || detail.device.devicePorts[1] && detail.device.devicePorts[1].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+      <div class="device-cable cable-p1"
+           ng-class="{'visible': true || detail.device.devicePorts[2] && detail.device.devicePorts[2].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+      <div class="device-cable cable-p2"
+           ng-class="{'visible': true || detail.device.devicePorts[3] && detail.device.devicePorts[3].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+      <div class="device-cable cable-p3"
+           ng-class="{'visible': true || detail.device.devicePorts[4] && detail.device.devicePorts[4].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+      <div class="device-cable cable-p4"
+           ng-class="{'visible': true || detail.device.devicePorts[5] && detail.device.devicePorts[5].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+      <div class="device-cable cable-p5"
+           ng-class="{'visible': true || detail.device.devicePorts[6] && detail.device.devicePorts[6].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+      <div class="device-cable cable-p6"
+           ng-class="{'visible': true || detail.device.devicePorts[7] && detail.device.devicePorts[7].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+      <div class="device-cable cable-p7"
+           ng-class="{'visible': true || detail.device.devicePorts[8] && detail.device.devicePorts[8].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+      <div class="device-cable cable-mgmt"
+           ng-class="{'visible': true || detail.device.devicePorts[0] && detail.device.devicePorts[0].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+    </div>
+  </div>
+  <div class="device-view-inner" ng-if="device.iconType !== 'ips8'">
+    <div class="device-view-inner-main ips4">
+      <img src="/images/devices/ips4.png" alt="device">
+
+      <div class="device-cable cable-mgmt"
+           ng-class="{'visible': true || detail.device.devicePorts[0] && detail.device.devicePorts[0].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+      <div class="device-cable cable-p0"
+           ng-class="{'visible': true || detail.device.devicePorts[1] && detail.device.devicePorts[1].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+      <div class="device-cable cable-p1"
+           ng-class="{'visible': true || detail.device.devicePorts[2] && detail.device.devicePorts[2].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+      <div class="device-cable cable-p2"
+           ng-class="{'visible': true || detail.device.devicePorts[3] && detail.device.devicePorts[3].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+      <div class="device-cable cable-p3"
+           ng-class="{'visible': true || detail.device.devicePorts[4] && detail.device.devicePorts[4].status >= 0}">
+        <img src="/images/devices/cable_left.png" alt="cable">
+      </div>
+    </div>
+  </div>
+
+  <div class="device-view-panels row">
+    <div class="device-view-panels-container">
+      <div class="device-view-panel device-view-panel-wrapper" ng-repeat="(portIndex, p) in device.devicePorts"
+           ng-if="p.isMgmtPort">
+        <div class="device-view-panel-head">
+          <div class="row">
+            <div class="col-xs-8">管理端口</div>
+            <div class="col-xs-4 text-right">
+              <button class="btn btn-sm btn-default"><img src="/images/icons/topology.png" height="12"></button>
+            </div>
+          </div>
+        </div>
+        <div class="device-view-panel-content">
+          <div class="device-view-panel-content-row">
+            <div class="title">管理端口状态</div>
+            <div>
+              <i class="fa icon-left"
+                 ng-class="p.linkState >= 0 ? 'fa-circle icon-status-circle glow-active' : 'fa-exclamation-triangle text-orange'"></i>{{p.linkState
+              >= 0 ? '端口连接正常' : '端口未连接'}}
+            </div>
+          </div>
+          <div class="device-view-panel-content-row">
+            <div class="title">管理端口 IP</div>
+            <div>{{p.portIp}}</div>
+          </div>
+        </div>
+        <div class="device-view-panel-angle port-angle"></div>
+      </div>
+
+      <form name="form" role="form" class="device-view-panel device-view-panel-wrapper"
+            ng-repeat="(portIndex, p) in device.devicePorts" ng-if="!p.isMgmtPort">
+        <div class="device-view-panel-head">
+          <div class="row">
+            <div class="col-xs-8">通信端口 {{p.portName}}</div>
+          </div>
+        </div>
+        <div class="device-view-panel-content">
+          <div class="device-view-panel-content-row">
+            <div class="title">通信端口{{p.portName}}状态</div>
+            <div>
+              <i class="fa icon-left"
+                 ng-class="p.linkState >= 0 ? 'fa-circle icon-status-circle glow-active' : 'fa-exclamation-triangle text-orange'"></i>{{p.linkState
+              >= 0 ? '端口连接正常' : '端口未连接'}}
+            </div>
+          </div>
+          <div class="device-view-panel-content-row">
+            <div class="title">IP地址</div>
+            <div ng-if="!isEdit">{{p.portIp}}</div>
+            <div ng-if="isEdit"><input type="text" name="ip" ng-model="p.portIp" ng-pattern="validateIp"
+                                       style="width:130px" required></div>
+            <span class="input-alert-error" ng-show="p.ip = form['ip'].$error.pattern">请输入合法的IP地址</span>
+            <span class="input-alert-error" ng-show="p.ip = p.ip + form['ip'].$error.required">请输入IP地址</span>
+          </div>
+          <div class="device-view-panel-content-row">
+            <div class="title">掩码</div>
+            <div ng-if="!isEdit">{{p.netMask}}</div>
+            <div ng-if="isEdit"><input type="text" name="mask" ng-model="p.netMask" ng-pattern="validateIp"
+                                       style="width:130px" required></div>
+            <span class="text-red" ng-show="p.mask = form['mask'].$error.pattern">请输入合法的Mask地址</span>
+            <span class="text-red" ng-show="form['mask'].$error.required">请输入Mask地址</span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

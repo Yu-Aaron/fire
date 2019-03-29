@@ -1,0 +1,402 @@
+<div class="margin-lg">
+  <h5 class="margin-left-default display-inline-block" style="opacity: 0">{{securitydetail.device.name}}</h5>
+  <div privilege class="pull-right">
+    <span ng-if="securitydetail.isDPIUpgrading" class="warning">(DPI设备升级中，无法编辑、下发) &nbsp;</span>
+    <button type="button" class="btn btn-default" id="asset_securitydevice_detail_ports_edit"
+            ng-if="securitydetail.device.showRoutingInfo" ng-hide="securitydetail.isEdited"
+            ng-click="securitydetail.editDevice();securitydetail.fillValidate()"
+            ng-disabled="securitydetail.isDPIUpgrading">编辑设备
+    </button>
+    <button type="button" class="btn btn-default" id="asset_securitydevice_detail_ports_config"
+            ng-if="securitydetail.device.showRoutingInfo" ng-hide="securitydetail.isEdited"
+            ng-click="securitydetail.configDevice(securitydetail.device)"
+            ng-disabled="securitydetail.isDPIUpgrading || (securitydetail.device.deviceOnline !== 1 || securitydetail.device.deviceSource !== 'DISCOVERY')">
+      配置终端
+    </button>
+    <span ng-show="securitydetail.isEdited">
+      <button type="button" id="asset_securitydevice_detail_ports_cancel" class="btn btn-default btn-group-pull-right"
+              ng-if="securitydetail.device.showRoutingInfo" ng-click="securitydetail.editCancel(false)"><i
+        class="fa fa-times icon-left"></i>取消</button>
+      <button type="button" id="asset_securitydevice_detail_ports_confirm" class="btn btn-default"
+              ng-if="securitydetail.device.showRoutingInfo"
+              ng-disabled="securitydetail.invalidIp || !securitydetail.validPortEdit"
+              ng-click="securitydetail.editDone('ports')"><i class="fa fa-check icon-left text-lime"></i>确认修改</button>
+    </span>
+  </div>
+</div>
+<div class="detail-page-wrapper">
+  <div class="detail-page-body">
+    <section id="device-port" ng-controller="SecurityDevicePortsCtrl as devicePorts">
+      <div class="detail-title">
+        <div class="row">
+          <div class="col-md-12">
+            <h4 class="title-section">端口信息</h4>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-lg">
+        <div class="panel-body">
+          <div class="device-view-inner"
+               ng-if="['KEC-U1000', 'KEV-C400', 'KED-C400', 'KEA-C200', 'KEA-C400', 'KEA-U1000','KEA-U1142', 'KEA-U1000E', 'KEA-U2000', 'KEV-C200'].indexOf(securitydetail.modelName)>-1">
+            <div class="device-view-inner-main {{securitydetail.modelName}}">
+              <img ng-src="/images/devices/{{securitydetail.modelName}}.png">
+              <div ng-repeat="port in securitydetail.device.devicePorts" class="device-cable cable-p{{$index-1}}"
+                   ng-class="{'visible': securitydetail.device.deviceSource === 'DISCOVERY' && (securitydetail.device.deviceOnline === 1 ? port.linkState>0 : securitydetail.device.deviceOnline>0)}"
+                   ng-if="$index >= 1">
+                <img src="/images/devices/cable_left.png"
+                     ng-if="['KEV-C400', 'KED-C400', 'KEA-C200', 'KEA-C400', 'KEV-C200'].indexOf(securitydetail.modelName)>-1">
+                <img src="/images/devices/cable_down_left.png"
+                     ng-if="['KEC-U1000', 'KEA-U1000','KEA-U1142', 'KEA-U1000E', 'KEA-U2000'].indexOf(securitydetail.modelName)>-1">
+              </div>
+              <div class="device-cable cable-mgmt"
+                   ng-class="{'visible': securitydetail.device.deviceSource === 'DISCOVERY' && securitydetail.device.deviceOnline>0}">
+                <img src="/images/devices/cable_left.png"
+                     ng-if="['KEV-C400', 'KED-C400', 'KEA-C200', 'KEA-C400', 'KEV-C200'].indexOf(securitydetail.modelName)>-1">
+                <img src="/images/devices/cable_down_left.png"
+                     ng-if="['KEC-U1000', 'KEA-U1000', 'KEA-U1142', 'KEA-U1000E', 'KEA-U2000'].indexOf(securitydetail.modelName)>-1">
+              </div>
+            </div>
+          </div>
+          <div
+            ng-if="['KEC-U1000', 'KEV-C400', 'KED-C400', 'KEA-C200', 'KEA-C400', 'KEA-U1000', 'KEA-U1142', 'KEA-U1000E', 'KEA-U2000', 'KEV-C200'].indexOf(securitydetail.modelName)===-1">
+            <div class="device-view-inner" ng-if="securitydetail.device.iconType === 'ips8'">
+              <div class="device-view-inner-main ips8">
+                <img ng-src="/images/devices/ips8.png">
+                <div class="device-cable cable-p0"
+                     ng-class="{'visible': securitydetail.device.devicePorts[1] && securitydetail.device.devicePorts[1].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+                <div class="device-cable cable-p1"
+                     ng-class="{'visible': securitydetail.device.devicePorts[2] && securitydetail.device.devicePorts[2].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+                <div class="device-cable cable-p2"
+                     ng-class="{'visible': securitydetail.device.devicePorts[3] && securitydetail.device.devicePorts[3].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+                <div class="device-cable cable-p3"
+                     ng-class="{'visible': securitydetail.device.devicePorts[4] && securitydetail.device.devicePorts[4].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+                <div class="device-cable cable-p4"
+                     ng-class="{'visible': securitydetail.device.devicePorts[5] && securitydetail.device.devicePorts[5].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+                <div class="device-cable cable-p5"
+                     ng-class="{'visible': securitydetail.device.devicePorts[6] && securitydetail.device.devicePorts[6].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+                <div class="device-cable cable-p6"
+                     ng-class="{'visible': securitydetail.device.devicePorts[7] && securitydetail.device.devicePorts[7].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+                <div class="device-cable cable-p7"
+                     ng-class="{'visible': securitydetail.device.devicePorts[8] && securitydetail.device.devicePorts[8].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+                <div class="device-cable cable-mgmt"
+                     ng-class="{'visible': securitydetail.device.devicePorts[0] && securitydetail.device.devicePorts[0].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+              </div>
+            </div>
+            <div class="device-view-inner" ng-if="securitydetail.device.iconType !== 'ips8'">
+              <div class="device-view-inner-main ips4">
+                <img ng-src="/images/devices/ips4.png">
+                <div class="device-cable cable-mgmt"
+                     ng-class="{'visible': securitydetail.device.devicePorts[0] && securitydetail.device.devicePorts[0].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+                <div class="device-cable cable-p0"
+                     ng-class="{'visible': securitydetail.device.devicePorts[1] && securitydetail.device.devicePorts[1].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+                <div class="device-cable cable-p1"
+                     ng-class="{'visible': securitydetail.device.devicePorts[2] && securitydetail.device.devicePorts[2].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+                <div class="device-cable cable-p2"
+                     ng-class="{'visible': securitydetail.device.devicePorts[3] && securitydetail.device.devicePorts[3].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+                <div class="device-cable cable-p3"
+                     ng-class="{'visible': securitydetail.device.devicePorts[4] && securitydetail.device.devicePorts[4].linkState > 0}">
+                  <img src="/images/devices/cable_left.png">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="device-view-panels row">
+            <div class="device-view-panels-container">
+              <div class="device-view-panel device-view-panel-wrapper"
+                   ng-repeat="(portIndex, p) in securitydetail.device.devicePorts" ng-if="p.isMgmtPort">
+                <div class="device-view-panel-head">
+                  <div class="row">
+                    <div class="col-md-8">管理端口</div>
+                  </div>
+                </div>
+                <div class="device-view-panel-content">
+                  <div class="device-view-panel-content-row">
+                    <div class="title">管理端口状态</div>
+                    <div>
+                      <i class="fa icon-left"
+                         ng-class="{'fa-circle icon-status-circle glow-active': (securitydetail.device.deviceSource === 'DISCOVERY' ? securitydetail.device.deviceOnline : 0) === 1, 'fa-circle icon-status-circle glow-disabled': (securitydetail.device.deviceSource === 'DISCOVERY' ? securitydetail.device.deviceOnline : 0) === 0, 'fa-exclamation-triangle text-orange': (securitydetail.device.deviceSource === 'DISCOVERY' ? securitydetail.device.deviceOnline : 0) === -1}"></i>{{securitydetail.device.deviceSource
+                      === 'DISCOVERY' ? securitydetail.device.deviceOnline : 0 | devicePortConnection}}
+                    </div>
+                  </div>
+                  <div class="device-view-panel-content-row">
+                    <div class="title">管理端口IP</div>
+                    <div>{{p.portIp}}</div>
+                  </div>
+                </div>
+                <div class="device-view-panel-angle port-angle"></div>
+              </div>
+              <form name="form" role="form" class="device-view-panel device-view-panel-wrapper"
+                    ng-repeat="(portIndex, p) in securitydetail.device.devicePorts"
+                    ng-if="!p.isMgmtPort && securitydetail.checkNodePortsVisibility(p.portName)">
+                <div class="device-view-panel-head">
+                  <div class="row">
+                    <div class="col-xs-8">通信端口 {{p.portName}}</div>
+                  </div>
+                </div>
+                <div class="device-view-panel-content">
+                  <div class="device-view-panel-content-row">
+                    <div class="title">通信端口{{p.portName}}状态</div>
+                    <div>
+                      <i class="fa icon-left"
+                         ng-class="{'fa-circle icon-status-circle glow-active': (securitydetail.device.deviceOnline === 1) && (p.linkState === 1), 'fa-exclamation-triangle text-orange' : (securitydetail.device.deviceOnline === -1) || (p.linkState === -1), 'fa-circle icon-status-circle glow-disabled': (securitydetail.device.deviceOnline === 0) || (p.linkState === 0)}"></i>
+                      <!--{{(securitydetail.device.deviceOnline === 1) ? (p.linkState === 1 ? '端口连接正常' : (p.linkState === -1 ? '端口未连接' : '未知')) : (securitydetail.device.deviceOnline === 0 ? '未知' : '端口未连接')}}-->
+                      {{securitydetail.device.deviceSource === 'DISCOVERY' ? (securitydetail.device.deviceOnline === 1 ?
+                      p.linkState : securitydetail.device.deviceOnline) : 0 | devicePortConnection}}
+                    </div>
+                  </div>
+                  <div class="device-view-panel-content-row"
+                       ng-if="securitydetail.device.nodes[0].type === 'ROUTING_IPS'">
+                    <div class="title">IP地址</div>
+                    <div ng-if="!securitydetail.isEdited">{{p.portIp}}</div>
+                    <div ng-if="securitydetail.isEdited">
+                      <input type="text" id="asset_securitydevice_detail_ports_ip_{{portIndex}}" name="ip"
+                             ng-model="p.portIp" ng-pattern="securitydetail.validateIp" style="width:130px" required
+                             ng-change="securitydetail.checkPortEdit(p.portIp, p.netMask, $index)"></div>
+                    <span class="input-alert-error" ng-show="form['ip'].$error.pattern">请输入合法的IP地址</span>
+                    <span class="input-alert-error" ng-show="form['ip'].$error.required">请输入IP地址</span>
+                  </div>
+                  <div class="device-view-panel-content-row"
+                       ng-if="securitydetail.device.nodes[0].type === 'ROUTING_IPS'">
+                    <div class="title">掩码</div>
+                    <div ng-if="!securitydetail.isEdited">{{p.netMaskIP}}</div>
+                    <div ng-if="securitydetail.isEdited">
+                      <input type="text" id="asset_securitydevice_detail_ports_mask_{{portIndex}}" name="mask"
+                             ng-model="p.netMaskIP" ng-pattern="securitydetail.validateIp" style="width:130px" required
+                             ng-change="p.netMask = securitydetail.forms.netMasks.indexOf(p.netMaskIP);securitydetail.checkPortEdit(p.portIp, p.netMask, $index)">
+                    </div>
+                    <span class="input-alert-error"
+                          ng-show="form['mask'].$error.pattern || (p.netMaskIP && p.netMask <= 0)">请输入合法的Mask地址</span>
+                    <span class="input-alert-error" ng-show="form['mask'].$error.required">请输入Mask地址</span>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </section>
+    <section id="device-route-table" ng-if="securitydetail.device.showRoutingInfo">
+      <div class="detail-information detail-panel">
+        <div class="detail-title">
+          <div class="row">
+            <div class="col-xs-6">
+              <h4>路由信息</h4>
+            </div>
+          </div>
+          <hr class="hr-lime hr-thick">
+        </div>
+        <div class="detail-information-content">
+          <div class="row">
+            <form name="form" role="form" class="col-xs-12">
+              <div class="panel">
+                <div class="panel-heading">
+                  <span><i class="fa fa-cogs icon-left"></i>缺省路由</span>
+                </div>
+                <div class="panel-body">
+                  <div class="detail-page-list-item">
+                    <div ng-hide="securitydetail.isEdited">
+                      <h5 ng-show="securitydetail.device.defaultGateway"
+                          class="detail-page-list-item-title detail-page-list-item-title-inline-block">默认网关：</h5>
+                      <span>{{securitydetail.device.defaultGateway ? securitydetail.device.defaultGateway : '默认网关并无设置，请点选编辑来添加信息'}}</span>
+                    </div>
+                    <h5 ng-show="securitydetail.isEdited"
+                        class="detail-page-list-item-title detail-page-list-item-title-inline-block">默认网关：</h5>
+                    <span ng-show="securitydetail.isEdited">
+                        <input type="text" name="defaultGateway" id="asset_securitydevice_detail_ports_default_gateway"
+                               ng-pattern="securitydetail.validateIp" ng-model="securitydetail.device.defaultGateway"
+                               size="15">
+                        <span class="input-alert-error"
+                              ng-show="securitydetail.invalidGateway = form['defaultGateway'].$invalid">
+                          请输入合法的默认网关地址
+                        </span>
+                      </span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- panel -->
+              <div class="panel">
+                <div class="panel-heading" ng-class="{'pandel-heading-with-icon': securitydetail.isEdited}">
+                  <span><i class="fa fa-cogs icon-left"></i>远端路由</span>
+                  <button class="btn btn-default pull-right btn-in-panel-header-sm"
+                          id="asset_securitydevice_detail_ports_add_route" ng-if="securitydetail.isEdited"
+                          ng-click="securitydetail.addRouteTableItem()"><i class="fa fa-plus text-lime icon-left"></i>
+                    添加远端路由
+                  </button>
+                </div>
+                <div class="panel-body">
+                  <div class="device-view-panels">
+                    <div class="device-view-panels-container">
+                      <span ng-if="!securitydetail.device._remoteRoutings.length">远端路由并无设置，请点选编辑来添加信息。</span>
+                      <div ng-repeat="route in securitydetail.device._remoteRoutings"
+                           class="device-view-routing-panel device-view-panel-wrapper">
+                        <form name="form" role="form">
+                          <div class="device-view-panel-head">
+                            <div class="row">
+                              <h5 class="col-xs-8 device-view-panel-head-w-icon">远端路由 {{$index+1}}</h5>
+                              <div class="col-xs-4 text-right">
+                                <button class="btn btn-sm btn-default"
+                                        id="asset_securitydevice_detail_ports_delete_route_{{$index+1}}"
+                                        ng-click="securitydetail.deleteRouteTableItem($index)"
+                                        ng-if="securitydetail.isEdited"><i class="fa fa-trash"></i></button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="device-view-panel-content">
+                            <div class="row device-view-panel-content-row">
+                              <h5 class="col-xs-4 routing-title">远端网段：</h5>
+                              <span ng-if="!securitydetail.isEdited" class="col-xs-8 routing-value">{{route.networkSegment}}</span>
+                              <span ng-if="securitydetail.isEdited" class="col-xs-8 routing-input"><input type="text"
+                                                                                                          id="asset_securitydevice_detail_ports_network_segment_{{$index+1}}"
+                                                                                                          name="networkSegment"
+                                                                                                          ng-pattern="securitydetail.validateSubnet"
+                                                                                                          ng-model="route.networkSegment"
+                                                                                                          ng-change="securitydetail.validate[$index].networkSegment = form['networkSegment'].$valid; securitydetail.validateInput()"
+                                                                                                          size=10
+                                                                                                          required></span>
+                              <span class="input-alert-error" ng-show="form['networkSegment'].$error.pattern">请输入合法的远端网段地址</span>
+                              <span class="input-alert-error"
+                                    ng-show="form['networkSegment'].$error.required">请输入远端网段地址</span>
+                            </div>
+                            <div class="row device-view-panel-content-row">
+                              <h5 class="col-xs-4 routing-title">网关：</h5>
+                              <span ng-if="!securitydetail.isEdited"
+                                    class="col-xs-8 routing-value">{{route.gateway}}</span>
+                              <span ng-if="securitydetail.isEdited" class="col-xs-8 routing-input"><input type="text"
+                                                                                                          id="asset_securitydevice_detail_ports_gateway_{{$index+1}}"
+                                                                                                          name="gateway"
+                                                                                                          ng-pattern="securitydetail.validateIp"
+                                                                                                          ng-model="route.gateway"
+                                                                                                          ng-change="securitydetail.validate[$index].gateway = form['gateway'].$valid; securitydetail.validateInput()"
+                                                                                                          size=10
+                                                                                                          required></span>
+                              <span class="input-alert-error" ng-show="form['gateway'].$error.pattern">请输入合法的网关地址</span>
+                              <span class="input-alert-error" ng-show="form['gateway'].$error.required">请输入网关地址</span>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <!-- panel -->
+              <div class="panel">
+                <div class="panel-heading" ng-class="{'pandel-heading-with-icon': securitydetail.isEdited}">
+                  <span><i class="fa fa-cogs icon-left"></i>端口路由配置</span>
+                </div>
+                <div class="panel-body">
+
+                  <div class="detail-information-content">
+                    <div class="row">
+                      <div class="device-view-panels">
+                        <form name="form" role="form"
+                              class="device-view-panel device-view-panel-wrapper device-large-form-panel"
+                              ng-repeat="(portIndex, p) in securitydetail.device.devicePorts" ng-if="!p.isMgmtPort">
+                          <div class="device-view-panel-head">
+                            <div class="row">
+                              <div class="col-xs-8">通信端口 {{p.portName}}</div>
+                            </div>
+                          </div>
+                          <div class="device-view-panel-content">
+                            <div class="device-view-panel-content-row">
+                              <div class="title">路由</div>
+                              <div style="margin-bottom: 20px; text-align: center;"
+                                   ng-repeat="sp in securitydetail.device.devicePorts"
+                                   ng-if="sp.portName != p.portName && !sp.isMgmtPort">
+                                <span>{{sp.portName}}</span>
+                                <span style="margin-left: 15px">
+                                    <div class="toggle-bg toggle-alternate"
+                                         ng-class="{true: 'on', false: 'off'}[securitydetail.port[p.portName][sp.portName].model]">
+                                      <label
+                                        ng-class="{true: 'on', false: 'off'}[securitydetail.port[p.portName][sp.portName].model]">{{securitydetail.port[p.portName][sp.portName].model ? '连通':'隔离'}}</label>
+                                      <input type="checkbox"
+                                             id="asset_securitydevice_detail_ports_{{p.portName}}_{{sp.portName}}"
+                                             name="toggle" ng-disabled="!securitydetail.isEdited"
+                                             ng-model="securitydetail.port[p.portName][sp.portName].model"
+                                             ng-change="securitydetail.changeTopoStatus(p.portName, sp.portName)">
+                                      <span class="switch"
+                                            ng-class="{true: 'on', false: 'off'}[securitydetail.port[p.portName][sp.portName].model]"></span>
+                                    </div>
+                                    </span>
+                              </div>
+                            </div>
+                            <div class="device-view-panel-content-row">
+                              <div class="title">接口路由</div>
+                              <div style="margin-top: 5px">
+                                <span
+                                  ng-if="!securitydetail.isEdited && !p._subnets.length">端口网关并无路由设置，请点选编辑来添加信息。</span>
+                                <div class="device-subnet-address" ng-repeat="subnet in p._subnets track by $index"
+                                     style="display: block;">
+                                  <span style="display: block; float: left; clear: left;">网段：</span>
+                                  <span ng-if="!securitydetail.isEdited">{{subnet.subnet}}</span>
+                                  <span ng-if="securitydetail.isEdited"><input type="text"
+                                                                               name="subnet{{portIndex}}{{$index}}"
+                                                                               id="asset_securitydevice_detail_ports_subnet_{{portIndex}}_{{$index}}"
+                                                                               ng-model="subnet.subnet"
+                                                                               ng-change="securitydetail.updateSubnetStatus(portIndex, $index, null, subnet.subnet)"
+                                                                               style="width:130px"></span>
+                                  <span><button class="btn btn-sm btn-default"
+                                                id="asset_securitydevice_detail_ports_delete_subnet_{{portIndex}}_{{$index}}"
+                                                ng-if="securitydetail.isEdited"
+                                                ng-click="securitydetail.updateSubnetStatus(portIndex, $index, 'delete')"><i
+                                    class="fa fa-trash"></i></button></span>
+                                  <span ng-if="securitydetail.isEdited" class="input-alert-error device-show-message"
+                                        ng-style="{'opacity': (securitydetail.isEdited) && !(securitydetail.subnetsValidate[portIndex][$index]) == true ? 1 : 0}">请输入合法的网段地址</span>
+                                  <br>
+                                </div>
+                                <button class="btn btn-default device-add-routing-subnet"
+                                        id="asset_securitydevice_detail_ports_add_subnet_{{portIndex}}"
+                                        ng-if="securitydetail.isEdited"
+                                        ng-click="securitydetail.updateSubnetStatus(portIndex, p._subnets.length, 'add')">
+                                  <i class="fa fa-plus text-lime icon-left"></i><span>添加路由</span></button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<nav class="left-navbar" ng-class="{'left-navbar-collapsed': report.expanded}">
+  <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat="tab in $root.rootMenu.getChild('SCHEDULED_REPORT').getChilds()"
+        ng-if="report.leftNavItemEnabled(tab)" disable="true" class="highlight" id="{{tab.getPrivilege()}}">
+      <a id="report_a_{{tab.getState()}}" class="left-navbar-item left-navbar-item-{{tab.getState()}}"
+         ui-sref="report.{{tab.getState()}}" ng-class="{active: report.isActive(tab.getState())}"
+         ui-sref-opts="{{tab.getOptions()}}">
+        <span
+          class="svg-side_nav_icons_{{tab.getIcon()}} svg-side_nav_icons_{{tab.getIcon()}}-dims left-navbar-item-icon"></span>
+        <div class="left-navbar-item-name-collapse">{{tab.getDescription()}}</div>
+      </a>
+    </li>
+    <li class="left-navbar-expand-toggle reset-highlight">
+      <a href="javascript:void(0)" ng-click="report.toggleExpand()">
+        <i class="fa" ng-class="{false: 'fa-angle-double-left', true: 'fa-angle-double-right'}[report.expanded]"></i>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<div class="main-content main-content-with-nav report-content" ng-class="{'navbar-collapsed': report.expanded}"
+     ui-view></div>
+
+<div class="clearfix"></div>

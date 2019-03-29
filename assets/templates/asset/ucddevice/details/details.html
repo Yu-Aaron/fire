@@ -1,0 +1,24 @@
+<div class="bg-gray-75 padding-default" style="padding-bottom: 5px">
+  <a ui-sref="asset.ucddevice" class="btn btn-default"><i class="fa fa-arrow-circle-left icon-left"></i>返回</a>
+  <h5 class="margin-left-default display-inline-block">{{ucddetail.device.name}}</h5>
+</div>
+<div class="detail-page-wrapper">
+  <div class="detail-page-body">
+    <!-- Device Details -->
+    <div class="tab-container" ng-controller="TabCtrl as tab">
+      <ul class="nav nav-tabs nav-tabs-lg nav-tabs-lime" ng-init="tab.active || tab.activatePanel('BASIC_INFO')">
+        <li ng-class="{active: tab.isActive('BASIC_INFO')}">
+          <a ui-sref="asset.ucddevice.detail({deviceID: ucddetail.device.deviceId, panel: 'BASIC_INFO'})"
+             ng-click="tab.activatePanel('BASIC_INFO')">
+            <span>基本信息</span>
+          </a>
+        </li>
+      </ul>
+      <div ng-switch on="tab.active" class="tab-container-body">
+        <div ng-switch-when="BASIC_INFO">
+          <div class="device-details" ng-include="'templates/asset/ucddevice/details/basic-info.html'"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+// BOOTSTRAP VARIABLES
+// ===================
+
+//** Default label background color
+@label-default-bg: @gray-light;
+//** Primary label background color
+@label-primary-bg: @brand-primary;
+//** Success label background color
+@label-success-bg: @lime;
+//** Info label background color
+@label-info-bg: @brand-info;
+//** Warning label background color
+@label-warning-bg: @brand-warning;
+//** Danger label background color
+@label-danger-bg: @brand-danger;
+
+//** Default label text color
+@label-color: #fff;
+//** Default text color of a linked label
+@label-link-hover-color: #fff;
+
+/* ----------------------------------------
+  New Labels
+---------------------------------------- */
+
+.label {
+  padding: 7px 12px;
+  background: @bg-gray-dark;
+  border: 1px solid @bg-gray;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.label-default {
+  &:extend(.label);
+  color: @txt-light-gray;
+}
+
+.label-success {
+  &:extend(.label);
+  color: @primary;
+}
+
+.label-error {
+  &:extend(.label);
+  color: @error;
+}
+
+.label-warning {
+  &:extend(.label);
+  color: @warning;
+}
+
+.label-info {
+  &:extend(.label);
+  color: @info;
+}

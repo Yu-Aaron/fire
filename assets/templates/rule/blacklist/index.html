@@ -1,0 +1,53 @@
+<div class="tab-container" ng-controller="TabCtrl as tab" ng-show="signature.showUI">
+  <ul class="nav nav-tabs nav-tabs-inverted nav-tabs-lg nav-tabs-lime" ng-init="tab.activatePanel(signature.tab)">
+    <li id="rule-blackList_li_deployedPanel" ng-class="{ active: tab.isActive('deployedPanel')}"
+        ng-if="signature.hasDeployedPolicy">
+      <a ui-sref="rule.blacklist({'tab':'deployedPanel'})" ><i
+        class="fa fa-wrench nav-tab-icon"></i><span class="nav-tab-title">已防护漏洞</span><span
+        ng-if="signature.deployedPanelCount" class="badge nav-tab-badge">{{signature.deployedPanelCount}}</span></a>
+    </li>
+    <li id="rule-blackList_li_policyManagement" ng-class="{ active: tab.isActive('policyManagement')}">
+      <a ui-sref="rule.blacklist({'tab':'policyManagement'})"><i
+        class="fa fa-file-text-o nav-tab-icon"></i><span class="nav-tab-title">漏洞管理</span><span
+        ng-if="signature.policyManagementCount"
+        class="badge nav-tab-badge">{{signature.policyManagementCount}}</span></a>
+    </li>
+  </ul>
+  <div ng-switch on="tab.active" class="tab-container-body">
+    <!-- 已部署规则 -->
+    <div ng-switch-when="deployedPanel" class="signature-editor-panel"
+         ng-if="signature.contentEnable('DEPLOYED_BLACK_LIST')">
+      <div ng-if="signature.canEdit">
+        <div ng-if="signature.showDash!=null && signature.showDash" class="btn-group-column-wrapper text-center">
+          <h4 class="whitelist-title">当前没有防护任何已知漏洞，请添加漏洞信息到黑名单。</h4>
+          <br/>
+          <div class="btn-group btn-group-column" role="group" aria-label="...">
+            <button id="rule-blackList_button_signatures" privilege disable="self"
+                    class="btn-group-column-button bottom-btn"
+                    ng-click="tab.activateTab('signatures'); signature.createPolicy('signatures')">添加漏洞信息
+            </button>
+          </div>
+        </div>
+      </div>
+      <div ng-if="!signature.canEdit">
+        <div ng-if="signature.showDash!=null && signature.showDash" class="btn-group-column-wrapper text-center"
+             style="padding-top: 200px; padding-bottom: 200px">
+          <h4 id="rule_blackList_noView_noRule">当前没有防护已知漏洞</h4>
+        </div>
+      </div>
+
+      <div ng-if="signature.showDash!=null && !signature.showDash">
+        <div>
+          <blacklist-deployed-table></blacklist-deployed-table>
+        </div>
+      </div>
+    </div>
+
+    <div ng-switch-when="policyManagement" ng-if="signature.contentEnable('SIGNATURE_MANAGEMENT')">
+      <!-- 规则管理 -->
+      <div>
+        <blacklist-policy-management-table></blacklist-policy-management-table>
+      </div>
+    </div>
+  </div>
+</div>

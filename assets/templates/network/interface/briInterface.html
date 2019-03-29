@@ -1,0 +1,122 @@
+<div id="bri-busy-container" cg-busy="{promise:configPromise,message:'正在保存...'}" global-events>
+    <div class="modal-header">
+        <h3 class="modal-header-title">桥接口配置</h3>
+    </div>
+
+    <div class="modal-body modal-interface">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <span>桥名称：</span>
+                    </div>
+                    <div class="col-xs-9">
+                        <input id="network_interface-bri_interfaceName" ng-model="interfaceData.interfaceName"
+                               maxlength="8" type="text" ng-disabled="!isEditing||!isNew" placeholder="如：BR100"
+                               ng-change="checkNameVal()">
+
+                        <div class="input-alert-error" ng-show="isEditing && error.interfaceName">
+                            <span>{{nameValMsg}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="hr-small-margin">
+                <h4>IP设置</h4>
+
+                <div class="row">
+                    <div class="col-xs-3">
+                        <span>IP地址/掩码：</span>
+                    </div>
+                    <div class="col-xs-9">
+                        <input id="network_interface-bri_ipAddressMask" style="width: 200px;" type="text"
+                               ng-model="interfaceData.ipAddressMask" ng-change="validateIpMask()"
+                               ng-disabled="!isEditing" placeholder="192.168.1.2/255.255.255.0"/>
+
+                        <div class="input-alert-error" ng-show="isEditing && error.ipAddressMask">
+                            <span>请输入有效的IP地址/掩码,或者不填</span>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="hr-small-margin">
+                <h4>选择接口</h4>
+
+                <div class="row" ng-class="{'margin-md': !$last}" ng-repeat="rowList in interfaceListByBRI">
+                    <div class="col-xs-3" ng-repeat="interface in rowList">
+                        <label>
+                            <input custom-checkbox name="interface.name" type="checkbox" ng-value="true"
+                                   id="network_interface-bri_interface_{{interface.name}}"
+                                   ng-model="interface.value"
+                                   ng-change="checkInterfaceByBri()"
+                                   ng-disabled="interface.used"/><span>{{interface.name}}</span>
+                        </label>
+                    </div>
+                </div>
+                <!--
+                <div class="row" ng-show="isEditing && ableInterfaceNum>=2 && error.interfaceCheck">
+                    <div class="col-xs-12"><span class="input-alert-error">请至少选择两个接口</span></div>
+                </div>
+                <div class="row" ng-show="isEditing && ableInterfaceNum<2">
+                    <div class="col-xs-12"><span class="input-alert-error">没有两个以上可用的接口</span>
+                    </div>
+                </div>
+                -->
+                <hr class="hr-small-margin">
+                <h4 class="clearfix" ng-init="expanded=true" ng-click="expanded=!expanded;">管理访问
+                    <i class="fa pull-right" aria-hidden="true"
+                       ng-class="{false: 'fa-angle-double-up', true: 'fa-angle-double-down'}[expanded]"></i>
+                </h4>
+
+                <div class="row" collapse="expanded">
+                    <div class="col-xs-3">
+                        <label>
+                            <input custom-checkbox id="network-interface-bri_ssh" type="checkbox"
+                                   id="network_interface-bri_ssh" ng-value="interfaceData.ssh"
+                                   ng-model="interfaceData.ssh"
+                                   ng-disabled="!isEditing"/><span>ssh</span>
+                        </label>
+                    </div>
+                    <div class="col-xs-3">
+                        <label>
+                            <input custom-checkbox id="network-interface-bri_https" type="checkbox"
+                                   id="network_interface-bri_https" ng-value="interfaceData.https"
+                                   ng-model="interfaceData.https"
+                                   ng-disabled="!isEditing"/><span>https</span>
+                        </label>
+                    </div>
+                  <!--
+                    <div class="col-xs-3">
+                        <label>
+                            <input custom-checkbox="" id="network-interface-bri_snmp" type="checkbox"
+                                   id="network_interface-bri_snmp" ng-value="interfaceData.snmp"
+                                   ng-model="interfaceData.snmp"
+                                   ng-disabled="!isEditing"/><span>snmp</span>
+                        </label>
+                    </div>
+                    -->
+                    <div class="col-xs-3">
+                        <label>
+                            <input custom-checkbox id="network-interface-bri_ping" type="checkbox"
+                                   id="network_interface-bri_ping" ng-value="interfaceData.ping"
+                                   ng-model="interfaceData.ping"
+                                   ng-disabled="!isEditing"/><span>ping</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <a id="network_interface-bri_cancel" ng-show="isEditing" class="btn btn-default pull-left"
+           ng-click="cancel()"><i
+                class="fa fa-times icon-left"></i>取消</a>
+        <a id="network_interface-bri_ok" ng-show="isEditing" class="btn btn-default pull-right" ng-click="ok()"
+           ng-disabled="ableInterfaceNum<2 || error.interfaceName || error.ipAddressMask || error.interfaceCheck"><i
+                class="fa fa-check text-lime icon-left"></i>保存</a>
+        <a id="network_interface-bri_close" ng-show="!isEditing" class="btn btn-default pull-middle"
+           ng-click="cancel()"><i
+                class="fa fa-times icon-left"></i>关闭</a>
+    </div>
+</div>

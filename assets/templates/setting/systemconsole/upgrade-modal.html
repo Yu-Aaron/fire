@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h3 class="modal-header-title"><i class="fa fa-exclamation-triangle"></i> &nbsp; 系统升级确认</h3>
+</div>
+
+<div class="modal-body">
+  <div class="modal-container padded-rows">
+    <div class="row">
+      <div class="col-xs-12">
+        <p>
+          请注意，系统升级可能会导致信息丢失。请在执行升级前确保重要信息已经保存备份。
+        </p>
+        <p>
+          升级完成后，系统会重新启动，导致所有当前用户退出。
+        </p>
+        <p>{{upgradeStarting ? '开始升级。。。' : ''}}&nbsp;</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-6">
+        <button type="button" class="btn btn-default" ng-click="cancel()">
+          <span><i class="fa fa-times"></i> &nbsp; 取消</span></button>
+      </div>
+      <div class="col-xs-6">
+        <button type="button" class="btn btn-default pull-right" ng-click="done()">
+          <span><i class="fa fa-arrow-circle-up"></i> &nbsp; 升级并重启系统</span></button>
+      </div>
+    </div>
+  </div>
+</div>

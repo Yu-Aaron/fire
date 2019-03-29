@@ -1,0 +1,25 @@
+.sidebar {
+  // position: absolute;
+  // top: 50px;
+  // bottom: 0;
+  float: left;
+  background-color: @gray88;
+  width: @sidebar-width;
+  z-index: 101;
+
+  .sidebar-item {
+    a {
+      display: block;
+      padding: 10px 0;
+      color: @color-font;
+
+      &:hover {
+        background-color: @gray80;
+      }
+    }
+  }
+}
+
+.sidebar-narrow {
+  width: @sidebar-narrow-width;
+}

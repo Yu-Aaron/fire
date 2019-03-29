@@ -1,0 +1,28 @@
+{
+    "success": true,
+    "message": "SUCCESS",
+    "loginedUser": {
+        "userId": "9608f968-bb8a-42e9-b4b8-5fed1ecaaff4",
+        "name": "admin",
+        "failedLoginAttemptCount": 0,
+        "locked": false,
+        "createdBy": "root",
+        "updatedBy": "root",
+        "createdAt": "2015-10-27T23:41:42Z",
+        "updatedAt": "2015-10-27T23:41:42Z",
+        "_roles": [
+            {
+                "roleId": "2ae8e697-2967-49f9-ba20-a4e7139a11af",
+                "name": "default默认管理员",
+                "createdAt": "2015-10-27T23:41:41Z",
+                "updatedAt": "2015-10-27T23:41:41Z",
+                "comment": "default默认管理员",
+                "priority": 1,
+                "defaultRole": true,
+                "roleLevel": "ADMIN"
+            }
+        ],
+        "stuffName": "",
+        "_type": 2
+    }
+}

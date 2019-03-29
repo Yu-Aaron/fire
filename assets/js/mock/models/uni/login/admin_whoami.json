@@ -1,0 +1,169 @@
+{
+    "user": {
+        "userId": "9608f968-bb8a-42e9-b4b8-5fed1ecaaff4",
+        "name": "admin",
+        "failedLoginAttemptCount": 0,
+        "locked": false,
+        "lastLogin": "2015-10-28T00:03:13Z",
+        "createdBy": "root",
+        "updatedBy": "root",
+        "createdAt": "2015-10-27T23:41:42Z",
+        "updatedAt": "2015-10-27T23:41:42Z",
+        "_roles": [
+            {
+                "roleId": "2ae8e697-2967-49f9-ba20-a4e7139a11af",
+                "name": "default默认管理员",
+                "createdAt": "2015-10-27T23:41:41Z",
+                "updatedAt": "2015-10-27T23:41:41Z",
+                "comment": "default默认管理员",
+                "priority": 1,
+                "defaultRole": true,
+                "roleLevel": "ADMIN"
+            }
+        ],
+        "stuffName": "",
+        "_type": 2,
+        "_domainInfoIds": [
+            "b9405be0-3a19-449c-a9bd-0bc81b759033"
+        ]
+    },
+    "targetAndActionValueFormList": [
+        {
+            "name": "REAL_TIME_PROTECTION",
+            "actionValue": 30,
+            "description": "实时监控"
+        },
+        {
+            "name": "INCIDENT",
+            "actionValue": 30,
+            "description": "安全事件"
+        },
+        {
+            "name": "EVENT",
+            "actionValue": 30,
+            "description": "系统事件"
+        },
+        {
+            "name": "LOG_MANAGEMENT",
+            "actionValue": 30,
+            "description": "日志管理"
+        },
+        {
+            "name": "DEVICE_MANAGEMENT",
+            "actionValue": 30,
+            "description": "设备管理"
+        },
+        {
+            "name": "POLICY",
+            "actionValue": 30,
+            "description": "规则管理"
+        },
+        {
+            "name": "TOPOLOGY",
+            "actionValue": 30,
+            "description": "网络拓扑"
+        },
+        {
+            "name": "STRUCTURE_SAFETY",
+            "actionValue": 30,
+            "description": "结构安全性"
+        },
+        {
+            "name": "ATTACKPATH",
+            "actionValue": 30,
+            "description": "攻击路径"
+        },
+        {
+            "name": "INTRUSION_DETECTION",
+            "actionValue": 30,
+            "description": "入侵检测"
+        },
+        {
+            "name": "AUDIT_MANAGEMENT",
+            "actionValue": 30,
+            "description": "网络审计"
+        },
+        {
+            "name": "SYSTEM_MANAGEMENT",
+            "actionValue": 30,
+            "description": "系统设置"
+        },
+        {
+            "name": "USER_MANAGEMENT",
+            "actionValue": 30,
+            "description": "用户管理"
+        },
+        {
+            "name": "DOMAIN_SUBNET",
+            "actionValue": 2,
+            "description": "分区管理"
+        },
+        {
+            "name": "STRATEGY_MANAGEMENT",
+            "actionValue": 30,
+            "description": "策略管理"
+        },
+        {
+            "name": "PRIVATE_PROTOCOL",
+            "actionValue": 30,
+            "description": "私有协议"
+        }
+    ],
+    "deviceIds": [],
+    "userWidgetOptionSettings": [
+        {
+            "userWidgetOptionSettingId": 6,
+            "userId": "9608f968-bb8a-42e9-b4b8-5fed1ecaaff4",
+            "widgetOptionId": "f3613ec4-fb1b-440f-8eed-fedee8ba0908",
+            "setting": 1,
+            "_widgetName": "MW_TIME",
+            "_widgetCNName": "安全监管平台当前时间",
+            "_widgetOrder": 1
+        },
+        {
+            "userWidgetOptionSettingId": 4,
+            "userId": "9608f968-bb8a-42e9-b4b8-5fed1ecaaff4",
+            "widgetOptionId": "a999bf8b-8466-41a2-8d1b-359781518092",
+            "setting": 1,
+            "_widgetName": "DEVICE_ONLINE_STATUS",
+            "_widgetCNName": "安全设备连线状态",
+            "_widgetOrder": 2
+        },
+        {
+            "userWidgetOptionSettingId": 2,
+            "userId": "9608f968-bb8a-42e9-b4b8-5fed1ecaaff4",
+            "widgetOptionId": "966b0c51-f766-48e1-834f-62d09c947922",
+            "setting": 1,
+            "_widgetName": "TOTAL_INCIDENT_DAILY",
+            "_widgetCNName": "今日事件总数",
+            "_widgetOrder": 3
+        },
+        {
+            "userWidgetOptionSettingId": 1,
+            "userId": "9608f968-bb8a-42e9-b4b8-5fed1ecaaff4",
+            "widgetOptionId": "906137cd-2606-48e6-ba66-5087e16ee902",
+            "setting": 1,
+            "_widgetName": "UNREAD_BLOCK_INCIDENT",
+            "_widgetCNName": "未读阻断事件总数",
+            "_widgetOrder": 4
+        },
+        {
+            "userWidgetOptionSettingId": 3,
+            "userId": "9608f968-bb8a-42e9-b4b8-5fed1ecaaff4",
+            "widgetOptionId": "994917d9-ae31-40fb-bccd-ad670b9e247a",
+            "setting": 1,
+            "_widgetName": "UNREAD_WARN_INCIDENT",
+            "_widgetCNName": "未读警告事件总数",
+            "_widgetOrder": 5
+        },
+        {
+            "userWidgetOptionSettingId": 5,
+            "userId": "9608f968-bb8a-42e9-b4b8-5fed1ecaaff4",
+            "widgetOptionId": "bf340b97-4d79-4cee-ac4a-7e50877c17f4",
+            "setting": 1,
+            "_widgetName": "MW_STATUS",
+            "_widgetCNName": "安全监管平台状态",
+            "_widgetOrder": 6
+        }
+    ]
+}

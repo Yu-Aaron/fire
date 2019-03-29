@@ -1,0 +1,41 @@
+<div>
+  <table class="table table-hover icon-hidden factory-device-table">
+    <thead>
+    <tr>
+      <th order-by="name">名称</th>
+      <th order-by="serialNumber">序列号</th>
+      <th order-by="make">厂商</th>
+      <th>类型</th>
+      <th>型号</th>
+      <th>IP&nbsp;/&nbsp;Mac</th>
+      <th>
+        <span>&nbsp;</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="device in dtable.table">
+      <td class="table-col-device-name">{{device.name}}</td>
+      <td class="table-col-serial">{{device.serialNumber}}</td>
+      <td>{{device.make}}</td>
+      <td>{{dtable.getType(device.iconType)}}</td>
+      <td class="table-col-model">{{device._model_name | deviceModel}}</td>
+      <td class="table-col-ip-mac">
+        <table class="inline-table">
+          <tbody>
+          <tr ng-repeat="port in device.devicePorts | filter:search.isMgmtPort=true">
+            <td>
+              <div class="inline-table-ip">{{port.portIp || "未知"}}</div>
+              <div class="inline-table-mac">{{(port.mac | uppercase) || "未知"}}</div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </td>
+      <td><a class="btn btn-default view-device-detail"
+             ui-sref="asset.factorydevice.detail({deviceID: device.deviceId})" ng-click="$event.stopPropagation()">查看 <i
+        class="fa fa-chevron-circle-right icon-right"></i></a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

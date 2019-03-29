@@ -1,0 +1,21 @@
+<div class="circle-meter-container">
+  <svg height="0" width="0" style="position: absolute;">
+    <defs>
+      <clipPath id="sector-{{$id}}">
+        <path style="fill:#0a0; stroke:#fff;" ng-attr-d="{{d}}">
+        </path>
+      </clipPath>
+    </defs>
+  </svg>
+  <div class="wrap scaleIn">
+    <img src="/images/bar.png" alt="" style="-webkit-clip-path: url(#sector-{{$id}});">
+    <i class="circle circle-start"></i>
+    <i class="circle circle-end" style="transform: translate(-50%, -50%) rotate({{deg}}deg);"></i>
+    <p class="name" ng-bind="name" ng-if="name"></p>
+    <span>{{displayPercent}} <sup>%</sup></span>
+  </div>
+  <div class="label-surplus" ng-if="surplus">
+    <span>剩余</span>
+    <p>{{surplus | spaceFormat}}</p>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div>
+  <table id="security_new_device_table" class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th>名称</th>
+      <th>序列号</th>
+      <th>版本</th>
+      <th>厂商</th>
+      <th>型号</th>
+      <!-- <th>分区</th> -->
+      <th>管理端口IP</th>
+      <th>管理端口MAC</th>
+      <th>端口数量</th>
+      <th>
+        <span>&nbsp;</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="security_new_device_table_row_{{$index}}" ng-repeat="device in newdevice.table">
+      <td>{{device.name}}</td>
+      <td class="table-col-md">{{device.serialNumber}}</td>
+      <td class="table-col-md">{{device.version}}</td>
+      <td>{{device.make}}</td>
+      <td class="table-col-md">{{newdevice.simplifyModelName(device._model_name) | deviceModel}}</td>
+      <!-- <td>
+		<span ng-repeat="zone in device._zoneNames">{{zone.zoneName}}</span>
+	  </td> -->
+      <td>
+        <span ng-repeat="port in device.devicePorts | filter:search.isMgmtPort=true">{{port.portIp}} </span>
+      </td>
+      <td>
+        <span ng-repeat="port in device.devicePorts | filter:search.isMgmtPort=true">{{port.mac}} </span>
+      </td>
+      <td>{{device.devicePorts.length}}个</td>
+      <td>
+        <a class="btn btn-primary" id="securitydevice-securityNewDeviceTable_a_addModal_{{$index}}"
+           ng-disabled="device.isAdding" ng-click="newdevice.addModal(device)" privilege>加入拓扑</a>
+        <a id="securitydevice-securityNewDeviceTable_a_removeModal_{{$index}}" class="btn btn-default"
+           ng-click="newdevice.removeNewDevice(device)" ng-disable="device.deviceOnline===1" privilege>删除</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

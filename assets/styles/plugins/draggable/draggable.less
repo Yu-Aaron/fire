@@ -1,0 +1,55 @@
+.draggable {
+  .draggable-item div {
+    background-color: @gray80;
+  }
+}
+
+[ng-drag] {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+[ng-drag] {
+  min-height: 280px;
+  background: @gray85;
+  display: block;
+  cursor: move;
+}
+
+// DRAG OVER
+[ng-drag].drag-over {
+}
+
+// DRAGGING
+[ng-drag].dragging {
+  opacity: 0.5;
+  width: 200px;
+  min-height: 200px;
+}
+
+[ng-drop] {
+  background: rgba(0, 0, 0, 0.55);
+  display: block;
+  position: relative;
+  width: 300px;
+  margin-right: 30px;
+  min-height: 200px;
+  float: left;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+[ng-drop].drag-enter {
+  border: dotted 5px @gray70;
+  height: 290px;
+}
+
+[ng-drop] div {
+  position: relative;
+  z-index: 2;
+}

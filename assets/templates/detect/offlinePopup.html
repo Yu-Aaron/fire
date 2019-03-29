@@ -1,0 +1,64 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">选择文件</h3>
+</div>
+
+<div class="modal-body">
+  <div class="modal-container">
+    <div class="modal-container-header">
+      <button type="button" ng-if class="btn btn-default" style="position: relative">
+        <i class="fa fa-plus icon-left"></i>
+        <input type="file" id="addRecord" name="addRecord" nv-file-select="" uploader="uploader" multiple> 增加文件</input>
+      </button>
+      <button type="button" class="btn btn-primary pull-right margin-bottom-default" ng-disabled="uploading"
+              ng-click="startAnalyze()"><i class="fa fa-gears icon-left"></i>开始检测
+      </button>
+    </div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>名称</th>
+        <th>修改时间</th>
+        <th ng-show="uploader.isHTML5">文件大小</th>
+        <th ng-show="uploader.isHTML5">上传进度</th>
+        <th>状态</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in uploader.queue">
+        <td>
+          <strong>{{ item.file.name }}</strong>
+        </td>
+        <td>{{item.file.lastModifiedDate | date:'yyyy-MM-dd HH:mm'}}</td>
+        <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+        <td ng-show="uploader.isHTML5">
+          <div class="progress" style="margin-bottom: 0;">
+            <div class="progress-bar progress-bar-default" role="progressbar"
+                 ng-style="{ 'width': item.progress + '%' }"></div>
+          </div>
+        </td>
+        <td class="text-center">
+            <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i>
+            </span>
+          <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i>
+            </span>
+          <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i>
+            </span>
+        </td>
+        <td nowrap>
+          <button ng-if="item.isError" type="button" class="btn btn-default" ng-click="item.upload()">
+            <span><i class="fa fa-refresh icon-left"></i>重新</span>
+          </button>
+          <button ng-if="item.isError" type="button" class="btn btn-default" ng-click="item.remove()">
+            <span><i class="fa fa-close icon-left"></i>移除</span>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-close icon-left"></i>取消</button>
+</div>

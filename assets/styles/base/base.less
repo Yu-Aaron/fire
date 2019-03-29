@@ -1,0 +1,106 @@
+/* ----------------------------------------
+  New Base Settings
+---------------------------------------- */
+
+:focus {
+  outline: none;
+}
+
+body {
+  color: @txt-base;
+  font-family: @font-family;
+  font-size: @font-size-body;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  font-weight: @font-weight-base;
+}
+
+h2, h3 {
+  margin-bottom: 5px;
+}
+
+h4, h5 {
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: @font-size-h1;
+}
+
+h2 {
+  font-size: @font-size-h2;
+}
+
+h3 {
+  font-size: @font-size-h3;
+}
+
+h4 {
+  font-size: @font-size-h4;
+}
+
+h5 {
+  font-size: @font-size-h5;
+}
+
+h6 {
+  font-size: @font-size-h6;
+}
+
+section#request-result-popup {
+  position: fixed;
+  top: 60px;
+  right: 30px;
+  z-index: 1500;
+}
+
+/* main title at the top of each page */
+.title {
+  font-weight: @font-weight-base;
+  color: @gray;
+}
+
+.title-page-main {
+  &:extend(.title);
+  font-size: @font-size-h2;
+}
+
+/* sub-title displayed to the right of the main title */
+.title-page-sub {
+  &:extend(.title);
+  font-size: @font-size-h3;
+  margin-left: 15px;
+}
+
+.title-page-main, .title-page-sub {
+  margin-bottom: 25px; //5px
+  padding-top: 5px; // For detail info page for Asset Management: to align with the return button
+}
+
+/* section titles that aren't contained inside a panel or table */
+.title-section {
+  &:extend(.title);
+  font-size: @font-size-h4;
+  margin-bottom: 10px;
+}
+
+/* over write default list item display */
+ul {
+  li {
+    display: block;
+  }
+}
+
+/* Center vertically within div */
+.vertical-mid {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+}
+
+.cg-busy-backdrop {
+  background-color: #272930;
+}

@@ -1,0 +1,82 @@
+<!-- BELOW TABLE IS PLACEHOLDER TO TEST ACCORDION STYLE EFFECT USING ANGULAR ANIMATE -->
+<table class="table table-hover icon-hidden" ng-init="items=[0,1,2]">
+  <thead>
+  <tr>
+    <th>
+      <span></span>
+    </th>
+    <th>
+      <span>安装</span>
+    </th>
+    <th>
+      <span>名称</span>
+    </th>
+    <th>
+      <span>序列号</span>
+    </th>
+    <th>
+      <span>型号</span>
+    </th>
+    <th>
+      <span>分区</span>
+    </th>
+    <th>
+      <span>管理口IP</span>
+    </th>
+    <th>
+      <span>端口</span>
+    </th>
+    <th>
+      <span>部署规则</span>
+    </th>
+  </tr>
+  </thead>
+  <tbody ng-repeat="item in items">
+  <tr ng-click="accordion.current = !accordion.current">
+    <td><i class="fa {{accordion.current ? 'fa-chevron-down' : 'fa-chevron-right'}}"></i></td>
+    <td>安装</td>
+    <td>ae</td>
+    <td>be</td>
+    <td>be</td>
+    <td>be</td>
+    <td>be</td>
+    <td>be</td>
+    <td>be</td>
+  </tr>
+  <tr ng-show="accordion.current" class="angular-animate show-hide show-hide-table-row">
+    <td colspan="100%">
+      <div class="row">
+        <div class="col-xs-2 text-center">
+          <h5>匡恩设备</h5>
+          <img src="images/placeholders/u857.png" width="60" class="display-block margin-center margin-bottom-default"/>
+          <button class="btn btn-default">查看网络结构 <i class="fa fa-chevron-circle-right"></i></button>
+        </div>
+        <div class="col-xs-10">
+          <table class="table table-black-rows">
+            <thead>
+            <tr>
+              <th>规则名称</th>
+              <th>规则来源</th>
+              <th>协议</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>test</td>
+              <td>test2</td>
+              <td>test3</td>
+            </tr>
+
+            <tr>
+              <td>test</td>
+              <td>test2</td>
+              <td>test3</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>

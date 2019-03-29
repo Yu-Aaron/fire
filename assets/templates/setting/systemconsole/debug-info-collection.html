@@ -1,0 +1,86 @@
+<div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-lg">
+        <div class="panel-header panel-header-border">
+          <h5 class="panel-header-title">{{$root.PLATFORM_SHORT_NAME}}收集信息</h5>
+        </div>
+        <div class="panel-body panel-dashboard">
+          <div class="row text-right">
+            <div class="col-xs-2 bg-icon bg-icon-clock">
+              <div class="mid-line spin-container" style="font-size:17px;" ng-if="$root.mwCollecting">
+                <i class="fa fa-spinner fa-spin"></i><span class="spin-text">收集中...</span>
+              </div>
+              <h1 class="panel-dashboard-value text-light-blue" style="font-size:17px" ng-if="!$root.mwCollecting">
+                {{(dbgInfo.endTimestamp | date:'yyyy-MM-dd HH:mm:ss')|| '无'}}</h1>
+              <h4 class="panel-dashboard-title">最近收集时间</h4>
+            </div>
+            <div class="col-xs-3 bg-icon bg-icon-ok" ng-if="dbgInfo.result !== 'FAILURE'">
+              <div class="mid-line spin-container" style="font-size:17px;" ng-if="$root.mwCollecting">
+                <i class="fa fa-spinner fa-spin"></i><span class="spin-text">收集中...</span>
+              </div>
+              <h1 class="panel-dashboard-value text-green" style="font-size:17px" ng-if="!$root.mwCollecting">
+                {{dbgInfo.result?'成功':'无'}}</h1>
+              <h4 class="panel-dashboard-title">收集结果</h4>
+            </div>
+            <div class="col-xs-3 bg-icon bg-icon-remove" ng-if="dbgInfo.result === 'FAILURE'">
+              <div class="mid-line spin-container" style="font-size:17px;" ng-if="$root.mwCollecting">
+                <i class="fa fa-spinner fa-spin"></i><span class="spin-text">收集中...</span>
+              </div>
+              <h1 class="panel-dashboard-value text-red" style="font-size:17px" ng-if="!$root.mwCollecting">失败</h1>
+              <h4 class="panel-dashboard-title">收集结果</h4>
+            </div>
+            <div class="col-xs-4 bg-icon bg-icon-folder-closer">
+              <div class="mid-line spin-container" style="font-size:17px;" ng-if="$root.mwCollecting">
+                <i class="fa fa-spinner fa-spin"></i><span class="spin-text">收集中...</span>
+              </div>
+              <h1 class="panel-dashboard-value text-orange" ng-if="!$root.mwCollecting">
+                <div class="text-content-ellipsis" style="font-size:17px" tooltip="{{dbgInfo.directory}}"
+                     tooltip-placement="bottom" ng-show="dbgInfo.directory">{{dbgInfo.directory}}
+                </div>
+                <div style="font-size:17px" ng-hide="dbgInfo.directory">无</div>
+              </h1>
+              <h4 class="panel-dashboard-title">收集目录</h4>
+            </div>
+            <div class="col-xs-2">
+              <div class="margin-top-default">
+                <a class="btn btn-default" style="font-size:15px;margin-left:10px"
+                   ng-click="debuginfo.collectMWDebugInfo()" ng-disabled="$root.mwCollecting">&nbsp;<i
+                  class="fa fa-download icon-left"></i> 收集&nbsp;</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-lg">
+        <div class="panel-header panel-header-border">
+          <h5 class="panel-header-title">安全设备收集信息</h5>
+        </div>
+        <div class="panel-body panel-body-light">
+          <dtable>
+            <debug-info-dpi-table></debug-info-dpi-table>
+          </dtable>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/ng-template" id="debuginfo-mw-collection-confirmation.html">
+    <div class="modal-header">
+      <h3 class="modal-header-title">调试信息收集</h3>
+    </div>
+    <div class="modal-body">
+      {{$root.PLATFORM_SHORT_NAME}}调试信息收集将会持续较长时间，确认开始信息收集？
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default pull-right" ng-click="ok()"><i class="fa fa-check text-lime icon-left"></i>确定
+      </button>
+      <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times-circle icon-left"></i>取消
+      </button>
+    </div>
+  </script>
+</div>

@@ -1,0 +1,227 @@
+<div class="padding-default" style="padding-bottom: 0">
+  <h5 class="margin-left-default display-inline-block" style="opacity: 0">{{securitydetail.device.name}}</h5>
+  <div privilege class="pull-right">
+    <span ng-if="securitydetail.isDPIUpgrading" class="warning">(DPI设备升级中，无法编辑、下发) &nbsp;</span>
+    <button type="button" class="btn btn-default" ng-hide="securitydetail.isEdited"
+            ng-click="securitydetail.editDevice();securitydetail.fillValidate()"
+            ng-disabled="securitydetail.isDPIUpgrading">编辑设备
+    </button>
+    <button type="button" class="btn btn-default" ng-hide="securitydetail.isEdited"
+            ng-click="securitydetail.deployDeviceACL(securitydetail.device)"
+            ng-disabled="!((securitydetail.aclData && securitydetail.aclData[0]._aclStatus === 'READYDEPLOY') || !securitydetail.aclData.length) || securitydetail.isDPIUpgrading || securitydetail.device.deviceOnline !== 1 || securitydetail.device.deviceSource !== 'DISCOVERY'">
+      下发
+    </button>
+    <span ng-show="securitydetail.isEdited">
+      <button type="button" class="btn btn-default btn-group-pull-right" ng-click="securitydetail.editCancel(false)"><i
+        class="fa fa-times icon-left"></i>取消</button>
+      <button type="button" class="btn btn-default" ng-disabled="securitydetail.invalidIp||securitydetail.invalidAcl"
+              ng-click="securitydetail.editDone('acl')"><i class="fa fa-check icon-left text-lime"></i>保存</button>
+    </span>
+  </div>
+</div>
+<div class="detail-page-wrapper bg-gray-85">
+  <div class="detail-page-body">
+    <section id="device-acl" class="detail-acl" ng-if="securitydetail.device.showRoutingInfo">
+      <div class="detail-information detail-panel">
+        <div class="detail-title">
+          <div class="row">
+            <div class="col-xs-6">
+              <h4>访问控制</h4>
+            </div>
+          </div>
+        </div>
+        <div class="detail-information-content">
+          <div class="row">
+            <form name="form" role="form" class="col-xs-12">
+              <div class="panel">
+                <div class="panel-heading">
+                  <span><i class="fa fa-cogs icon-left"></i>访问控制表</span>
+                </div>
+                <div class="panel-body">
+                  <div class="detail-page-list-item">
+                    <div ng-hide="!securitydetail.isEdited">
+                      <table class="table table-hover icon-hidden">
+                        <thead>
+                        <tr>
+                          <th>编号</th>
+                          <th style="width:120px;">操作</th>
+                          <th style="min-width:170px;">起源地址</th>
+                          <th style="min-width:170px;">目标地址</th>
+                          <th style="min-width:120px;">协议</th>
+                          <th style="min-width:80px;">起源端口</th>
+                          <th style="min-width:80px;">目标端口</th>
+                          <th style="width:90px;">日志生成</th>
+                          <th style="width:80px;">下发状态</th>
+                          <th>&nbsp;</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="acl in securitydetail.aclData">
+                          <td>
+                            <div ng-class="securitydetail.acl.acls_numValidate[$index] ?'acl-correct':'acl-error'">
+                              <input class="acl-num acl-input" type="text" placeholder="{{acl.aclNumber}}"
+                                     ng-model="acl.aclNumber"
+                                     ng-keyup="securitydetail.checkNum(acl.aclNumber, $index)"/>
+                            </div>
+                          </td>
+                          <td class="acl-ops">
+                            <div class="select-styled acl-ops">
+                              <select ng-model="acl.aclAction">
+                                <option value="permit">允许</option>
+                                <option value="deny">阻断</option>
+                              </select>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="select-styled input-stacked"
+                                 ng-hide="securitydetail.acl.acls_sourceIpDisable[$index]">
+                              <div class="input-stacked-wrap"
+                                   ng-class="securitydetail.acl.acls_sourceIpValidate[$index] ?'acl-correct':'acl-error'">
+                                <input class="acl-ip acl-input"
+                                       ng-class="securitydetail.acl.acls_sourceIpEdit[$index]? 'acl-input-enable':'acl-input-disable'"
+                                       ng-disabled="!securitydetail.acl.acls_sourceIpEdit[$index]" type="text"
+                                       placeholder="{{acl.sourceIp}}" ng-model="acl.sourceIp"
+                                       ng-keyup="securitydetail.checkIp(acl.sourceIp, $index, 'source')"/>
+                              </div>
+                              <select ng-model="securitydetail.acl.acls_sourceIpEdit[$index]"
+                                      ng-options="o.v as o.n for o in [{ n: '任意', v: false }, { n: '填写范围', v: true }]"
+                                      ng-change="securitydetail.ipChange($index, 'source')">
+                              </select>
+                            </div>
+                            <div class="acl-center" ng-hide="!securitydetail.acl.acls_sourceIpDisable[$index]">--</div>
+                          </td>
+                          <td>
+                            <div class="select-styled input-stacked"
+                                 ng-hide="securitydetail.acl.acls_destinationIpDisable[$index]">
+                              <div class="input-stacked-wrap"
+                                   ng-class="securitydetail.acl.acls_destinationIpValidate[$index] ?'acl-correct':'acl-error'">
+                                <input class="acl-ip acl-input"
+                                       ng-class="securitydetail.acl.acls_destinationIpEdit[$index]? 'acl-input-enable':'acl-input-disable'"
+                                       ng-disabled="!securitydetail.acl.acls_destinationIpEdit[$index]" type="text"
+                                       placeholder="{{acl.destinationIp}}" ng-model="acl.destinationIp"
+                                       ng-keyup="securitydetail.checkIp(acl.destinationIp, $index, 'target')"/>
+                              </div>
+                              <select ng-model="securitydetail.acl.acls_destinationIpEdit[$index]"
+                                      ng-options="o.v as o.n for o in [{ n: '任意', v: false }, { n: '填写范围', v: true }]"
+                                      ng-change="securitydetail.ipChange($index, 'target')">
+                              </select>
+                            </div>
+                            <div class="acl-center" ng-hide="!securitydetail.acl.acls_destinationIpDisable[$index]">--
+                            </div>
+                          </td>
+                          <td>
+                            <div class="select-styled acl-protocol">
+                              <select ng-model="acl.protocolType"
+                                      ng-change="securitydetail.checkAclProtocol(acl.protocolType, $index)">
+                                <option value="任意">任意</option>
+                                <option value="TCP">TCP</option>
+                                <option value="UDP">UDP</option>
+                                <option value="ICMP">ICMP</option>
+                                <option value="OPC_Classic">OPC_Classic</option>
+                              </select>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="select-styled input-stacked"
+                                 ng-hide="securitydetail.acl.acls_sourcePortDisable[$index]">
+                              <div class="input-stacked-wrap"
+                                   ng-class="securitydetail.acl.acls_sourcePortValidate[$index] ?'acl-correct':'acl-error'">
+                                <input class="acl-port acl-input"
+                                       ng-class="securitydetail.acl.acls_sourcePortEdit[$index]? 'acl-input-enable':'acl-input-disable'"
+                                       ng-disabled="!securitydetail.acl.acls_sourcePortEdit[$index]" type="text"
+                                       placeholder="{{acl.sourcePort}}" ng-model="acl.sourcePort"
+                                       ng-keyup="securitydetail.checkPort(acl.sourcePort, $index, 'source')"/>
+                              </div>
+                              <select ng-model="securitydetail.acl.acls_sourcePortEdit[$index]"
+                                      ng-options="o.v as o.n for o in [{ n: '任意', v: false }, { n: '填写范围', v: true }]"
+                                      ng-change="securitydetail.portChange($index, 'source')">
+                              </select>
+                            </div>
+                            <div class="acl-center" ng-hide="!securitydetail.acl.acls_sourcePortDisable[$index]">--
+                            </div>
+                          </td>
+                          <td>
+                            <div class="select-styled input-stacked"
+                                 ng-hide="securitydetail.acl.acls_destinationPortDisable[$index]">
+                              <div class="input-stacked-wrap"
+                                   ng-class="securitydetail.acl.acls_destinationPortValidate[$index]?'acl-correct':'acl-error'">
+                                <input class="acl-port acl-input"
+                                       ng-class="securitydetail.acl.acls_destinationPortEdit[$index]?'acl-input-enable':'acl-input-disable'"
+                                       ng-disabled="!securitydetail.acl.acls_destinationPortEdit[$index]" type="text"
+                                       placeholder="{{acl.destinationPort}}" ng-model="acl.destinationPort"
+                                       ng-keyup="securitydetail.checkPort(acl.destinationPort, $index, 'target')"/>
+                              </div>
+                              <select ng-model="securitydetail.acl.acls_destinationPortEdit[$index]"
+                                      ng-options="o.v as o.n for o in [{ n: '任意', v: false }, { n: '填写范围', v: true }]"
+                                      ng-change="securitydetail.portChange($index, 'target')">
+                              </select>
+                            </div>
+                            <div class="acl-center" ng-hide="!securitydetail.acl.acls_destinationPortDisable[$index]">
+                              --
+                            </div>
+                          </td>
+                          <td>
+                            <input type="checkbox" ng-model="acl.aclLog"/>日志生成
+                          </td>
+                          <td>{{!acl._aclStatus || acl._aclStatus === 'READYDEPLOY' ? '未下发' : '已下发'}}</td>
+                          <td style="text-align: center;">
+                            <button type="button" class="btn btn-default btn-sm"
+                                    ng-click="securitydetail.deleteSingleAcl($index)"><i class="fa fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                      <button type="button" class="btn btn-default acl-add-button" ng-click="securitydetail.addAcl()">
+                        <span class="acl-icon-green"><i class="fa fa-plus"></i></span> 添加访问控制
+                      </button>
+                    </div>
+                    <div ng-hide="securitydetail.isEdited">
+                      <table class="table table-hover icon-hidden">
+                        <thead>
+                        <tr>
+                          <th>编号</th>
+                          <th>操作</th>
+                          <th>起源地址</th>
+                          <th>目标地址</th>
+                          <th>协议</th>
+                          <th>起源端口</th>
+                          <th>目标端口</th>
+                          <th>日志生成</th>
+                          <th>下发状态</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="acl in securitydetail.aclData">
+                          <td>{{acl.aclNumber}}</td>
+                          <td>{{acl._aclAction}}</td>
+                          <td>{{acl.sourceIp}}</td>
+                          <td>{{acl.destinationIp}}</td>
+                          <td>{{acl.protocolType}}</td>
+                          <td>
+                            <div ng-hide="securitydetail.acl.acls_sourcePortDisable[$index]">{{acl.sourcePort}}</div>
+                            <div ng-hide="!securitydetail.acl.acls_sourcePortDisable[$index]">--</div>
+                          </td>
+                          <td>
+                            <div ng-hide="securitydetail.acl.acls_destinationPortDisable[$index]">
+                              {{acl.destinationPort}}
+                            </div>
+                            <div ng-hide="!securitydetail.acl.acls_destinationPortDisable[$index]">--</div>
+                          </td>
+                          <td><span ng-hide="acl.aclLog"><i class="fa fa-times"></i></span><span
+                            ng-hide="!acl.aclLog"><i class="fa fa-check"></i></span></td>
+                          <td>{{!acl._aclStatus || acl._aclStatus === 'READYDEPLOY' ? '未下发' : '已下发'}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

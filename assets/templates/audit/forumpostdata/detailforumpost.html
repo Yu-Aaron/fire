@@ -1,0 +1,53 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">详细信息</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body-no-frame">
+  <style type="text/css">
+    .forcewrap {
+      word-break: break-all;
+      word-wrap: break-word;
+      height: 250px;
+      vertical-align: middle;
+      overflow-y: auto;
+    }
+  </style>
+  <div id="audit_auditdetailpanel_container" class="modal-container">
+    <div>
+      <div class="row">
+        <div class="col-xs-3">
+          <h5>论坛名称</h5>
+          <div class="gray-content">{{forumpostDataDetail.forumName}}</div>
+        </div>
+        <div class="col-xs-3">
+          <h5>起始时间</h5>
+          <div class="gray-content">{{forumpostDataDetail.postTimestamp | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+        </div>
+        <div class="col-xs-3">
+          <h5>IP地址</h5>
+          <div class="gray-content">{{forumpostDataDetail.usrIp}}</div>
+        </div>
+        <div class="col-xs-3">
+          <h5>MAC地址</h5>
+          <div class="gray-content">{{forumpostDataDetail.usrMac}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <table id="audit_audittab_table" class="table icon-hidden table-bordered" style="margin-top: 20px">
+    <tbody>
+    <tr>
+      <td style="width:10%;text-align:center;vertical-align:middle"><h5>标题</h5></td>
+      <td><h5>{{forumpostDataDetail.title}}</h5></td>
+    </tr>
+    <tr>
+      <td style="width:10%;height:100%;text-align:center;vertical-align:middle"><h5>内容</h5></td>
+      <td class="forcewrap">
+        <div style="overflow-y: auto;height: 240px">{{forumpostDataDetail.postContent}}</div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+

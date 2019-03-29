@@ -1,0 +1,254 @@
+<div class="padding-default signature-top">
+  <div ng-show="editor.hasPolicies">
+    <a class="display-inline-block" ng-click="editor.goBack()">
+      <button id="rule-whiteList-editor_button_cancel" class="btn btn-default"><i
+        class="fa fa-arrow-circle-left icon-left"></i>返回
+      </button>
+    </a>
+  </div>
+  <div ng-hide="editor.hasPolicies">
+    <h5>当前没有已部署规则，请选择并部署适用于您网络的安全规则</h5>
+  </div>
+</div>
+
+<div class="rule-container">
+  <div class="detail-page-wrapper signature-wrapper-left" id="whitelist-editor">
+    <div class="tab-container" cg-busy="{promise:$root.unlockPromise,message:'工作中...'}" ng-controller="TabCtrl as tab">
+
+      <div class="row">
+
+        <div class="col-xs-6">
+          <div class="signature-tab tab-container">
+
+            <h4>规则库</h4>
+
+            <!-- TAB NAVIGATION -->
+            <ul class="nav nav-tabs nav-tabs-lime">
+              <li id="rule-whiteList-editor_li_all"
+                  ng-class="{ active: tab.isActiveTab('total') }"><a href
+                                                                     ng-click="tab.activateTab('total');editor.changeURL('total')"><span>全部规则库</span></a>
+              </li>
+              <li id="rule-whiteList-editor_li_learning"
+                  ng-class="{ active: tab.isActiveTab('learning') }"><a href
+                                                                        ng-click="tab.activateTab('learning');editor.changeURL('learning')"><span>学习规则库</span></a>
+              </li>
+              <li id="rule-whiteList-editor_li_templates"
+                  ng-class="{ active: tab.isActiveTab('templates') }"><a href
+                                                                         ng-click="tab.activateTab('templates');editor.changeURL('templates')"><span>模版库</span></a>
+              </li>
+              <li id="rule-whiteList-editor_li_customs"
+                  ng-class="{ active: tab.isActiveTab('customs') }"><a href
+                                                                       ng-click="tab.activateTab('customs');editor.changeURL('customs')"><span>自定义库</span></a>
+              </li>
+            </ul>
+
+            <!-- TAB CONTENT -->
+            <div ng-switch on="tab.activeTab" class="panel panel-gradient padding-default tab-container-body">
+              <div ng-switch-when="total" class="signature-tab-total" >
+                <button id="rule-white-editor_button_selectAll" class="btn btn-default signature-btn-select-all"
+                        ng-click="dtable.selectAllSignature()" setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED">
+                  {{dtable.selectAllSigsText}}
+                </button>
+                <button id="rule-white-editor_button_delete" class="btn btn-default signature-btn-select-all"
+                        ng-click="dtable.deleteWhiteList()" ng-disabled="dtable.selectedBlockCount === 0"
+                        setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED">
+                  删除
+                </button>
+                <dtable>
+                  <total-rule-block-table></total-rule-block-table>
+                </dtable>
+              </div>
+              <div ng-switch-when="learning" class="signature-learning" ng-init="editor.checklearningTasks()">
+                <button id="rule-whiteList-editor_button_learningRules"
+                        ng-click="editor.toLearning()" class="btn btn-default btn-file ng-binding" setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED"><i
+                  class="fa fa-pencil icon-left"></i>规则学习
+                </button>
+                <div class="signature-learning-list">
+                  <hr class="hr-small-margin">
+                  <div class="spacing"></div>
+                  <ul id="rule-whiteList-editor_li_learningTasks" ng-if="!editor.showDetailPanel"
+                      ng-init="editor.stopCountDown()" class="no-bullets padding-zero margin-default">
+                    <div class="learning-item-scroll">
+                      <li id="rule-whiteList-editor_li_learningTasks_{{task.taskId}}"
+                          ng-class="task.state === 'SUCCESS'?'learnt-li':'learning-li'" class="learning-item"
+                          ng-repeat="task in editor.learningTasks" ng-if="task.state === 'SUCCESS'" fade-in-list>
+                        <div class="row">
+                          <div class="col-xs-1">
+                            <span ng-class="task.status" ng-show="task.state == 'PENDING'"><i
+                              class="fa fa-large fa-clock-o text-lime"></i></span>
+                            <span ng-class="task.status" ng-show="task.state == 'PROCESSING'|| task.state=='PAUSED'"><i
+                              class="fa fa-circle fa-large fa-flashing-orange"></i></span>
+                            <!--<span ng-class="task.status" ng-show="task.state == 'SUCCESS'"><input type="checkbox">&nbsp;</span>-->
+                          </div>
+                          <div
+                            ng-click="editor.learningDetail(task.taskId);editor.loopLearningDetail(task.taskId);editor.showDetailPanel = true;editor.value=0">
+                            <div class="col-xs-8 padding-zero">
+                              <span>{{task.taskName}}</span>
+                            </div>
+                            <div class="col-xs-2 status-label" ng-show="task.state == 'PENDING'">
+                              <span class="label label-success">等待</span>
+                            </div>
+                            <div class="col-xs-2 status-label" ng-show="task.state == 'PROCESSING'">
+                              <span class="label label-warning">学习中</span>
+                            </div>
+                            <div class="col-xs-2 status-label" ng-show="task.state == 'PAUSED'">
+                              <span class="label label-warning">暂停</span>
+                            </div>
+                            <div class="col-xs-2 status-label" ng-show="task.state == 'SUCCESS'">
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </div>
+                  </ul>
+                  <div
+                    ng-if="!editor.showDetailPanel && (editor.learningTasks.length===0 || (editor.learningTasks.length===1 && editor.learningTasks[0].state!=='SUCCESS'))">
+                    没有已完成的规则学习
+                  </div>
+                  <div ng-if="editor.showDetailPanel && editor.detailPanelItem.state!='PENDING'"
+                       class="signature-learning-processing">
+                    <button class="btn btn-default" ng-click="editor.showDetailPanel=false;editor.checklearningTasks()">
+                      <i class="fa fa-reply"></i></button>
+                    <button id="rule-whiteList-editor_button_deleteRule" class="btn btn-default pull-right"
+                            ng-click="editor.remove(editor.detailPanelItem); editor.showDetailPanel=false"
+                            setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED">删除学习
+                    </button>
+                    <hr class="hr-small-margin">
+                    <div class="learning-detail-name">
+                      <div class="row">
+                        <div class="col-xs-9">
+                          <h5>{{editor.detailPanelItem.taskName}}</h5>
+                        </div>
+                        <div class="col-xs-2 text-right">
+                          <div
+                            ng-show="editor.detailPanelItem.state=='SUCCESS' || editor.detailPanelItem.state=='PENDING'"
+                            style="margin-top:8px;">
+                            <span class="label label-success"
+                                  ng-show="editor.detailPanelItem.state == 'SUCCESS'">完成</span>
+                            <span class="label label-success"
+                                  ng-show="editor.detailPanelItem.state == 'PENDING'">等待</span>
+                          </div>
+                        </div>
+                        <div class="col-xs-1 text-right">
+                          <button id="rule-whiteList-editor_button_toggleRuleDetail"
+                                  ng-click="editor.learningDetailCollapse= !editor.learningDetailCollapse"
+                                  ng-init="editor.learningDetailCollapse=false" class="btn btn-default pull-right"
+                                  style="padding-top:2px; padding-bottom:2px; margin-top:5px;">
+                            <i class="fa fa-info"></i>
+                          </button>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div collapse="editor.learningDetailCollapse" class="learning-detail" style="margin-left:10px;">
+                      <span>开始学习：{{editor.detailPanelItem.startDatetimeLocal}}</span>
+                      <br>
+                      <span>停止学习：{{editor.detailPanelItem.endDatetimeLocal}}</span>
+                      <br>
+                      <span>学习长度：{{editor.detailPanelItem.difference.days}}天{{editor.detailPanelItem.difference.hours}}小时{{editor.detailPanelItem.difference.mins | number:0}}分</span>
+                      <br>
+                      <span>数据流 : {{editor.detailPanelItem.learningResult.validFlowdataCount||0}}</span>
+                      <br>
+                      <span>设备活动记录 : <a id="rule-whiteList-editor_a_showMonitor" class="monitor-signature-link"
+                                        ng-click="editor.openRecord()">{{editor.detailPanelItem.learningResult.knownDevices.length||0}} 设备活动， {{editor.detailPanelItem.learningResult.unknownDevices.length||0}} 未知设备活动</a> </span>
+                      <br>
+                      <span>IP/MAC地址记录 : <a id="rule-whiteList-editor_a_showIPMACMonitor" class="monitor-signature-link"
+                                            ng-click="editor.openIPMACRecord()">{{editor.detailPanelItem.macData.length||0}} 个设备</a> </span>
+                      <br>
+                    </div>
+
+                    <hr class="hr-small-margin">
+
+                    <div ng-if="editor.detailPanelItem.state=='PROCESSING' || editor.detailPanelItem.state=='PAUSED'"
+                         ng-init="editor.countdown(editor.detailPanelItem, editor.detailPanelItem.state)"
+                         class="learning-status-display">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <h5>
+                            剩余时间：{{editor.remainTime.days}}天{{editor.remainTime.hours}}小时{{editor.remainTime.minutes}}分钟{{editor.remainTime.seconds}}秒</h5>
+                        </div>
+                        <div class="col-md-3 padding-zero text-center">
+                          <h5>数据流 : <span
+                            ng-class="{'fa-flashing-orange learning-traffic': editor.detailPanelItem.state=='PROCESSING'}">{{editor.detailPanelItem.learningResult.validFlowdataCount||0}}</span>
+                          </h5>
+                        </div>
+                        <div class="col-md-3">
+                          <h5 class="pull-right" ng-if="editor.detailPanelItem.state=='PROCESSING'"><i
+                            class="fa fa-default fa-circle fa-flashing-orange"></i> 学习中</span></h5>
+                        </div>
+                      </div>
+                      <div class="player learning-status-dashboard">
+                        <div class="row">
+                          <div class="col-xs-3 player-btns">
+                            <button id="rule-whiteList-editor_button_stopLearning"
+                                    ng-click="editor.cancelLearning(editor.detailPanelItem);editor.stopCountDown()"
+                                    class="btn-default player-btn"><i class="fa fa-stop"></i></button>
+                          </div>
+                          <div class="col-xs-9 player-progressbar">
+                            <progressbar value="editor.value" type="success"></progressbar>
+                          </div>
+                        </div>
+                      </div>
+                      <hr>
+                    </div>
+
+
+                    <div class="learning-rule-list">
+                      <learning-table topology-id="editor.topologyId" learning-type='editor.learningType'
+                                      policy-id="editor.getPolicyId" task="editor.getTask"
+                                      move="editor.refreshPreDeployTable(block)"></learning-table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div ng-switch-when="templates" class="signature-tab-template" signature-editor>
+
+                <div cg-busy="{promise:$root.uploadTemplatePromise,message:'上传中...'}">
+                  <div class="upload">
+                    <button id="rule-whiteList-editor_button_upload" type="button"
+                            class="btn btn-default btn-file ng-binding" setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED"><i
+                      class="fa fa-cloud-upload icon-left"></i>上传<input class="template" type="file"/></button>
+                  </div>
+                  <dtable>
+                    <template-table></template-table>
+                  </dtable>
+                </div>
+              </div>
+              <div ng-switch-when="customs" class="signature-tab-add" signature-deployed>
+                <button id="rule-whiteList-editor_button_handwriteRules"
+                        ng-click="dtable.createCustomRules(editor.state)" class="btn btn-default btn-file ng-binding"
+                        setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED"><i
+                  class="fa fa-pencil icon-left"></i>手写规则
+                </button>
+                <dtable>
+                  <custom-table protocol-type="'WHITELIST'"
+                                policy-id="editor.getPolicyId"
+                                move="editor.refreshPreDeployTable(block)"></custom-table>
+                </dtable>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- SIGNATURE RULE PASS BUTTON -->
+        <div class="col-xs-1 text-center signature-padding-zero">
+          <div class="signature-rule-pass-button" ng-click="editor.moveToPreDeployTable()" setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED">
+            <span><i id="rule-whiteList-editor_i_movePreDep" class="fa fa-plus-circle fa-3x"></i></span><br><br>
+            <span class="font-bigger">添加</span>
+          </div>
+        </div>
+
+        <!-- SIGNATURE RULE WAITING LIST -->
+        <div class="col-xs-5">
+          <div class="signature-rule-waiting-list" setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED">
+            <pre-deploy-table policy-id="editor.getPolicyId"></pre-deploy-table>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>

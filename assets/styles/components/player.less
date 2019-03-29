@@ -1,0 +1,43 @@
+/* ----------------------------------------
+  New Player
+---------------------------------------- */
+
+.player {
+  padding: 5px 8px 3px;
+  background: @bg-gray;
+  border: 1px solid @bg-gray-dark;
+  box-shadow: inset 0px 1px 2px 0px rgba(204, 204, 204, 0.50);
+  .progress {
+    margin-top: 3px;
+    margin-bottom: 0;
+  }
+}
+
+.player-btns {
+  width: 8% !important;
+  padding-right: 5px;
+}
+
+.player-progressbar {
+  width: 92% !important;
+  padding-left: 0;
+}
+
+.player-btns {
+  .player-btn {
+    width: 26px;
+    height: 26px;
+    padding: 4px 6px 8px;
+    border: 1px solid @bg-gray-darker;
+    box-shadow: inset 0px 1px 0px 0px rgba(204, 204, 204, 0.50);
+    border-radius: 2px;
+    &:last-child {
+      margin-left: -4px;
+    }
+    i {
+      font-size: 14px;
+      line-height: 1;
+      text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.50);
+    }
+  }
+}

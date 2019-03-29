@@ -1,0 +1,297 @@
+<!-- Event Details -->
+
+<!-- THE DEVICE DETAIL TOOLBAR -->
+<!-- ========================= -->
+<div class="bg-gray-75 padding-default">
+  <a ui-sref="monitor.incident.list({panel: 'list'})" class="btn btn-default"><i class="fa fa-arrow-circle-left icon-left"></i>返回</a>
+  <span></span>
+  <!--
+  <div privilege disable="true"  class="pull-right" ng-hide="detail.incident.appLayerProtocol==='NA'">
+    <div class="row" style="width:280px;">
+      <div class="col-md-7" style="padding-right: 0px"><h5>将来此事件的处理方式:</h5></div>
+      <div class="col-md-4 dropdown toolbar-dropdown" dropdown>
+        <button type="button" class="btn dropdown-toggle" id="filter"
+                ng-disabled="detail.incident.alertType ==='BLACKLIST' || (detail.incident.alertType ==='WHITELIST' && (detail.incident.appLayerProtocol === 'netbios'||detail.incident.appLayerProtocol === 'dns'))"
+                data-toggle="dropdown" dropdown-toggle>
+          <i class="fa"
+             ng-class="{'DENY': 'fa-ban text-red', 'ALERT': 'fa-warning text-yellow', 'ALLOW':'fa-check text-green'}[detail.incident.action]"></i>
+          {{detail.incident.action | eventAction}}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="filter">
+          <li><a href="javascript:void(0)" ng-class="{active: detail.incident.action == 'DENY'}"
+                 ng-click="detail.confirmChangeAction(detail.incident, 'DENY')">
+            <i class="fa fa-ban text-red"></i>
+            阻断
+            <i ng-show="detail.incident.action == 'DENY'" class="fa fa-check"></i></a></li>
+          <li><a href="javascript:void(0)" ng-class="{active: detail.incident.action == 'ALLOW'}"
+                 ng-click="detail.confirmChangeAction(detail.incident, 'ALLOW')">
+            <i class="fa fa-check text-green"></i>
+            允许
+            <i ng-show="detail.incident.action == 'ALLOW'" class="fa fa-check"></i></a></li>
+          <li><a href="javascript:void(0)" ng-class="{active: detail.incident.action == 'ALERT'}"
+                 ng-click="detail.confirmChangeAction(detail.incident, 'ALERT')">
+            <i class="fa fa-warning text-yellow"></i>
+            警告
+            <i ng-show="detail.incident.action == 'ALERT'" class="fa fa-check"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  -->
+</div>
+
+<!-- THE DEVICE DETAIL SIDEBAR -->
+<!-- ========================= -->
+<aside class="sidebar sidebar-narrow device-sidebar pull-left text-center">
+  <div class="sidebar-item">
+    <a href="javascript:void(0)" ng-click="app.scrollTo('event-info')"><span>详细信息</span></a>
+  </div>
+
+  <div class="sidebar-item">
+    <a href="javascript:void(0)" ng-click="app.scrollTo('event-node')"><span>节点</span></a>
+  </div>
+
+</aside>
+
+<!-- THE DEVICE DETAIL CONTAINER -->
+<!-- =========================== -->
+<div class="detail-page-wrapper content-scrollable margin-sidebar-narrow">
+  <!-- THE EVENT DETAIL BODY -->
+  <!-- ====================== -->
+
+  <div class="detail-page-body" cg-busy="{promise:$root.deployTaskPromise,message:'部署中...',delay:300}">
+
+    <!-- OVERVIEW SECTION -->
+    <section>
+      <div class="panel panel-dashboard">
+        <div class="panel-heading">
+          <h4>事件详情总览</h4>
+          <!--<button type="button" class="btn btn-default"><i class="fa fa-gear"></i></button>-->
+        </div>
+
+        <div class="panel-body-dark text-right">
+          <div class="row">
+            <div class="col-xs-2 bg-icon bg-icon-warning">
+              <h1 class="panel-dashboard-value"
+                  ng-class="{'REJECTBOTH': 'text-red-dark', 'DROP': 'text-red', 'WARN': 'text-yellow'}[detail.incident.level]">{{detail.incident.level
+                | eventLevel}}</h1>
+              <h4 class="panel-dashboard-title"><i class="fa panel-dashboard-title-icon"
+                                                   ng-class="{'REJECTBOTH': 'fa-ban text-red-dark', 'DROP': 'fa-trash text-red', 'WARN': 'fa-warning text-yellow'}[detail.incident.level]"></i>事件等级
+              </h4>
+            </div>
+
+            <div class="col-xs-4 bg-icon bg-icon-paperclip">
+              <h1 class="panel-dashboard-value text-light-blue">{{detail.incident.packetLength}}<span
+                class="panel-dashboard-value-unit">字节</span></h1>
+              <h4 class="panel-dashboard-title"><i
+                class="panel-dashboard-title-icon text-light-blue fa fa-paperclip"></i>事件包长度</h4>
+            </div>
+
+            <div class="col-xs-4 bg-icon bg-icon-clock">
+              <h1 class="panel-dashboard-value text-orange"
+                  style="font-size: 30px!important">
+                {{detail.incident.sourceName }}</h1>
+              <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-orange fa fa-clock-o"></i>发生区域
+              </h4>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Event Details -->
+    <div class="event-inner-detail">
+      <div class="panel panel-detail padding-default">
+
+        <section class="panel-container">
+          <!-- detail info -->
+          <div id="event-info" class="detail-information detail-panel">
+            <div class="detail-title">
+              <h4>详细信息</h4>
+              <hr class="hr-lime hr-thick">
+            </div>
+            <div class="detail-information-content">
+              <div class="row">
+                <div class="col-xs-6 col-md-6">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <span><i class="fa fa-folder-open"></i> 事件内容</span>
+                    </div>
+                    <div class="panel-body panel-body-fixed-height-200">
+                      <div class="row">
+                        <!-- col 1 -->
+                        <div class="col-xs-6">
+                          <div class="detail-page-list-item">
+                            <h5 class="detail-page-list-item-title">事件等级</h5>
+                            <p><i class="fa"
+                                  ng-class="{'REJECTBOTH': 'fa-ban text-red-dark', 'DROP': 'fa-trash text-red','WARN': 'fa-warning text-yellow'}[detail.incident.level]"></i>
+                              {{detail.incident.level | eventLevel}}</p>
+                          </div>
+                          <div class="detail-page-list-item">
+                            <h5 class="detail-page-list-item-title">风险等级</h5>
+                            <p>{{detail.incident.riskLevel | eventRiskLevel}}</p>
+                          </div>
+
+                          <div class="detail-page-list-item">
+                            <h5 class="detail-page-list-item-title">事件类别</h5>
+                            <p>安全事件</p>
+                          </div>
+                        </div>
+
+                        <!-- col 2 -->
+                        <div class="col-xs-6">
+                          <div class="detail-page-list-item">
+                            <h5 class="detail-page-list-item-title">发生日期</h5>
+                            <p>{{detail.incident.timestamp | date: 'yyyy-MM-dd'}}</p>
+                          </div>
+
+                          <div class="detail-page-list-item">
+                            <h5 class="detail-page-list-item-title">发生时间</h5>
+                            <p>{{detail.incident.timestamp | date: 'HH:mm:ss'}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-md-6">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <span><i class="fa fa-cogs"></i> 事件协议</span>
+                    </div>
+                    <div class="panel-body panel-body-fixed-height-200">
+                      <div class="row">
+                        <!-- col 1 -->
+                        <div class="col-xs-4">
+                          <div class="detail-page-list-item">
+                            <h5 class="detail-page-list-item-title">网络层协议</h5>
+                            <p>{{detail.incident.protocol==='0'?'无':detail.incident.protocol}}</p>
+                          </div>
+                        </div>
+                        <!-- col 2 -->
+                        <div class="col-xs-4">
+                          <div class="detail-page-list-item">
+                            <h5 class="detail-page-list-item-title">网络应用协议</h5>
+                            <p>{{detail.incident.appLayerProtocol==='0'?'无':detail.incident.appLayerProtocol}}</p>
+                          </div>
+                        </div>
+                        <div class="col-xs-4" ng-if="detail.incident._protocolDetail">
+                          <div class="detail-page-list-item">
+                            <h5 class="detail-page-list-item-title">协议注释</h5>
+                            <p>{{detail.incident._protocolDetail}}</p>
+                          </div>
+                        </div>
+                        <div class="col-xs-12">
+                          <div class="detail-page-list-item">
+                            <h5 class="detail-page-list-item-title">协议细节</h5>
+                            <p>{{detail.incident.protocolDetail | protocolDetail}}</p>
+                          </div>
+                        </div>
+                        <div class="col-xs-12">
+                          <div class="detail-page-list-item">
+                            <h5 class="detail-page-list-item-title">备注</h5>
+                            <p>{{detail.incident.signatureMessage}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="event-detail-block-rule col-xs-6">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <span><i class="fa fa-wrench"></i> 规则项</span>
+                    </div>
+                    <div class="panel-body panel-body-fixed-height-80">
+                      <div class="event-package-detail-content">
+                        {{detail.incident.matchedKey}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--div class="event-detail-package-content col-xs-6">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <span><i class="fa fa-suitcase"></i> 事件包内容 &nbsp; (长度: {{detail.incident.packetLength}}字节)</span>
+                    </div>
+                    <div class="panel-body {{detail.expend?'expended-container':'expendable-container'}}">
+                      <div
+                        class="event-package-content {{detail.expend?'event-package-container-expended':'event-package-container'}}">
+                        <div ng-show="detail.expend">
+                          {{detail.incident.packet.hb | toHex}}
+                        </div>
+                        <div ng-hide="detail.expend">
+                          {{detail.incident.packet.hb_sliced | toHex}}
+                        </div>
+                      </div>
+                      <span ng-if="detail.incident.packet.hb.length>57&&!detail.expend"><a ng-click="detail.expend=true"
+                                                                                           class="text-light-blue">...更多</a></span>
+                      <span ng-if="detail.incident.packet.hb.length>57&&detail.expend"><a ng-click="detail.expend=false"
+                                                                                          class="text-light-blue">收起</a></span>
+                    </div>
+                  </div>
+                </div-->
+              </div>
+            </div>
+          </div>
+
+
+          <!-- NODE INFORMATION -->
+          <!-- ================ -->
+          <section id="event-node" class="detail-node">
+            <h4>节点</h4>
+            <hr class="hr-lime hr-thick">
+
+            <div class="panel panel-default">
+              <div class="panel-body">
+
+                <div class="row">
+                  <div class="col-xs-4 col-xs-offset-1" ng-include src="'templates/includes/node-arrow.html'"></div>
+                  <div class="col-xs-4" ng-include src="'templates/includes/node-arrow.html'"></div>
+                </div>
+
+                <div class="row">
+                  <div ng-repeat="(key, node) in detail.nodes" class="col-xs-3 col-xs-offset-1 bg-icon bg-icon-cogs">
+                    <div class="detail-node-thumb">
+                      <h5 class="detail-node-thumb-description">{{key | nodeName}}</h5>
+                      <div ng-if="node.category === 'SECURITY_DEVICE'" class="text-center"><img
+                        class="detail-node-device-icon" ng-src="/images/devices/security/capstone-icon.png"
+                        height="50"></div>
+                      <div ng-if="$index===0 " class="text-center"><img
+                        class="detail-node-device-icon" ng-src="/images/devices/asset-left-icon.png" height="50"></div>
+                      <div ng-if="$index===2 " class="text-center"><img
+                        class="detail-node-device-icon" ng-src="/images/devices/asset-right-icon.png" height="50"></div>
+                    </div>
+                    <ul class="detail-node-description">
+                      <li class="padding-default"><span class="detail-node-description-label">设备名称</span> <span>{{node.name}}</span>
+                      </li>
+                      <li class="padding-default" ng-if="$index !== 1">
+                        <span class="detail-node-description-label">IP地址</span>
+                        <span ng-if="$index===0">{{detail.incident.sourceIp}} </span>
+                        <span ng-if="$index===2">{{detail.incident.destinationIp}} </span>
+                      </li>
+                     <!-- <li class="padding-default" ng-if="$index !== 1">
+                        <span class="detail-node-description-label">MAC地址</span>
+                        <span ng-if="$index===0">{{detail.incident.sourceMac}} </span>
+                        <span ng-if="$index===2">{{detail.incident.destinationMac}} </span>
+                      </li> -->
+                      <li class="padding-default" ng-if="$index !== 1 && node.securityAreaName.length>0"><span
+                        class="detail-node-description-label">区域</span> <span
+                        ng-repeat="zone in node.securityAreaName track by $index">{{zone}}</span></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+/* ----------------------------------------
+  New Helpers
+---------------------------------------- */
+
+// Dividers
+
+hr.hr-thick {
+  height: 2px;
+}
+
+hr.hr-lime {
+  background-color: @primary;
+  border: none;
+}
+
+hr.hr-with-title {
+  margin: 5px 0 20px;
+}
+
+// Add Padding to Rows
+
+.padded-rows-lg {
+  .row {
+    padding: 10px 0;
+  }
+}
+
+.padded-rows-md {
+  .row {
+    padding: 5px 0;
+  }
+}
+
+.padded-rows-sm {
+  .row {
+    padding: 2.5px 0;
+  }
+}
+
+// Add Margin
+
+.margin-lg {
+  margin-bottom: 20px;
+}
+
+.margin-md {
+  margin-bottom: 10px;
+}
+
+.blank-hint {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  > div{
+    i{
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    margin: auto;
+    font-size: 16px;
+    color: #aaa;
+  }
+}
+.fadeListItem {
+  opacity: 0;
+  transform: scale(0.95);
+  .transition(all .15s linear);
+  &.in {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

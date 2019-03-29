@@ -1,0 +1,75 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">详细信息</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body-no-frame">
+  <div class="modal-container">
+    <div class="row">
+      <div class="col-xs-3">
+        <h5 class="detail-page-list-item-title">捕获时间</h5>
+        {{auditData.flowTimestamp | date:'yyyy-MM-dd HH:mm:ss'}}
+      </div>
+      <div class="col-xs-3">
+        <h5 class="detail-page-list-item-title">协议类型</h5>
+        {{auditData.protocolTypeName}}
+      </div>
+      <div class="col-xs-3">
+        <h5 class="detail-page-list-item-title">数据包长度</h5>
+        {{auditData.packetLenth}}
+      </div>
+    </div>
+    <br/><br/>
+    <div class="row">
+      <div class="col-xs-3">
+        <h5 class="detail-page-list-item-title">源IP地址</h5>
+        {{auditData.sourceIp}}
+      </div>
+      <div class="col-xs-3">
+        <h5 class="detail-page-list-item-title">源MAC地址</h5>
+        {{auditData.sourceMac}}
+      </div>
+      <div class="col-xs-3">
+        <h5 class="detail-page-list-item-title">源端口</h5>
+        {{auditData.sourcePort}}
+      </div>
+      <div class="col-xs-3">
+        <h5 class="detail-page-list-item-title">帐号</h5>
+        {{auditData.accountName}}
+      </div>
+      <div class="col-xs-3" ng-hide="true">
+        <h5 class="detail-page-list-item-title">密码</h5>
+        {{auditData.password}}
+      </div>
+    </div>
+    <br/><br/>
+    <div class="row">
+      <div class="col-xs-3">
+        <h5 class="detail-page-list-item-title">目标IP地址</h5>
+        {{auditData.destinationIp}}
+      </div>
+      <div class="col-xs-3">
+        <h5 class="detail-page-list-item-title">目标端口</h5>
+        {{auditData.destinationPort}}
+      </div>
+      <div class="col-xs-3">
+        <h5 class="detail-page-list-item-title">文件名</h5>
+        {{auditData.fileName}}
+      </div>
+      <div class="col-xs-3">
+        <h5 class="detail-page-list-item-title">文件大小</h5>
+        {{auditData.packetLenth}} {{auditData.unitSize}}
+      </div>
+    </div>
+    <br/><br/><br/><br/>
+  </div>
+  <br>
+</div>
+<div class="modal-footer">
+  <span ng-hide="auditData.zipPsw.length" class="warning">请先输入解压密码 </span><br/><br/>
+  设置解压密码：<input class="ng-pristine ng-valid ng-touched" ng-model="auditData.zipPsw" type="password"
+                placeholder="输入解压密码">
+  <button class="btn btn-default pull-right" ng-disabled="!auditData.zipPsw.length" ng-click="download()"><i
+    class="fa fa-download icon-left"></i>下载文件
+  </button>
+  &nbsp; &nbsp;
+</div>

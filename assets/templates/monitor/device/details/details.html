@@ -1,0 +1,494 @@
+<!-- Monitor Details -->
+
+<!-- THE DEVICE DETAIL TOOLBAR -->
+<!-- ========================= -->
+
+<div class="main-content main-content-with-nav">
+
+  <div class="row">
+    <div class="col-md-1">
+
+      <a ui-sref="monitor.device({panel: detail.device.category})" class="btn btn-default"><i
+        class="fa fa-arrow-circle-left icon-left"></i>返回</a>
+    </div>
+    <div class="col-md-11">
+
+      <h2 class="title-page-main display-inline-block">{{detail.device.name}}</h5>
+    </div>
+  </div>
+
+  <!--
+	<div privilege class="pull-right">
+	  <button type="button" class="btn btn-default" ng-hide="detail.isEdited" ng-click="detail.editDevice();detail.fillValidate()">编辑设备</button>
+	  <span ng-show="detail.isEdited">
+		<button type="button" class="btn btn-default btn-group-pull-right" ng-click="detail.editCancel()"><i class="fa fa-times icon-left"></i>取消</button>
+		<button type="button" class="btn btn-default" ng-disabled="detail.invalidGateway || detail.invalidPorts || detail.invalidSubnet || detail.invalidAcl" ng-click="detail.editDone()"><i class="fa fa-check icon-left text-lime"></i>确认修改</button>
+	  </span>
+	</div>
+  -->
+
+  <!-- THE DEVICE DETAIL SIDEBAR -->
+  <!-- ========================= -->
+  <!--
+  <aside ng-switch on="detail.device.category" class="sidebar sidebar-narrow pull-left text-center">
+	<div ng-switch-when="SECURITY_DEVICE">
+	  <div class="sidebar-item">
+		<a href="javascript:void(0)" ng-click="app.scrollTo('device-info')">
+		  <span>详细信息</span>
+		</a>
+	  </div>
+	  <div class="sidebar-item" ng-if="detail.device.showRoutingInfo">
+		<a href="javascript:void(0)" ng-click="app.scrollTo('device-acl')">
+		  <span>访问控制</span>
+		</a>
+	  </div>
+	  <div class="sidebar-item" ng-if="detail.device.showRoutingInfo">
+		<a href="javascript:void(0)" ng-click="app.scrollTo('device-route-table')">
+		  <span>路由信息</span>
+		</a>
+	  </div>
+
+	  <div class="sidebar-item">
+		<a href="javascript:void(0)" ng-click="app.scrollTo('device-port')">
+		  <span>端口</span>
+		</a>
+	  </div>
+
+	  <div class="sidebar-item">
+		<a href="javascript:void(0)" ng-click="app.scrollTo('device-deployment-rules')">
+		  <span>部署规则</span>
+		</a>
+	  </div>
+
+	  <div ng-if class="sidebar-item">
+		<a href="javascript:void(0)" ng-click="app.scrollTo('device-equipment')">
+		  <span>被保护工控设备</span>
+		</a>
+	  </div>
+	</div>
+
+	<div ng-switch-when="FACTORY_DEVICE">
+	  <div class="sidebar-item">
+		<a href="javascript:void(0)" ng-click="app.scrollTo('device-info')">
+		  <span>详细信息</span>
+		</a>
+	  </div>
+	</div>
+  </aside>
+  -->
+
+  <!-- THE DEVICE DETAIL CONTAINER -->
+  <!-- =========================== -->
+  <!--<div class="detail-page-wrapper content-scrollable">-->
+  <div>
+    <!-- THE DEVICE DETAIL BODY -->
+    <!-- ====================== -->
+
+    <div class="detail-page-body">
+
+      <!-- OVERVIEW SECTION -->
+      <section ng-if="detail.device.category === 'SECURITY_DEVICE'">
+        <div class="panel">
+          <div class="panel-header-dark">
+            <span class="panel-title">设备详情总览</span>
+            <!--<button type="button" class="btn btn-default"><i class="fa fa-gear icon-left"></i></button>-->
+          </div>
+
+          <div ng-switch on="detail.device.category" class="panel-body-dark panel-dashboard text-right">
+            <!-- SECURITY -->
+            <div ng-switch-when="SECURITY_DEVICE" class="row">
+              <div class="col-xs-2 bg-icon bg-icon-device padding-zero">
+                <!--<h1 class="panel-dashboard-value text-red-orange">{{detail.device.protectedDevicesNumber}}<span class="panel-dashboard-value-unit">台</span></h1>-->
+                <h1 class="panel-dashboard-value text-red-orange">{{detail.device._factoryCount}}
+                  <span class="panel-dashboard-value-unit">台</span>
+                </h1>
+                <h4 class="panel-dashboard-title"><i
+                  class="panel-dashboard-title-icon text-red-orange fa fa-exclamation-triangle"></i>保护工控设备总数</h4>
+              </div>
+
+              <div class="col-xs-3 bg-icon bg-icon-tool">
+                <h1 class="panel-dashboard-value text-light-blue">{{detail.device._rulesCount}}
+                  <span class="panel-dashboard-value-unit">条</span>
+                </h1>
+                <h4 class="panel-dashboard-title"><i
+                  class="panel-dashboard-title-icon text-light-blue fa fa-paperclip"></i>部署白名单规则数</h4>
+              </div>
+
+              <div class="col-xs-2 bg-icon bg-icon-target">
+                <h1 class="panel-dashboard-value text-orange">{{detail.device._signaturesCount}}
+                  <span class="panel-dashboard-value-unit">个</span>
+                </h1>
+                <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-orange fa fa-clock-o"></i>防护漏洞数
+                </h4>
+              </div>
+
+              <div class="col-xs-2 bg-icon bg-icon-tool">
+                <h1 class="panel-dashboard-value text-light-blue">{{detail.device._domainRulesCount}}
+                  <span class="panel-dashboard-value-unit">条</span>
+                </h1>
+                <h4 class="panel-dashboard-title"><i
+                  class="panel-dashboard-title-icon text-light-blue fa fa-paperclip"></i>域名规则数</h4>
+              </div>
+
+              <div class="col-xs-2 bg-icon bg-icon-warning">
+                <h1 class="panel-dashboard-value text-green">{{detail.deviceIncidents}}
+                  <span class="panel-dashboard-value-unit">件</span>
+                </h1>
+                <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-green fa fa-bookmark"></i>今日截获安全事件
+                </h4>
+              </div>
+            </div>
+
+            <!-- FACTORY -->
+            <div ng-switch-when="FACTORY_DEVICE" class="row">
+              <div class="col-xs-2 bg-icon bg-icon-device">
+                <h1 class="panel-dashboard-value text-red-orange">{{detail.device.protectedDevicesNumber}}
+                  <span class="panel-dashboard-value-unit">件</span>
+                </h1>
+                <h4 class="panel-dashboard-title"><i
+                  class="panel-dashboard-title-icon text-red-orange fa fa-exclamation-triangle"></i>已知设备漏洞</h4>
+              </div>
+
+              <div class="col-xs-3 bg-icon bg-icon-tool">
+                <h1 class="panel-dashboard-value text-light-blue">0
+                  <span class="panel-dashboard-value-unit">%</span>
+                </h1>
+                <h4 class="panel-dashboard-title"><i
+                  class="panel-dashboard-title-icon text-light-blue fa fa-shield"></i>部署保护覆盖率</h4>
+              </div>
+
+              <div class="col-xs-3 bg-icon bg-icon-target">
+                <h1 class="panel-dashboard-value text-orange">{{detail.device.protectedVulnerabilitiesNumber}}
+                  <span class="panel-dashboard-value-unit">个</span>
+                </h1>
+                <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-orange fa fa-hdd-o"></i>保护设备
+                </h4>
+              </div>
+
+              <div class="col-xs-3 bg-icon bg-icon-warning">
+                <h1 class="panel-dashboard-value text-green">0
+                  <span class="panel-dashboard-value-unit">件</span>
+                </h1>
+                <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-green fa fa-bookmark"></i>建议部署规则
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section ng-if="detail.device.category === 'SECURITY_DEVICE' && detail.device.deviceOnline === 1">
+        <div class="panel">
+          <div class="panel-header-dark">
+            <span class="panel-title">设备资讯</span>
+            <!--<button type="button" class="btn btn-default"><i class="fa fa-gear icon-left"></i></button>-->
+          </div>
+
+          <div class="panel-body-dark panel-info text-center" cg-busy="{promise: detail.waitingDPI,message:'工作中...'}">
+            <!-- SECURITY -->
+            <div class="row">
+              <div class="col-xs-3 panel-info-border-gray-right">
+                <!--<h1 class="panel-dashboard-value text-red-orange">{{detail.device.protectedDevicesNumber}}<span class="panel-dashboard-value-unit">台</span></h1>-->
+                <h4 class="panel-info-title"><i
+                  class="panel-dashboard-title-icon text-lime fa fa-dashboard icon-left"></i>设备CPU使用率</h4>
+
+                <div class="panel-info-graph">
+                  <highchart id="deviceCPUUsage" config="deviceCPUUsage"></highchart>
+                </div>
+
+                <div class="row panel-info-border-gray-top">
+                  <div class="col-md-6 panel-info-title panel-info-font panel-info-border-gray-right padding-default">
+                    <span class="text-gray">CPU最高使用率</span>
+                    <br>
+                    <span
+                      class="text-light-blue panel-info-large-font">{{detail.message.maxCpuUsage*100 | number: 0}}%</span>
+                  </div>
+                  <div class="col-md-6 panel-info-font panel-info-title padding-default">
+                    <span class="text-gray">CPU最低使用率</span>
+                    <br>
+                    <span
+                      class="text-yellow panel-info-large-font">{{detail.message.minCpuUsage*100 | number: 0}}%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-3 panel-info-border-gray-right">
+                <h4 class="panel-info-title"><i
+                  class="panel-dashboard-title-icon text-lime fa fa-dashboard icon-left"></i>设备储存使用率</h4>
+                <div class="panel-info-graph">
+                  <highchart id="deviceHardDriveUsage" config="deviceHardDriveUsage"></highchart>
+                </div>
+                <div class="panel-info-title panel-info-font panel-info-border-gray-top padding-default">
+                  <span class="text-gray">当前使用大小</span>
+                  <br/>
+                  <span class="text-lime panel-info-large-font">{{detail.message.diskUsageInMegabytes/1024 | number: 2}} GB</span>
+                </div>
+              </div>
+
+              <div class="col-xs-3 panel-info-border-gray-right">
+                <h4 class="panel-info-title"><i
+                  class="panel-dashboard-title-icon text-lime fa fa-dashboard icon-left"></i>设备内存使用率</h4>
+                <div class="panel-info-graph">
+                  <highchart id="deviceRAMUsage" config="deviceRAMUsage"></highchart>
+                </div>
+                <div class="panel-info-title panel-info-font panel-info-border-gray-top padding-default">
+                  <span class="text-gray">当前使用大小</span>
+                  <br/>
+                  <span class="text-lime panel-info-large-font">{{(detail.message.totalMemory - detail.message.freeMemory)/1048576 | number: 2}} GB</span>
+                </div>
+              </div>
+
+              <div class="col-xs-3">
+                <h4 class="panel-info-title"><i
+                  class="panel-dashboard-title-icon text-lime fa fa-dashboard icon-left"></i>设备运行状态</h4>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="panel-info-title text-gray panel-info-font padding-medium">ALARM <span
+                      ng-if="detail.message.alarmStatus"><i
+                      class="fa fa-default fa-circle fa-flashing-orange icon-right"></i></span><span
+                      ng-if="!detail.message.alarmStatus"><i
+                      class="fa fa-default fa-circle fa-flashing-green icon-right"></i></span></div>
+                    <div class="panel-info-large-font padding-md">系统硬件：{{detail.message.alarmStatus ? '警告': '正常'}}</div>
+                  </div>
+                  <div class="col-md-12 panel-info-border-gray-top">
+                    <div class="panel-info-title text-gray panel-info-font padding-medium">运行时间</div>
+                    <div class="panel-info-large-font padding-md">{{detail.timer.day}}天 {{detail.timer.hour}}小时
+                      {{detail.timer.minute}}分钟 {{detail.timer.second}}秒
+                    </div>
+                  </div>
+                  <div class="col-md-12 panel-info-border-gray-top">
+                    <div class="panel-info-title text-gray panel-info-font padding-medium">启动时间</div>
+                    <div class="panel-info-font text-light-blue panel-info-large-font padding-md">
+                      {{detail.message.startDatetime | date: 'yyyy-MM-dd EEEE HH:mm:ss '}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DETAIL INFO SECTION -->
+      <section id="device-info">
+        <div class="detail-information detail-panel">
+          <div class="detail-title">
+            <div class="row">
+              <div class="col-xs-6">
+                <h4>详细信息</h4>
+                <div ng-show="detail.device.category === 'SECURITY_DEVICE'">
+                  <h5 class="margin-left-default display-inline-block">设备状态：</h5>
+                  <span class="device-badge">
+                    <div class="bullet bullet-online" title="连线"
+                         ng-if="detail.device.deviceOnline===1&&detail.device.deviceSource==='DISCOVERY'"></div>
+                    <div class="bullet bullet-offline" title="掉线"
+                         ng-if="detail.device.deviceOnline!==1&&detail.device.deviceSource==='DISCOVERY'"></div>
+                    <div class="bullet bullet-unactivated" title="未激活"
+                         ng-if="detail.device.deviceSource!=='DISCOVERY'"></div>
+                    {{detail.device.deviceSource === 'DISCOVERY' ? detail.device.deviceOnline : 0 | deviceConnection}}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <hr class="hr-lime hr-thick">
+          </div>
+
+          <div class="detail-information-content">
+            <div class="row">
+              <div class="col-xs-4 col-md-4">
+                <div class="panel">
+                  <div class="panel-heading">
+                    <span><i class="fa fa-picture-o icon-left"></i>设备图</span>
+                  </div>
+                  <div class="panel-body text-center panel-body-fixed-height-300">
+                    <div class="panel-body-device text-center">
+                      <div class="device-image"
+                           ng-style="{'background-image': 'url(/images/devices/security/' + detail.device._iconName + '-icon.png)'}"
+                           ng-if="detail.device.category === 'SECURITY_DEVICE'"></div>
+                      <div class="device-image"
+                           ng-style="{'background-image': 'url(/images/' + detail.device._iconName + '-icon.png)'}"
+                           ng-if="detail.device.category != 'SECURITY_DEVICE'"></div>
+                    </div>
+
+                    <button ng-if="" type="button" class="btn btn-default margin-top-default">网络结构查看</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-4 col-md-4">
+
+                <!-- panel -->
+                <div class="panel">
+                  <div class="panel-heading">
+                    <span><i class="fa fa-folder-open icon-left"></i>设备规格</span>
+                  </div>
+
+                  <div class="panel-body panel-body-fixed-height-300">
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <div class="detail-page-list-item">
+                          <h5 class="detail-page-list-item-title">设备名称</h5>
+                          <p ng-hide="detail.isEdited" class="device-name-space">{{detail.device.name || '未知'}}</p>
+                          <input type="text" ng-show="detail.isEdited" ng-model="detail.editedInfo.name" maxlength="255"
+                                 size="15">
+                        </div>
+                      </div>
+                      <div class="col-xs-6">
+                        <div class="detail-page-list-item">
+                          <h5 class="detail-page-list-item-title">设备序列号</h5>
+                          <p ng-hide="detail.isEdited" class="device-sn-space">{{detail.device.serialNumber ||
+                            '未知'}}</p>
+                          <input type="text" ng-show="detail.isEdited" ng-model="detail.editedInfo.serialNumber"
+                                 maxlength="255" size="15">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <div class="detail-page-list-item">
+                          <h5 class="detail-page-list-item-title">设备型号</h5>
+                          <p>{{detail.simplifyModelName(detail.device._model_name) || '未知' | deviceModel}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <div class="detail-page-list-item">
+                          <h5 class="detail-page-list-item-title">设备厂商</h5>
+                          <p>{{detail.device.make || '未知'}}</p>
+                        </div>
+                      </div>
+                      <div class="col-xs-6">
+                        <div class="detail-page-list-item" ng-if="detail.device.category === 'SECURITY_DEVICE'">
+                          <h5 class="detail-page-list-item-title">端口数量</h5>
+                          <p>{{detail.device.devicePorts.length}}个</p>
+                        </div>
+                      </div>
+                      <div class="col-xs-6">
+                        <div class="detail-page-list-item" ng-if="detail.device.category === 'SECURITY_DEVICE'">
+                          <h5 class="detail-page-list-item-title">设备版本</h5>
+                          <p>{{detail.device.version || '未知'}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <div class="detail-page-list-item">
+                          <h5 class="detail-page-list-item-title">更新时间</h5>
+                          <p>{{detail.device.updatedAt || '未知' | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-4 col-md-4">
+                <div class="panel" ng-hide="true">
+                  <div class="panel-heading">
+                    <span><i class="fa fa-cogs icon-left"></i>设备设置</span>
+                  </div>
+                  <div class="panel-body">
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">安装时间</h5>
+                      <p>{{detail.device.timestamp}}</p>
+                    </div>
+
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">分区</h5>
+                      <p ng-hide="detail.isEdited">{{detail.device._zoneNames | deviceZoneFilter}}</p>
+                      <select class="form-control" ng-show="detail.isEdited" ng-model="detail.editedInfo.zone"
+                              ng-options="zone for zone in detail.forms.setting.zones">
+                        <option value="">-- 请选择分区 --</option>
+                      </select>
+                    </div>
+
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">权重</h5>
+                      <p ng-hide="detail.isEdited">{{detail.device.priority}}</p>
+                      <select class="form-control" ng-show="detail.isEdited" ng-model="detail.editedInfo.priority"
+                              ng-options="priority for priority in detail.forms.setting.priorities"></select>
+                    </div>
+                    <!--
+									  <div class="detail-page-list-item">
+										<h5 class="detail-page-list-item-title">连通性</h5>
+										<p>连通</p>
+									  </div>
+					-->
+                  </div>
+                </div>
+                <div class="panel"
+                     ng-hide="detail.device.category === 'NETWORK_DEVICE' && detail.device.nodes[0].type !== 'ROUTER'">
+                  <div class="panel-heading">
+                    <span><i class="fa fa-cogs icon-left"></i>设备管理端口</span>
+                  </div>
+                  <div class="panel-body panel-body-fixed-height-300">
+                    <div class="row" ng-hide="true">
+                      <div class="col-xs-12">
+                        <div class="detail-page-list-item">
+                          <div privilege class="pull-right">
+                            <button type="button" class="btn btn-default" ng-hide="detail.isIPEdited"
+                                    ng-click="detail.editIP()">编辑
+                            </button>
+                            <span ng-show="detail.isIPEdited">
+                            <button type="button" class="btn btn-default btn-group-pull-right"
+                                    ng-click="detail.editIPCancel()"><i class="fa fa-times icon-left"></i>取消</button>
+                            <button type="button" class="btn btn-default"
+                                    ng-disabled="detail.invalidIp || detail.invalidMac"
+                                    ng-click="detail.editIPDone()"><i
+                              class="fa fa-check icon-left text-lime"></i>确认修改</button>
+                          </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-xs-6">
+                        <div class="detail-page-list-item">
+                          <h5 class="detail-page-list-item-title">IP地址</h5>
+                          <p ng-hide="detail.isIPEdited">
+                          <div ng-repeat="port in detail.device.devicePorts | filter:search.isMgmtPort=true">
+                            {{port.portIp || '未知'}}
+                          </div>
+                          </p>
+                          <input type="text" ng-show="detail.isIPEdited" ng-model="detail.editedInfo.ip"
+                                 ng-change="detail.deviceIpChange()" maxlength="255" size="15"><span
+                          class="input-alert-error" ng-show="detail.isIPEdited && detail.invalidIp"> 请输入合法IP地址</span>
+                        </div>
+                      </div>
+                      <div class="col-xs-6">
+                        <div class="detail-page-list-item">
+                          <h5 class="detail-page-list-item-title">MAC地址</h5>
+                          <p ng-hide="detail.isIPEdited">
+                          <div ng-repeat="port in detail.device.devicePorts | filter:search.isMgmtPort=true">{{port.mac
+                            || '未知'}}
+                          </div>
+                          </p>
+                          <input type="text" ng-show="detail.isIPEdited" ng-model="detail.editedInfo.mac"
+                                 ng-change="detail.deviceMacChange()" maxlength="255" size="15"><span
+                          class="input-alert-error" ng-show="detail.isIPEdited && detail.invalidMac"> 请输入合法MAC地址</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--
+		  <div ng-switch on="detail.device.category">
+			<div ng-switch-when="SECURITY_DEVICE">
+			  <div class="device-details-security" ng-include="'templates/monitor/device/details/details-security.html'"></div>
+			</div>
+
+			<div ng-switch-when="FACTORY_DEVICE">
+			  <div ng-if="0" class="device-details-factory" ng-include="'templates/monitor/device/details/details-factory.html'"></div>
+			</div>
+		  </div>
+	  -->
+    </div>
+    <br/><br/><br/>
+  </div>
+
+</div>

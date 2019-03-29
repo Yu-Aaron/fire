@@ -1,0 +1,91 @@
+@label-width: 70px;
+.circle-meter-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  .wrap {
+    position: relative;
+    margin: auto;
+    width: 148px;
+    height: 148px;
+    background: url(/images/bg1.png) no-repeat 50% 50% hsla(230,12%,12%,1);
+    text-align: center;
+    border-radius: 50%;
+    border: 2px dotted #1b3148;
+    color: #ccc;
+    img{
+      position: absolute;
+      vertical-align: middle;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .circle{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 21px;
+      height: 134px;
+      transform: translate(-50%, -50%);
+      background: url(/images/circle-dot.png) no-repeat 50% 100%;
+    }
+    .name{
+      position: absolute;
+      top: 42px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 14px;
+    }
+    span {
+      position: absolute;
+      left: 50%;
+      top: 56%;
+      font-size: 32px;
+      transform: translate(-40%, -50%);
+      sup {
+        font-size: 12px;
+        position: relative;
+        top: -14px;
+        left: -6px;
+      }
+    }
+  }
+  .label-surplus{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: @label-width;
+    height: @label-width;
+    &:after {
+      position: absolute;
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      left: 0;
+      top: 0;
+      border-style: solid;
+      border-width: 0 0 @label-width @label-width;
+      border-color: transparent transparent #1b1c22 transparent;
+    }
+    span{
+      position: absolute;
+      right: 4px;
+      bottom: 24px;
+      z-index: 1;
+      color: #aaa;
+    }
+    p{
+      margin: 0;
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      z-index: 1;
+      font-size: 16px;
+      font-weight: bold;
+      color: #2c97de;
+    }
+  }
+}

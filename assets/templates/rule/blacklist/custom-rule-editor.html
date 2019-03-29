@@ -1,0 +1,193 @@
+<div class="modal-body-custom-signature">
+  <div class="modal-header-rule-info">
+    <button class="btn btn-default btn-sm pull-right" ng-click="cancel()"><i class="fa fa-close"></i></button>
+    <h6>编辑规则</h6>
+
+  </div>
+  <div class="modal-body-custom-signature-tab">
+    <div class="modal-body-rule-info">
+      <h6>第一步&nbsp;</h6> <h4>&nbsp;&nbsp;<i class="fa fa-cogs"></i>&nbsp;&nbsp;规则信息</h4>
+      <div class="row">
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-7">
+              <div>
+                <span>规则组名称* （长度：不超过25个字符）</span>
+                <span><input ng-model="customPolicyBlock.name" maxlength="25" type="text" placeholder="填写规则组名称"></span>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div>
+                <span>起源组*</span>
+                <span>
+                  <select class="select-styled signature-custom-select" ng-model="customPolicyBlock.sourceZoneName"
+                          ng-options="zone.zoneName as zone.zoneName for zone in zones | filter:{zoneName : '!NA'}">
+                    <option value="">-- 请选择 --</option>
+                  </select>
+                </span>
+              </div>
+            </div>
+            <div class="col-md-2 row-second-child-dropdown">
+              <div>
+                <span>目标组*</span>
+                <span>
+                   <select class="select-styled signature-custom-select"
+                           ng-model="customPolicyBlock.destinationZoneName"
+                           ng-options="zone.zoneName as zone.zoneName for zone in zones | filter:{zoneName : '!NA'}">
+                     <option value="">-- 请选择 --</option>
+                   </select>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-12">
+              <span>规则描述</span>
+              <span><textarea rows="4" cols="50" ng-model="customPolicyBlock.description" placeholder="填写描述"></textarea></span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div>
+            <span>创建时间</span>
+            <span class="font-color-white">{{customPolicyBlock.timeStamp | date:'yyyy-MM-dd'}}</span>
+          </div>
+          <div>
+            <span>规则来源</span>
+            <span class="font-color-white">自定义</span>
+          </div>
+          <div>
+            <span>网络结构</span>
+            <span class="font-color-white">{{customPolicyBlock.topology}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-body-rule-item">
+      <h6>第二步&nbsp;</h6> <h4>&nbsp;&nbsp;<i class="fa fa-list"></i>&nbsp;&nbsp;规则项</h4>
+      <div class="custom-signature-create padding-default" ng-if="ruleItems.length ==0 && !editRules">
+        <div ng-hide="editRules">
+          <h4>请添加规则来完成编辑规则</h4>
+          <br>
+          <button class="btn btn-default btn-create-signature btn-edit" ng-click="createRuleItem()">创建规则项</button>
+        </div>
+      </div>
+
+      <div class="custom-signature-edit-area" ng-if="(ruleItems.length >0 && !editRules) || editRules">
+        <div class="custom-signature-edit-rules" ng-if="editRules">
+          <div>
+            <button class="btn btn-default pull-right margin-left-default" ng-if="!editRuleItem"
+                    ng-click="confirmCreateRule()"><i class="fa fa-check icon-left"></i>完成
+            </button>
+            <button class="btn btn-default pull-right" ng-if="editRuleItem" ng-click="confirmRuleEdit()"><i
+              class="fa fa-check icon-left"></i>完成
+            </button>
+            <button class="btn btn-default pull-right" ng-click="cancelRuleEdit()"><i class="fa fa-times icon-left"></i>取消
+            </button>
+            <span class="custom-signature-padding">编辑规则项</span>
+          </div>
+          <div class="custom-signature-diagram">
+            <ul id="diagram"></ul>
+          </div>
+        </div>
+
+        <div ng-if="ruleItems.length >0 && !editRules">
+          <button class="btn btn-default" ng-click="createRuleItem()">新增规则</button>
+          <button class="btn btn-default btn-sm" ng-click="moveUp()" ng-disabled="selectedRuleItems.length !=1"><i
+            class="fa fa-chevron-up"></i></button>
+          <button class="btn btn-default btn-sm" ng-click="moveDown()" ng-disabled="selectedRuleItems.length !=1"><i
+            class="fa fa-chevron-down"></i></button>
+          <button class="btn btn-default btn-sm" ng-click="deleteRuleItems()"
+                  ng-disabled="selectedRuleItems.length == 0"><i class="fa fa-trash"></i></button>
+
+          <table class="table table-hover icon-hidden table-custom-preview-signature-2">
+            <thead>
+            <tr>
+              <th>
+                <span>优先级</span>
+              </th>
+              <th>
+                <span><input class="inpput-checkbox-signature" type="checkbox" ng-change="selectAllRuleItem()"
+                             ng-model="customPolicyBlock.selectAll"/></span>
+              </th>
+              <th>
+                <span>协议名称</span>
+              </th>
+              <th>
+                <span>操作码</span>
+              </th>
+              <th>
+                <span>处理方式</span>
+              </th>
+              <th>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-index="0"
+                ng-repeat="ruleItem in ruleItems"
+            >
+              <td>{{$index +1}}</td>
+              <td style="text-align:center"><input class="inpput-checkbox-signature" type="checkbox"
+                                                   ng-model="ruleItem.checked"
+                                                   ng-change="selectRuleItem(ruleItem, $index)"></td>
+              <td>{{ruleItem.fields[0].value}}</td>
+              <td>
+                <div class="percent-80-width">
+                  <span ng-repeat="field in ruleItem.fields">
+                    <span ng-if="$index >0">{{field.name}}:
+                      <span ng-if="enabledEditRuleItem" class="pull-right"></span>
+                      {{field.value}}
+                    </span>
+                  </span>
+                </div>
+              </td>
+              <td class="signature-btn-overflow">
+                <div class="dropdown display-inline-block" dropdown>
+                  <button type="button" class="btn btn-default pull-right dropdown-toggle" dropdown-toggle>
+                    <i ng-if="ruleItem.action =='REJECTBOTH'" class="fa fa-ban text-red"></i>
+                    <i ng-if="ruleItem.action =='DROP'" class="fa fa-remove text-red"></i>
+                    <i ng-if="ruleItem.action =='ALERT'" class="fa fa-exclamation-triangle text-yellow"></i>
+                    <i ng-if="ruleItem.action =='ALLOW'" class="fa fa-check text-green"></i>
+                    {{ruleItem.action |actionName}}
+                  </button>
+                  <ul class="dropdown-menu pull-left" role="menu" aria-labelledby="signature-drop-down">
+                    <li ng-click="changeAction(ruleItem, 'REJECTBOTH')" role="presentation"><a class="dropdown-menu-item"
+                                                                                         role="menuitem" tabindex="-1"
+                                                                                         href="#"><i
+                      class="fa fa-ban text-red"></i> 阻断</a></li>
+                    <li ng-click="changeAction(ruleItem, 'DROP')" role="presentation"><a class="dropdown-menu-item"
+                                                                                         role="menuitem" tabindex="-1"
+                                                                                         href="#"><i
+                      class="fa fa-remove text-red"></i> 丢弃</a></li>
+                    <li ng-click="changeAction(ruleItem, 'ALERT')" role="presentation"><a class="dropdown-menu-item"
+                                                                                          role="menuitem" tabindex="-1"
+                                                                                          href="#"><i
+                      class="fa fa-exclamation-triangle text-yellow"></i> 警告</a></li>
+                    <li ng-click="changeAction(ruleItem, 'ALLOW')" role="presentation"><a class="dropdown-menu-item"
+                                                                                          role="menuitem" tabindex="-1"
+                                                                                          href="#"><i
+                      class="fa fa-check text-green"></i> 允许</a></li>
+                  </ul>
+                </div>
+              </td>
+              <td>
+                <button class="btn btn-default btn-sm pull-right" ng-click="modifyRuleItem($index,ruleItem)"><i
+                  class="fa fa-pencil"></i></button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-close icon-left"></i>取消</button>
+    <button class="btn btn-default"
+            ng-disabled="!customPolicyBlock.name || !customPolicyBlock.sourceZoneName || !customPolicyBlock.destinationZoneName"
+            ng-click="ok()"><i class="fa fa-check text-green icon-left"></i>保存
+    </button>
+  </div>
+</div>

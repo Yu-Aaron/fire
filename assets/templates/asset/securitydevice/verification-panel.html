@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">添加新发现设备</h3>
+</div>
+
+<div class="modal-body">
+  <div class="modal-container">
+    <p>请输入验证码以继续添加新发现设备</p><br/>
+    <p>验证码: &nbsp; <input type="text" ng-model="vKey"></p>
+    <br/>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button id="securitydevice-confirmPanel_button_cancel" class="btn btn-default pull-left" ng-click="cancel()"><i
+    class="fa fa-close icon-left"></i>取消
+  </button>
+  <button id="securitydevice-confirmPanel_button_confirm" class="btn btn-default" ng-click="confirm()"><i
+    class="fa fa-check text-green icon-left"></i>确定
+  </button>
+</div>

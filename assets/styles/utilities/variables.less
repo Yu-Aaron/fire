@@ -1,0 +1,258 @@
+// COLORS
+@red: #fe540f;
+@red-light: #fc7742;
+@red-dark: #c9420c;
+@red-orange: #ff5200;
+@red-orange-dark: darken(@red-orange, 10%);
+@light-blue: #97c9ff;
+@orange: #fb9700;
+@yellow: #ffc52d;
+@green: #5cb85c;
+@blue-dark: #001c34;
+@blue-darker: #152131;
+@blue-primary: #457cbc;
+@blue: #0071BC;
+@lime: #76B900;
+@lime-light: lighten(@lime, 10%);
+@lime-lighter: #8EEE2F;
+@lime-dark: darken(@lime, 10%);
+@skyblue: #99CCFF;
+/* --- Other Color Palette --- */
+@green-dark: #456C00;
+// BLACK, WHITE AND GREYS
+@black: #000000;
+@white: #ffffff;
+
+@gray95: darken(@white, 95%);
+@gray92: darken(@white, 92%);
+@gray90: darken(@white, 90%); // dark gray
+@gray88: darken(@white, 88%);
+@gray85: darken(@white, 85%);
+@gray83: darken(@white, 83%);
+@gray80: darken(@white, 80%);
+@gray79: darken(@white, 79%);
+@gray77: darken(@white, 77%);
+@gray75: darken(@white, 75%);
+@gray70: darken(@white, 70%);
+@gray60: darken(@white, 60%);
+@gray50: darken(@white, 50%); // medium gray
+@gray40: darken(@white, 40%);
+@gray30: darken(@white, 30%);
+@gray20: darken(@white, 20%);
+@gray10: darken(@white, 10%); // light gray
+
+@gradient1: #272b35;
+@gradient2: #1e2128;
+
+// BACKGROUND COLORS
+@background-gray: @gray70;
+@background-body: @gray79;
+@background-navbar: #212121;
+@background-container: @gray85;
+@background-dark-gray: @gray90;
+@background-darker-gray: @gray90;
+
+// PADDING AND MARGINS
+@spacing-default: 10px;
+@spacing-medium: 15px;
+@spacing-large: 30px;
+
+// TRANSITIONS
+@transition-speed-default: 0.4s;
+
+// TYPOGRAPHY
+@color-font-content: #333;
+@color-font: #c4c4c4;
+@font-family: 'SourceHanSansCN-Regular', Helvetica, Arial, sans-serif;
+@font-size-base: 12px;
+@font-size-secondary: 14px;
+
+// MISC VARIABLES
+@left-navbar-width-collapsed: 60px;
+@left-navbar-width-expanded: 130px;
+@main-content-margin: 40px; // 40px comes from the nav margin-right and then another 20px for margin on the main-contents right side (can be changed of course)
+@main-content-padding: 20px;
+@sidebar-width: 270px;
+@sidebar-narrow-width: 190px;
+@header-height: 124px;
+@toolbar-height: 55px;
+
+// ================================================================
+// BOOTSTRAP VARIABLES
+// MORE IN /PLUGINS/BOOTSTRAP-3.3.0/VARIABLES.LESS
+// ================================================================
+
+// SCREEN SIZES (WIDTH)
+@screen-xs: 480px;
+@screen-sm: 768px;
+@screen-md: 992px;
+@screen-lg: 1280px;
+@screen-xlg: 1500px;
+
+// SCREEN SIZES (HEIGHT)
+@screen-height-xs: 600px;
+@screen-height-sm: 720px;
+
+// COLORS
+@brand-primary: @primary;
+@brand-primary-light: lighten(@link-color, 15%);
+@brand-primary-dark: darken(@link-color, 15%);
+@brand-success: @green;
+@brand-info: @light-blue;
+@brand-warning: @orange;
+@brand-danger: @red;
+
+@gray-base: @black;
+@gray-darker: @gray80;
+@gray-dark: @gray70;
+@gray: @gray50;
+@gray-light: @gray30;
+@gray-lighter: @gray20;
+
+// GLOBAL VARIABLES
+@body-bg: transparent;
+@text-color: @gray20;
+@link-color: @brand-primary;
+@link-hover-color: darken(@link-color, 10%);
+@link-hover-decoration: underline;
+
+//== Dropdowns
+
+//** Background for the dropdown menu.
+@dropdown-bg: @gray80;
+//** Dropdown menu `border-color`.
+@dropdown-border: rgba(0, 0, 0, .15);
+//** Dropdown menu `border-color` **for IE8**.
+@dropdown-fallback-border: #ccc;
+//** Divider color for between dropdown items.
+@dropdown-divider-bg: @black;
+
+//** Dropdown link text color.
+@dropdown-link-color: @color-font;
+//** Hover color for dropdown links.
+@dropdown-link-hover-color: darken(@dropdown-link-color, 15%);
+//** Hover background for dropdown links.
+@dropdown-link-hover-bg: @gray75;
+
+//** Active dropdown menu item text color.
+@dropdown-link-active-color: @component-active-color;
+//** Active dropdown menu item background color.
+@dropdown-link-active-bg: @component-active-bg;
+
+//** Disabled dropdown menu item background color.
+@dropdown-link-disabled-color: @gray-light;
+
+//** Text color for headers within dropdown menus.
+@dropdown-header-color: @gray-light;
+
+//** Deprecated `@dropdown-caret-color` as of v3.1.0
+@dropdown-caret-color: #000;
+
+/* ----------------------------------------
+  New Variables
+---------------------------------------- */
+
+/* --- Main Colors --- */
+
+@primary: #0084ce;
+@secondary: #CCCCCC;
+@error: #FE540F;
+@warning: #FF9900;
+@danger: @red;
+@info: #99CCFF;
+
+/* --- Support Colors --- */
+
+@primary-light: #0093e6;
+@primary-dark: #0072b2;
+@secondary-light: #E4E4E4;
+@secondary-dark: #999999;
+@error-light: #FC7742;
+@error-dark: #C9420C;
+@warning-light: #FCB954;
+@warning-dark: #CC7A00;
+@info-light: #CCE5FF;
+@info-dark: #7AA3CC;
+
+/* --- Main Background Colors --- */
+
+@bg-black: #000000;
+@bg-gray-dark: #1c1f24;
+@bg-gray-darker: #20232c;
+@bg-gray: #2a2d36;
+@bg-gray-lighter: #343843;
+@bg-gray-light: #555b6d;
+@bg-gray-lightest: #666d83;
+@bg-cyan: #F0F5F9;
+@bg-cyan-light: #f5faff;
+@bg-cyan-darker: #d9e8f5;
+@bg-top-bar: #29294D;
+
+/* --- Main Font Colors --- */
+
+@txt-black: #000000;
+@txt-light-black: #333333;
+@txt-dark-gray: #666666;
+@txt-gray: #999999;
+@txt-light-gray: #CCCCCC;
+@txt-white-gray: #E4E4E4;
+@txt-white: #FFFFFF;
+
+/* --- Base Font Colors --- */
+
+@txt-highlight: @txt-white-gray;
+@txt-base: @txt-light-gray;
+@txt-secondary: @txt-gray;
+@txt-disable: @txt-dark-gray;
+
+/* --- Border Colors --- */
+@border-black: #000000;
+@border-gray-dark: #212121;
+@border-gray-darker: #282828;
+@border-gray: #333333;
+@border-gray-lighter: #3E3E3E;
+@border-gray-light: #434343;
+@border-gray-lightest: #666666;
+@border-gray-new: #e4e4e4;
+
+/* --- Additional Font Colors --- */
+
+.text-lime {
+  color: @primary;
+}
+
+.text-orange {
+  color: @error;
+}
+
+/* --- Base Layout --- */
+
+@min-screen-size: 1024px;
+@min-topbar-width: 1280px;
+@topbar-height: 72px;
+
+/* --- Alerts --- */
+// These variables are not actually used in the new style
+// but they are required by bootstrap
+@alert-padding: 15px;
+@alert-border-radius: @border-radius-base;
+@alert-link-font-weight: bold;
+
+@alert-success-bg: @state-success-bg;
+@alert-success-text: @state-success-text;
+@alert-success-border: @state-success-border;
+
+@alert-info-bg: @state-info-bg;
+@alert-info-text: @state-info-text;
+@alert-info-border: @state-info-border;
+
+@alert-warning-bg: @state-warning-bg;
+@alert-warning-text: @state-warning-text;
+@alert-warning-border: @state-warning-border;
+
+@alert-danger-bg: @state-danger-bg;
+@alert-danger-text: @state-danger-text;
+@alert-danger-border: @state-danger-border;
+
+@btn-light: #0189FD;
+@btn-darker: #1B33DE;

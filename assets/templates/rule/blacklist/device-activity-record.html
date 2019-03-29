@@ -1,0 +1,78 @@
+<div class="modal-body-custom-signature">
+  <div class="modal-header-rule-info">
+    <h6 class="modal-header-title">设备活动记录</h6>
+    <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+  </div>
+  <div class="modal-body">
+    <div class="signature-learning-activity-table">
+      <tabset>
+        <tab heading="{{tabs[0].name}}" active="tabs[0].active">
+          <div class="signature-learning-activity-table-content">
+            <table class="table table-hover icon-hidden">
+              <thead>
+              <tr>
+                <th>
+                  <span>时间</span>
+                </th>
+                <th>
+                  <span>设备名称</span>
+                </th>
+                <th>
+                  <span>IP地址</span>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="activity in learningItems.knownDevices">
+                <th>
+                  <span>{{activity.timestamp | date: 'HH:mm:ss'}}</span>
+                </th>
+                <th>
+                  <span>{{activity.deviceName}}</span>
+                </th>
+                <th>
+                  <span>{{activity.ip}}</span>
+                </th>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </tab>
+        <tab heading="{{tabs[1].name}}">
+          <div class="signature-learning-activity-table-content">
+            <table class="table table-hover icon-hidden">
+              <thead>
+              <tr>
+                <th>
+                  <span>时间</span>
+                </th>
+                <th>
+                  <span>设备名称</span>
+                </th>
+                <th>
+                  <span>IP地址</span>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="inactivity in learningItems.unknownDevices">
+                <th>
+                  <span>{{inactivity.timestamp | date: 'HH:mm:ss'}}</span>
+                </th>
+                <th>
+                  <span>{{inactivity.deviceName}}</span>
+                </th>
+                <th>
+                  <span>{{inactivity.ip}}</span>
+                </th>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+  <div class="modal-footer">
+  </div>
+</div>

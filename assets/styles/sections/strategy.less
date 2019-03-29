@@ -1,0 +1,181 @@
+//安全策略
+.strategy-new-delete-container {
+  &:extend(.object-new-delete-container);
+}
+.modal-security-strategy-info {
+  background: @bg-gray-dark;
+  .modal-body {
+    &:extend(.panel.panel-lg);
+    margin: 10px 10px;
+    .modal-body-security-strategy-info {
+      > .row {
+        padding: 15px 15px;
+        background: #252934;
+        color: #878787;
+        border: 1px black solid;
+        margin: 1px;
+      }
+      .row {
+        margin-bottom: 17px;
+        .info-title-label {
+          padding-left: 2%;
+          height: 2.5rem;
+          line-height: 2.5rem;
+        }
+        .info-label {
+          height: 2.5rem;
+          line-height: 2.5rem;
+        }
+        .setting-app-label {
+          padding-left: 2%;
+        }
+        .toggle-container,
+        .radio-container {
+          margin-right: 10%;
+          height: 2.5rem;
+          line-height: 2.5rem;
+          .toggle-alternate {
+            margin-bottom: 0;
+          }
+        }
+      }
+      input[type="text"],
+      select {
+        width: 85%;
+      }
+      .setting-app-container {
+        padding: 15px 15px;
+        background: #1D2027;
+        color: #878787;
+        border: 1px black solid;
+        width: 100%;
+        .common-setting-container {
+          input[type="text"] {
+            width: 60%;
+          }
+          span.info-label {
+            margin: 0 .5rem;
+            display: inline-block;
+          }
+          .col-xs-8,
+          .col-xs-9 {
+            padding-right: 0;
+          }
+        }
+        .func-code-setting-container {
+          .fa-blue {
+            color: #168ab9;
+          }
+          .tree-node {
+            border: 1px @border-gray-light dashed;
+            background-color: @bg-gray-darker;
+            .tree-node-content {
+              .value-detail-input-container{
+                display: flex;
+                .info-label{
+                  white-space: nowrap;
+                  flex-grow: 1;
+                }
+                .info-value{
+                  display: flex;
+                  flex-grow: 1;
+                  *{
+                    flex-grow: 1;
+                  }
+                }
+              }
+              margin: .5rem 0 .5rem .5rem;
+              > .col-xs-3 {
+                padding-left: 0;
+              }
+              .tree-toggle {
+                width: 1.1rem;
+              }
+              select {
+                width: 13rem;
+                max-width: 100%;
+              }
+              .value-container {
+                padding-left: 0;
+                padding-right: 0;
+                .info-label,
+                .info-value {
+                  max-width: 100%;
+                }
+              }
+              .action-container {
+                select {
+                  width: 7rem;
+                }
+              }
+              .button-container {
+                padding-left: 0;
+                padding-right: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .modal-footer {
+    margin-top: -10px;
+  }
+}
+.expression-container {
+  display: inline-block;
+  span {
+    display: inline-block;
+    position: relative;
+    left: 2px;
+  }
+}
+
+//抗渗透
+.page-strategy-anti_penetration{
+  .panel-box{
+    padding: 30px 36px;
+    border: 1px solid #000;
+    .box-hd{
+      margin-bottom: 20px;
+      h5{
+        display: inline-block;
+        margin: 0 10px 0 0;
+      }
+      > * {
+        vertical-align: middle;
+      }
+    }
+    .custom-checkbox-wrap,.input-wrap{
+      label{
+        vertical-align: middle;
+        margin-right: 4px;
+      }
+      span{
+        display: inline-block;
+        vertical-align: middle;
+      }
+      > *{
+        vertical-align: middle;
+      }
+    }
+    .input-alert-error{
+      margin-top: 4px;
+    }
+    .text{
+      height: 30px;
+      line-height: 30px;
+      vertical-align: middle;
+    }
+  }
+}
+
+.page-strategy-session{
+  ul.wrap-button li{
+    float: left;
+    margin: 10px 12px 0 0;
+    .btn-default:active, .btn-default:focus{
+      background: #191919;
+    }
+  }
+}

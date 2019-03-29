@@ -1,0 +1,83 @@
+<div id="rule_maliciousdomain_modal_new">
+  <div class="modal-header">
+    <h3 class="modal-header-title">新增域名规则</h3>
+  </div>
+  <div class="modal-body">
+    <div class="modal-container">
+      <div class="row">
+        <div class="col-xs-8"><label for="rule_maliciousdomain_new_name_0" class="control-label"><span class="text-red">&#42;</span>域名</label>
+        </div>
+        <!-- We might need this in the future
+        <div class="col-xs-2"><label for="rule_maliciousdomain_new_protocol_dropdown_0" class="control-label">协议名称</label></div>
+        -->
+        <div class="col-xs-2"><label for="rule_maliciousdomain_new_action_dropdown_0" class="control-label">处理方式</label>
+        </div>
+        <div class="col-xs-2"></div>
+      </div>
+      <div class="row rule_maliciousdomain_new_names_{{$index}}" ng-repeat="domain in newDomains">
+        <div class="col-xs-8">
+          <input type="text" name="name" autofocus id="rule_maliciousdomain_new_name_{{$index}}"
+                 ng-model="domain.domainName" ng-change="validateFormat(domain);validateDulplcate(domain);validate();"
+                 maxlength="253" size="22"/>
+          <error-msg id="error_rule_maliciousdomain_new_name_{{$index}}" validator="domain" type="'domain'"></error-msg>
+        </div>
+        <!-- We might need this in the future
+        <div class="col-xs-2">
+          <div class="dropdown display-inline-block" dropdown>
+            <button id="rule_maliciousdomain_new_protocol_dropdown_{{$index}}" type="button" class="btn btn-default pull-right dropdown-toggle" data-toggle="dropdown" dropdown-toggle>{{domain.domainProtocolType}}</button>
+            <ul id="rule_maliciousdomain_new_protocol_list_{{$index}}" class="dropdown-menu pull-left" role="menu" aria-labelledby="signature-drop-down">
+              <li id="rule_maliciousdomain_new_protocol_list_{{$index}}_dns" ng-click="domain.domainProtocolType = 'DNS'" role="presentation"><a class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#">DNS</a></li>
+              <li id="rule_maliciousdomain_new_protocol_list_{{$index}}_netbios" ng-click="domain.domainProtocolType = 'NETBIOS'" role="presentation"><a class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#">NETBIOS</a></li>
+            </ul>
+          </div>
+        </div>
+        -->
+        <div class="col-xs-2">
+          <div class="dropdown display-inline-block" dropdown>
+            <button id="rule_maliciousdomain_new_action_dropdown_{{$index}}" type="button"
+                    class="btn btn-default pull-right dropdown-toggle" dropdown-toggle>
+              <i ng-if="domain.action === 'DENY'" class="fa fa-ban text-red"></i>
+              <i ng-if="domain.action === 'ALERT'" class="fa fa-exclamation-triangle text-yellow"></i>
+              <i ng-if="domain.action === 'ALLOW'" class="fa fa-check text-green"></i>
+              {{domain.action | actionName}}
+            </button>
+            <ul id="rule_maliciousdomain_new_action_list_{{$index}}" class="dropdown-menu pull-left" role="menu"
+                aria-labelledby="signature-drop-down">
+              <li id="rule_maliciousdomain_new_action_list_{{$index}}_deny" ng-click="domain.action = 'DENY'"
+                  role="presentation"><a class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                class="fa fa-ban text-red"></i> 阻断</a></li>
+              <li id="rule_maliciousdomain_new_action_list_{{$index}}_alert" ng-click="domain.action = 'ALERT'"
+                  role="presentation"><a class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                class="fa fa-exclamation-triangle text-yellow"></i> 警告</a></li>
+              <li id="rule_maliciousdomain_new_action_list_{{$index}}_allow" ng-click="domain.action = 'ALLOW'"
+                  role="presentation"><a class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                class="fa fa-check text-green"></i> 允许</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <button class="btn btn-default btn-sm pull-right" id="rule_maliciousdomain_remove_new_button_{{$index}}"
+                  ng-disabled="newDomains.length <= 1" ng-click="delete($index);validate();"><i class="fa fa-trash"></i>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6"></div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-2">
+          <button class="btn btn-default btn-sm pull-right" id="rule_maliciousdomain_add_new_button"
+                  ng-disabled="!allNewDomainValid" ng-click="add();validate();"><i class="fa fa-plus"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default pull-right" id="rule_maliciousdomain_ok_new_button" ng-disabled="!allNewDomainValid"
+            ng-click="ok()"><i class="fa fa-check icon-left text-lime"></i>完成
+    </button>
+    <button class="btn btn-default pull-left" id="rule_maliciousdomain_cancel_new_button" ng-click="cancel()"><i
+      class="fa fa-close icon-left"></i>取消
+    </button>
+  </div>
+</div>

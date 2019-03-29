@@ -1,0 +1,17 @@
+<div class="error-incident" ng-click="goToIncidentState()">
+  <p class="placeholder" ng-if="!(incidentList && incidentList.length)">
+    系统暂无阻断事件
+  </p>
+  <ul class="incident-list">
+    <li class="angular-animate" ng-repeat="incident in incidentList">
+      <p>时间：<span class="value">{{incident.timestamp | utc}}</span></p>
+      <p dotdotdot style="height: 18px; width: 100%;">
+        <span class="margin-right-default">网络层协议：<span class="value">{{incident.protocol}}</span></span>
+        <span>应用层协议：<span class="value">{{incident.appLayerProtocol}}</span></span>
+      </p>
+      <p dotdotdot style="height: 18px; width: 100%;">
+        规则项：<span class="value">{{incident.matchedKey}}</span>
+      </p>
+    </li>
+  </ul>
+</div>

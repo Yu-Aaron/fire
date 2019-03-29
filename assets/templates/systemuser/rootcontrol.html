@@ -1,0 +1,64 @@
+<div class="full-height">
+  <div class="row no-padding full-height">
+    <div class="col-md-12 full-height">
+      <div class="panel full-height" style="overflow-y: auto;" ng-if="systemuser.showUserTable">
+        <div class="panel-header">
+          <span class="panel-header-title">用户列表</span>
+        </div>
+        <div class="system-user-list-container">
+          <div  disable=true>
+            <div class="table-wrapper">
+              <table id="users_table" class="table">
+                <thead>
+                <tr>
+                  <th class="table-col-xsm"></th>
+                  <th class="table-col-md">用户名</th>
+                  <th class="table-col-md">姓名</th>
+                  <th class="table-col-md">用户组</th>
+                  <th>上次登录时间</th>
+                  <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="user_table_row_{{$index}}" class="user_table_row_tr" ng-repeat="user in systemuser.table">
+                  <td><img src="/images/user.png" width="30"/></td>
+                  <td>{{user.name}} <span ng-if="user.locked==='on'" class="systemuser-lock"><i
+                    class="fa fa-lock"></i></span>
+                  </td>
+                  <td>{{user.name==='admin'?'管理员':user.stuffName}}</td>
+                  <td><i class="fa {{user.privilege === 'ADMIN' ? 'fa-wrench' : 'fa-user'}}"></i>
+                    {{user._roles[0].name | translateUserpril}}
+                  </td>
+                  <td>{{user.lastLogin | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+                  <td class="text-right" disable=true>
+                    <div class="toggle-container">
+                      <div class="toggle-bg toggle-alternate" ng-class="{true: 'off', false: 'on'}[user.locked]">
+                        <label ng-class="{true: 'off', false: 'on'}[user.locked]">{{user.locked?'锁定':'正常'}}</label>
+                        <input type="checkbox" id="setting_{{$index}}" name="toggle"
+                               ng-model="user.locked"
+                               ng-change="systemuser.userLockedChanged(user)">
+                        <span class="switch" ng-class="{true: 'off', false: 'on'}[user.locked]"></span>
+                      </div>
+                    </div>
+                    <button class="btn btn-default" ng-click="systemuser.editUser($index)"
+                    ><i class="fa fa-pencil"></i></button>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel full-height" style="overflow-y: auto;"
+           ng-if="systemuser.showEditUser">
+        <div class="panel-header">
+          <span class="panel-header-title" ng-if="systemuser.showEditUser">编辑用户</span>
+        </div>
+        <div class="system-user-list-container">
+          <div ng-if="systemuser.showEditUser" ng-include src="'templates/systemuser/rootcontrol_useredit.html'"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

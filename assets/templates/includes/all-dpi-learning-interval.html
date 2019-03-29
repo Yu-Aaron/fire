@@ -1,0 +1,34 @@
+<form name="intervalForm">
+  <div class="row">
+    <div class="col-xs-12 text-left">
+      <span>为期</span>
+      <input class="input-ty" type="text"
+             name="days"
+             ng-model="whitelistAllDpi.interval.days"
+             ng-change="whitelistAllDpi.changeInterval()"
+             ng-blur="whitelistAllDpi.calculateValues()"
+             required>
+      <span class="learning-time-unit">天</span>
+
+      <input class="input-ty" type="text"
+             name="hours"
+             ng-model="whitelistAllDpi.interval.hours"
+             ng-change="whitelistAllDpi.changeInterval()"
+             ng-blur="whitelistAllDpi.calculateValues()"
+             required>
+      <span class="learning-time-unit">时</span>
+
+      <input class="input-ty" type="text"
+             name="minutes"
+             ng-model="whitelistAllDpi.interval.minutes"
+             ng-change="whitelistAllDpi.changeInterval()"
+             ng-blur="whitelistAllDpi.calculateValues()"
+             required>
+      <span class="learning-time-unit">分</span><br/><br/>
+      <div class="col-xs-12">
+        <span class="error" ng-show="whitelistAllDpi.intervalError"><i class="fa fa-warning text-red"> </i> {{whitelistAllDpi.intervalErrorMessage}}</span>
+      </div>
+    </div>
+  </div>
+</form>
+

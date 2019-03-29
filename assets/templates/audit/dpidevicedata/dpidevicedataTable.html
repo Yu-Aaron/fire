@@ -1,0 +1,48 @@
+<div>
+  <h5 class="text-center text-red" ng-show="dtable.table.length===0">未发现有实时流量设备</h5>
+  <table id="security_device_table" class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th><span>&nbsp;</span></th>
+      <th>名称</th>
+      <th>设备状态</th>
+      <th>序列号</th>
+      <th style="white-space: normal;">IP地址</th>
+      <th style="white-space: normal;">端口数量</th>
+      <th style="white-space: normal;">最大速率(1小时)</th>
+      <th style="white-space: normal;">最小速率(1小时)</th>
+      <th style="white-space: normal;">平均速率(1小时)</th>
+      <th style="white-space: normal;">平均流量百分比</th>
+      <th>更新时间</th>
+      <th>
+        <span>&nbsp;</span>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="device in dtable.table">
+      <td class="table-col-serial"><span class="error" ng-show="device.totalBytes === 0"><i
+        class="fa fa-warning text-red"> </i> 无流量</span></td>
+      <td class="table-col-device-name">{{device.deviceName}}</td>
+      <td class="table-col-online">
+        <div class="bullet bullet-online" title="连线"
+             ng-if="device.deviceOnline===1&&device.deviceSource==='DISCOVERY'"></div>
+        <div class="bullet bullet-offline" title="掉线"
+             ng-if="device.deviceOnline!==1&&device.deviceSource==='DISCOVERY'"></div>
+        <div class="bullet bullet-unactivated" title="未激活" ng-if="device.deviceSource!=='DISCOVERY'"></div>
+      </td>
+      <td class="table-col-serial">{{device.boxId}}</td>
+      <td class="table-col-mode">{{device.dpiIp}}</td>
+      <td class="table-col-mac">{{device.portsNumber}}个</td>
+      <td class="table-col-mac">{{device.maxSpeed}}</td>
+      <td class="table-col-mac">{{device.minSpeed}}</td>
+      <td class="table-col-mac">{{device.avgSpeed}}</td>
+      <td class="table-col-mac">{{device.percent * 100 | number:2}}%</td>
+      <td class="table-col-serial">{{device.timestamp | date : 'yyyy-MM-dd HH:mm:ss'}}</td>
+      <td><a class="btn btn-default"
+             ui-sref="audit.dpidevice_data.detail({deviceID: device.deviceId, boxId: device.boxId, dpiIp: device.dpiIp})">查看
+        <i class="fa fa-chevron-circle-right icon-right"></i></a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

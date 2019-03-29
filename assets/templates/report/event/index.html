@@ -1,0 +1,457 @@
+<!--<div class="tab-container margin-top-medium" ng-controller="TabCtrl as tab">-->
+  <!--<ul class="nav nav-tabs nav-tabs-lg nav-tabs-lime"-->
+      <!--ng-init="tab.active || tab.activatePanel('INCIDENT')">-->
+    <!--<li id="report_event_incident_tab" ng-class="{ active: tab.isActive('INCIDENT') }">-->
+      <!--<a href="#" ng-click="tab.activatePanel('INCIDENT'); revent.event.editMode = false; revent.viewDetail = false;">-->
+        <!--<span>规则事件</span>-->
+      <!--</a>-->
+    <!--</li>-->
+    <!--<li id="report_event_event_tab" ng-class="{ active: tab.isActive('EVENT') }">-->
+      <!--<a href="#" ng-click="tab.activatePanel('EVENT'); revent.incident.editMode = false; revent.viewDetail = false;">-->
+        <!--<span>策略事件</span>-->
+      <!--</a>-->
+    <!--</li>-->
+  <!--</ul>-->
+  <!--<div ng-switch on="tab.active">-->
+    <!--<div class="tab-container-body" ng-switch-when="INCIDENT">-->
+      <!--<div class="panel panel-lg" ng-if="!revent.viewDetail">-->
+        <!--<div class="panel-header panel-header-border">-->
+          <!--定期安全报告设置-->
+          <!--<button id="report_incident_setting_edit_button"-->
+                  <!--class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"-->
+                  <!--ng-hide="revent.incident.editMode" ng-click="revent.incident.editSetting()"><i-->
+            <!--class="fa fa-pencil-square-o"></i></button>-->
+          <!--<button id="report_incident_setting_confirm_button"-->
+                  <!--class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"-->
+                  <!--ng-show="revent.incident.editMode" ng-click="revent.incident.confirmSetting()"><i-->
+            <!--class="fa fa-check text-lime"></i></button>-->
+          <!--<button id="report_incident_setting_cancel_button"-->
+                  <!--class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"-->
+                  <!--ng-show="revent.incident.editMode" ng-click="revent.incident.cancelSetting()"><i-->
+            <!--class="fa fa-remove"></i></button>-->
+        <!--</div>-->
+        <!--<div class="panel-body">-->
+          <!--<div ng-show="revent.incident.editMode">-->
+            <!--<div class="row report-setting-padding">-->
+              <!--<div class="col-xs-2 setting-tag">-->
+                <!--频率-->
+              <!--</div>-->
+              <!--<div class="col-xs-3">-->
+                <!--<select id="report_incident_frequency_select"-->
+                        <!--class="select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"-->
+                        <!--ng-model="revent.incident.tempSetting.frequency">-->
+                  <!--<option id="report_incident_frequency_everyday" class="btn btn-default" value="daily">每天</option>-->
+                  <!--<option id="report_incident_frequency_everyweek" class="btn btn-default" value="weekly">每周</option>-->
+                  <!--<option id="report_incident_frequency_everymonthfirstday" class="btn btn-default" value="monthly">-->
+                    <!--每月一号-->
+                  <!--</option>-->
+                <!--</select>-->
+                <!--<select id="report_incident_frequency_weekly_select"-->
+                        <!--class=" select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"-->
+                        <!--ng-model="revent.incident.tempSetting.weekday"-->
+                        <!--ng-show="revent.incident.tempSetting.frequency==='weekly'">-->
+                  <!--<option id="report_incident_frequency_weekly_mon" class="btn btn-default" value="星期一">星期一</option>-->
+                  <!--<option id="report_incident_frequency_weekly_tue" class="btn btn-default" value="星期二">星期二</option>-->
+                  <!--<option id="report_incident_frequency_weekly_wed" class="btn btn-default" value="星期三">星期三</option>-->
+                  <!--<option id="report_incident_frequency_weekly_thu" class="btn btn-default" value="星期四">星期四</option>-->
+                  <!--<option id="report_incident_frequency_weekly_fri" class="btn btn-default" value="星期五">星期五</option>-->
+                  <!--<option id="report_incident_frequency_weekly_sat" class="btn btn-default" value="星期六">星期六</option>-->
+                  <!--<option id="report_incident_frequency_weekly_sun" class="btn btn-default" value="星期天">星期天</option>-->
+                <!--</select>-->
+              <!--</div>-->
+              <!--<div class="col-xs-6 setting-tag">-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row report-setting-padding">-->
+              <!--<div class="col-xs-2 setting-tag">-->
+                <!--包含事件等级-->
+              <!--</div>-->
+              <!--<div class="col-xs-3">-->
+                <!--<select id="report_incident_level_select"-->
+                        <!--class="select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"-->
+                        <!--ng-model="revent.incident.tempSetting.level">-->
+                  <!--<option id="report_incident_dropandalert" class="btn btn-default" value="阻断和警告">阻断和警告</option>-->
+                  <!--<option id="report_incident_droponly" class="btn btn-default" value="阻断">阻断</option>-->
+                <!--</select>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div ng-hide="revent.incident.editMode">-->
+            <!--<div class="row report-setting-padding">-->
+              <!--<div class="col-xs-2 setting-tag">-->
+                <!--频率-->
+              <!--</div>-->
+              <!--<div class="col-xs-3 setting-tag">-->
+                <!--{{revent.incident.setting.frequency==='daily'?'每天':revent.incident.setting.frequency==='weekly'?('每周' +-->
+                <!--revent.incident.setting.weekday):'每月一号'}}-->
+              <!--</div>-->
+              <!--<div class="col-xs-6 setting-tag">-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row report-setting-padding">-->
+              <!--<div class="col-xs-2 setting-tag">-->
+                <!--包含事件等级-->
+              <!--</div>-->
+              <!--<div class="col-xs-3 setting-tag">-->
+                <!--{{revent.incident.setting.level}}-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="panel panel-lg bottom-Table" ng-if="!revent.viewDetail">-->
+        <!--<div class="panel-header panel-header-border">-->
+          <!--安全报告一览-->
+        <!--</div>-->
+        <!--<div class="panel-body">-->
+          <!--<table id="report_incident_table" class="table table-hover icon-hidden">-->
+            <!--<thead>-->
+            <!--<tr>-->
+              <!--<th class="table-col-sm"></th>-->
+              <!--<th class="table-col-20">报告名称</th>-->
+              <!--<th>报告日期</th>-->
+              <!--<th></th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr id="report_incident_table_row_{{$index}}" ng-repeat="event in revent.incident.curData">-->
+              <!--<td></td>-->
+              <!--<td>-->
+                <!--安全事件_每{{revent.incident.setting.frequency==='daily'?'日':revent.incident.setting.frequency==='weekly'?'周':'月'}}报告_{{event.start-->
+                <!--| date: 'yyyy-MM-dd'}}-->
+              <!--</td>-->
+              <!--<td>-->
+                <!--<span ng-if="revent.incident.setting.frequency==='daily'">{{event.start | date: 'yyyy-MM-dd'}}</span>-->
+                <!--<span ng-if="revent.incident.setting.frequency==='weekly'">{{event.start | date: 'yyyy-MM-dd'}} - {{event.end | date: 'yyyy-MM-dd'}}</span>-->
+                <!--<span ng-if="revent.incident.setting.frequency==='monthly'">{{event.start | date: 'yyyy-MM'}}</span>-->
+              <!--</td>-->
+              <!--<td>-->
+                <!--<button id="report_incident_table_row_detail_button_{{$index}}" class="btn btn-default" privilege-->
+                        <!--ng-click="revent.incident.showDetail(event)">-->
+                  <!--查看 <i class="fa fa-chevron-circle-right icon-right"></i>-->
+                <!--</button>-->
+              <!--</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+          <!--</table>-->
+          <!--<br/>-->
+          <!--<div class="text-center">-->
+            <!--<ul id="report_incident_pagination_list" class="pagination-sm pagination ng-isolate-scope ng-valid">-->
+              <!--<li>-->
+                <!--<a href="" ng-click="revent.incident.gotoPageHead()" class="ng-binding"><i-->
+                  <!--class="fa fa-angle-double-left"></i></a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" ng-click="revent.incident.changePage(-1)" class="ng-binding"-->
+                   <!--ng-disabled="revent.incident.curPage<=0"><i class="fa fa-angle-left"></i></a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.incident.changePage(-4)"-->
+                   <!--ng-hide="revent.incident.curPage <= 3 || revent.incident.curPage < revent.incident.maxPage-2">{{revent.incident.curPage-3}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.incident.changePage(-3)"-->
+                   <!--ng-hide="revent.incident.curPage <= 2 || revent.incident.curPage < revent.incident.maxPage-1">{{revent.incident.curPage-2}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.incident.changePage(-2)"-->
+                   <!--ng-hide="revent.incident.curPage <= 1">{{revent.incident.curPage-1}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.incident.changePage(-1)"-->
+                   <!--ng-hide="revent.incident.curPage <= 0">{{revent.incident.curPage}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="selectedPage">{{revent.incident.curPage+1}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.incident.changePage(1)"-->
+                   <!--ng-hide="revent.incident.curPage >= revent.incident.maxPage-1">{{revent.incident.curPage+2}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.incident.changePage(2)"-->
+                   <!--ng-hide="revent.incident.curPage >= revent.incident.maxPage-2">{{revent.incident.curPage+3}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.incident.changePage(3)"-->
+                   <!--ng-hide="revent.incident.curPage >= revent.incident.maxPage-3 || revent.incident.curPage > 1">{{revent.incident.curPage+4}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.incident.changePage(4)"-->
+                   <!--ng-hide="revent.incident.curPage >= revent.incident.maxPage-4 || revent.incident.curPage > 0">{{revent.incident.curPage+5}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" ng-click="revent.incident.changePage(1)" class="ng-binding"-->
+                   <!--ng-disabled="revent.incident.curPage >= revent.incident.maxPage-1"><i class="fa fa-angle-right"></i></a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" ng-click="revent.incident.gotoPageEnd()" class="ng-binding"><i-->
+                  <!--class="fa fa-angle-double-right"></i></a>-->
+              <!--</li>-->
+            <!--</ul>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="panel padding-default" ng-if="revent.viewDetail">-->
+        <!--<div class="panel-body">-->
+          <!--<div class="row margin-bottom-default">-->
+            <!--<div class="col-xs-1">-->
+              <!--<button id="report_incident_detail_return_button" class="btn btn-default pull-left"-->
+                      <!--ng-click="revent.viewDetail=false;">-->
+                <!--<i class="fa fa-arrow-circle-left icon-left"></i>返回-->
+              <!--</button>-->
+            <!--</div>-->
+            <!--<div class="col-xs-8">-->
+              <!--<h4 class="margin-left-default vertical-mid display-inline-block">{{revent.incident.detail.title}}</h4>-->
+            <!--</div>-->
+            <!--<div class="col-xs-3">-->
+              <!--<button id="report_incident_detail_downloadhtml_button" class="btn btn-default pull-right"-->
+                      <!--ng-click="revent.incident.genPDF(incidentdata, revent.incident.detail.ruleTitle, 'html')">-->
+                <!--<i class="fa fa-download icon-left text-lime"></i>下载 HTML-->
+              <!--</button>-->
+              <!--<button id="report_incident_detail_downloadpdf_button" class="btn btn-default pull-right"-->
+                      <!--ng-click="revent.incident.genPDF(incidentdata, revent.incident.detail.ruleTitle)">-->
+                <!--<i class="fa fa-download icon-left text-lime"></i>下载 PDF-->
+              <!--</button>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div id="incidentBarChart" style="min-width: 800px; height: 400px; margin: 0 auto"></div>-->
+
+          <!--<div id="incidentRiskLevelBarChart" style="min-width: 800px; height: 400px; margin-top: 40px;"></div>-->
+
+          <!--<div class="device-selector" style="margin-top: 40px; margin-bottom: 10px; font-size: 1.2em;">-->
+            <!--选择设备：-->
+            <!--<select id="report_incident_device_select" name="deviceSingleSelect"-->
+                    <!--ng-model="revent.incident.currentDeviceId"-->
+                    <!--ng-change="revent.incident.getDeviceRuleData(revent.incident.currentDeviceId)"-->
+                    <!--style="background:#1F1F1F;">-->
+              <!--<option id="report_incident_device_{{$index}}" ng-repeat="device in revent.incident.devices"-->
+                      <!--value="{{device.deviceId}}">{{device.name}}-->
+              <!--</option>-->
+            <!--</select>-->
+          <!--</div>-->
+          <!--<div id="incidentRuleBarChart" style="min-width: 800px; height: 400px; margin: 0 auto"></div>-->
+          <!--<br/>-->
+          <!--<dtable>-->
+            <!--<incident-report-table></incident-report-table>-->
+          <!--</dtable>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="tab-container-body" ng-switch-when="EVENT">-->
+      <!--<div class="panel panel-lg padding-zero" ng-if="!revent.viewDetail">-->
+        <!--<div class="panel-header panel-header-border">-->
+          <!--定期系统报告设置-->
+          <!--<button id="report_event_setting_edit_button"-->
+                  <!--class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"-->
+                  <!--ng-hide="revent.event.editMode" ng-click="revent.event.editSetting()"><i-->
+            <!--class="fa fa-pencil-square-o"></i></button>-->
+          <!--<button id="report_event_setting_confirm_button"-->
+                  <!--class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"-->
+                  <!--ng-show="revent.event.editMode" ng-click="revent.event.confirmSetting()"><i-->
+            <!--class="fa fa-check text-lime"></i></button>-->
+          <!--<button id="report_event_setting_cancel_button"-->
+                  <!--class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"-->
+                  <!--ng-show="revent.event.editMode" ng-click="revent.event.cancelSetting()"><i class="fa fa-remove"></i>-->
+          <!--</button>-->
+        <!--</div>-->
+        <!--<div class="panel-body">-->
+          <!--<div ng-show="revent.event.editMode">-->
+            <!--<div class="row report-setting-padding">-->
+              <!--<div class="col-xs-2 setting-tag">-->
+                <!--频率-->
+              <!--</div>-->
+              <!--<div class="col-xs-3">-->
+                <!--<select id="report_event_frequency_select"-->
+                        <!--class="select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"-->
+                        <!--ng-model="revent.event.tempSetting.frequency">-->
+                  <!--<option id="report_event_frequency_everyday" class="btn btn-default" value="daily">每天</option>-->
+                  <!--<option id="report_event_frequency_everyweek" class="btn btn-default" value="weekly">每周</option>-->
+                  <!--<option id="report_event_frequency_everymonthfirstday" class="btn btn-default" value="monthly">每月一号-->
+                  <!--</option>-->
+                <!--</select>-->
+                <!--<select id="report_event_frequency_weekly_select"-->
+                        <!--class="select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"-->
+                        <!--ng-model="revent.event.tempSetting.weekday"-->
+                        <!--ng-show="revent.event.tempSetting.frequency==='weekly'">-->
+                  <!--<option id="report_event_frequency_weekly_mon" class="btn btn-default" value="星期一">星期一</option>-->
+                  <!--<option id="report_event_frequency_weekly_tue" class="btn btn-default" value="星期二">星期二</option>-->
+                  <!--<option id="report_event_frequency_weekly_wed" class="btn btn-default" value="星期三">星期三</option>-->
+                  <!--<option id="report_event_frequency_weekly_thu" class="btn btn-default" value="星期四">星期四</option>-->
+                  <!--<option id="report_event_frequency_weekly_fri" class="btn btn-default" value="星期五">星期五</option>-->
+                  <!--<option id="report_event_frequency_weekly_sat" class="btn btn-default" value="星期六">星期六</option>-->
+                  <!--<option id="report_event_frequency_weekly_sun" class="btn btn-default" value="星期天">星期天</option>-->
+                <!--</select>-->
+              <!--</div>-->
+              <!--<div class="col-xs-6 setting-tag">-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row report-setting-padding">-->
+              <!--<div class="col-xs-2 setting-tag">-->
+                <!--包含事件等级-->
+              <!--</div>-->
+              <!--<div class="col-xs-3">-->
+                <!--<select id="report_event_level_select"-->
+                        <!--class="select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"-->
+                        <!--ng-model="revent.event.tempSetting.level">-->
+                  <!--<option id="report_event_infoandalert" class="btn btn-default" value="信息和警告">信息和警告</option>-->
+                  <!--<option id="report_event_alertonly" class="btn btn-default" value="警告">警告</option>-->
+                <!--</select>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div ng-hide="revent.event.editMode">-->
+            <!--<div class="row report-setting-padding">-->
+              <!--<div class="col-xs-2 setting-tag">-->
+                <!--频率-->
+              <!--</div>-->
+              <!--<div class="col-xs-3 setting-tag">-->
+                <!--{{revent.event.setting.frequency==='daily'?'每天':revent.event.setting.frequency==='weekly'?('每周' +-->
+                <!--revent.event.setting.weekday):'每月一号'}}-->
+              <!--</div>-->
+              <!--<div class="col-xs-6 setting-tag">-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row report-setting-padding">-->
+              <!--<div class="col-xs-2 setting-tag">-->
+                <!--包含事件等级-->
+              <!--</div>-->
+              <!--<div class="col-xs-3 setting-tag">-->
+                <!--{{revent.event.setting.level}}-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="panel panel-lg padding-zero bottom-Table" ng-if="!revent.viewDetail">-->
+        <!--<div class="panel-header panel-header-border">-->
+          <!--系统报告一览-->
+        <!--</div>-->
+        <!--<div class="panel-body">-->
+          <!--<table id="report_event_table" class="table table-hover icon-hidden">-->
+            <!--<thead>-->
+            <!--<tr>-->
+              <!--<th class="table-col-sm"></th>-->
+              <!--<th class="table-col-20">报告名称</th>-->
+              <!--<th>报告日期</th>-->
+              <!--<th></th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr id="report_event_table_row_{{$index}}" ng-repeat="event in revent.event.curData">-->
+              <!--<td></td>-->
+              <!--<td>-->
+                <!--系统事件_每{{revent.event.setting.frequency==='daily'?'日':revent.event.setting.frequency==='weekly'?'周':'月'}}报告_{{event.start-->
+                <!--| date: 'yyyy-MM-dd'}}-->
+              <!--</td>-->
+              <!--<td>-->
+                <!--<span ng-if="revent.event.setting.frequency==='daily'">{{event.start | date: 'yyyy-MM-dd'}}</span>-->
+                <!--<span ng-if="revent.event.setting.frequency==='weekly'">{{event.start | date: 'yyyy-MM-dd'}} - {{event.end | date: 'yyyy-MM-dd'}}</span>-->
+                <!--<span ng-if="revent.event.setting.frequency==='monthly'">{{event.start | date: 'yyyy-MM'}}</span>-->
+              <!--</td>-->
+              <!--<td>-->
+                <!--<button id="report_event_table_row_detail_button_{{$index}}" class="btn btn-default" privilege-->
+                        <!--ng-click="revent.event.showDetail(event)">-->
+                  <!--查看 <i class="fa fa-chevron-circle-right icon-right"></i>-->
+                <!--</button>-->
+              <!--</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+          <!--</table>-->
+          <!--<br/>-->
+          <!--<div class="text-center">-->
+            <!--<ul id="report_event_pagination_list" class="pagination-sm pagination ng-isolate-scope ng-valid">-->
+              <!--<li>-->
+                <!--<a href="" ng-click="revent.event.gotoPageHead()" class="ng-binding">«</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" ng-click="revent.event.changePage(-1)" class="ng-binding"-->
+                   <!--ng-disabled="revent.event.curPage<=0">‹</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.event.changePage(-4)"-->
+                   <!--ng-hide="revent.event.curPage <= 3 || revent.event.curPage < revent.event.maxPage-2">{{revent.event.curPage-3}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.event.changePage(-3)"-->
+                   <!--ng-hide="revent.event.curPage <= 2 || revent.event.curPage < revent.event.maxPage-1">{{revent.event.curPage-2}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.event.changePage(-2)"-->
+                   <!--ng-hide="revent.event.curPage <= 1">{{revent.event.curPage-1}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.event.changePage(-1)"-->
+                   <!--ng-hide="revent.event.curPage <= 0">{{revent.event.curPage}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="selectedPage">{{revent.event.curPage+1}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.event.changePage(1)"-->
+                   <!--ng-hide="revent.event.curPage >= revent.event.maxPage-1">{{revent.event.curPage+2}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.event.changePage(2)"-->
+                   <!--ng-hide="revent.event.curPage >= revent.event.maxPage-2">{{revent.event.curPage+3}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.event.changePage(3)"-->
+                   <!--ng-hide="revent.event.curPage >= revent.event.maxPage-3 || revent.event.curPage > 1">{{revent.event.curPage+4}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" class="ng-binding" ng-click="revent.event.changePage(4)"-->
+                   <!--ng-hide="revent.event.curPage >= revent.event.maxPage-4 || revent.event.curPage > 0">{{revent.event.curPage+5}}</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" ng-click="revent.event.changePage(1)" class="ng-binding"-->
+                   <!--ng-disabled="revent.event.curPage >= revent.event.maxPage-1">›</a>-->
+              <!--</li>-->
+              <!--<li>-->
+                <!--<a href="" ng-click="revent.event.gotoPageEnd()" class="ng-binding">»</a>-->
+              <!--</li>-->
+            <!--</ul>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+
+      <!--<div class="panel padding-default" ng-if="revent.viewDetail">-->
+        <!--<div class="panel-body">-->
+          <!--<div class="row margin-bottom-default">-->
+            <!--<div class="col-xs-1">-->
+              <!--<button id="report_event_detail_return_button"-->
+                      <!--class="btn btn-default pull-left btn-top-pull-left-margin-back"-->
+                      <!--ng-click="revent.viewDetail=false;">-->
+                <!--<i class="fa fa-arrow-circle-left icon-left"></i>返回-->
+              <!--</button>-->
+            <!--</div>-->
+            <!--<div class="col-xs-8">-->
+              <!--<h4 class="margin-left-default display-inline-block">{{revent.event.detail.title}}</h4>-->
+            <!--</div>-->
+            <!--<div class="col-xs-3">-->
+              <!--<button id="report_event_detail_downloadhtml_button"-->
+                      <!--class="btn btn-default pull-right btn-top-pull-right-margin-back"-->
+                      <!--ng-click="revent.event.genPDF(eventdata, revent.event.detail.title, 'html')">-->
+                <!--<i class="fa fa-download icon-left text-lime"></i>下载 HTML-->
+              <!--</button>-->
+              <!--<button id="report_event_detail_downloadpdf_button"-->
+                      <!--class="btn btn-default pull-right btn-top-pull-right-margin-back"-->
+                      <!--ng-click="revent.event.genPDF(eventdata, revent.event.detail.title)">-->
+                <!--<i class="fa fa-download icon-left text-lime"></i>下载 PDF-->
+              <!--</button>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div id="eventBarChart" style="min-width: 800px; height: 400px; margin: 0 auto"></div>-->
+          <!--<br/>-->
+          <!--<dtable>-->
+            <!--<event-report-table></event-report-table>-->
+          <!--</dtable>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->

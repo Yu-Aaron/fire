@@ -1,0 +1,195 @@
+<div class="panel panel-lg padding-zero" ng-if="!rlogger.viewDetail">
+  <div class="panel-header panel-header-border">
+    <span class="panel-header-title">定期日志报告设置</span>
+    <button id="report_logger_setting_edit_button"
+            class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+            ng-hide="rlogger.logger.editMode" ng-click="rlogger.logger.editSetting()"><i
+      class="fa fa-pencil-square-o"></i></button>
+    <button id="report_logger_setting_confirm_button"
+            class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+            ng-show="rlogger.logger.editMode" ng-click="rlogger.logger.confirmSetting()"><i
+      class="fa fa-check text-lime"></i></button>
+    <button id="report_logger_setting_cancel_button"
+            class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+            ng-show="rlogger.logger.editMode" ng-click="rlogger.logger.cancelSetting()"><i class="fa fa-remove"></i>
+    </button>
+  </div>
+  <div class="panel-body">
+    <div ng-show="rlogger.logger.editMode">
+      <div class="row report-setting-padding">
+        <div class="col-xs-2 setting-tag">
+          频率
+        </div>
+        <div class="col-xs-3">
+          <select id="report_logger_frequency_select"
+                  class="select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"
+                  ng-model="rlogger.logger.tempSetting.frequency">
+            <option id="report_logger_frequency_everyday" class="btn btn-default" value="daily">每天</option>
+            <option id="report_logger_frequency_everyweek" class="btn btn-default" value="weekly">每周</option>
+            <option id="report_logger_frequency_everymonthfirstday" class="btn btn-default" value="monthly">每月一号
+            </option>
+          </select>
+          <select id="report_logger_weekly_select"
+                  class="select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"
+                  ng-model="rlogger.logger.tempSetting.weekday"
+                  ng-show="rlogger.logger.tempSetting.frequency==='weekly'">
+            <option id="report_logger_weekly_mon" class="btn btn-default" value="星期一">星期一</option>
+            <option id="report_logger_weekly_tue" class="btn btn-default" value="星期二">星期二</option>
+            <option id="report_logger_weekly_wed" class="btn btn-default" value="星期三">星期三</option>
+            <option id="report_logger_weekly_thu" class="btn btn-default" value="星期四">星期四</option>
+            <option id="report_logger_weekly_fri" class="btn btn-default" value="星期五">星期五</option>
+            <option id="report_logger_weekly_sat" class="btn btn-default" value="星期六">星期六</option>
+            <option id="report_logger_weekly_sun" class="btn btn-default" value="星期天">星期天</option>
+          </select>
+        </div>
+        <div class="col-xs-6 setting-tag">
+        </div>
+      </div>
+    </div>
+    <div ng-hide="rlogger.logger.editMode">
+      <div class="row report-setting-padding">
+        <div class="col-xs-2 setting-tag">
+          频率
+        </div>
+        <div class="col-xs-3 setting-tag">
+          {{rlogger.logger.setting.frequency==='daily'?'每天':rlogger.logger.setting.frequency==='weekly'?('每周' +
+          rlogger.logger.setting.weekday):'每月一号'}}
+        </div>
+        <div class="col-xs-6 setting-tag">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-lg padding-zero bottom-Table" ng-if="!rlogger.viewDetail">
+  <div class="panel-header panel-header-border">
+    <span class="panel-header-title">日志报告一览</span>
+  </div>
+  <div class="panel-body">
+    <table id="report_logger_table" class="table table-hover icon-hidden">
+      <thead>
+      <tr>
+        <th class="table-col-sm"></th>
+        <th class="table-col-20">报告名称</th>
+        <th>报告日期</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr id="report_logger_table_row_{{$index}}" ng-repeat="log in rlogger.logger.curData" fade-in-list>
+        <td></td>
+        <td>
+          日志_每{{rlogger.logger.setting.frequency==='daily'?'日':rlogger.logger.setting.frequency==='weekly'?'周':'月'}}报告_{{log.start
+          | date: 'yyyy-MM-dd'}}
+        </td>
+        <td>
+          <span ng-if="rlogger.logger.setting.frequency==='daily'">{{log.start | date: 'yyyy-MM-dd'}}</span>
+          <span ng-if="rlogger.logger.setting.frequency==='weekly'">{{log.start | date: 'yyyy-MM-dd'}} - {{log.end | date: 'yyyy-MM-dd'}}</span>
+          <span ng-if="rlogger.logger.setting.frequency==='monthly'">{{log.start | date: 'yyyy-MM'}}</span>
+        </td>
+        <td>
+          <button id="report_logger_table_row_detail_button_{{$index}}" class="btn btn-default"
+                  ng-click="rlogger.logger.showDetail(log)">
+            查看 <i class="fa fa-chevron-circle-right icon-right"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <br/>
+    <div class="text-center">
+      <ul id="report_logger_table_pagination" class="pagination-sm pagination ng-isolate-scope ng-valid">
+        <li>
+          <a href="" ng-click="rlogger.logger.gotoPageHead()" class="ng-binding">«</a>
+        </li>
+        <li>
+          <a href="" ng-click="rlogger.logger.changePage(-1)" class="ng-binding"
+             ng-disabled="rlogger.logger.curPage<=0">‹</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rlogger.logger.changePage(-4)"
+             ng-hide="rlogger.logger.curPage <= 3 || rlogger.logger.curPage < rlogger.logger.maxPage-2">{{rlogger.logger.curPage-3}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rlogger.logger.changePage(-3)"
+             ng-hide="rlogger.logger.curPage <= 2 || rlogger.logger.curPage < rlogger.logger.maxPage-1">{{rlogger.logger.curPage-2}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rlogger.logger.changePage(-2)" ng-hide="rlogger.logger.curPage <= 1">{{rlogger.logger.curPage-1}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rlogger.logger.changePage(-1)" ng-hide="rlogger.logger.curPage <= 0">{{rlogger.logger.curPage}}</a>
+        </li>
+        <li>
+          <a href="" class="selectedPage">{{rlogger.logger.curPage+1}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rlogger.logger.changePage(1)"
+             ng-hide="rlogger.logger.curPage >= rlogger.logger.maxPage-1">{{rlogger.logger.curPage+2}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rlogger.logger.changePage(2)"
+             ng-hide="rlogger.logger.curPage >= rlogger.logger.maxPage-2">{{rlogger.logger.curPage+3}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rlogger.logger.changePage(3)"
+             ng-hide="rlogger.logger.curPage >= rlogger.logger.maxPage-3 || rlogger.logger.curPage > 1">{{rlogger.logger.curPage+4}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rlogger.logger.changePage(4)"
+             ng-hide="rlogger.logger.curPage >= rlogger.logger.maxPage-4 || rlogger.logger.curPage > 0">{{rlogger.logger.curPage+5}}</a>
+        </li>
+        <li>
+          <a href="" ng-click="rlogger.logger.changePage(1)" class="ng-binding"
+             ng-disabled="rlogger.logger.curPage >= rlogger.logger.maxPage-1">›</a>
+        </li>
+        <li>
+          <a href="" ng-click="rlogger.logger.gotoPageEnd()" class="ng-binding">»</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div ng-if="rlogger.viewDetail">
+  <div class="row margin-bottom-default">
+    <div class="col-xs-12">
+      <button id="report_logger_detail_return_button" class="btn btn-default pull-left"
+              ng-click="rlogger.viewDetail=false;">
+        <i class="fa fa-arrow-circle-left icon-left"></i>返回
+      </button>
+      <h4 class="margin-left-default vertical-mid display-inline-block">{{rlogger.logger.detail.title}}</h4>
+    </div>
+  </div>
+  <div class="tab-container-body">
+    <div class="panel panel-lg">
+      <div class="panel-body">
+        <div class="row margin-bottom-default">
+          <div class="col-xs-9">
+            <!--<h4 id="report_logger_detail_all_title" class="vertical-mid display-inline-block">-->
+            <!--{{rlogger.logger.detail.title}}</h4>-->
+          </div>
+          <div class="col-xs-3">
+            <!--<button id="report_logger_detail_all_downloadhtml_button" class="btn btn-default pull-right"-->
+            <!--ng-click="rlogger.logger.genPDF(rlogger.logger.detail.title, 'html')">-->
+            <!--<i class="fa fa-download icon-left text-lime"></i>下载 HTML-->
+            <!--</button>-->
+            <button id="report_logger_detail_all_downloadpdf_button" class="btn btn-default pull-right"
+                    setting-privilege privilege-name="REPORT" privilege-require="VIEW"
+                    ng-click="rlogger.logger.outPutReport()">
+              <i class="fa fa-download icon-left text-lime"></i>下载
+            </button>
+          </div>
+        </div>
+        <div class="panel-body" cg-busy="{promise:rlogger.reportPromise,message:'加载中.....'}">
+          <div id="chart_bar_line" style="min-width: 1000px; height: 500px; margin: 0 auto"></div>
+          <br/>
+          <br/>
+          <div id="chart_pie" style="min-width: 1000px; height: 400px; margin: 0 auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

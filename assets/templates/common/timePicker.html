@@ -1,0 +1,13 @@
+<div class="input-append time-picker">
+  <input class="time-picker-input" ng-disabled="ngdisabled" data-format="hh:mm:ss" type="text" name="{{name}}"
+         id="{{id}}" placeholder="{{placeholder|date:'HH:mm:ss'}}" ng-model="time" maxlength="8"
+         ng-focus="click();setTime();showWidget();"></input>
+  <div class="add-on" ng-click="click();setTime();" ng-show="!ngdisabled">
+    <i data-time-icon="fa fa-clock-o" data-date-icon="fa fa-chevron-down">
+    </i>
+  </div>
+  <div class="add-on-show-only" ng-if="ngdisabled">
+    <i class="fa fa-clock-o">
+    </i>
+  </div>
+</div>

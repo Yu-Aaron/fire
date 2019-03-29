@@ -1,0 +1,14 @@
+[
+    {
+        "nodeZoneId": "8aac060c-a906-4792-a993-11844ca45485",
+        "zoneName": "HMI"
+    },
+    {
+        "nodeZoneId": "ea08f7a7-2f23-4324-afcb-1b246fb00974",
+        "zoneName": "OPC"
+    },
+    {
+        "nodeZoneId": "b60a0fa9-09e2-431c-8dd6-78ad9a0b7b40",
+        "zoneName": "Server(OPC)"
+    }
+]

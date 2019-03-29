@@ -1,0 +1,73 @@
+/* ----------------------------------------
+  New Notifications
+---------------------------------------- */
+
+.notification-base {
+  max-width: 410px;
+  min-height: 30px;
+  margin: 0 0 4px;
+  z-index: 15;
+  padding: 8px 50px 8px 66px;
+  background: linear-gradient(@bg-gray-lighter, @bg-gray);
+  border: 2px solid;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.50);
+  border-radius: 2px;
+  color: @txt-light-gray;
+}
+
+.notification {
+  .alert-success,
+  .alert-error,
+  .alert-warning,
+  .alert-danger,
+  .alert-info {
+    &:extend(.notification-base);
+    //position: relative;
+    &:before {
+      top: 8px;
+      text-shadow: 0 2px 2px rgba(0, 0, 0, 0.50);
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 56px;
+      height: 100%;
+      border-left: 1px solid @bg-gray-dark;
+      border-right: 1px solid @bg-gray-lightest;
+    }
+  }
+  .close {
+    position: absolute;
+    top: 8px;
+    right: 18px;
+    color: @txt-white;
+    font-size: 14px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.50);
+    opacity: 1;
+  }
+  .alert-success {
+    border-color: @primary;
+    &:before {
+      color: @primary;
+    }
+  }
+  .alert-warning {
+    border-color: @warning;
+    &:before {
+      color: @warning;
+    }
+  }
+  .alert-error {
+    border-color: @error;
+    &:before {
+      color: @error;
+    }
+  }
+  .alert-danger {
+    border-color: @danger;
+    &:before {
+      color: @danger;
+    }
+  }
+}

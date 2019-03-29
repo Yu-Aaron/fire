@@ -1,0 +1,44 @@
+<div class="panel" cg-busy="{promise:$root.deployAllTaskPromise,message:'部署中...'}">
+  <div class="panel-header">
+    <h5><span class="panel-header-title">防范所有已知漏洞</span>
+      <span class="pull-right">
+        <button type="button" privilege ng-show="!blacklistAllDpi.showEdit" ng-click="blacklistAllDpi.showEdit=true"
+                class="btn btn-default pull-right btn-top-pull-right-margin-back">批量部署</button>
+          <button type="button" privilege ng-show="blacklistAllDpi.showEdit" ng-click="blacklistAllDpi.showEdit=false"
+                  class="btn btn-default btn-top-pull-right-margin-back">取消</button>
+         <button type="submit" privilege ng-show="blacklistAllDpi.showEdit" ng-click="blacklistAllDpi.deployAll()"
+                 class="btn btn-default btn-top-pull-right-margin-back">批量部署所有规则</button> &nbsp;
+      </span>
+    </h5>
+  </div>
+  <div class="panel-body panel-body-light">
+    <table class="table table-striped all-api-table">
+      <thead>
+      <tr>
+        <th><input type="checkbox" privilege ng-model="blacklistAllDpi.dpiSelectAll"
+                   ng-click="blacklistAllDpi.selectAllDPI()" ng-show="blacklistAllDpi.showEdit"></th>
+        <th>设备名称</th>
+        <th>状态</th>
+        <!-- <th>功能模式</th> -->
+        <th>管理端口IP</th>
+        <th>已部署规则</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in blacklistAllDpi.dpiData">
+        <td><input type="checkbox" privilege ng-model="blacklistAllDpi.selectDPI[$index]"
+                   ng-disabled="item.deviceOnline !== 1" ng-show="blacklistAllDpi.showEdit"></td>
+        <td>{{item.name}}</td>
+        <td>{{item.deviceOnline?'在线':'离线'}}</td>
+        <!-- <td>
+			{{item.nodes[0].type && item.nodes[0].type === 'ROUTING_IPS' ? '路由保护模式' :
+		  (item.nodes[0].type && item.nodes[0].type === 'IDS' ? '监测审计模式' :
+		   (item.nodes[0].type && item.nodes[0].type === 'IPS' ? (item._subCategory === 'DATA_COLLECTION_DEVICE' ? '数采隔离模式' : '智能保护模式') : ''))}}
+		</td> -->
+        <td>{{item.mgmtIp}}</td>
+        <td>{{item.deployRulesNum}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

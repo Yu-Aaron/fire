@@ -1,0 +1,20 @@
+<nav class="left-navbar">
+  <ul class="nav nav-pills nav-stacked">
+    <li id="setting_li_{{tab.getState()}}" ng-repeat="tab in $root.rootMenu.getChild('NTP_SYNC').getChilds()"
+        ng-if="setting.leftNavItemEnabled(tab) && !($root.isRootUser && tab.target==='SYSTEM_DEVICE_MANAGEMENT')"
+        disable="true" class="highlight">
+      <a class="left-navbar-item left-navbar-item-{{tab.getState()}}" ui-sref="setting.{{tab.getState()}}"
+         ng-class="{active: setting.isActive(tab.getState())}" ui-sref-opts="{{tab.getOptions()}}">
+        <span
+          class="svg-side_nav_icons_{{tab.getIcon()}} svg-side_nav_icons_{{tab.getIcon()}}-dims left-navbar-item-icon"></span>
+        <div class="left-navbar-item-name">{{(tab.getState() === 'setting') ? $root.PLATFORM_SHORT_NAME :
+          tab.getDescription()}}
+        </div>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<div class="main-content main-content-with-nav" ng-class="{'navbar-collapsed': monitor.expanded}" ui-view></div>
+
+<div class="clearfix"></div>

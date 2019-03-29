@@ -1,0 +1,160 @@
+<div ng-if="!isError">
+  <div class="modal-header">
+    <h3 class="modal-header-title">将来事件处理方式</h3>
+    <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+  </div>
+
+  <div class="modal-body">
+    <div class="message-panel">
+      <h5>更改此事件未来处理方式将会添加以下规则到目前部署规则并重新部署。</h5>
+      <h5>请确认并重新部署规则。</h5>
+      <br>
+      <h5>新增规则：</h5>
+    </div>
+    <br>
+    <div class="info-panel">
+
+      <div class="rules-info">
+        <h5>新增规则</h5>
+      </div>
+
+      <div class="rules-info">
+        <div class="row">
+          <div class="col-xs-8">
+            <div class="row">
+              <div class="col-xs-4">
+                <div class="rules-info-item">
+                  <h5 class="rules-info-item-title">规则名称</h5>
+                  <span>{{policyBlock.name}}</span>
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="rules-info-item">
+                  <h5 class="rules-info-item-title">起源组</h5>
+                  <span>{{policyBlock['_sourceZoneName']}}</span>
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="rules-info-item">
+                  <h5 class="rules-info-item-title">目标组</h5>
+                  <span>{{policyBlock['_destinationZoneName']}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="rules-info-item">
+                  <h5 class="rules-info-item-title">规则描述</h5>
+                  <span ng-if="policyBlock.description">{{policyBlock.description}}</span>
+                  <span ng-if="!policyBlock.description">无</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="rules-info-item">
+              <h5 class="rules-info-item-title">创建时间</h5>
+              <span>{{policyBlock.createdAt | date: 'yyyy-MM-dd'}}</span>
+            </div>
+            <div class="rules-info-item">
+              <h5 class="rules-info-item-title">规则来源</h5>
+              <span>{{policyBlock._typeDisplay}}</span>
+            </div>
+            <div class="rules-info-item">
+              <h5 class="rules-info-item-title">网络结构</h5>
+              <span>{{policyBlock.topology}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <br>
+    <div class="table-panel" ng-show="policyBlock.rules.length">
+      <table class="table table-condensed table-th-right-border table-hover icon-hidden">
+        <thead>
+        <tr>
+          <th>
+            <span>优先级</span>
+          </th>
+          <th>
+            <span>协议名称</span>
+          </th>
+          <th>
+            <span>操作码</span>
+          </th>
+          <th>
+            <span>处理方式</span>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-index="0" ng-repeat="rule in policyBlock.rules">
+          <th>{{$index+1}}</th>
+          <td>{{rule.fields[0].value}}</td>
+          <td>
+            <span ng-repeat="field in rule.fields">
+                  <span ng-if="$index >0">{{field.name}}: {{field.value}} </span>
+            </span>
+            <span ng-if="enabledEditRuleItem" class="pull-right"><button ng-click="modifyRuleItem($index,rule)"><i
+              class="fa fa-pencil"></i></button></span>
+          </td>
+          <td>
+            <div class="dropdown display-inline-block" dropdown>
+              <button type="button" class="btn dropdown-toggle" ng-disabled="rule.disabled"
+                      dropdown-toggle>
+                <i ng-if="rule.action =='DROP'" class="fa fa-ban text-red"></i>
+                <i ng-if="rule.action =='REJECTBOTH'" class="fa fa-ban text-red"></i>
+                <i ng-if="rule.action =='ALERT'" class="fa fa-exclamation-triangle text-yellow"></i>
+                <i ng-if="rule.action =='ALLOW'" class="fa fa-check text-green"></i>
+                {{rule.action |actionName}}
+              </button>
+              <ul class="dropdown-menu pull-left" role="menu" aria-labelledby="signature-drop-down">
+                <li ng-click="changeAction($index, 'REJECTBOTH')" role="presentation"><a class="dropdown-menu-item"
+                                                                                   role="menuitem" tabindex="-1"
+                                                                                   href="#"><i
+                  class="fa fa-ban text-red"></i> 阻断</a></li>
+                <li ng-click="changeAction($index, 'DROP')" role="presentation"><a class="dropdown-menu-item"
+                                                                                   role="menuitem" tabindex="-1"
+                                                                                   href="#"><i
+                  class="fa fa-ban text-red"></i> 丢弃</a></li>
+                <li ng-click="changeAction($index, 'ALERT')" role="presentation"><a class="dropdown-menu-item"
+                                                                                    role="menuitem" tabindex="-1"
+                                                                                    href="#"><i
+                  class="fa fa-exclamation-triangle text-yellow"></i> 警告</a></li>
+                <li ng-click="changeAction($index, 'ALLOW')" role="presentation"><a class="dropdown-menu-item"
+                                                                                    role="menuitem" tabindex="-1"
+                                                                                    href="#"><i
+                  class="fa fa-check text-green"></i> 允许</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-close icon-left"></i>取消</button>
+    <button class="btn btn-default" ng-if="policyBlock.rules.length" ng-click="ok()"><i
+      class="fa fa-check text-green icon-left"></i>确定并更新部署
+    </button>
+  </div>
+</div>
+
+<div ng-if="isError">
+  <div class="modal-header">
+    <h3 class="modal-header-title"><i class="fa fa-exclamation-triangle text-red icon-left"></i>错误信息</h3>
+    <a class="modal-close" ng-click="ok()"><i class="fa fa-times"></i></a>
+  </div>
+  <div class="modal-body-no-frame" style="padding-top: 10px">
+    <p>{{error}}</p>
+  </div>
+  <div class="modal-footer text-center">
+    <button class="btn btn-default" ng-click="ok()">确定</button>
+  </div>
+</div>

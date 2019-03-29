@@ -1,0 +1,34 @@
+<table class="table table-hover icon-hidden">
+  <thead>
+  <tr>
+    <th><span>是否已读</span></th>
+    <th>风险等级</th>
+    <th>时间</th>
+    <th>起源IP地址</th>
+    <th>目标IP地址</th>
+    <th>起源端口</th>
+    <th>目标端口</th>
+    <th>规则</th>
+    <th>处理措施</th>
+    <!--<th><span>查看详细</span></th>-->
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="inc in dtable.table"
+      ng-class="{'new': inc.status == 'NEW'}">
+    <td style="width: 76px">
+      <span class="status">未读</span>
+    </td>
+    <td>{{inc.riskLevel | eventRiskLevel}}</td>
+    <td>{{inc.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
+    <td>{{inc.sourceIp}}</td>
+    <td>{{inc.destinationIp}}</td>
+    <td>{{inc.sourcePort}}</td>
+    <td>{{inc.destinationPort}}</td>
+    <td>{{inc.matchedKey}}</td>
+    <td>{{inc.action | eventAction}}</td>
+    <!--<td><a class="btn btn-default">详细 <i-->
+    <!--class="fa fa-chevron-circle-right icon-right"></i></a></td>-->
+  </tr>
+  </tbody>
+</table>

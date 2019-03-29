@@ -1,0 +1,200 @@
+/*
+  Styles used by dtable
+*/
+
+.bootstrap-datetimepicker-widget{
+  margin: 2px;
+  background-color: transparent;
+  #gradient > .vertical(#282c37, #1e2128);
+  .box-shadow(0 3px 5px @black);
+  table{
+    background: transparent;
+  }
+}
+
+.showDateTimeRange {
+  position: static;
+  margin-top: 0;
+}
+
+.hideDateTimeRange {
+  position: absolute;
+  margin-top: -52px;
+}
+
+.time-range-selector, .date-range-selector {
+  &::-webkit-clear-button {
+    display: none;
+  }
+}
+
+.time-range-selector {
+  width: 120px !important;
+}
+
+.time-picker, .date-picker {
+  display: inline-block;
+  border: 1px solid #090c15;
+  border-radius: 3px;
+  #gradient > .vertical(#282c37, #1e2128);
+
+  input {
+    margin-right: 0px;
+    // width: 80px;
+    border-color: transparent;
+    background: #333333;
+    box-shadow: none;
+    color: #c4c4c4;
+    padding: 6px;
+    max-width: 100%;
+    height: 33px;
+    background: none;
+  }
+  .add-on {
+    display: inline-block;
+    border-left: none;
+    padding: 5px 9px 6px 8px;
+    margin-left: -3px;
+    font-size: 1.2em;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .add-on-show-only:extend(.time-picker .add-on){
+    &:hover {
+      cursor: default;
+    }
+  }
+}
+
+.date-picker {
+  input {
+    min-width: 100px;
+  }
+  margin-right: 10px;
+}
+
+.timepicker {
+  .timepicker-picker {
+    .table-condensed{
+      margin: 0 auto;
+    }
+    tbody {
+      tr {
+        td {
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+.datepicker {
+  .datepicker-days, .datepicker-months, .datepicker-years {
+    .table-condensed {
+      width: 250px;
+      thead {
+        display: table-header-group;
+        vertical-align: middle;
+        tr {
+          th {
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            width: 20px;
+            height: 20px;
+            padding: 4px 5px;
+            border-radius: 4px;
+            &.switch {
+              width: 145px;
+              display: table-cell;
+              clear: both;
+              float: none;
+            }
+            &.prev, &.next {
+              font-size: 21px;
+            }
+          }
+        }
+      }
+      tbody {
+        tr {
+          td {
+            text-align: center;
+            width: 20px;
+            height: 20px;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            &.day:hover {
+              cursor: pointer;
+              background-color: #666;
+            }
+            &.day.old {
+              color: #888;
+            }
+            &.day.active {
+              background-color: #76b900;
+            }
+            &.disabled {
+              opacity: 0.5;
+              cursor: not-allowed !important;
+            }
+            span {
+              display: block;
+              width: 47px;
+              height: 54px;
+              line-height: 54px;
+              float: left;
+              margin: 2px;
+              cursor: pointer;
+              -webkit-border-radius: 4px;
+              -moz-border-radius: 4px;
+              border-radius: 4px;
+              &:hover {
+                cursor: pointer;
+                background-color: #666;
+              }
+              &.active {
+                background-color: #76b900;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.dtable-advanced-search {
+  .padding-right-zero {
+    padding-right: 0;
+  }
+  .time-range-row {
+    margin-top: 16px;
+    .time-range-label {
+      padding: 6px 0 0 0;
+    }
+    .input-alert-error {
+      margin-left: 0;
+      padding-top: 5px;
+    }
+  }
+  .other-item {
+    min-height: 50px;
+  }
+  .time-range {
+    margin-bottom: 16px;
+  }
+  .date-picker {
+    .date-picker-input {
+      width: 110px;
+    }
+  }
+  .time-picker {
+    .time-picker-input {
+      width: 110px;
+    }
+  }
+}

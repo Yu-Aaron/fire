@@ -1,0 +1,68 @@
+.monitor-topology-tab-ul {
+  border: 1px solid black;
+  background: #363636;
+  li {
+    width: 33%;
+    text-align: center;
+    padding: 7px;
+    font-size: 12px;
+    border-bottom: 1px #363636 solid;
+  }
+
+  li.active {
+    border-bottom: 1px @lime solid;
+    color: @lime;
+  }
+}
+
+.monitor-topology-span-name {
+  background: #323232;
+  border-top: 1px solid gray;
+  padding: 4px 10px 4px 10px;
+  &:before {
+    content: "\f0d7";
+    font-family: FontAwesome;
+  }
+  span {
+    font-size: 12px;
+  }
+}
+
+ul.monitor-topology-show-hide {
+  background: #3a3a3a;
+  li {
+    background: #3a3a3a;
+    font-size: 12px;
+    padding: 5px 5px 5px 5px;
+    border-top: 1px solid black;
+    &:before {
+      content: "\f06e";
+      font-family: FontAwesome;
+    }
+  }
+  li:hover {
+    background: #5e5e5e;
+  }
+}
+
+.monitor-topology-palette {
+  // background: #363636;
+  width: 100%;
+  white-space: nowrap;
+
+}
+
+.monitor-topology-search-box {
+  background: #363636;
+  border: 1px black solid;
+  padding: 5px;
+
+  input {
+    background: #282828;
+    width: 100%;
+  }
+}
+
+.topo-btn-group {
+  padding-right: 10px;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <base href="/"></base>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title id="tabTitle"></title>
+
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!--STYLES-->
+  <!--STYLES END-->
+</head>
+
+<body ng-controller="AppCtrl as app" ng-class="currentPageTitle" right-click-prevent>
+<div cg-busy="{promise:$root.timeoutPromise,message:'服务器设置部署中，请稍等...'}">
+  <div class="view-container" ui-view global-events></div>
+</div>
+<!--SCRIPTS-->
+<!--SCRIPTS END-->
+</body>
+
+</html>

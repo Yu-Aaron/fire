@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12081) - http://www.bohemiancoding.com/sketch -->
+    <title>top_nav_icon_monitoring</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0.00585305106%" y1="50.0281381%" x2="100.034869%" y2="50.0281381%" id="linearGradient-1">
+            <stop stop-color="#B9B9B9" offset="0%"></stop>
+            <stop stop-color="#DDD8D8" offset="10.67%"></stop>
+            <stop stop-color="#CBC7C7" offset="28.9839764%"></stop>
+            <stop stop-color="#888585" offset="57.78%"></stop>
+            <stop stop-color="#898989" offset="92.0838648%"></stop>
+            <stop stop-color="#9A9898" offset="100%"></stop>
+        </linearGradient>
+        <radialGradient cx="32.715115%" cy="21.2717014%" fx="32.715115%" fy="21.2717014%" r="85.2758674%" id="radialGradient-2">
+            <stop stop-color="#79D919" offset="0%"></stop>
+            <stop stop-color="#60962A" offset="49.3587552%"></stop>
+            <stop stop-color="#3A6C0F" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient cx="50%" cy="50%" fx="50%" fy="50%" r="48.0957031%" id="radialGradient-3">
+            <stop stop-color="#000000" offset="0%"></stop>
+            <stop stop-color="#1C1C1C" offset="36.8104273%"></stop>
+            <stop stop-color="#434343" offset="44.788345%"></stop>
+            <stop stop-color="#676767" offset="52.2022481%"></stop>
+            <stop stop-color="#0D0D0D" offset="63.4845344%"></stop>
+            <stop stop-color="#444343" offset="72.1261161%"></stop>
+            <stop stop-color="#1F1F1F" offset="80.725845%"></stop>
+            <stop stop-color="#575555" offset="87.2867506%"></stop>
+            <stop stop-color="#000000" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient cx="33.0690861%" cy="19.3167892%" fx="33.0690861%" fy="19.3167892%" r="83.3788052%" id="radialGradient-4">
+            <stop stop-color="#161616" offset="0%"></stop>
+            <stop stop-color="#858585" offset="26.1459662%"></stop>
+            <stop stop-color="#B3AFAF" offset="43.9453125%"></stop>
+            <stop stop-color="#4A4848" offset="77.3895886%"></stop>
+            <stop stop-color="#787878" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="TopNav" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="top_nav_icon_monitoring" sketch:type="MSArtboardGroup">
+            <g sketch:type="MSLayerGroup" transform="translate(27.000000, 30.000000)">
+                <g id="Layer_1" transform="translate(0.000000, 0.189064)" sketch:type="MSShapeGroup">
+                    <path d="M46,22.165 C46,9.955 35.7777777,0.055 23.2271605,0.055 C10.6197531,0.055 0.397530863,9.955 0.397530863,22.165 C0.397530863,31.24 6.0765432,39.05 14.1975309,42.46 L10.3358025,50.765 L10.3358025,50.875 C10.3358025,51.865 16.1283951,52.635 23.2271605,52.635 C30.3827161,52.635 36.1185185,51.865 36.1185185,50.875 L36.1185185,50.765 L33.4493828,45.1 C32.2,44.66 30.6666667,44.44 28.6790124,44.495 C26.4074075,44.605 24.4765433,44.495 22.9432099,44.22 L23.1703704,44.22 C35.7777777,44.275 46,34.375 46,22.165 L46,22.165 L46,22.165 Z" id="Shape" fill="url(#linearGradient-1)"></path>
+                    <path d="M15.5604938,51.645 C15.5604938,51.645 12.437037,51.37 11.7555556,50.93 L15.2197531,42.845 C15.9580247,43.12 16.6962963,43.34 17.4345679,43.505 L15.5604938,51.645 L15.5604938,51.645 Z" id="Shape" fill-opacity="0.8" fill="#FFFCFC"></path>
+                    <path d="M8.6888889,36.19 C4.99753086,32.615 2.66913581,27.665 2.66913581,22.165 C2.66913581,16.665 4.94074075,11.715 8.6888889,8.14 C12.437037,4.51 17.5481481,2.31 23.2271605,2.31 C28.9061728,2.31 34.0172839,4.51 37.7086419,8.14 C41.4,11.715 43.7283951,16.665 43.7283951,22.165 C43.7283951,27.665 41.4567901,32.615 37.7086419,36.19 C34.0172839,39.765 28.8493828,42.02 23.2271605,42.02 C17.5481481,42.02 12.437037,39.82 8.6888889,36.19 L8.6888889,36.19 L8.6888889,36.19 Z" id="Shape" fill="url(#radialGradient-2)"></path>
+                </g>
+                <ellipse id="Oval-123" fill="url(#radialGradient-3)" sketch:type="MSShapeGroup" cx="23.5679013" cy="22.4640638" rx="13.345679" ry="12.925"></ellipse>
+                <path d="M23.5679013,36.4890638 C31.5658026,36.4890638 38.0493828,30.2098575 38.0493828,22.4640638 C38.0493828,14.7182702 31.5658026,8.4390638 23.5679013,8.4390638 C15.5699999,8.4390638 9.08641976,14.7182702 9.08641976,22.4640638 C9.08641976,30.2098575 15.5699999,36.4890638 23.5679013,36.4890638 L23.5679013,36.4890638 Z M23.5679013,34.8390638 C30.624873,34.8390638 36.345679,29.2985875 36.345679,22.4640638 C36.345679,15.62954 30.624873,10.0890638 23.5679013,10.0890638 C16.5109294,10.0890638 10.7901235,15.62954 10.7901235,22.4640638 C10.7901235,29.2985875 16.5109294,34.8390638 23.5679013,34.8390638 L23.5679013,34.8390638 Z" id="Oval-121" fill="url(#radialGradient-4)" sketch:type="MSShapeGroup"></path>
+                <path d="M22.1374354,21.2400165 C23.6760473,19.9165583 25.625896,19.9500043 25.0008743,19.2385449 C24.3758526,18.5270855 22.1769327,18.2101228 20.6383209,19.5335811 C19.099709,20.8570393 19.3902159,23.3034318 19.9497196,23.9403124 C20.5092233,24.5771931 20.5988235,22.5634748 22.1374354,21.2400165 L22.1374354,21.2400165 L22.1374354,21.2400165 Z" id="Oval-124" fill-opacity="0.5" fill="#FBFBFB" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,51 @@
+/* ----------------------------------------
+  New Dropdowns
+---------------------------------------- */
+
+.btn-group.btn-group-dropdown {
+  > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+  }
+}
+
+.btn-dropdown {
+  padding: 7px 10px 9px;
+  .fa-caret-down {
+    margin-left: 12px;
+  }
+  &:focus {
+    border: 2px solid @primary;
+  }
+}
+
+.dropdown-menu {
+  padding: 6px 0;
+  background: @bg-gray;
+  border: 1px solid @bg-gray-darker;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.50),
+  inset 0px 1px 1px 0px rgba(204, 204, 204, 0.50);
+  font-size: 12px;
+  > li {
+    > a {
+      padding: 4px 12px;
+      color: @txt-base;
+
+      .icon-left {
+        font-size: 14px;
+        margin-right: 12px;
+      }
+    }
+    > a:hover,
+    > a:focus {
+      background-color: @bg-gray-lighter;
+      color: @txt-highlight;
+    }
+  }
+  > li[disabled] {
+    > a {
+      color: @txt-disable;
+      cursor: not-allowed;
+    }
+  }
+}

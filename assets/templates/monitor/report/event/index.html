@@ -1,0 +1,248 @@
+<!--<div class="tab-container margin-top-medium">-->
+<!--<div class="tab-container-body">-->
+<div class="panel panel-lg" ng-if="!revent.viewDetail">
+  <div class="panel-header panel-header-border">
+    <span class="panel-header-title">定期安全报告设置</span>
+    <button id="report_incident_setting_edit_button"
+            class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+            ng-hide="revent.incident.editMode" ng-click="revent.incident.editSetting()"><i
+      class="fa fa-pencil-square-o"></i></button>
+    <button id="report_incident_setting_confirm_button"
+            class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+            ng-show="revent.incident.editMode" ng-click="revent.incident.confirmSetting()"><i
+      class="fa fa-check text-lime"></i></button>
+    <button id="report_incident_setting_cancel_button"
+            class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+            ng-show="revent.incident.editMode" ng-click="revent.incident.cancelSetting()"><i
+      class="fa fa-remove"></i></button>
+  </div>
+  <div class="panel-body">
+    <div ng-show="revent.incident.editMode">
+      <div class="row report-setting-padding">
+        <div class="col-xs-2 setting-tag">
+          频率
+        </div>
+        <div class="col-xs-3">
+          <select id="report_incident_frequency_select"
+                  class="select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"
+                  ng-model="revent.incident.tempSetting.frequency">
+            <option id="report_incident_frequency_everyday" class="btn btn-default" value="daily">每天</option>
+            <option id="report_incident_frequency_everyweek" class="btn btn-default" value="weekly">每周</option>
+            <option id="report_incident_frequency_everymonthfirstday" class="btn btn-default" value="monthly">
+              每月一号
+            </option>
+          </select>
+          <select id="report_incident_frequency_weekly_select"
+                  class=" select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"
+                  ng-model="revent.incident.tempSetting.weekday"
+                  ng-show="revent.incident.tempSetting.frequency==='weekly'">
+            <option id="report_incident_frequency_weekly_mon" class="btn btn-default" value="星期一">星期一</option>
+            <option id="report_incident_frequency_weekly_tue" class="btn btn-default" value="星期二">星期二</option>
+            <option id="report_incident_frequency_weekly_wed" class="btn btn-default" value="星期三">星期三</option>
+            <option id="report_incident_frequency_weekly_thu" class="btn btn-default" value="星期四">星期四</option>
+            <option id="report_incident_frequency_weekly_fri" class="btn btn-default" value="星期五">星期五</option>
+            <option id="report_incident_frequency_weekly_sat" class="btn btn-default" value="星期六">星期六</option>
+            <option id="report_incident_frequency_weekly_sun" class="btn btn-default" value="星期天">星期天</option>
+          </select>
+        </div>
+        <div class="col-xs-6 setting-tag">
+        </div>
+      </div>
+    </div>
+    <div ng-hide="revent.incident.editMode">
+      <div class="row report-setting-padding">
+        <div class="col-xs-2 setting-tag">
+          频率
+        </div>
+        <div class="col-xs-3 setting-tag">
+          {{revent.incident.setting.frequency==='daily'?'每天':revent.incident.setting.frequency==='weekly'?('每周' +
+          revent.incident.setting.weekday):'每月一号'}}
+        </div>
+        <div class="col-xs-6 setting-tag">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-lg padding-zero bottom-Table" ng-if="!revent.viewDetail">
+  <div class="panel-header panel-header-border">
+    <span class="panel-header-title">安全报告一览</span>
+  </div>
+  <div class="panel-body">
+    <table id="report_incident_table" class="table table-hover icon-hidden">
+      <thead>
+      <tr>
+        <th class="table-col-sm"></th>
+        <th class="table-col-20">报告名称</th>
+        <th>报告日期</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr id="report_incident_table_row_{{$index}}" ng-repeat="event in revent.incident.curData" fade-in-list>
+        <td></td>
+        <td>
+          安全事件_每{{revent.incident.setting.frequency==='daily'?'日':revent.incident.setting.frequency==='weekly'?'周':'月'}}报告_{{event.start
+          | date: 'yyyy-MM-dd'}}
+        </td>
+        <td>
+          <span ng-if="revent.incident.setting.frequency==='daily'">{{event.start | date: 'yyyy-MM-dd'}}</span>
+          <span ng-if="revent.incident.setting.frequency==='weekly'">{{event.start | date: 'yyyy-MM-dd'}} - {{event.end | date: 'yyyy-MM-dd'}}</span>
+          <span ng-if="revent.incident.setting.frequency==='monthly'">{{event.start | date: 'yyyy-MM'}}</span>
+        </td>
+        <td>
+          <button id="report_incident_table_row_detail_button_{{$index}}" class="btn btn-default"
+                  ng-click="revent.incident.showDetail(event,false)">
+            查看 <i class="fa fa-chevron-circle-right icon-right"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <br/>
+    <div class="text-center">
+      <ul id="report_incident_pagination_list" class="pagination-sm pagination ng-isolate-scope ng-valid">
+        <li>
+          <a href="" ng-click="revent.incident.gotoPageHead()" class="ng-binding"><i
+            class="fa fa-angle-double-left"></i></a>
+        </li>
+        <li>
+          <a href="" ng-click="revent.incident.changePage(-1)" class="ng-binding"
+             ng-disabled="revent.incident.curPage<=0"><i class="fa fa-angle-left"></i></a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="revent.incident.changePage(-4)"
+             ng-hide="revent.incident.curPage <= 3 || revent.incident.curPage < revent.incident.maxPage-2">{{revent.incident.curPage-3}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="revent.incident.changePage(-3)"
+             ng-hide="revent.incident.curPage <= 2 || revent.incident.curPage < revent.incident.maxPage-1">{{revent.incident.curPage-2}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="revent.incident.changePage(-2)"
+             ng-hide="revent.incident.curPage <= 1">{{revent.incident.curPage-1}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="revent.incident.changePage(-1)"
+             ng-hide="revent.incident.curPage <= 0">{{revent.incident.curPage}}</a>
+        </li>
+        <li>
+          <a href="" class="selectedPage">{{revent.incident.curPage+1}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="revent.incident.changePage(1)"
+             ng-hide="revent.incident.curPage >= revent.incident.maxPage-1">{{revent.incident.curPage+2}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="revent.incident.changePage(2)"
+             ng-hide="revent.incident.curPage >= revent.incident.maxPage-2">{{revent.incident.curPage+3}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="revent.incident.changePage(3)"
+             ng-hide="revent.incident.curPage >= revent.incident.maxPage-3 || revent.incident.curPage > 1">{{revent.incident.curPage+4}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="revent.incident.changePage(4)"
+             ng-hide="revent.incident.curPage >= revent.incident.maxPage-4 || revent.incident.curPage > 0">{{revent.incident.curPage+5}}</a>
+        </li>
+        <li>
+          <a href="" ng-click="revent.incident.changePage(1)" class="ng-binding"
+             ng-disabled="revent.incident.curPage >= revent.incident.maxPage-1"><i
+            class="fa fa-angle-right"></i></a>
+        </li>
+        <li>
+          <a href="" ng-click="revent.incident.gotoPageEnd()" class="ng-binding"><i
+            class="fa fa-angle-double-right"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div ng-if="revent.viewDetail">
+  <div class="row margin-bottom-default">
+    <div class="col-xs-12">
+      <button id="report_incident_detail_return_button" class="btn btn-default pull-left"
+              ng-click="revent.viewDetail=false;">
+        <i class="fa fa-arrow-circle-left icon-left"></i>返回
+      </button>
+      <h4 class="margin-left-default vertical-mid display-inline-block">{{revent.incident.detail.title}}</h4>
+    </div>
+  </div>
+  <div class="tab-container-body">
+    <div class="panel panel-lg">
+      <div class="panel-body">
+        <div class="flex-row margin-bottom-default">
+          <div class="wrap-left">
+            <div class="col">
+              <span>类型:</span>
+              <span class="select-wrap">
+              <select class="select-styled" ng-model="revent.incident.selectType"
+                      ng-change="revent.incident.typeSelectedChanged()">
+                <option value="level">事件等级</option>
+                <option value="risk">风险等级</option>
+              </select>
+            </span>
+            </div>
+            <div class="col">
+              <span>源IP: </span>
+              <span class="select-wrap">
+               <angucomplete search-str="revent.incident.inputSrcIp" id="report_srcIp"
+                             fetch-action="getReportIp(str,'src')"
+                             placeholder="192.168.1.2"
+                             pause="0" minlength="1"
+                             selectedObject="selectedObj"
+                             searchfields="name" titlefield="name"
+                             custom-width="160px"
+                             inputclass="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength margin-right-default"
+                             input-changed="revent.incident.ipSelectedChanged('src')"></angucomplete>
+
+              </span>
+              <button ng-if="revent.incident.isInputSrcIp" ng-click="revent.incident.confirmInputSrcIp()"
+                      class="btn btn-default">确定
+              </button>
+            </div>
+            <div class="col">
+              <span>目的IP: </span>
+              <span class="select-wrap">
+                <angucomplete search-str="revent.incident.inputDstIp" id="report_dstIp"
+                              fetch-action="getReportIp(str,'dst')"
+                              placeholder="192.168.1.2"
+                              pause="0" minlength="1"
+                              selectedObject="selectedObj"
+                              searchfields="name" titlefield="name"
+                              custom-width="160px"
+                              input-changed="revent.incident.ipSelectedChanged('dst')"
+                              inputclass="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength margin-right-default"></angucomplete>
+
+              </span>
+              <button ng-if="revent.incident.isInputDstIp" ng-click="revent.incident.confirmInputDstIp()"
+                      class="btn btn-default">确定
+              </button>
+            </div>
+          </div>
+          <div class="wrap-right">
+            <!--<button id="report_logger_detail_all_downloadhtml_button" class="btn btn-default pull-right"-->
+            <!--ng-click="revent.incident.genPDF(revent.incident.detail.title,'html')">-->
+            <!--<i class="fa fa-download icon-left text-lime"></i>下载 HTML-->
+            <!--</button>-->
+            <button id="report_logger_detail_all_downloadpdf_button" class="btn btn-default pull-right"
+                      setting-privilege privilege-name="REPORT" privilege-require="VIEW"
+                    ng-click="revent.incident.outPutReport()">
+              <i class="fa fa-download icon-left text-lime"></i>下载
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body" cg-busy="{promise:revent.reportPromise,message:'加载中.....'}">
+        <div id="chart_bar_line" style="min-width: 1000px; height: 500px; margin: 0 auto"></div>
+        <br/>
+        <br/>
+        <div id="chart_pie" style="min-width: 1000px; height: 400px; margin: 0 auto"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

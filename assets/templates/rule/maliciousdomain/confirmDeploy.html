@@ -1,0 +1,43 @@
+<div id="rule_maliciousdomain_modal_deploy" class="modal-header">
+  <h3 class="modal-header-title">{{msg.title}}</h3>
+  <a id="rule_maliciousdomain_a_deployExit" class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body-no-frame">
+  <br>
+  <div>
+    <div>{{msg.text}}</div>
+  </div>
+  <div ng-if="!(msg.isShowDeviceConnectedCnt === 0 || msg.isShowDeviceUpgradingMsg)"
+       ng-show="deviceDisconnetedPool.length">
+    <div ng-if="deviceDisconnetedPool.length" style="margin-top:10px;">
+      <i class="fa fa-exclamation-triangle icon-left text-red"></i>请确认以下警告<br>
+    </div>
+    <div style="border: 2px solid black; margin-top:10px; margin-bottom:10px; padding: 10px;"
+         id="rule_maliciousdomain_confirmDeploy">
+      <div ng-if="deviceDisconnetedPool.length">
+        <div>
+          <span><input type="checkbox" ng-model="check.checkDisconnect"
+                       id="rule_maliciousdomain_confirmDeploy_disconnect"/></span>
+          <span style="margin-left:5px">{{msg.isShowDeviceDisconnectedText}}</span>
+        </div>
+        <span style="margin-left:20px;">
+          {{deviceDisconnetedPool.toString()}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div>
+    {{msg.qus}}
+  </div>
+</div>
+<div class="modal-footer">
+  <button id="rule_maliciousdomain_button_deployCancel" class="btn btn-default pull-left" ng-click="cancel()"
+          ng-if="msg.isShowDeviceConnectedCnt !== 0"><i class="fa fa-times icon-left"></i>取消
+  </button>
+  <button id="rule_maliciousdomain_button_deployConfirm" class="btn btn-default"
+          ng-class="{'btn-deploy': msg.fontAwesomeText === 'fa-cloud-download'}" ng-click="ok()"
+          ng-disabled="!check.checkDisconnect && !(msg.isShowDeviceConnectedCnt === 0 || msg.isShowDeviceUpgradingMsg)">
+    <i class="fa {{msg.fontAwesomeText}} icon-left" ng-class="{'text-red': msg.fontAwesomeText === 'fa-times-circle-o'}"
+       ng-if="!(msg.isShowDeviceConnectedCnt === 0 || msg.isShowDeviceUpgradingMsg)"></i>{{msg.buttonText}}
+  </button>
+</div>

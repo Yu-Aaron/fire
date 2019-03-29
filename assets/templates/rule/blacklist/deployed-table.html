@@ -1,0 +1,92 @@
+<div id="blacklist_deployed_table_summary_panel" class="panel panel-lg">
+  <div class="panel-header padding-default">
+    <span class="panel-header-title">部署规则总览</span>
+  </div>
+  <div class="panel-body-dark panel-dashboard text-right">
+    <div class="row">
+      <div id="blacklist_deployed_table_summary_panel_signaturecount" class="col-xs-2 bg-icon bg-icon-bullseye">
+        <h1 class="panel-dashboard-value text-orange">{{deployedPolicies.policySignatueFixedCount}}<span
+          class="panel-dashboard-value-unit">个</span></h1>
+        <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-orange fa fa-gear"></i>防护漏洞数</h4>
+      </div>
+
+      <div id="blacklist_deployed_table_summary_panel_updatetime" class="col-xs-4 bg-icon bg-icon-clock">
+        <h4 class="panel-dashboard-up-note text-light-blue">{{deployedPolicies.updateTime | date : '系统时间 yyyy年MM月dd日,
+          EEE'}}</h4>
+        <h1 class="panel-dashboard-value text-light-blue">{{deployedPolicies.updateTime | date : 'HH:mm:ss'}}</h1>
+        <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-light-blue fa fa-clock-o"></i>规则库更新时间
+        </h4>
+      </div>
+
+      <div id="blacklist_deployed_table_summary_panel_incidentcount" class="col-xs-4 bg-icon bg-icon-bookmark">
+        <h1 class="panel-dashboard-value text-green">{{deployedPolicies.incidentCount}}<span
+          class="panel-dashboard-value-unit">事件</span></h1>
+        <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-green fa fa-bookmark"></i>警告和阻断总数
+        </h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-lg">
+  <div class="panel-header clearfix">
+    <h5 class="panel-header-title pull-left">部署规则：{{deployedPolicies.policy.name}}</h5>
+
+    <div setting-privilege privilege-name="RULE_BLACKLIST" privilege-require="MIXED" class="pull-right">
+        <span><button id="rule-blackList-policyDetail_button_createRules" privilege class="btn btn-default"
+                      ng-click="createPolicy('signatures')">
+          <i class="fa fa-file-o fa-plus-overlay fa-after-lime icon-left"></i>新增规则
+        </button></span>
+      <span><button id="rule-blackList-editor_button_deployedClearRules" ng-click="deployedPolicies.cleanDeploy()"
+                    class="btn btn-default"><i class="fa fa-times-circle-o text-red icon-left"></i>清空已部署规则</button>
+       </span>
+    </div>
+  </div>
+
+  <div id="blacklist_deployed_table_summary_table" class="table-overview-wrapper table-scroll-wrapper-striped">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-1">优先级</div>
+        <div class="col-xs-4">规则组名称</div>
+        <div class="col-xs-1">规则来源</div>
+        <div class="col-xs-1">规则项数量</div>
+        <div class="col-xs-4">基本描述</div>
+        <div class="col-xs-1">&nbsp;&nbsp;</div>
+      </div>
+      <div id="blacklist_deployed_table_summary_table_row_{{$index}}" class="row" data-index="0"
+           ng-repeat="policy in deployedPolicies.table">
+        <div class="col-xs-1">{{(deployedPolicies.currentPage-1)*deployedPolicies.numPerPage+$index+1}}</div>
+        <div class="col-xs-4" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{policy.name}}
+        </div>
+        <div class="col-xs-1">{{policy['_typeDisplay']}}</div>
+        <div class="col-xs-1">{{policy['_signaturesCount']}}</div>
+        <div class="col-xs-4" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+          {{policy._description || '无'}}
+        </div>
+        <div class="col-xs-1">
+          <button
+            id="rule-blackList-editor_button_deployedShowDetail-{{(deployedPolicies.currentPage-1)*deployedPolicies.numPerPage+$index+1}}"
+            ng-click="deployedPolicies.showDetail(policy)" class="btn btn-default"><i
+            class="fa fa-file-text-o icon-left"></i> 详情
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <pagination id="blacklist_deployed_table_summary_pagination" ng-model="deployedPolicies.currentPage"
+              class="pagination-sm"
+              boundary-links="true"
+              total-items="deployedPolicies.totalNum"
+              items-per-page="deployedPolicies.numPerPage"
+              max-size="5"
+              num-pages="deployedPolicies.numPages"
+              previous-text="&lsaquo;"
+              next-text="&rsaquo;"
+              first-text="&laquo;"
+              last-text="&raquo;"
+              ng-change="deployedPolicies.pageChanged()"
+  ></pagination>
+</div>

@@ -1,0 +1,161 @@
+<div cg-busy="{promise:systemuser.updateUserGroupPromise, message:'更新中...'}">
+  <div>
+    <button class="btn btn-default" ng-click="systemuser.goToUserManagerPage();systemuser.cleanErrorMsg()" id="btn_back">
+      <i class="fa fa-chevron-circle-left icon-left"></i>返回
+    </button>
+  </div>
+
+  <div class="systemuser-user-panel margin-top-default padded-rows">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="systemuser-create-panel">
+          <div class="systemuser-header">
+            个性资料
+          </div>
+          <div>
+            <!--<div class="row">-->
+              <!--<div class="col-md-2">-->
+                <!--<span>用户状态: </span>-->
+              <!--</div>-->
+              <!--<div class="col-md-10">-->
+                <!--<div class="toggle-container">-->
+                  <!--<div class="toggle-bg toggle-alternate"-->
+                       <!--ng-class="{true: 'off', false: 'on'}[systemuser.editedUser.locked]">-->
+                    <!--<label ng-class="{true: 'off', false: 'on'}[systemuser.editedUser.locked]">{{systemuser.editedUser.locked?'锁定':'正常'}}</label>-->
+                    <!--<input type="checkbox" id="setting_edit_user" name="toggle"-->
+                           <!--ng-model="systemuser.editedUser.locked"-->
+                           <!--ng-change="systemuser.validateEditUserForm()">-->
+                    <!--<span class="switch" ng-class="{true: 'off', false: 'on'}[systemuser.editedUser.locked]"></span>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <div class="row">
+              <div class="col-md-2">
+                <span>用户名: </span>
+              </div>
+              <div class="col-md-2">
+                <input type="text" id="input-username" maxlength="64" ng-model="systemuser.editedUser.name"
+                       ng-change="systemuser.validateEditUserForm()" disabled>
+              </div>
+              <div class="col-md-8">
+                <div class="account-input-error" ng-if="systemuser.requestError">
+                  <span class="input-alert-error">{{systemuser.requestError}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row no-padding">
+              <div class="col-md-2"></div>
+              <div class="col-md-8"><i class="fa fa-info-circle fa-beside-button-right"></i>用户名为64位以内的字母数字和符号的一种或多种的任意组合
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <span>姓名: </span>
+              </div>
+              <div class="col-md-2">
+                <input type="text" id="input-stuffname" maxlength="64" ng-model="systemuser.editedUser.stuffName"
+                       ng-change="systemuser.validateEditUserForm()">
+              </div>
+            </div>
+            <div class="row no-padding">
+              <div class="col-md-2"></div>
+              <div class="col-md-8"><i class="fa fa-info-circle fa-beside-button-right"></i>姓名不能超过64个字</div>
+            </div>
+            <div class="row" style="margin-top: 20px">
+              <div class="col-md-2">
+                <span>用户组: </span>
+              </div>
+              <div class="col-md-2">
+                <span>{{systemuser.editedUser._roles[0].name}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="systemuser-create-panel">
+          <div class="systemuser-header">
+            用户密码
+          </div>
+          <div>
+            <div class="row">
+              <div class="col-md-2">
+                <span>新密码: </span>
+              </div>
+              <div class="col-md-6">
+                <div class="row nopadding-top nopadding-bottom">
+                  <div class="col-sm-4 nomargin-top nomargin-bottom">
+                    <input type="password" id="input-password" maxlength="25"
+                           ng-model="systemuser.editedUser.newPassword"
+                           ng-change="systemuser.validatePassword(systemuser.editedUser.newPassword, systemuser.editedUser.confirmNewPassword);systemuser.validateEditUserForm()">
+                  </div>
+                  <div class="col-sm-6 nomargin-top nomargin-bottom">
+                    <div class="input-alert-error input-invalid" ng-show="systemuser.newPassValid===1"><span>{{systemuser.passwordErrormessages.newPass}}</span>
+                    </div>
+                    <div class="input-valid" ng-show="systemuser.newPassValid===2"><i class="fa fa-check text-lime"></i>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <!--(不填则保留原密码)-->
+                  <span class="fa-beside-button-left ng-binding"><i
+                    class="fa fa-info-circle fa-beside-button-right"></i>{{systemuser.passwordComplexityMessage}}</span></td>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <span>确认密码: </span>
+              </div>
+              <div class="col-md-6">
+                <div class="row nopadding-top nopadding-bottom">
+                  <div class="col-sm-4 nomargin-top nomargin-bottom">
+                    <input type="password" id="input-confirm-password" maxlength="25"
+                           ng-model="systemuser.editedUser.confirmNewPassword"
+                           ng-change="systemuser.validatePassword(systemuser.editedUser.newPassword, systemuser.editedUser.confirmNewPassword);systemuser.validateEditUserForm()">
+                  </div>
+                  <div class="col-sm-6 nomargin-top nomargin-bottom">
+                    <div class="input-alert-error input-invalid" ng-show="systemuser.confirmPassValid===1"><span>{{systemuser.passwordErrormessages.confirmPass}}</span>
+                    </div>
+                    <div class="input-valid" ng-show="systemuser.confirmPassValid===2"><i
+                      class="fa fa-check text-lime"></i></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--<div class="col-md-4">-->
+      <!--<div class="systemuser-create-panel">-->
+      <!--<div class="systemuser-header">-->
+      <!--<span>用户组</span>-->
+      <!--</div>-->
+      <!--<ul id="edit_user_group_radio_buttons" class="no-bullets systemuser-roles">-->
+      <!--<li id="group_radio_button_{{$index}}" class="systemuser-role" ng-repeat="role in systemuser.subRoles"-->
+      <!--ng-if="!role.defaultRole">-->
+      <!--<input type="radio" ng-model="systemuser.editedUser._roleId" ng-value="role.roleId"-->
+      <!--ng-disabled="systemuser.editedUser.name===systemuser.getCurrentUserName()"-->
+      <!--ng-change="systemuser.validateEditUserForm()"/>-->
+      <!--<span>{{role.name}}</span>-->
+      <!--</li>-->
+      <!--</ul>-->
+      <!--<div class="account-input-error" ng-show="systemuser.createdError.roleNotSelected">-->
+      <!--<i class="fa fa-exclamation-triangle text-red icon-left"></i>-->
+      <!--<span>未选择用户组</span>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</div>-->
+    </div>
+  </div>
+  <div class="system-footer-button-group">
+    <button ng-disabled="!systemuser.formValid" class="btn btn-default pull-right" id="btn_ok"
+            ng-click="systemuser.saveEditedUser($index)">
+      <i class="fa fa-check text-lime icon-left"></i>确定
+    </button>
+    <button class="btn btn-default pull-right" ng-click="systemuser.goToUserManagerPage();systemuser.cleanErrorMsg()" id="btn_cancel"
+            style="margin-right: 10px">
+      <i class="fa fa-times-circle icon-left"></i>取消
+    </button>
+  </div>
+</div>

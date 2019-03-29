@@ -1,0 +1,16 @@
+<div class="fixed-table">
+  <div cg-busy="{promise:dtable.searchPromise,message:'数据查询中，请稍侯...'}"
+       style="width: 100%;height: 100%;">
+    <!-- TOOLBAR -->
+    <div ng-if="!dtable.disableToolbar" class="padding-default" ng-include="'templates/includes/toolbar.html'"></div>
+
+    <!-- TABLE CONTAINER -->
+    <div class="fixed-table-container">
+      <div id="dtableBody" class="fixed-table-body" ng-transclude>
+      </div>
+    </div>
+
+    <!-- PAGINATOR -->
+    <div class="paginator" ng-include="'templates/includes/paginator-dtable.html'"></div>
+  </div>
+</div>

@@ -1,0 +1,678 @@
+<div class="second-title">基本设置</div>
+<div class="panel-content" cg-busy="{promise:$root.basicSettingDeployTaskPromise,message:'部署中...'}">
+  <div class="row">
+    <!--LEFT START -->
+    <div class="col-lg-6" setting-privilege privilege-name="SETTING_BASIC"
+         privilege-handle="hidden">
+      <!--工作模式　starts -->
+      <div id="setting_basic_container_editWorkingMode" class="panel panel-lg padding-zero"
+           setting-privilege privilege-name="SETTING_BASIC" privilege-handle="hidden">
+        <div class="panel-header panel-header-border">
+          <span>工作模式</span>
+          <button id="setting_basic_button_editWorkingMode"
+                  setting-privilege privilege-name="SETTING_BASIC" privilege-handle="disabled"
+                  class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-hide="basic.editMode.workingModeSetting" ng-click="basic.editWorkingMode()">
+            <i class="fa fa-pencil-square-o"></i>
+          </button>
+          <button id="setting_basic_button_changeWorkingMode"
+                  class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-show="basic.editMode.workingModeSetting"
+                  ng-disabled="basic.modeType==null || !basic.validSwitchTime"
+                  ng-click="basic.changeWorkingMode()">
+            <i class="fa fa-check text-lime"></i>
+          </button>
+          <button id="setting_basic_button_cancelWorkingMode"
+                  class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                  ng-show="basic.editMode.workingModeSetting"
+                  ng-click="basic.cancelWorkingMode()">
+            <i class="fa fa-remove"></i>
+          </button>
+        </div>
+        <div class="panel-body">
+          <form name="workingMode" class="form-horizontal">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group-title">模式选择:</div>
+              </div>
+              <div class="col-md-12">
+                <label class="radio-button radio-inline margin-left-large" ng-repeat="mt in basic.modeTypeOptions">
+                  <input custom-radio type="radio" name="modeType"
+                         id="radio-mt{{mt.value}}"
+                         ng-model="basic.modeType"
+                         ng-value="mt.value"
+                         ng-click="basic.clickModeType()"
+                         ng-disabled="!basic.editMode.workingModeSetting">
+                  {{mt.text}}
+                </label>
+              </div>
+            </div>
+            <div class="row margin-top-default" ng-show="basic.modeType===0">
+              <div class="col-md-12">
+                <div class="form-group-title">测试模式自动转为其他模式策略:</div>
+              </div>
+              <div class="col-md-12">
+                <div class="row margin-left-default">
+                  <switch-toggle id="cb_enableSwitch" status="basic.enableSwitch" on-label="开启" off-label="关闭"
+                                 disabled="!basic.editMode.workingModeSetting"
+                                 change="basic.clickEnableSwitch()"></switch-toggle>
+                  ​
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label">测试工作模式</label>
+
+                <div class="col-md-9">
+                  <date-picker id="dp_switchTime" ng-model="basic.switchTime"
+                               ng-show="basic.editMode.workingModeSetting && basic.enableSwitch"
+                               ng-change="basic.validateSwitchTime()"
+                               control="basic.datePickerCtrl"></date-picker>
+                  <label class="form-control-static"
+                         ng-show="!basic.editMode.workingModeSetting || !basic.enableSwitch">
+                    {{basic.switchTime | date: 'yyyy-MM-dd'}}
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3"></label>
+
+                <div class="col-md-9">
+                  <time-picker id="tp_switchTime" ng-model="basic.switchTime"
+                               ng-show="basic.editMode.workingModeSetting && basic.enableSwitch"
+                               ng-change="basic.validateSwitchTime()"
+                               control="basic.timePickerCtrl"></time-picker>
+                  <label class="form-control-static"
+                         ng-show="!basic.editMode.workingModeSetting || !basic.enableSwitch">
+                    {{basic.switchTime | date: 'HH:mm:ss'}}
+                  </label>
+                  <span class="input-alert-error"
+                        ng-show="basic.editMode.workingModeSetting && basic.enableSwitch && !basic.validSwitchTime">切换时间不能小于当前时间</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label">自动转入</label>
+
+                <div class="col-md-9">
+                  <label ng-show="basic.editMode.workingModeSetting && basic.enableSwitch">
+                    <div class="select-styled">
+                      <select id="select_switchModeType" name="switchModeType" ng-model="basic.switchModeType"
+                              ng-options="mt.value as mt.text for mt in basic.modeTypeOptions | filter:basic.filterTestMode">
+                      </select>
+                    </div>
+                  </label>
+                  <label class="form-control-static"
+                         ng-show="!basic.editMode.workingModeSetting || !basic.enableSwitch">
+                    {{basic.switchMode.text}}
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </form>
+        </div>
+      </div>
+      <!--工作模式　end -->
+      <!--时钟设置　begin -->
+      <div id="setting_basic_container_editNtpSync" class="panel panel-lg padding-zero"
+           setting-privilege privilege-name="SETTING_BASIC" privilege-handle="hidden">
+        <div class="panel-header panel-header-border">
+          <span>时钟设置</span>
+          <button id="setting_basic_button_editNtpSync"
+                  setting-privilege privilege-name="SETTING_BASIC" privilege-handle="disabled"
+                  class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-hide="basic.editMode.timeSync" ng-click="basic.editTimeSync()">
+            <i class="fa fa-pencil-square-o"></i></button>
+          <button id="setting_basic_button_changeNtpSync"
+                  class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-show="basic.editMode.timeSync"
+                  ng-disabled="basic.setActivateNtp ? !basic.validNtpIP : !basic.validSystemTime"
+                  ng-click="basic.changeTimeSync()">
+            <i class="fa fa-check text-lime"></i></button>
+          <button id="setting_basic_button_cancelNtpSync"
+                  class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                  ng-show="basic.editMode.timeSync"
+                  ng-click="basic.cancelTimeSync()">
+            <i class="fa fa-remove"></i></button>
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal">
+            <div class="row">
+              <div class="col-md-12 system-time-sync-option">
+                <label class="radio-button">
+                  <input id="radio_manual" custom-radio ng-class="{checked:!basic.setActivateNtp}" type="radio"
+                         ng-model="basic.setActivateNtp" ng-value="false"
+                         ng-disabled="!basic.editMode.timeSync">
+                  <span class="form-group-title">手工设置:</span>
+                </label>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-2 margin-top-zero control-label">日期</label>
+
+                <div class="col-md-9 margin-top-zero">
+                  <date-picker id="dp_systemDateInput" ng-model="basic.systemDateInput" ng-change="basic.validateSystemTime()"
+                               placeholder="basic.serverTime"
+                               ng-disabled="!basic.editMode.timeSync || basic.setActivateNtp"
+                               ng-hide="!basic.editMode.timeSync || basic.setActivateNtp"
+                               click="basic.stopTimeout()" control="basic.datePickerCtrl"></date-picker>
+                  <label class="col-md-9 margin-top-zero form-control-static"
+                         ng-show="!basic.editMode.timeSync || basic.setActivateNtp">
+                    {{basic.serverTime | date: 'yyyy-MM-dd'}}
+                  </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 margin-top-zero control-label">时间</label>
+
+                <div class="col-md-9 margin-top-zero">
+                  <time-picker id="tp_systemTimeInput" ng-model="basic.systemTimeInput" ng-change="basic.validateSystemTime()"
+                               placeholder="basic.serverTime"
+                               ng-disabled="!basic.editMode.timeSync || basic.setActivateNtp"
+                               ng-hide="!basic.editMode.timeSync || basic.setActivateNtp"
+                               click="basic.stopTimeout()" control="basic.timePickerCtrl"></time-picker>
+                  <label class="col-md-9 margin-top-zero form-control-static"
+                         ng-show="!basic.editMode.timeSync || basic.setActivateNtp">
+                    {{basic.serverTime | date: 'HH:mm:ss'}}
+                  </label>
+
+                  <!--div class="row margin-top-default"
+                       ng-show="basic.editMode.timeSync && basic.setActivateNtp===false">
+                    <i class="fa fa-exclamation-triangle"
+                       style="color:#fe540f;margin-left:13px;margin-right:4px;"></i>手动更改系统时间会导致{{$root.PLATFORM_NAME}}重启
+                  </div-->
+                </div>
+              </div>
+            </div>
+            <div class="row ntp-row">
+              <div class="col-md-12 system-time-sync-option">
+                <label class="radio-button">
+                  <input id="radio_ntp" custom-radio ng-class="{checked:basic.setActivateNtp}" type="radio"
+                         ng-model="basic.setActivateNtp"
+                         ng-value="true" ng-disabled="!basic.editMode.timeSync">
+                  <span class="form-group-title">NTP同步:</span>
+                </label>
+              </div>
+              <div class="col-md-12" ng-show="basic.setActivateNtp">
+                <div class="form-group">
+                  <div class="col-md-2 margin-top-zero control-label">服务器IP</div>
+                  <div class="col-md-9 margin-top-zero">
+                      <span ng-show="basic.setActivateNtp && basic.editMode.timeSync">
+                        <input style="width:52%" id="setting_basic_text_ntpIp" name="ntpIp" type="text"
+                               ng-model="basic.ntpIpEnter" class="input-md"
+                               ng-change="basic.validateNtpIP(basic.ntpIpEnter)"/>
+                      </span>
+                    <div class="form-control-static" ng-hide="basic.editMode.timeSync">{{basic.ntpIp || ''}}</div>
+                    <span class="input-alert-error"
+                          ng-show="basic.editMode.timeSync && !basic.validNtpIP && basic.ntpIpEnter.length">请输入合法IP地址</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </form>
+        </div>
+      </div>
+      <!--时钟设置　end -->
+      <!--日志存储　begin -->
+      <div id="setting_basic_container_editSyslog" class="panel panel-lg padding-zero"
+           setting-privilege privilege-name="SETTING_BASIC" privilege-handle="hidden">
+        <div class="panel-header panel-header-border">
+          <span>日志存储</span>
+          <button id="setting_basic_button_editSyslog" setting-privilege privilege-name="SETTING_BASIC"
+                  privilege-handle="hidden"
+                  class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-hide="basic.editMode.syslogStorage"
+                  ng-click="basic.editSyslog()"><i
+            class="fa fa-pencil-square-o"></i></button>
+          <button id="setting_basic_button_changeSyslog"
+                  class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-show="basic.editMode.syslogStorage" ng-click="basic.changeSyslog()"
+                  ng-disabled="!basic.validSyslog">
+            <i class="fa fa-check text-lime"></i></button>
+          <button id="setting_basic_button_cancelSyslog"
+                  class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                  ng-show="basic.editMode.syslogStorage" ng-click="basic.cancelSyslog()"><i
+            class="fa fa-remove"></i></button>
+        </div>
+
+        <div class="panel-body">
+          <form name="timeConf">
+            <div class="row">
+              <div class="col-md-12"><span class="form-group-title">事件存储</span></div>
+            </div>
+            <div class="row">
+              <div class="content">
+                <div class="col-md-6 system-time-sync-option">
+                  <switch-toggle status="basic.syslog.setting.localEnabled"
+                                 disabled="true" id="syslog-localEnabled-switch-toggle"></switch-toggle>
+                  <span class="margin-left-20">本地</span>
+                </div>
+                <div class="col-md-6 system-time-sync-option">
+                  <switch-toggle status="basic.syslog.setting.syslogEnabled"
+                                 disabled="!basic.editMode.syslogStorage" id="syslog-syslogEnabled-switch-toggle"></switch-toggle>
+                  <span class="margin-left-20">Syslog</span>
+                </div>
+              </div>
+            </div>
+            <br/>
+
+            <div ng-show="basic.syslog.setting.syslogEnabled">
+              <hr class="hr-small-margin">
+
+              <div class="row">
+                <div class="col-md-2">
+                  <span class="form-group-title">启用Syslog输出</span>
+                </div>
+                <div class="col-md-8">
+                  <div class="pull-left text-orange">
+                    （注意：最多可设定3个远程日志输出配置）
+                  </div>
+                </div>
+                <div class="col-md-2" ng-show="basic.editMode.syslogStorage" align="right">
+                  <button id="setting_basic_syslog_button_add" type="button" privilege="SYSLOG"
+                          class="btn btn-default" ng-click="basic.addSyslog()"
+                          ng-disabled="basic.syslog.setting.syslogs.length >= basic.syslog.setting.maxNo"><span
+                    class="syslog-icon-green"><i
+                    class="fa fa-plus"></i></span>新增
+                  </button>
+                </div>
+              </div>
+              <div class="syslog-editView" ng-show="basic.editMode.syslogStorage"
+                   ng-repeat="syslog in basic.syslog.setting.syslogs">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label class="input-label">
+                      <span style="width: 66px;">{{$index+1}}. IP地址</span>
+                      <input id="setting_basic_text_syslogIp_{{$index+1}}"
+                             ng-class="{'input-error': (syslog.syslogIp.length && syslog.syslogIp.errors)}"
+                             type="text" maxlength="15"
+                             placeholder="{{syslog.syslogIp}}" ng-model="syslog.syslogIp"
+                             ng-change="basic.validateSyslog(syslog)">
+                    </label><br/>
+                    <div style="margin-left:65px" id="setting_basic_text_syslogIp_error_{{$index+1}}"
+                         class="syslogIp-err input-alert-error"
+                         ng-if="syslog.syslogIp.length && syslog.ipErrors">请输入有效IP地址
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="input-label">
+                      <span style="width: 40px;">协议</span>
+                      <select class="select-styled" required
+                              ng-model="syslog.syslogProtocol"
+                              ng-change="basic.validateSyslog(syslog)" id="setting_basic_select_syslogProtocol_{{$index+1}}">
+                        <option value="UDP">UDP</option>
+                        <option value="TCP">TCP</option>
+                      </select>
+                    </label>
+                    <br/>
+                    <div style="margin-left:40px" id="setting_basic_text_syslogProtocol_error_{{$index+1}}"
+                         class="syslogIp-err input-alert-error"
+                         ng-if="syslog.protocolErrors" >请选择协议
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="input-label">
+                      <span style="width: 40px;">端口</span>
+                      <input id="setting_basic_text_syslogPort_{{$index+1}}"
+                             name="syslogPort" type="text"
+                             placeholder="{{514}}"
+                             ng-model="syslog.syslogPort"
+                             ng-change="basic.validateSyslog(syslog)"
+                             maxlength="5" />
+                    </label>
+                    <br/>
+                    <div style="margin-left:40px" id="setting_basic_text_syslogPort_error_{{$index+1}}"
+                         ng-if="syslog.syslogPort.length && syslog.portErrors">
+                      <span class="syslogPort-err input-alert-error">请输入有效端口号</span>
+                    </div>
+                  </div>
+                  <div class="remoteIp-remove col-md-2">
+                    <button id="setting_basic_button_remove_syslog_{{$index+1}}" type="button"
+                            class="btn btn-default btn-sm"
+                            ng-click="basic.removeSyslog($index, syslog.syslogId)"><i class="fa fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div ng-show="basic.reduplicateSyslogs" class="syslogReduplicate input-alert-error" align="center">
+                请勿输入重复的配置
+              </div>
+              <div class="syslog-showView" ng-show="!basic.editMode.syslogStorage"
+                   ng-repeat="syslog in basic.syslog.setting.syslogs">
+                <div class="row">
+                  <div class="col-md-4" id="setting_basic_div_syslogIp_{{$index+1}}">
+                    {{$index+1}}. IP地址&nbsp;&nbsp;{{syslog.syslogIp}}<br/>
+
+                  </div>
+                  <div class="col-md-3" id="setting_basic_div_syslogProtocol_{{$index+1}}">
+                    协议&nbsp;{{syslog.syslogProtocol}}
+                  </div>
+                  <div class="col-md-3" id="setting_basic_div_syslogPort_{{$index+1}}">
+                    端口&nbsp;{{syslog.syslogPort}}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </form>
+        </div>
+
+      </div>
+      <!--日志存储　end -->
+
+    </div>
+    <!--LEFT END -->
+
+    <!--RIGHT START -->
+    <div class="col-lg-6">
+      <!--安全管理　begin -->
+      <div id="setting_basic_container_editSecurity" class="panel panel-lg padding-zero"
+           setting-privilege privilege-name="SETTING_BASIC" privilege-handle="hidden">
+        <div class="panel-header panel-header-border">
+          <span>安全管理</span>
+          <button id="setting_basic_button_editSecurity" setting-privilege privilege-name="SETTING_BASIC"
+                  privilege-handle="hidden"
+                  class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-hide="basic.editMode.security"
+                  ng-click="basic.editSecurity()"><i
+            class="fa fa-pencil-square-o"></i></button>
+          <button id="setting_basic_button_changeSecurity"
+                  class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-show="basic.editMode.security"
+                  ng-disabled="(!basic.remoteProtocol.setting.SSHDisabled && basic.editMode.security && !basic.validSSHPort)
+                                || (!basic.remoteProtocol.setting.httpsDisabled && basic.editMode.security && !basic.validHttpsPort)"
+                  ng-click="basic.changeSecurity()"><i class="fa fa-check text-lime"></i></button>
+          <button id="setting_basic_button_cancelSecurity"
+                  class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                  ng-show="basic.editMode.security" ng-click="basic.cancelSecurity()"><i
+            class="fa fa-remove"></i></button>
+        </div>
+        <div class="panel-body">
+          <form name="securityConf">
+            <div class="row">
+              <div class="col-md-12"><span class="form-group-title">授权远程访问服务</span></div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+
+                <switch-toggle status="basic.remoteProtocol.setting.SSHDisabled" invert="true"
+                               disabled="!basic.editMode.security" id="setting_basic_switch_toggle_ssh"></switch-toggle>
+                <span class="margin-left-20" id="setting_basic_span_security_ssh">SSH</span>
+              </div>
+              <div class="col-md-4" ng-show="!basic.remoteProtocol.setting.SSHDisabled">
+                <label class="input-label">
+                  <span style="width: 50px;">端口&nbsp;</span>
+                  <span ng-show="basic.editMode.security"><input id="setting_basic_text_SSHPort"
+                                                                 name="SSHPort" type="text"
+                                                                 ng-model="basic.remoteProtocol.setting.SSHPort"
+                                                                 required
+                                                                 ng-change="basic.validateSSHPort(basic.remoteProtocol.setting.SSHPort)"
+                                                                 maxlength="5"/></span>
+                  <span ng-hide="basic.editMode.security" id="setting_basic_span_SSHPort"> {{basic.remoteProtocol.setting.SSHPort}}</span>
+                </label>
+              </div>
+              <div class="col-md-4" ng-show="!basic.remoteProtocol.setting.SSHDisabled">
+                    <span class="input-alert-error"
+                          ng-show="basic.editMode.security && !basic.validSSHPort">请输入有效端口号</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <switch-toggle status="basic.remoteProtocol.setting.httpsDisabled" invert="true"
+                               disabled="!basic.editMode.security" id="setting_basic_switch_toggle_https"></switch-toggle>
+                <span class="margin-left-20" id="setting_basic_span_security_https">https</span>
+              </div>
+              <div class="col-md-4" ng-show="!basic.remoteProtocol.setting.httpsDisabled">
+                <label class="input-label">
+                  <span style="width: 50px;">端口&nbsp;</span>
+                  <span ng-show="basic.editMode.security"><input id="setting_basic_text_httpsPort"
+                                                                 name="httpsPort" type="text"
+                                                                 ng-model="basic.remoteProtocol.setting.httpsPort"
+                                                                 required
+                                                                 ng-change="basic.validateHttpsPort(basic.remoteProtocol.setting.httpsPort)"
+                                                                 maxlength="5"/></span>
+                  <span ng-hide="basic.editMode.security" id="setting_basic_span_httpsPort"> {{basic.remoteProtocol.setting.httpsPort}}</span>
+                </label>
+              </div>
+              <div class="col-md-4" ng-show="!basic.remoteProtocol.setting.httpsDisabled">
+                    <span class="input-alert-error"
+                          ng-show="basic.editMode.security && !basic.validHttpsPort">请输入有效端口号</span>
+              </div>
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+      <!--安全管理　end -->
+      <!--登陆管理　begin -->
+      <div id="setting_basic_container_editLogin" class="panel panel-lg padding-zero"
+           setting-privilege privilege-name="SETTING_BASIC" privilege-handle="hidden">
+        <div class="panel-header panel-header-border">
+          <span>登陆管理</span>
+          <button id="setting_basic_button_editLogin" setting-privilege privilege-name="SETTING_BASIC"
+                  privilege-handle="hidden"
+                  class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-hide="basic.editMode.login"
+                  ng-click="basic.editLogin()"><i
+            class="fa fa-pencil-square-o"></i></button>
+          <button id="setting_basic_button_changeLogin"
+                  class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-show="basic.editMode.login"
+                  ng-disabled="(loginConf.timeout.$error.pattern || !loginConf.timeout.$valid)
+                                || (loginConf.loginTry.$error.pattern || !loginConf.loginTry.$valid)
+                                || (loginConf.loginLockingTime.$error.pattern || !loginConf.loginLockingTime.$valid)
+                                || !basic.validIp
+                                || (basic.remoteIps && basic.remoteIps.length<1)"
+                  ng-click="basic.changeLogin()"><i class="fa fa-check text-lime"></i></button>
+          <button id="setting_basic_button_cancelLogin"
+                  class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                  ng-show="basic.editMode.login" ng-click="basic.cancelLogin()"><i
+            class="fa fa-remove"></i></button>
+        </div>
+        <div class="panel-body">
+          <form name="loginConf" id="setting_basic_login_conf">
+            <div class="row fixed-height-row">
+              <div class="col-md-3">
+                <span class="form-group-title">管理保活时长：</span>
+              </div>
+              <div class="col-md-3">
+                      <span ng-show="basic.editMode.login"><input id="setting_basic_text_login_timeout"
+                                                                  name="timeout" type="text"
+                                                                  ng-model="basic.timeoutStrategy.strategyRules[0].ruleData"
+                                                                  class="input-3-letter"
+                                                                  ng-pattern="/^([5-9]|[1-5][0-9]|[6][0])$/"
+                                                                  required
+                                                                  maxlength="15"/>分钟</span>
+                <span ng-show="!basic.editMode.login" class="move-left" id="setting_basic_span_login_timeout">{{basic.timeoutStrategy.strategyRules[0].ruleData}} 分钟</span>
+              </div>
+              <div class="col-md-4">
+                <span name="error_span_timeout" id="error_span_timeout" class="input-alert-error"
+                      ng-show="(loginConf.timeout.$error.pattern || !loginConf.timeout.$valid) && basic.editMode.login">管理保活时长请确认在5-60分钟</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3">
+                <span class="form-group-title">登录锁定：</span>
+              </div>
+              <div class="col-md-4">
+                登录错误<span ng-show="!basic.editMode.login" class="move-left" id="setting_basic_span_login_loginTry">&nbsp;{{basic.maxLoginTimesStrategy.strategyRules[0].ruleData}} 次</span>
+                <span ng-show="basic.editMode.login"><input id="setting_basic_text_login_loginTry"
+                                                            name="loginTry" type="text"
+                                                            ng-model="basic.maxLoginTimesStrategy.strategyRules[0].ruleData"
+                                                            class="input-3-letter"
+                                                            ng-pattern="/^([5-9]|[1][0])$/"
+                                                            required/> 次</span><br/>
+                <span id="error_span_loginTry" class="input-alert-error"
+                      ng-show="(loginConf.loginTry.$error.pattern || !loginConf.loginTry.$valid) && basic.editMode.login">登录次数请确认在5-10次</span>
+
+              </div>
+              <div class="col-md-4">
+                锁定<span ng-show="!basic.editMode.login" class="move-left" id="setting_basic_span_login_loginLocking">&nbsp;{{basic.loginLockingTimeStrategy.strategyRules[0].ruleData}} 分钟</span>
+                <span ng-show="basic.editMode.login"><input id="setting_basic_text_login_loginLocking"
+                                                            name="loginLockingTime" type="text"
+                                                            ng-model="basic.loginLockingTimeStrategy.strategyRules[0].ruleData"
+                                                            class="input-3-letter"
+                                                            ng-pattern="/^([5-9]|[1-5][0-9]|[6][0])$/"
+                                                            required/>分钟</span><br/>
+                <span id="error_span_loginLockingTime" class="input-alert-error"
+                      ng-show="(loginConf.loginLockingTime.$error.pattern || !loginConf.loginLockingTime.$valid) && basic.editMode.login">锁定时间请确认在5-60分钟</span>
+
+              </div>
+            </div>
+            <div class="row">
+              <hr class="hr-small-margin">
+            </div>
+            <div>
+              <div class="row">
+                <div class="col-md-2">
+                  <span class="form-group-title">远程可信管理IP</span>
+                </div>
+                <div class="col-md-7">
+                  <span class="pull-left text-orange">
+                  （注意：最多可设定５组远程可信管理IP）
+                  </span>
+                </div>
+                <div class="col-md-3" ng-show="basic.editMode.login" align="right">
+                  <button id="setting_remoteIp_button_add" type="button" privilege="SETTINGS_IP_LOGIN"
+                          class="btn btn-default" ng-click="basic.addRemoteIp()"
+                          ng-disabled="basic.remoteIps.length >= basic.login.maxRemoteIpNo"><span
+                    class="remoteIp-icon-green"><i
+                    class="fa fa-plus"></i></span>新增
+                  </button>
+                </div>
+              </div>
+              <div class="remoteIp-editView" ng-show="basic.editMode.login" ng-repeat="ip in basic.remoteIps">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="input-label">
+                        <span style="width: 128px;">{{$index+1}}. 登录IP地址/网段:</span>
+                        <input id="setting_basic_text_login_ipRange_{{$index+1}}" class="remoteIp-input remoteIp-input-ip"
+                               ng-class="{'input-error': (ip.ruleData.length && ip.errors)}" type="text"
+                               placeholder="{{ip.ruleData}}" ng-model="ip.ruleData" ng-change="basic.checkIp(ip)"><br/>
+
+                        <div id="setting_basic_text_ruleData_error_{{$index+1}}"
+                             class="remoteIp-err input-alert-error"
+                             ng-if="ip.ruleData.length && ip.errors">非法的IP地址
+                          <label ng-if="ip.isMwIp">(IP不能为设备管理口IP)</label>
+                        </div>
+                      </label>
+                    </div>
+                  <div class="col-md-4">
+                    <label class="input-label">
+                      <span style="width: 40px;">
+                        名称：
+                      </span>
+                      <input id="setting_basic_text_login_ipName_{{$index+1}}"
+                             class="remoteIp-input remoteIp-input-name" name="ipName" type="text"
+                             placeholder="{{ip.strategyRuleName}}" ng-model="ip.strategyRuleName"
+                             maxlength="20"><br/>
+                    </label>
+                  </div>
+                  <div class="remoteIp-remove col-md-2">
+                    <button id="setting_basic_button_remove_{{$index+1}}" type="button"
+                            ng-disabled="noDelete[$index]" class="btn btn-default btn-sm"
+                            ng-click="basic.removeRemoteIp($index, ip.strategyRuleId)"><i class="fa fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="remoteIp-showView " ng-show="!basic.editMode.login" id="remote-ip-table"
+                   ng-repeat="ip in basic.remoteIps">
+                <div class="row remoteIp-item">
+                  <div class="col-md-6">{{$index+1}}.
+                    <span class="remoteIp-item-label"> 登录IP地址/网段：</span>
+                    <span class="remoteIp-item-ip" id="setting_basic_span_login_ipRange_{{$index+1}}"> {{ip.ruleData}}</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="remoteIp-item-name" id="setting_basic_span_login_ipName_{{$index+1}}">名称： {{ip.strategyRuleName}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+      <!--登陆　end -->
+      <!--定期删除信息 begin -->
+      <div id="setting_basic_container_editScheduleDeletion" class="panel panel-lg padding-zero log-reset-config-panel"
+           setting-privilege privilege-name="SETTING_BASIC" privilege-handle="hidden">
+        <div class="panel-header panel-header-border">
+          <span>定期删除信息</span>
+          <button id="setting_basic_button_editInfo" setting-privilege privilege-name="SETTING_BASIC"
+                  privilege-handle="hidden"
+                  class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-hide="basic.editMode.scheduleDelete" ng-click="basic.editScheduleDelete()"><i
+            class="fa fa-pencil-square-o"></i></button>
+          <button id="setting_basic_button_editInfoCheck"
+                  class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-show="basic.editMode.scheduleDelete" ng-disabled="false"
+                  ng-click="basic.changeScheduleDelete()"><i class="fa fa-check text-lime"></i></button>
+          <button id="setting_basic_button_editInfoClose"
+                  class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                  ng-show="basic.editMode.scheduleDelete" ng-click="basic.cancelScheduleDelete()"><i
+            class="fa fa-remove"></i></button>
+        </div>
+        <div class="panel-body">
+          <form name="timeConf">
+            <div class="row">
+              <div class="col-md-12">
+                <span class="form-group-title">定期自动删除{{$root.PLATFORM_NAME}}上所有日志和系统记录</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label class="input-label">
+                  <span style="width: 160px;">保存周期</span>
+
+                  <div ng-if="basic.editMode.scheduleDelete">
+                    <select class="select select-styled log-delete-select"
+                            ng-model="basic.logDeletionManagementTmp" id="setting_basic_select_logDeletionManagementTmp">
+                      <option value="90" id="setting_basic_select_logDeletionManagementTmp_option_90">90天</option>
+                      <option value="180" id="setting_basic_select_logDeletionManagementTmp_option_180">180天</option>
+                      <option value="365" id="setting_basic_select_logDeletionManagementTmp_option_365">365天</option>
+                    </select>
+                  </div>
+                  <div class="select read-only-mode" ng-show="!basic.editMode.scheduleDelete" id="logDeletionManagementTmp">
+                    {{basic.logDeletionManagementTmp === '-1' ? "永久" : basic.logDeletionManagementTmp +
+                    "天"}}
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="input-label">
+                  <span style="width: 160px;">每天删除时间</span>
+
+                  <div ng-if="basic.editMode.scheduleDelete">
+                    <form name="basic.scheduleDelete.time">
+                      <label>
+                        <!-- <input type="time" placeholder="HH:mm" ng-model="basic.logDeletionTimeTmp" style="width: 100px;"/> -->
+                        <time-picker ng-model="basic.logDeletionTimeTmp" style="width: 130px;" id="setting_basic_time_picker_scheduleDelete"></time-picker>
+                      </label>
+                    </form>
+                  </div>
+                  <div ng-if="!basic.editMode.scheduleDelete" style="margin-top:9px;margin-left:13px" id="setting_basic_div_logDeletionTimeTmp">
+                    {{((basic.logDeletionTimeTmp.getHours()<10)?'0' +
+                    basic.logDeletionTimeTmp.getHours(): basic.logDeletionTimeTmp.getHours()) + ':' +
+                    (basic.logDeletionTimeTmp.getMinutes()<10? '0' +
+                    basic.logDeletionTimeTmp.getMinutes() : basic.logDeletionTimeTmp.getMinutes()) + ':' +
+                    (basic.logDeletionTimeTmp.getSeconds()<10? '0' +
+                    basic.logDeletionTimeTmp.getSeconds() : basic.logDeletionTimeTmp.getSeconds())}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!--定期删除信息 end-->
+    </div>
+  </div>
+  <!--RIGHT END -->
+</div>
+

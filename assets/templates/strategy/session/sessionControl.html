@@ -1,0 +1,166 @@
+<div cg-busy="{promise:configPromise,message:'正在保存...'}" global-events>
+  <div class="modal-header">
+    <h3 class="modal-header-title">会话策略</h3>
+  </div>
+
+  <div class="modal-body">
+    <div class="panel">
+      <div class="panel-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-xs-3 control-label">
+              <span>源IP：</span>
+            </label>
+
+            <div class="col-xs-6">
+              <input id="sourceIp" ng-model="sessionControlData.sourceIp" maxlength="31" type="text"
+                     class="form-control" ng-disabled="isEdit"
+                     ng-change="validateIp(sessionControlData.sourceIp, 'SOURCE')"
+                     placeholder="any/192.168.1.1">
+              <div>
+                <label class="input-alert-error"
+                       ng-show="!valid.sourceIp">
+                  源IP取值为any或者其它合法IP地址
+                </label>
+                <!--<label class="input-alert-error"
+                       ng-show="sessionControlData.sourceIp.length===0">
+                  源IP不能为空
+                </label>-->
+              </div>
+            </div>
+          </div>
+          <div class="form-group margin-top-default">
+            <label class="col-xs-3 control-label">
+              <span>目标IP：</span>
+            </label>
+
+            <div class="col-xs-6">
+              <input id="targetIp" ng-model="sessionControlData.targetIp" maxlength="31" type="text"
+                     class="form-control" ng-disabled="isEdit"
+                     ng-change="validateIp(sessionControlData.targetIp, 'TARGET')"
+                     placeholder="any/192.168.1.1">
+              <div>
+                <label class="input-alert-error"
+                       ng-show="!valid.targetIp">
+                  目标IP取值为any或者其它合法IP地址
+                </label>
+                <!--<label class="input-alert-error"
+                       ng-show="sessionControlData.targetIp.length===0">
+                  目标IP不能为空
+                </label>-->
+              </div>
+            </div>
+          </div>
+          <div class="form-group margin-top-default">
+            <div class="col-xs-3 control-label">
+              <span>会话类型：</span>
+            </div>
+            <div class="col-xs-6">
+              <select id="sessionType" class="select-styled" ng-disabled="isEdit"
+                      ng-model="sessionControlData.sessionType" ng-change="changeSessionType()"
+                      ng-options="item.value as item.name for item in sessionTypeOptions">
+              </select>
+            </div>
+          </div>
+          <div class="form-group margin-top-default" ng-if="sessionControlData.sessionType!==-1">
+            <div class="col-xs-3 control-label">
+              <span>服务/应用：</span>
+            </div>
+            <div class="col-xs-6">
+              <div ng-if="sessionControlData.sessionType===0">
+                <angucomplete id="serviceApp0" search-str="sessionControlData.serviceApp"
+                              placeholder="请输入服务名称" pause="400" ng-disabled="isEdit"
+                              selectedobject="selectedObj" fetch-action="searchService(str)"
+                              searchfields="name" titlefield="name" minlength="1"
+                              inputclass="form-control margin-right-default"/>
+              </div>
+              <div ng-if="sessionControlData.sessionType===1">
+                <angucomplete id="serviceApp1" search-str="sessionControlData.serviceApp"
+                              placeholder="请输入应用名称" pause="400" ng-disabled="isEdit"
+                              selectedobject="selectedObj" fetch-action="searchApp(str)"
+                              searchfields="name" titlefield="name" minlength="1"
+                              inputclass="form-control margin-right-default"/>
+              </div>
+              <label class="input-alert-error" ng-show="sessionControlData.serviceApp.length===0">
+                服务/应用名称不能为空
+              </label>
+            </div>
+          </div>
+          <div class="form-group margin-top-default">
+            <div class="col-xs-3 control-label">
+              <span>新建频率上限：</span>
+            </div>
+            <div class="col-xs-9">
+              <div class="row">
+                <div class="col-xs-8">
+                <input id="frequencyUpperLimit" type="text"
+                       class="form-control"
+                       ng-model="sessionControlData.frequencyUpperLimit"
+                       ng-change="validateFrequency(sessionControlData.frequencyUpperLimit)">
+                </div>
+                <div class="col-xs-4"><label class="control-label">( 10 - 1000 )</label></div>
+              </div>
+              <label class="input-alert-error"
+                     ng-show="sessionControlData.frequencyUpperLimit.length>0&&!valid.frequency">
+                频率上限范围为10~1000
+              </label>
+              <!--<label class="input-alert-error" ng-show="!valid.frequencyNull">
+                频率上限不能为空
+              </label>-->
+            </div>
+          </div>
+          <div class="form-group margin-top-default">
+            <div class="col-xs-3 control-label">
+              <span>会话总数上限：</span>
+            </div>
+            <div class="col-xs-6">
+              <input id="totalUpperLimit" type="text"
+                     class="form-control margin-right-default"
+                     ng-model="sessionControlData.totalUpperLimit"
+                     ng-change="validateTotalUpperLimit(sessionControlData.totalUpperLimit)">
+            </div>
+          </div>
+          <div class="form-group margin-top-default">
+            <div class="col-xs-3 control-label">
+              <span>日志：</span>
+            </div>
+            <div class="col-xs-6">
+              <switch-toggle id="enableLog" status="sessionControlData.enableLog" on-label="开启" off-label="关闭"></switch-toggle>
+              ​
+            </div>
+          </div>
+          <div class="form-group margin-top-default">
+            <div class="col-xs-3 control-label">
+              <span>超出上限警告：</span>
+            </div>
+            <div class="col-xs-6">
+              <switch-toggle id="enableUpperLimitWarn" status="sessionControlData.enableUpperLimitWarn" on-label="开启" off-label="关闭"></switch-toggle>
+              ​
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+   <!-- <a class="btn btn-default pull-left" ng-click="cancel()">
+      <i class="fa fa-times icon-left"></i>取消
+    </a>-->
+    <label class="input-alert-error margin-right-default" style="margin-top: 6px;"
+           ng-show="valid.duplicate">
+      该会话策略已经存在！
+    </label>
+    <label class="input-alert-error margin-right-default" style="margin-top: 6px;"
+           ng-show="valid.error">
+      服务器异常，请稍后重试！
+    </label>
+    <a id="sessionControl_save_btn" class="btn btn-default pull-right"
+       ng-disabled="!valid.enableSave" ng-click="ok()">
+      <i class="fa fa-check text-lime icon-left"></i>保存
+    </a>
+    <a id="sessionControl_cancel_btn" class="btn btn-default pull-left" ng-click="cancel()">
+      <i class="fa fa-times icon-left"></i>关闭
+    </a>
+  </div>
+</div>

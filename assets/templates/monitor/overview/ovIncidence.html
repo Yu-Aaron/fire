@@ -1,0 +1,57 @@
+<div class="ov-incidence">
+  <!--<div class="box">
+    <div class="row">
+      <div class="col-xs-4" manual-fetch="overview.shouldFlashUnreadCount" fetch-action="overview.getUnreadCount()"
+           blink="blink-1"><i class="icon icon-warning"></i></div>
+      <div class="col-xs-8">
+        <p class="title">未读事件</p>
+        <p class="content" style="color: #ca593b;">{{overview.unreadCount}}</p>
+      </div>
+    </div>
+  </div>-->
+  <div class="box" ng-click="overview.navigate('session.state')">
+    <div class="box-hd">
+      <i class="icon icon-session"></i>
+      <span class="title">实时会话</span>
+      <span class="count" style="color: #0b8a99;" ng-bind="overview.sessionCount"></span>
+    </div>
+    <div id="session_trend" class="box-bd chart-content" ng-init="initSessionTrend()" ng-hide="noSessionData"></div>
+    <div class="placeholder" ng-show="noSessionData">没有数据</div>
+  </div>
+  <!--<div class="box">
+    <div class="row">
+      <div class="col-xs-4"><i class="icon icon-history"></i></div>
+      <div class="col-xs-8">
+        <p class="title">历史事件</p>
+        <p class="content" style="color: #67912d;">{{overview.historyCount}}</p>
+      </div>
+    </div>
+  </div>-->
+  <!--<div class="box">
+    <div class="row">
+      <div class="col-xs-4"><i class="icon icon-vulnerabilities"></i></div>
+      <div class="col-xs-8">
+        <p class="title">漏洞总数</p>
+        <p class="content" style="color: #b5b428;" ng-bind="overview.signatureCount" count-animation></p>
+      </div>
+    </div>
+  </div>-->
+  <div class="box">
+    <div class="box-hd">
+      <i class="icon icon-rule"></i>
+      <span class="title">规则总数</span>
+      <span class="count" style="color: #0b8a99;" ng-bind="overview.ruleCount"></span>
+    </div>
+    <div class="box-bd chart-content" id="rule-chart" ng-init="initRuleChart()">
+    </div>
+  </div>
+  <div class="box">
+    <div class="box-hd">
+      <i class="icon icon-strategy"></i>
+      <span class="title">策略总数</span>
+      <span class="count" style="color: #9172c0;" ng-bind="overview.strategyDeployCount"></span>
+    </div>
+    <div class="box-bd chart-content" id="strategy-chart" ng-init="initStrategyChart()">
+    </div>
+  </div>
+</div>

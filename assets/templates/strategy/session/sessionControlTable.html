@@ -1,0 +1,64 @@
+<div class="sessionControl-container">
+  <div class="margin-bottom-default">
+    <button id="sessionControl_add_btn" class="btn btn-default" ng-click="dtable.add()" setting-privilege
+       privilege-name="STRATEGY_SESSION" privilege-handle="hidden" privilege-require="MIXED">
+      <i class="fa fa-file-o fa-after-blue fa-plus-overlay icon-left"></i>新增
+    </button>
+    <button id="sessionControl_del_btn" class="btn btn-default" ng-click="dtable.delete()" setting-privilege
+       privilege-name="STRATEGY_SESSION" privilege-handle="hidden" privilege-require="MIXED"
+       ng-disabled="dtable.table === null || dtable.table.length<=0">
+      <i class="fa fa-trash-o icon-left"></i>删除
+    </button>
+  </div>
+  <table class="table table-hover icon-hidden">
+    <thead>
+      <tr>
+        <th class="text-center">
+          <input type="checkbox" custom-checkbox tri-state-checkbox ng-model="dtable.selectAllValue" ng-click="dtable.selectAll()"/>
+        </th>
+        <th>序号</th>
+        <th order-by="sourceIp">源IP</th>
+        <th order-by="targetIp">目标IP</th>
+        <th order-by="sessionType">会话类型</th>
+        <th order-by="serviceApp">服务/应用</th>
+        <th order-by="frequencyUpperLimit">新建频率上限</th>
+        <th order-by="totalUpperLimit">会话总数上限</th>
+        <th order-by="log">日志</th>
+        <th order-by="upperLimitWarn">超出上限警告</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="sc in dtable.table" fade-in-list>
+        <td class="text-center">
+          <input type="checkbox" custom-checkbox id="selected-item-{{$index}}"
+                 ng-model="dtable.selectedItems[sc.sessionControlId]"
+                 ng-change="dtable.selectChanged()"/>
+        </td>
+        <td>{{skip + $index + 1}}</td>
+        <td>{{sc.sourceIp}}</td>
+        <td>{{sc.targetIp}}</td>
+        <td>
+          <span ng-if="sc.sessionType === 0">服务</span>
+          <span ng-if="sc.sessionType === 1">应用</span>
+        </td>
+        <td>{{sc.sessionType === -1 ? "" : sc.serviceApp}}</td>
+        <td>{{sc.frequencyUpperLimit}}</td>
+        <td>{{sc.totalUpperLimit}}</td>
+        <td>
+          <switch-toggle status="sc.enableLog" on-label="开启" off-label="关闭"
+                         change="dtable.changeSwitch(sc, 'LOG')"></switch-toggle>​
+        </td>
+        <td>
+          <switch-toggle status="sc.enableUpperLimitWarn" on-label="开启" off-label="关闭"
+                         change="dtable.changeSwitch(sc, 'UPPERLIMITWARN')"></switch-toggle>​
+        </td>
+        <td>
+          <a class="btn btn-sm btn-default" ng-click="dtable.edit(sc)" title="编辑">
+            <i class="fa fa-edit"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

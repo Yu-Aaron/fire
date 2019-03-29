@@ -1,0 +1,86 @@
+<div class="panel panel-lg" id="remote-ip-panel">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel-header panel-header-border" ng-if="isEditing || remoteIpsEnable">
+        允许登录的IP地址/网段<i class="fa fa-info-circle icon-right"></i>
+        <div class="pull-right">
+          <div ng-if="!isEditing" class="topo-btn-group">
+            <button id="setting-systemconsole_button_edit" privilege="SETTINGS_IP_LOGIN" type="button"
+                    class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back" ng-click="edit()"><i
+              class="fa fa-edit"></i></button>
+          </div>
+          <div ng-if="isEditing" class="topo-btn-group">
+            <button id="setting-systemconsole_button_confirm" type="button"
+                    ng-disabled="!validIp||(remoteIps && remoteIps.length<1)" privilege="SETTINGS_IP_LOGIN"
+                    class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back" ng-click="confirm()"><i
+              class="fa fa-check text-lime"></i></button>
+            <button id="setting-systemconsole_button_refresh" type="button" privilege="SETTINGS_IP_LOGIN"
+                    class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                    ng-click="refresh();"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="panel-lg">
+        <div class="remoteIp">
+          <div ng-if="isEditing" class="remoteIp-editView">
+            <div class="remoteIp-add">
+              <button id="setting-systemconsole_button_add" type="button" privilege="SETTINGS_IP_LOGIN"
+                      class="btn btn-default" ng-click="add()"><span class="remoteIp-icon-green"><i
+                class="fa fa-plus"></i></span> 添加远端登录IP地址
+              </button>
+            </div>
+            <div class="remoteIp-item col-xs-6" ng-repeat="ip in remoteIps">
+              {{$index+1}}. 登录IP地址/网段:
+              <div class="remoteIp-item-ip">
+                <input id="setting-systemconsole_text_ruleData_{{$index+1}}" class="remoteIp-input remoteIp-input-ip"
+                       ng-class="{'input-error': (ip.ruleData.length && ip.errors)}" type="text"
+                       placeholder="{{ip.ruleData}}" ng-model="ip.ruleData" ng-change="checkIp(ip)"><br/>
+                <div id="setting-systemconsole_text_ruleData_error_{{$index+1}}" class="remoteIp-err input-alert-error"
+                     ng-if="ip.ruleData.length && ip.errors">非法的IP地址
+                </div>
+              </div>
+              <div class="remoteIp-item-name">
+                名称： <input id="setting-systemconsole_text_ipName_{{$index+1}}"
+                           class="remoteIp-input remoteIp-input-name" name="ipName" type="text"
+                           placeholder="{{ip.strategyRuleName}}" ng-model="ip.strategyRuleName" maxlength="20"><br/>
+              </div>
+              <div class="remoteIp-remove">
+                <button id="setting-systemconsole_button_remove_{{$index+1}}" type="button"
+                        ng-disabled="noDelete[$index]" class="btn btn-default btn-sm"
+                        ng-click="remove($index, ip.strategyRuleId)"><i class="fa fa-trash"></i></button>
+              </div>
+            </div>
+          </div>
+          <div ng-if="!isEditing" class="remoteIp-showView" id="remote-ip-table">
+            <div ng-show="remoteIpsEnable">
+              <div class="remoteIp-item col-xs-6" ng-repeat="ip in remoteIps">
+                {{$index+1}}.
+                <div class="remoteIp-item-label"> 登录IP地址/网段：</div>
+                <div class="remoteIp-item-ip" id="remote-ip-data-{{$index}}"> {{ip.ruleData}}</div>
+                <div class="remoteIp-item-name">名称： {{ip.strategyRuleName}}</div>
+              </div>
+            </div>
+            <div class="remoteIp-landingPage" ng-show="!remoteIpsEnable">
+              <div class="remoteIp-landingPage-title">默认无限制IP访问</div>
+              <button id="initial_add_remote_ip_button" type="button"
+                      class="btn btn-default bg-icon bg-icon-upload bg-icon-contain text-lime btn-group-column-button remoteIp-landingPage-add"
+                      privilege="SETTINGS_IP_LOGIN" ng-click="initialAdd()">启用远程登录IP控制
+              </button>
+              <br/><br/>
+              <p>一旦启动此功能，所有IP将会无法访问{{$root.PLATFORM_NAME}}。</p>
+              <p>需要设置允许登录的IP地址或网段</p>
+            </div>
+          </div>
+        </div>
+        <div class="panel-footer panel-footer-border" ng-show="remoteIpsEnable">
+          <button id="close_all_remote_ip_button" type="button" class="btn btn-default btn-group-column-button"
+                  ng-click="closeAll()" privilege="SETTINGS_IP_LOGIN"><span class="remoteIp-err"><i
+            class="fa fa-times"></i></span> 关闭IP登录限制功能
+          </button>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</div>

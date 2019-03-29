@@ -1,0 +1,144 @@
+<div>
+    <div class="padding-default"
+         ng-class="dtable.dateTimeRange && dtable.dateTimeRange.enable ? 'showDateTimeRange' : 'hideDateTimeRange'">
+        <div class="btn-toolbar">
+            <button id="monitor-logger-logTab_button_refresh" type="button" class="btn btn-default"
+                    ng-click="dtable.refresh()"><i class="fa fa-refresh text-lime icon-left"></i>刷新
+            </button>
+            <button id="monitor-logger-logTab_button_openExportPanelFalse" type="button" class="btn btn-default"
+                    ng-click="openExportPanel(false)"
+                    ng-disabled="!dtable.table.length"><i class="fa fa-download text-lime icon-left"></i>导出全部
+            </button>
+            <button id="monitor-logger-logTab_button_openExportPanelTrue" type="button" class="btn btn-default"
+                    ng-click="openExportPanel(true)" ng-if="logger.editRight&&dtable.isSearching"
+                    ng-disabled="!dtable.table.length"><i class="fa fa-download text-lime icon-left"></i>导出当前记录
+            </button>
+        </div>
+    </div>
+    <table class="table table-hover icon-hidden">
+        <thead>
+        <tr>
+            <th class="table-col-xsm">
+                <span>&nbsp;</span>
+            </th>
+            <th order-by="operationLogId">日期</th>
+            <th order-by="user">用户</th>
+            <th order-by="user_ip">IP</th>
+            <th order-by="operationName">内容</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat-start="log in dtable.table"
+            ng-click="accordion.current = !accordion.current && log.detail && (log.subServiceType === 'DpiUserCmdLog' || log.subServiceType === 'DpiUserLogin' || log.subServiceType === 'DpifwPacketAccounting')">
+            <td><i class="fa {{accordion.current ? 'fa-chevron-down' : 'fa-chevron-right'}}"
+                   ng-show="log.detail && (log.subServiceType === 'DpiUserCmdLog' || log.subServiceType === 'DpiUserLogin' || log.subServiceType === 'DpifwPacketAccounting')"></i>
+            </td>
+            <td class="table-col-datetime">{{log.timestamp | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td class="table-col-username">{{log.user}}</td>
+            <td class="table-col-ip">{{log.user_ip}}</td>
+            <td>
+                <div ng-attr-tooltip="{{logger.toolTip}}" ng-attr-tooltip-placement="{{logger.toolTipPlacement}}">
+                    {{log.operationName | ellipsis:'200'}}
+                </div>
+            </td>
+        </tr>
+        <tr ng-repeat-end ng-if="accordion.current" class="angular-animate show-hide show-hide-table-row"
+            style="border-left: 3px solid rgb(117, 184, 0)">
+            <td colspan="100%" style="background-color: rgb(19, 19, 19)">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div ng-if="log.subServiceType === 'DpiUserLogin'">
+                            <table class="table table-black-rows">
+                                <thead>
+                                <tr>
+                                    <th class="table-col-xsm">
+                                        <span>&nbsp;</span>
+                                    </th>
+                                    <th>登录状态</th>
+                                    <th>原因</th>
+                                    <th>序列号</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in log.detail">
+                                    <td>
+                                        <span>&nbsp;</span>
+                                    </td>
+                                    <td>{{item.login_result | ellipsis:'50'}}</td>
+                                    <td>{{item.reason | ellipsis:'50'}}</td>
+                                    <td class="table-col-serial">{{item.boxId}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div ng-if="log.subServiceType === 'DpiUserCmdLog'">
+                            <table class="table table-black-rows">
+                                <thead>
+                                <tr>
+                                    <th class="table-col-xsm">
+                                        <span>&nbsp;</span>
+                                    </th>
+                                    <th>输入命令</th>
+                                    <th>执行结果</th>
+                                    <th>序列号</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in log.detail">
+                                    <td>
+                                        <span>&nbsp;</span>
+                                    </td>
+                                    <td>{{item.cmd | ellipsis:'50'}}</td>
+                                    <td>{{item.cmd_result | ellipsis:'50'}}</td>
+                                    <td class="table-col-serial">{{item.boxId}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div ng-if="log.subServiceType === 'DpifwPacketAccounting'">
+                            <table class="table table-black-rows">
+                                <thead>
+                                <tr>
+                                    <th class="table-col-xsm">
+                                        <span>&nbsp;</span>
+                                    </th>
+                                    <th>源IP地址</th>
+                                    <th>源MAC地址</th>
+                                    <th>源端口</th>
+                                    <th>目标IP地址</th>
+                                    <th>目标MAC地址</th>
+                                    <th>目标端口</th>
+                                    <th>IP版本</th>
+                                    <th>协议类型</th>
+                                    <th>数据包长度</th>
+                                    <th>数据流结果</th>
+                                    <th>原因</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="item in log.detail">
+                                    <td>
+                                        <span>&nbsp;</span>
+                                    </td>
+                                    <td class="table-col-ip">{{item.sourceIp}}</td>
+                                    <td class="table-col-mac">{{item.sourceMac}}</td>
+                                    <td>{{item.sourcePort}}</td>
+                                    <td class="table-col-ip">{{item.destinationIp}}</td>
+                                    <td class="table-col-mac">{{item.destinationMac}}</td>
+                                    <td>{{item.destinationPort}}</td>
+                                    <td>{{item.ipVersion}}</td>
+                                    <td>{{item.protocolTypeName}}</td>
+                                    <td>{{item.packetLenth}}</td>
+                                    <td>{{item.result | ellipsis:'50'}}</td>
+                                    <td>{{item.reason | ellipsis:'50'}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

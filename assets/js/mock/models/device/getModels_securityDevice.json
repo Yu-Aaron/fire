@@ -1,0 +1,156 @@
+[
+    {
+        "modelId": "Acorn001-296d-47d3-8ec6-fe76fdea8d02",
+        "model_name": "IAD智能保护平台",
+        "make": "匡恩网络",
+        "model": "KEV-C200",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 2,
+        "iconType": "kev-c200",
+        "subCategory": "NORMAL"
+    },
+    {
+        "modelId": "Acorn001-81dd-4259-9ba0-7b00e467c4a0",
+        "model_name": "IAD智能保护平台",
+        "make": "匡恩网络",
+        "model": "KEV-C400",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 4,
+        "iconType": "kev-c400",
+        "subCategory": "NORMAL"
+    },
+    {
+        "modelId": "Acorn001-d2a4-4d64-818d-6bf8d719146e",
+        "model_name": "IAD智能保护平台",
+        "make": "匡恩网络",
+        "model": "KEV-U800",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 8,
+        "iconType": "ips8",
+        "subCategory": "NORMAL"
+    },
+    {
+        "modelId": "Acorn001-eef7-458d-87a0-1fe3410d9268",
+        "model_name": "IAD智能保护平台",
+        "make": "匡恩网络",
+        "model": "KEV-U1600",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 16,
+        "iconType": "ips8",
+        "subCategory": "NORMAL"
+    },
+    {
+        "modelId": "Acorn001-18d4-49df-b0a0-bd2bc48af6e3",
+        "model_name": "数据采集隔离平台",
+        "make": "匡恩网络",
+        "model": "KED-C200",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 2,
+        "iconType": "ked",
+        "subCategory": "DATA_COLLECTION_DEVICE"
+    },
+    {
+        "modelId": "Acorn001-52cd-4d0e-b6b2-14eae1cedd6f",
+        "model_name": "数据采集隔离平台",
+        "make": "匡恩网络",
+        "model": "KED-U1600",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 16,
+        "iconType": "ked",
+        "subCategory": "DATA_COLLECTION_DEVICE"
+    },
+    {
+        "modelId": "Acorn001-52f5-4d51-9b38-6e1839e78d73",
+        "model_name": "数据采集隔离平台",
+        "make": "匡恩网络",
+        "model": "KED-C400",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 4,
+        "iconType": "ked-c400",
+        "subCategory": "DATA_COLLECTION_DEVICE"
+    },
+    {
+        "modelId": "Acorn001-a253-4d43-8e31-1e2370e0aca9",
+        "model_name": "数据采集隔离平台",
+        "make": "匡恩网络",
+        "model": "KED-U800",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 8,
+        "iconType": "ked",
+        "subCategory": "DATA_COLLECTION_DEVICE"
+    },
+    {
+        "modelId": "Acorn001-6a77-46eb-a5d1-98a7c12b3608",
+        "model_name": "数控审计保护平台",
+        "make": "匡恩网络",
+        "model": "KEC-U1000",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 4,
+        "iconType": "kec",
+        "subCategory": "NORMAL"
+    },
+    {
+        "modelId": "Acorn001-0900-48fb-8aba-5d438f1c3912",
+        "model_name": "监测审计平台",
+        "make": "匡恩网络",
+        "model": "KEA-U1000",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 2,
+        "iconType": "kea-u1000",
+        "subCategory": "NORMAL"
+    },
+    {
+        "modelId": "Acorn001-0900-48fb-8aba-5d438f1c3956",
+        "model_name": "监测审计平台",
+        "make": "匡恩网络",
+        "model": "KEA-U1000E",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 5,
+        "iconType": "kea-u1000e",
+        "subCategory": "NORMAL"
+    },
+    {
+        "modelId": "Acorn001-0900-48fb-8aba-5d438f1c3915",
+        "model_name": "监测审计平台",
+        "make": "匡恩网络",
+        "model": "KEA-U2000",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 2,
+        "iconType": "kea-u2000",
+        "subCategory": "NORMAL"
+    },
+    {
+        "modelId": "Acorn001-15f3-4f3e-b09a-271d02cf567b",
+        "model_name": "监测审计平台",
+        "make": "匡恩网络",
+        "model": "KEA-C400",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 4,
+        "iconType": "kea-c400",
+        "subCategory": "NORMAL"
+    },
+    {
+        "modelId": "Acorn001-63b9-408a-be6a-66cd9c592448",
+        "model_name": "监测审计平台",
+        "make": "匡恩网络",
+        "model": "KEA-C200",
+        "version": "N/A",
+        "hidden": 0,
+        "numOfPorts": 2,
+        "iconType": "kea-c200",
+        "subCategory": "NORMAL"
+    }
+]

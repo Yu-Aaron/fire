@@ -1,0 +1,103 @@
+<div>
+  <div class="session-pool-overview-container">
+    <div class="hd" style="padding: 20px; background: hsla(225,13%,16%,1);" ng-show="sessionPoolOverviewCtrl.searchS">
+      <div class="row">
+        <div class="col-md-12">
+          <button class="btn btn-default margin-left-default ng-scope pull-right" type="button"
+                  ng-click="sessionPoolOverviewCtrl.activeSearch()"
+                  ng-class="{'active': sessionPoolOverviewCtrl.active}"><i
+            class="fa fa-filter icon-left"></i>过滤条件
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="action-wrap" style="padding: 20px; background: hsla(225,13%,16%,1);"
+         ng-show="sessionPoolOverviewCtrl.active && sessionPoolOverviewCtrl.searchS">
+      <div class="col">
+        <span class="">查看时间：</span>
+
+        <div class="wrap">
+          <select class="select-styled padding-zero ng-pristine ng-valid ng-touched"
+                  ng-model="s" ng-init="s = 'h'; sessionPoolOverviewCtrl.search(s)"
+                  ng-change="sessionPoolOverviewCtrl.timeChange(s)">
+            <option value="h">过去1小时内</option>
+            <option value="d">过去24小时内</option>
+            <option value="w">过去1周内</option>
+          </select>
+        </div>
+      </div>
+      <div class="col">
+        <span class="">协议类型：</span>
+
+        <div class="wrap multiselect-parent btn-group dropdown-multiselect dropdown" style="margin-right: 6px;" dropdown>
+          <button type="button" id="poolove_button"
+                  class="dropdown-toggle dropdown-btn btn btn-default" dropdown-toggle>
+            <div class="multiselect-view">{{sessionPoolOverviewCtrl.selectedProto}}</div>
+            &nbsp;
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-form" role="menu"
+              style="overflow-x: hidden; overflow-y: auto; height: 180px; width: 210px;max-height: 288px;padding: 10px;" ng-click="app.stopEventPropagation($event)">
+            <li ng-repeat="proto in sessionPoolOverviewCtrl.protocol" style="padding: 2px 0">
+          <span>
+            <label style="padding-left: 8px"><input custom-checkbox
+                                                    ng-checked="sessionPoolOverviewCtrl.setSelectItem(proto.name,proto.selected)"
+                                                    type="checkbox" ng-model="proto.selected"
+                                                    style="width: 25px; padding-left:8px;"/>
+              <span style="margin-left: 4px;">{{proto.name}}</span></label>
+          </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col">
+        <span class="">源IP：</span>
+
+        <div class="wrap">
+          <input type="text" ng-model="sessionPoolOverviewCtrl.srcIp"
+                 class="ng-pristine ng-untouched ng-valid ng-empty">
+        </div>
+      </div>
+      <div class="col">
+        <span class="">目的IP：</span>
+
+        <div class="wrap">
+          <input type="text" ng-model="sessionPoolOverviewCtrl.dstIp"
+                 class="ng-pristine ng-untouched ng-valid ng-empty">
+        </div>
+      </div>
+      <div class="col col-button">
+        <button
+          class="btn btn-default btn-wide pull-right" ng-disabled="false"
+          ng-click="sessionPoolOverviewCtrl.search()"><i class="fa fa-check text-lime icon-left"></i>更新
+        </button>
+      </div>
+    </div>
+    <div class="chart-container position-relative">
+      <div class="toolbox">
+        <button class="btn btn-default" ng-click="sessionPoolOverviewCtrl.saveAsImage()">
+          <i class="fa fa-download icon-left"></i>
+          <span>保存为图片</span>
+        </button>
+        <button class="btn btn-default" ng-click="sessionPoolOverviewCtrl.restore()">
+          <i class="fa fa-refresh icon-left"></i>
+          <span>还原</span>
+        </button>
+        <button class="btn btn-default" ng-click="sessionPoolOverviewCtrl.goBack()" ng-show="sessionPoolOverviewCtrl.searchS === false">
+          <i class="fa fa-arrow-circle-left icon-left"></i>
+          <span>返回</span>
+        </button>
+      </div>
+      <div id="session_poolOverview" style="height: 650px;padding-top: 20px;">
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-lg" ng-if="!sessionPoolOverviewCtrl.searchS">
+    <div class="panel-body panel-body-light">
+      <dtable>
+        <audit-full-table></audit-full-table>
+      </dtable>
+    </div>
+  </div>
+</div>

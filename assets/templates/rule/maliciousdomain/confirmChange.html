@@ -1,0 +1,20 @@
+<div id="rule_maliciousdomain_modal_change">
+  <div class="modal-header">
+    <h3 ng-show="action === 'ALLOW'" class="modal-header-title">允许全部选中域名</h3>
+    <h3 ng-show="action === 'ALERT'" class="modal-header-title">警告全部选中域名</h3>
+    <h3 ng-show="action === 'DENY'" class="modal-header-title">阻断全部选中域名</h3>
+  </div>
+  <div class="modal-body-no-frame" style="padding-top: 10px">
+    <p ng-show="action === 'ALLOW'">确定更改全部选中域名的处理方式为允许？</p>
+    <p ng-show="action === 'ALERT'">确定更改全部选中域名的处理方式为警告？</p>
+    <p ng-show="action === 'DENY'">确定更改全部选中域名的处理方式为阻断？</p>
+  </div>
+  <div class="modal-footer">
+    <button id="rule_maliciousdomain_modal_change_button_ok" class="btn btn-default" ng-click="ok()"><i
+      class="fa fa-check icon-left text-lime"></i>确定
+    </button>
+    <button id="rule_maliciousdomain_modal_change_button_cancel" class="btn btn-default pull-left" ng-click="cancel()">
+      <i class="fa fa-close icon-left"></i>取消
+    </button>
+  </div>
+</div>

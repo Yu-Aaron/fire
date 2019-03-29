@@ -1,0 +1,137 @@
+<div class="panel panel-lg padding-zero ng-scope"
+     cg-busy="{promise:$root.antiPenetrationDeployTaskPromise,message:'部署中...'}">
+  <div class="panel-header panel-header-border ng-binding">
+    <h5><span class="panel-header-title">抗攻击</span>
+      <button id="anti-penetration-edit-but" class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+              ng-hide="antiPenetrationCtrl.editMode" ng-click="antiPenetrationCtrl.editChangeMode()" setting-privilege
+              privilege-name="STRATEGY_ANTI_ATTACK" privilege-require="MIXED" privilege-handle="disabled"><i
+        class="fa fa-pencil-square-o"></i></button>
+      <button id="anti-penetration-set-but"
+              class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back ng-hide"
+              ng-show="antiPenetrationCtrl.editMode" ng-disabled="antiPenetrationCtrl.setEnable"
+              ng-click="antiPenetrationCtrl.setAntiPenetrations()">
+        <i class="fa fa-check text-lime"></i>
+      </button>
+      <button id="anti-penetration-cancel-but"
+              class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back ng-hide"
+              ng-show="antiPenetrationCtrl.editMode" ng-click="antiPenetrationCtrl.cancelAntiPenetrations()">
+        <i class="fa fa-remove"></i>
+      </button>
+    </h5>
+  </div>
+  <div class="panel-body">
+    <div class="panel panel-lg padding-zero ng-scope">
+      <div class="panel-body panel-box">
+        <div class="box-hd">
+          <h5>启用全局抗DOS</h5>
+          <switch-toggle id="anti-penetration-dos-switch-but" disabled="!antiPenetrationCtrl.editMode"
+                         status="antiPenetrationCtrl.dos"
+                         change="antiPenetrationCtrl.changeAntiPenetrations(antiPenetrationCtrl.dosid,antiPenetrationCtrl.dos,'','')"
+                         on-label="启动" off-label="关闭"></switch-toggle>
+          <!--<label class="label-default label "
+                 ng-show="!antiPenetrationCtrl.editMode && !antiPenetrationCtrl.dos">关闭</label>
+          <label class="label-default label label-success"
+                 ng-show="!antiPenetrationCtrl.editMode && antiPenetrationCtrl.dos">开启</label>-->
+        </div>
+        <div class="row margin-lg">
+          <div class="col-md-2" ng-repeat="oneAnti in antiPenetrationCtrl.antiPenetrations"
+               ng-if="oneAnti.documentType===0 && oneAnti.attackType===0"
+               ng-hide="oneAnti.attackName==='Ping of Death' || oneAnti.attackName==='Tear Drop'">
+            <label class=" ng-binding ng-scope" style="cursor:pointer">
+              <input custom-checkbox type="checkbox" ng-model="oneAnti.enable" id="antiPenetration-checkbox-{{$index}}"
+                     ng-click="antiPenetrationCtrl.changeAntiPenetrations(oneAnti.antiAttackId,antiPenetrationCtrl.dos,'',oneAnti.enable)"
+                     ng-disabled="!antiPenetrationCtrl.dos || !antiPenetrationCtrl.editMode || oneAnti.attackName==='Ping of Death' || oneAnti.attackName==='Tear Drop'">
+              <span>{{oneAnti.attackName}}</span>
+              <!--<label for="tcpSynFlood" class="col-md-3 control-label">tcp syn flood</label>-->
+            </label>
+          </div>
+        </div>
+        <div class="row margin-lg" ng-if="oneAnti.documentType===1 && oneAnti.attackType===0"
+             ng-repeat="oneAnti in antiPenetrationCtrl.antiPenetrations">
+          <div class="col-md-2">
+            <label style="cursor:pointer">
+              <input custom-checkbox type="checkbox" id="antiPenetration-checkbox-{{$index}}"
+                     ng-click="antiPenetrationCtrl.changeAntiPenetrations(oneAnti.antiAttackId,antiPenetrationCtrl.dos,oneAnti.attackValue,oneAnti.enable)"
+                     ng-disabled="!antiPenetrationCtrl.dos ||  !antiPenetrationCtrl.editMode" ng-model="oneAnti.enable">
+              <span>{{oneAnti.attackName}}</span>
+            </label>
+          </div>
+          <div class="col-md-4">
+            <input id="antiPenetration-input-{{$index}}" type="text" ng-show="antiPenetrationCtrl.editMode"
+                   ng-disabled="!antiPenetrationCtrl.dos || !oneAnti.enable" autofocus=""
+                   ng-change="antiPenetrationCtrl.changeAntiPenetrations(oneAnti.antiAttackId,antiPenetrationCtrl.dos,oneAnti.attackValue,oneAnti.enable)"
+                   class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched" placeholder="阀值"
+                   ng-model="oneAnti.attackValue" maxlength="10">
+            <span ng-hide="antiPenetrationCtrl.editMode">{{oneAnti.attackValue}}</span>
+
+            <div class="input-alert-error"
+                 ng-show="oneAnti.enable && antiPenetrationCtrl.checkAttackValue(oneAnti.enable,oneAnti.attackValue)">
+              请输入大于10的整数{{oneAnti.attackName}}阈值
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel panel-lg padding-zero ng-scope">
+      <div class="panel-body panel-box">
+        <div class="box-hd">
+          <h5>启用全局扫描</h5>
+          <switch-toggle id="anti-penetration-sca-switch-but" disabled="!antiPenetrationCtrl.editMode"
+                         status="antiPenetrationCtrl.scanning"
+                         change="antiPenetrationCtrl.changeAntiPenetrations(antiPenetrationCtrl.scanningid,antiPenetrationCtrl.scanning,'','')"
+                         on-label="启动" off-label="关闭"></switch-toggle>
+          ​
+          <!--<label class="label-default label " ng-show="!antiPenetrationCtrl.editMode && !antiPenetrationCtrl.scanning">关闭</label>
+          <label class="label-default label label-success"
+                 ng-show="!antiPenetrationCtrl.editMode && antiPenetrationCtrl.scanning">开启</label>-->
+        </div>
+        <div class="row margin-lg" ng-if="oneAnti.attackType===1 && oneAnti.documentType===1"
+             ng-repeat="oneAnti in antiPenetrationCtrl.antiPenetrations">
+          <div class="col-md-2">
+            <label style="cursor:pointer">
+              <input custom-checkbox type="checkbox" id="antiPenetration-checkbox-{{$index}}"
+                     ng-disabled="!antiPenetrationCtrl.scanning || !antiPenetrationCtrl.editMode"
+                     ng-click="antiPenetrationCtrl.changeAntiPenetrations(oneAnti.antiAttackId,antiPenetrationCtrl.scanning,oneAnti.attackValue,oneAnti.enable);antiPenetrationCtrl.testa(oneAnti.enable)"
+                     ng-model="oneAnti.enable">
+              <span>{{oneAnti.attackName}}</span>
+            </label>
+          </div>
+          <div class="col-md-4">
+            <input id="antiPenetration-input-{{$index}}" type="text" ng-show="antiPenetrationCtrl.editMode"
+                   ng-disabled="!antiPenetrationCtrl.scanning || !oneAnti.enable" autofocus=""
+                   class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched" placeholder="阀值"
+                   ng-change="antiPenetrationCtrl.changeAntiPenetrations(oneAnti.antiAttackId,antiPenetrationCtrl.scanning,oneAnti.attackValue,oneAnti.enable)"
+                   ng-model="oneAnti.attackValue" maxlength="10">
+            <span ng-hide="antiPenetrationCtrl.editMode">{{oneAnti.attackValue}}</span>
+
+            <div class="input-alert-error"
+                 ng-show="oneAnti.enable && antiPenetrationCtrl.checkAttackValue(oneAnti.enable,oneAnti.attackValue)">
+              请输入大于10的整数{{oneAnti.attackName}}阈值
+            </div>
+          </div>
+        </div>
+        <div class="row margin-lg" ng-if="oneAnti.attackType===1 && oneAnti.documentType===2"
+             ng-repeat="oneAnti in antiPenetrationCtrl.antiPenetrations">
+          <div class="col-md-2 text">
+            {{oneAnti.attackName}}
+          </div>
+          <div class="col-md-2">
+            <input id="antiPenetration-input-time" type="text" ng-show="antiPenetrationCtrl.editMode" autofocus=""
+                   ng-disabled="!antiPenetrationCtrl.scanning || !antiPenetrationCtrl.isDisabledTimeText"
+                   class="form-control ng-pristine ng-valid ng-valid-maxlength ng-touched" placeholder="1"
+                   ng-change="antiPenetrationCtrl.changeAntiPenetrations(oneAnti.antiAttackId,antiPenetrationCtrl.scanning,oneAnti.attackValue,oneAnti.enable)"
+                   ng-model="oneAnti.attackValue" maxlength="10">
+
+            <div class="input-alert-error" ng-show="antiPenetrationCtrl.isShowTimeWarn">
+              {{antiPenetrationCtrl.intervalErrorMessage}}
+            </div>
+            <span ng-hide="antiPenetrationCtrl.editMode">{{oneAnti.attackValue}}</span>
+          </div>
+          <div class="col-md-2 text" ng-show="oneAnti.attackValue || antiPenetrationCtrl.editMode">
+            秒
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

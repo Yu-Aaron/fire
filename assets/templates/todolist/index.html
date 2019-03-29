@@ -1,0 +1,29 @@
+<div class="main-content ng-scope">
+  <div class="tab-container" ng-controller="TabCtrl as tab">
+    <ul class="nav nav-tabs nav-tabs-lg nav-tabs-red-orange nav-tabs-top-border"
+        ng-init="tab.active || tab.activatePanel('todo')">
+      <li ng-class="{ active: tab.isActive('todo') }">
+        <a href="#" ng-click="tab.activatePanel('todo')"><i class="fa fa-tasks icon-left"></i>
+          <span>待办事宜</span>
+        </a>
+      </li>
+      <li ng-class="{ active: tab.isActive('done') }">
+        <a href="#" ng-click="tab.activatePanel('done')"><i class="fa fa-calendar-check-o"></i>
+          <span>已办事宜</span>
+        </a>
+      </li>
+    </ul>
+    <div ng-switch on="tab.active" class="tab-container-body">
+      <div ng-switch-when="todo">
+        <dtable>
+          <todo-list-table></todo-list-table>
+        </dtable>
+      </div>
+      <div ng-switch-when="done">
+        <dtable>
+          <done-list-table></done-list-table>
+        </dtable>
+      </div>
+    </div>
+  </div>
+</div>

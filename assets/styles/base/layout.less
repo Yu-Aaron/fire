@@ -1,0 +1,117 @@
+// html and body
+html,
+body {
+  //background: url(/images/bg/bg.png);
+  height: 100%;
+  min-width: 1280px;
+  margin: 0;
+  font-size: 12px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+html, body, .main-container {
+  color: #414457;
+}
+// container
+.main-container {
+  // overflow-x: hidden;
+  // overflow-y: auto;
+  // height: ~"calc(100vh - 124px)";
+  position: relative;
+  min-width: @min-screen-size;
+  background-color: @bg-cyan;
+  //background: linear-gradient(to right,  rgba(255,255,255,0) 0%,rgba(255,255,255,0) 1%,rgba(255,255,255,0.1) 35%,rgba(255,255,255,0.1) 65%,rgba(255,255,255,0) 100%);
+  width: 100%;
+  height: calc(~'100vh - 78px'); //100vh
+}
+
+.content-scrollable {
+  overflow: auto;
+  background-color: @gray88;
+  padding: 10px;
+  height: ~"calc(100vh - 179px)";
+  &.margin-sidebar-narrow {
+    margin-left: @sidebar-narrow-width;
+  }
+}
+
+// links
+.link-white {
+  color: @color-font;
+  &:hover,
+  &:active,
+  &:focus {
+    color: @white;
+  }
+}
+
+.link-blue {
+  color: @skyblue;
+  text-decoration: underline;
+}
+
+a,
+a:active,
+a:hover:enabled,
+a:focus,
+.btn {
+  outline: none !important;
+}
+
+[ng-click] {
+  cursor: pointer;
+}
+
+.modal[ng-click] {
+  cursor: auto;
+}
+
+canvas {
+  outline-style: none;
+  outline-width: 0;
+}
+
+// list styles
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+// main content
+.main-content {
+  // position: absolute;
+  // top: 0;
+  // left: 140px;
+  // right: 0;
+  // bottom: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: @main-content-padding;
+  border-radius: 2px;
+  height: 100%;
+}
+
+.main-content-with-nav {
+  // width: calc(~"100% - " (@left-navbar-width-expanded) ~"- " (@main-content-margin));
+  .transition(width @transition-speed-default;);
+}
+
+// expanded navbar
+.main-content-with-nav.navbar-collapsed {
+  left: 80px;
+  // width: calc(~"100% - " (@left-navbar-width-collapsed) ~"- " (@main-content-margin));
+}
+
+.padded-rows {
+  .row {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+}
+
+.warning {
+  color: #FF9900;
+}

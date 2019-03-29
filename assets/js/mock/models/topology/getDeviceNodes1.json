@@ -1,0 +1,25 @@
+[
+    {
+        "id": 45,
+        "topologyId": "999c3f9c-d209-417b-9694-62e464534b0f",
+        "orderID": 0,
+        "name": "DPI-IPS-Modbus",
+        "zoneName": "NA",
+        "type": "IPS",
+        "x": 139,
+        "y": 319,
+        "ports": [
+            "p0",
+            "p1"
+        ],
+        "deviceId": "92b1a79c-c98e-4224-a505-a1763f77c814",
+        "importance": 1,
+        "nodeZoneId": "31df69a9-aecd-4e20-8992-d2527d870dde",
+        "online": 0,
+        "nodeProperty": "AllRules",
+        "_nodeProtocolLinks": [],
+        "createdAt": "2015-11-27T22:35:59Z",
+        "updatedAt": "2015-11-27T22:35:59Z",
+        "_subCategory": "NORMAL"
+    }
+]

@@ -1,0 +1,18 @@
+/* ----------------------------------------
+  Button Group
+  Overwrites default margins defined in
+  bootstrap.
+---------------------------------------- */
+
+// Wrap buttons above a table with .btn-toolbar to
+// get proper spacing between buttons and other controls
+.btn-toolbar {
+  margin-left: -10px;
+
+  > .btn,
+  > .btn-group,
+  > select,
+  > .input-group {
+    margin-left: 10px;
+  }
+}

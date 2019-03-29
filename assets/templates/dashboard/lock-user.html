@@ -1,0 +1,33 @@
+<div class="page-login"
+     style="position: absolute; width: 100%; height: 100%; background-size: 140%; background-image: url('/images/placeholders/login_bg_u_99.jpg'); background-repeat: no-repeat; z-index: 99999; top: 0;">
+  <div class="login-header">
+    <img class="login-header-logo" width="200" ng-src="/images/logo/{{$root.logo.loginLogo}}.png"/>
+  </div>
+  <div class="row login-body" style="width:533px;">
+    <div class="col-xs-12 login-panel-left">
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <img width="500px" src="/images/product-logo.png">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 login-panel" style="margin-left: 18px;">
+          <span class="login-panel-title">解除会话锁定</span>
+          <div>
+            <div style="height: 28px; font-size: 16px; margin-top: 35px;">{{dashboard.user()}}</div>
+            <input id="login_text_password" autofocus class="login-input login-input-password" type="password"
+                   placeholder="登录密码" ng-model="dashboard.usr.password" ng-keyup="dashboard.pwKeyPress($event.keyCode)"><i
+            class="fa fa-lock login-input-password-icon"></i>
+            <input class="checkbox-login" type="checkbox"><span>{{getName('rememberUser')}}</span>
+          </div>
+          <button id="login_button_loginButton" class="btn btn-primary margin-top-lg btn-login"
+                  ng-click="dashboard.unlockUsr()" style="position: absolute; left: 165px;">{{getName('loginButton')}}
+            登录平台
+          </button>
+          <i class="fa fa-chevron-right login-input-submit-icon" style="right: 175px;"></i>
+          <div class="login-err">{{dashboard.error}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

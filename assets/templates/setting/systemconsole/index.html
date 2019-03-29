@@ -1,0 +1,861 @@
+<div class="tab-container margin-top-medium system-config-page system-upgrade" ng-controller="TabCtrl as tab">
+  <ul class="nav nav-tabs nav-tabs-lime" ng-init="tab.active || tab.activatePanel(sysconsole.system_console_init_tab)">
+    <li id="setting-systemconsole_li_systemSetting" ng-class="{ active: tab.isActive('SYSTEM_SETTING') }"
+        ng-if="sysconsole.tabEnabled('SYSTEM_SETTING')" privilege="SETTINGS_POLICY" disable="true">
+      <a href="#" ng-click="tab.activatePanel('SYSTEM_SETTING')">
+        <span>策略配置</span>
+      </a>
+    </li>
+    <li id="setting-systemconsole_li_systemReset" ng-class="{ active: tab.isActive('SYSTEM_RESET') }"
+        ng-if="sysconsole.tabEnabled('SYSTEM_RESET')" privilege="SETTINGS_PLATFORM_REBOOT" disable="true">
+      <a href="#" ng-click="tab.activatePanel('SYSTEM_RESET')">
+        <span>系统重置</span>
+      </a>
+    </li>
+    <li id="setting-systemconsole_li_systemUpgrade" ng-class="{ active: tab.isActive('SYSTEM_UPGRADE') }"
+        ng-if="($root.userRoleTypeC05!==1 && sysconsole.tabEnabled('SYSTEM_UPGRADE'))"
+        privilege="SETTINGS_PLATFORM_UPGRADE_RESET" disable="true">
+      <a href="#" ng-click="tab.activatePanel('SYSTEM_UPGRADE')">
+        <span>系统升级</span>
+      </a>
+    </li>
+    <li id="setting-systemconsole_li_ipConfig" ng-class="{ active: tab.isActive('IP_CONFIG') }"
+        ng-if="$root.userRoleTypeC05!==1 && sysconsole.tabEnabled('IP_CONFIG')" privilege="SETTINGS_IP_LOGIN"
+        disable="true">
+      <a href="#" ng-click="tab.activatePanel('IP_CONFIG')">
+        <span>远程登录IP控制</span>
+      </a>
+    </li>
+    <li id="setting-systemconsole_li_protocolConfig" ng-class="{ active: tab.isActive('PROTOCOL_SETTING') }"
+        ng-if="sysconsole.tabEnabled('PROTOCOL_SETTING')&&$root.hideArea(['JA00'])" privilege="SETTINGS_PROTOCOL"
+        disable="true">
+      <a href="#" ng-click="tab.activatePanel('PROTOCOL_SETTING')">
+        <span>协议配置</span>
+      </a>
+    </li>
+    <li id="setting-systemconsole_li_protocolPortSetting" ng-class="{ active: tab.isActive('PROTOCOL_PORT_SETTING') }"
+        privilege="PRIVATE_PROTOCOL" ng-if="hideArea(['-X03']) && sysconsole.tabEnabled('PROTOCOL_PORT_SETTING')">
+      <a href="#" ng-click="tab.activatePanel('PROTOCOL_PORT_SETTING')">
+        <span>端口映射</span>
+      </a>
+    </li>
+    <li id="setting-systemconsole_li_debugInfoCollection" ng-class="{ active: tab.isActive('DEBUG_INFO_COLLECTION') }"
+        ng-if="sysconsole.tabEnabled('DEBUG_INFO_COLLECTION')" privilege="DEVICE_MANAGEMENT" disable="true">
+      <a href="#" ng-click="tab.activatePanel('DEBUG_INFO_COLLECTION')">
+        <span>调试信息收集</span>
+      </a>
+    </li>
+    <li id="setting-systemconsole_li_confBackup" ng-class="{ active: tab.isActive('CONFIGURATION_BACKUP') }"
+        ng-if="sysconsole.tabEnabled('CONFIGURATION_BACKUP')" privilege="DEVICE_MANAGEMENT" disable="true">
+      <a href="#" ng-click="tab.activatePanel('CONFIGURATION_BACKUP')">
+        <span>系统备份</span>
+      </a>
+    </li>
+    <li id="setting-systemconsole_li_runningMode" ng-class="{ active: tab.isActive('RUNNING_MODE') }"
+        ng-if="sysconsole.tabEnabled('RUNNING_MODE')" disable="true">
+      <a href="#" ng-click="tab.activatePanel('RUNNING_MODE')">
+        <span>管理模式</span>
+      </a>
+    </li>
+  </ul>
+  <div ng-switch on="tab.active">
+    <div class="tab-container-body" ng-switch-when="SYSTEM_SETTING" privilege="SETTINGS_POLICY" disable="true">
+      <div class="row">
+        <div class="panel-title">
+          <h3>基本设置</h3>
+        </div>
+        <div class="col-md-6">
+          <div id="setting_systemconsole_container_editIPAddress" class="panel panel-lg padding-zero ip-config-panel"
+               ng-if="$root.userRoleTypeC05!==1">
+            <div class="panel-header panel-header-border">
+              {{$root.PLATFORM_NAME}}网络端口配置<i class="fa fa-info-circle fa-beside-button-left"></i>
+              <button id="setting-systemconsole_button_editIPAddress"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-hide="sysconsole.editMode.ipaddress||!sysconsole.editRight"
+                      ng-disabled="sysconsole.disableEditIPButton" ng-click="sysconsole.editIPAddress()"><i
+                class="fa fa-pencil-square-o"></i></button>
+              <button id="setting-systemconsole_button_changeIPAddress"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.ipaddress"
+                      ng-disabled="!sysconsole.validPlatformIP || !sysconsole.validPlatformNetMask || !sysconsole.validPlatformGateWay"
+                      ng-click="sysconsole.changeIPAddress()"><i class="fa fa-check text-lime"></i></button>
+              <button id="setting-systemconsole_button_cancelIPAddress"
+                      class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.ipaddress" ng-click="sysconsole.cancelIPAddress()"><i
+                class="fa fa-remove"></i></button>
+            </div>
+            <div class="panel-body">
+              <form name="ipConf">
+                <div class="row">
+                  <div class="col-md-3">
+                    <span>主机名称</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span ng-show="sysconsole.editMode.ipaddress"><input id="setting-systemconsole_text_hostName"
+                                                                         name="hostName" type="text"
+                                                                         ng-model="sysconsole.hostName" required
+                                                                         ng-change="sysconsole.validateHostName(sysconsole.hostName)"
+                                                                         maxlength="25"/></span>
+                    <span ng-hide="sysconsole.editMode.ipaddress"> {{sysconsole.hostName}}</span>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="input-alert-error"
+                          ng-show="sysconsole.editMode.ipaddress && !sysconsole.validPlatformHostName">请输入有效主机名称</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <!--<span>{{$root.PLATFORM_NAME}}IP地址</span>-->
+                    <span>IP地址</span>
+                  </div>
+                  <div class="col-md-4">
+                    <span ng-show="sysconsole.editMode.ipaddress"><input id="setting-systemconsole_text_ipAddress"
+                                                                         name="ipAddress" type="text"
+                                                                         ng-model="sysconsole.ipAddress" required
+                                                                         ng-change="sysconsole.validatePlatformIP(sysconsole.ipAddress)"
+                                                                         maxlength="15"/></span>
+                    <span ng-hide="sysconsole.editMode.ipaddress"> {{sysconsole.ipAddress}}</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="input-alert-error"
+                          ng-show="sysconsole.editMode.ipaddress && !sysconsole.validPlatformIP">请输入有效IP地址</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <span>子网掩码</span>
+                  </div>
+                  <div class="col-md-4">
+                    <span ng-show="sysconsole.editMode.ipaddress"><input id="setting-systemconsole_text_subnetMask"
+                                                                         name="netMask" type="text"
+                                                                         ng-model="sysconsole.netMask" required
+                                                                         ng-change="sysconsole.validatePlatformNetMask(sysconsole.netMask)"
+                                                                         maxlength="15"/></span>
+                    <span ng-hide="sysconsole.editMode.ipaddress"> {{sysconsole.netMask}}</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="input-alert-error"
+                          ng-show="sysconsole.editMode.ipaddress && !sysconsole.validPlatformNetMask">请输入有效子网掩码</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <span>默认网关</span>
+                  </div>
+                  <div class="col-md-4">
+                    <span ng-show="sysconsole.editMode.ipaddress"><input id="setting-systemconsole_text_gateWay"
+                                                                         name="gateWay" type="text"
+                                                                         ng-model="sysconsole.gateWay" required
+                                                                         ng-change="sysconsole.validatePlatformGateWay(sysconsole.gateWay)"
+                                                                         maxlength="15"/></span>
+                    <span ng-hide="sysconsole.editMode.ipaddress"> {{sysconsole.gateWay}}</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="input-alert-error"
+                          ng-show="sysconsole.editMode.ipaddress && !sysconsole.validPlatformGateWay">请输入有效默认网关</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <span>主DNS服务器</span>
+                  </div>
+                  <div class="col-md-4">
+                    <span ng-show="sysconsole.editMode.ipaddress"><input id="setting-systemconsole_text_preferDns"
+                                                                         name="preferDns" type="text"
+                                                                         ng-model="sysconsole.preferDns" required
+                                                                         ng-change="sysconsole.validatePlatformPreferDns(sysconsole.preferDns)"
+                                                                         maxlength="15"/></span>
+                    <span ng-hide="sysconsole.editMode.ipaddress"> {{sysconsole.preferDns}}</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="input-alert-error"
+                          ng-show="sysconsole.editMode.ipaddress && !sysconsole.validPreferDns">请输入有效主DNS地址</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                    <span>备用DNS服务器</span>
+                  </div>
+                  <div class="col-md-4">
+                      <span ng-show="sysconsole.editMode.ipaddress"><input id="setting-systemconsole_text_spareDns"
+                                                                           name="spareDns" type="text"
+                                                                           ng-model="sysconsole.spareDns" required
+                                                                           ng-change="sysconsole.validatePlatformSpareDns(sysconsole.preferDns,sysconsole.spareDns)"
+                                                                           maxlength="15"/></span>
+                    <span ng-hide="sysconsole.editMode.ipaddress"> {{sysconsole.spareDns}}</span>
+                  </div>
+                  <div class="col-md-5">
+                      <span class="input-alert-error"
+                            ng-show="sysconsole.editMode.ipaddress && !sysconsole.validSpareDns">请输入有效辅DNS地址</span>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+          </div>
+          <div id="setting_systemconsole_container_editNtpSync" class="panel panel-lg padding-zero"
+               ng-if="$root.userRoleTypeC05!==1 && !$root.isJAXX">
+            <div class="panel-header panel-header-border">
+              时钟同步<i class="fa fa-info-circle fa-beside-button-left"></i>
+              <button id="setting-systemconsole_button_editNtpSync"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-hide="sysconsole.editMode.ntpSync||!sysconsole.editRight"
+                      ng-disabled="sysconsole.disableEditTimeSyncButton" ng-click="sysconsole.editNtpSync()"><i
+                class="fa fa-pencil-square-o"></i></button>
+              <button id="setting-systemconsole_button_changeNtpSync"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.ntpSync" ng-click="sysconsole.changeNtpSync()"
+                      ng-disabled="sysconsole.disableNtpSubmit"><i class="fa fa-check text-lime"></i></button>
+              <button id="setting-systemconsole_button_cancelNtpSync"
+                      class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.ntpSync" ng-click="sysconsole.cancelNtpSync()"><i
+                class="fa fa-remove"></i></button>
+            </div>
+            <div class="panel-body">
+              <form name="timeConf">
+                <div class="row">
+                  <div class="col-md-3 system-time-sync-option">
+                    <div class="radio-button"><input ng-class="{checked:!sysconsole.setActivateNtp}" type="radio"
+                                                     ng-model="sysconsole.setActivateNtp" ng-value="false"
+                                                     ng-disabled="!sysconsole.editMode.ntpSync"></div>
+                    <div class="option-title">手动输入时间</div>
+                  </div>
+                  <div class="col-md-9">
+                    <div class="row">
+                      <div class="col-md-3 margin-top-zero">系统时间:</div>
+                      <div class="col-md-6 margin-top-zero"
+                           ng-hide="!sysconsole.editMode.ntpSync || sysconsole.setActivateNtp">
+                        <date-picker ng-model="sysconsole.systemDateInput" ng-change="sysconsole.validateSystemTime()"
+                                     placeholder="sysconsole.serverTime"
+                                     ng-disabled="!sysconsole.editMode.ntpSync || sysconsole.setActivateNtp"
+                                     click="sysconsole.stopTimeout()" control="sysconsole.datePickerCtrl"></date-picker>
+                        <time-picker ng-model="sysconsole.systemTimeInput" ng-change="sysconsole.validateSystemTime()"
+                                     placeholder="sysconsole.serverTime"
+                                     ng-disabled="!sysconsole.editMode.ntpSync || sysconsole.setActivateNtp"
+                                     click="sysconsole.stopTimeout()" control="sysconsole.timePickerCtrl"></time-picker>
+                      </div>
+                      <div class="col-md-3 margin-top-zero import-button"
+                           ng-show="sysconsole.editMode.ntpSync && !sysconsole.setActivateNtp">
+                        <button id="import_system_time" class="btn btn-default btn-sm"
+                                ng-click="sysconsole.importLocalTime();sysconsole.validateSystemTime()">导入本机时间
+                        </button>
+                      </div>
+                      <div class="col-md-9 margin-top-zero"
+                           ng-show="!sysconsole.editMode.ntpSync || sysconsole.setActivateNtp">
+                        {{sysconsole.serverTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3 margin-top-zero">本机时间:</div>
+                      <div class="col-md-9 margin-top-zero local-time">{{sysconsole.localTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+                      </div>
+                    </div>
+                    <div class="row" ng-show="sysconsole.editMode.ntpSync">
+                      <i class="fa fa-exclamation-triangle"
+                         style="color:#fe540f;margin-left:13px;margin-right:4px;"></i>手动更改系统时间会导致{{$root.PLATFORM_NAME}}重启
+                    </div>
+                  </div>
+                </div>
+                <div class="row ntp-row">
+                  <div class="col-md-3 system-time-sync-option">
+                    <div class="radio-button"><input ng-class="{checked:sysconsole.setActivateNtp}" type="radio"
+                                                     ng-model="sysconsole.setActivateNtp" ng-value="true"
+                                                     ng-disabled="!sysconsole.editMode.ntpSync"></div>
+                    <div class="option-title">NTP自动同步</div>
+                  </div>
+                  <div class="col-md-9" ng-show="sysconsole.setActivateNtp">
+                    <div class="row">
+                      <div class="col-md-3 margin-top-zero">服务器IP地址:</div>
+                      <div class="col-md-9 margin-top-zero">
+                        <span ng-show="sysconsole.setActivateNtp && sysconsole.editMode.ntpSync"><input
+                          style="width:52%" id="setting-systemconsole_text_ntpIp" name="ntpIp" type="text"
+                          ng-model="sysconsole.ntpIpEnter" class="input-md"
+                          ng-change="sysconsole.validateNtpIP(sysconsole.ntpIpEnter)"/></span>
+                        <div ng-hide="sysconsole.editMode.ntpSync">{{sysconsole.ntpIp || ''}}</div>
+                        <span class="input-alert-error"
+                              ng-show="sysconsole.editMode.ntpSync && !sysconsole.validNtpIP && sysconsole.ntpIpEnter.length">请输入合法IP地址</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-lg padding-zero security-config-panel" ng-hide="sysconsole.noViewRight"
+               ng-if="$root.userRoleTypeC05!==1">
+            <div class="panel-header panel-header-border">
+              安全配置<i class="fa fa-info-circle fa-beside-button-left"></i>
+              <button id="setting-systemconsole_button_editSecurity"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-hide="sysconsole.editMode.security||!sysconsole.editRight"
+                      ng-click="sysconsole.editSecurity()"><i class="fa fa-pencil-square-o"></i></button>
+              <button id="setting-systemconsole_button_changeSecurityStatus"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.security" ng-click="sysconsole.changeSecurityStatus()"><i
+                class="fa fa-check text-lime"></i></button>
+              <button id="setting-systemconsole_button_cancelSecurityStatus"
+                      class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.security" ng-click="sysconsole.cancelSecurityStatus()"><i
+                class="fa fa-remove"></i></button>
+            </div>
+            <div class="panel-body">
+              <form name="securityConf">
+                <div class="row fixed-height-row">
+                  <div class="col-md-3">
+                    <span>系统强制登出时间</span>
+                  </div>
+                  <div class="col-md-4">
+                    <span ng-show="sysconsole.editMode.security"><input id="setting-systemconsole_text_systemTime"
+                                                                        name="systemTime" type="text"
+                                                                        ng-model="sysconsole.timeoutStrategy.strategyRules[0].ruleData"
+                                                                        class="input-3-letter"
+                                                                        ng-pattern="/^([5-9]|[1-5][0-9]|[6][0])$/"
+                                                                        required/> 分钟</span>
+                    <span ng-show="!sysconsole.editMode.security" class="move-left">{{sysconsole.timeoutStrategy.strategyRules[0].ruleData}} 分钟</span>{{}}
+                  </div>
+                  <div class="col-md-5">
+                    <span class="input-alert-error"
+                          ng-show="(securityConf.systemTime.$error.pattern || !securityConf.systemTime.$valid)&&sysconsole.editMode.security">登录时间请确认在5-60分钟</span>
+                  </div>
+                </div>
+                <div class="row fixed-height-row">
+                  <div class="col-md-3">
+                    <span>可尝试登录次数</span>
+                  </div>
+                  <div class="col-md-4">
+                    <span ng-show="sysconsole.editMode.security"><input id="setting-systemconsole_text_loginTry"
+                                                                        name="loginTry" type="text"
+                                                                        ng-model="sysconsole.maxLoginTimesStrategy.strategyRules[0].ruleData"
+                                                                        class="input-3-letter"
+                                                                        ng-pattern="/^([5-9]|[1][0])$/"
+                                                                        required/> 次</span>
+                    <span ng-show="!sysconsole.editMode.security" class="move-left">{{sysconsole.maxLoginTimesStrategy.strategyRules[0].ruleData}} 次</span>
+                  </div>
+                  <div class="col-md-5">
+                    <span class="input-alert-error"
+                          ng-show="(securityConf.loginTry.$error.pattern || !securityConf.loginTry.$valid)&&sysconsole.editMode.security">登录次数请确认在5-10次</span>
+                  </div>
+                </div>
+                <div class="row fixed-height-row">
+                  <div class="col-md-3">
+                    <span class="sysconsole-dropdown-label">密码强度设置</span>
+                  </div>
+                  <div class="col-md-3">
+                    <label ng-show="sysconsole.editMode.security">
+                      <div class="select-styled">
+                        <select id="setting-systemconsole_select_passwordStrength" name="passwordStrength"
+                                ng-model="sysconsole.passwordComplexityStrategy.strategyRules[0].ruleData"
+                                ng-change="sysconsole.changePasswordComplexityStrategyArray(sysconsole.passwordComplexityStrategy.strategyRules[0].ruleData)"
+                                ng-options="pass for pass in sysconsole.passwordComplexityStrategyArray"></select>
+                      </div>
+                    </label>
+                    <div class="select read-only-mode" ng-show="!sysconsole.editMode.security">
+                      {{sysconsole.passwordComplexityStrategy.strategyRules[0].ruleData}}
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="fa-beside-button-left"><i class="fa fa-info-circle fa-beside-button-right"></i>{{sysconsole.passwordComplexityStrategyMessage}}</span>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+          </div>
+          <div class="panel padding-zero" ng-if="false">
+            <div class="panel-header panel-header-border">
+              通信加密<i class="fa fa-info-circle fa-beside-button-left"></i>
+              <button id="setting-systemconsole_button_encryption"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-hide="sysconsole.editMode.encryption||!sysconsole.editRight"
+                      ng-disabled="sysconsole.disableEditEncryptionButton" ng-click="sysconsole.editEncryption()"><i
+                class="fa fa-pencil-square-o"></i></button>
+              <button id="setting-systemconsole_button_encryptionConfirm"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.encryption" ng-click="sysconsole.changeEncryption()"><i
+                class="fa fa-check text-lime"></i></button>
+              <button id="setting-systemconsole_button_cancelEncryption"
+                      class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.encryption" ng-click="sysconsole.cancelEncryption()"><i
+                class="fa fa-remove"></i></button>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="toggle-bg toggle-alternate"
+                       ng-class="{true: 'on', false: 'off'}[sysconsole.encryptionStrategy.strategyRules[0].ruleData]">
+                    <label
+                      ng-class="{true: 'on', false: 'off'}[sysconsole.encryptionStrategy.strategyRules[0].ruleData]">{{sysconsole.encryptionStrategy.strategyRules[0].ruleData
+                      === 'true' ? '开启':'关闭'}}</label>
+                    <input id="setting-systemconsole_checkbox_ActiveEncryptionSwitch" type="checkbox" name="toggle"
+                           ng-disabled="!sysconsole.editMode.encryption"
+                           ng-model="sysconsole.encryptionStrategy.strategyRules[0].ruleData" ng-true-value="'true'"
+                           ng-false-value="'false'">
+                    <span class="switch"
+                          ng-class="{true: 'on', false: 'off'}[sysconsole.encryptionStrategy.strategyRules[0].ruleData]"></span>
+                  </div>
+                </div>
+                <div class="col-md-8">
+                  通信加密开关
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="panel-title">
+          <h3>自动删除策略</h3>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-lg padding-zero storage-config-panel" ng-hide="sysconsole.noViewRight"
+               ng-if="$root.userRoleTypeC05!==1">
+            <div class="panel-header panel-header-border">
+              存储管理配置<i class="fa fa-info-circle fa-beside-button-left"></i>
+              <button id="setting-systemconsole_button_editStorage"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-hide="sysconsole.editMode.storage||!sysconsole.editRight" ng-click="sysconsole.editStorage()">
+                <i class="fa fa-pencil-square-o"></i></button>
+              <button id="setting-systemconsole_button_changeStorageStatus"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.storage" ng-click="sysconsole.changeStorageStatus()"
+                      ng-disabled="storageConf.storageSpace.$error.pattern||!storageConf.storageSpace.$valid"><i
+                class="fa fa-check text-lime"></i></button>
+              <button id="setting-systemconsole_button_cancelStorageStatus"
+                      class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.storage" ng-click="sysconsole.cancelStorageStatus()"><i
+                class="fa fa-remove"></i></button>
+            </div>
+            <div class="panel-body">
+              <form name="storageConf">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="content-text">设置储存空间上限为</div>
+                    <span ng-show="sysconsole.editMode.storage"><input id="setting-systemconsole_text_storageSpace"
+                                                                       class="input-3-letter" name="storageSpace"
+                                                                       type="text"
+                                                                       ng-model="sysconsole.storageStrategy.strategyRules[0].ruleData"
+                                                                       ng-pattern="/^([6-8][0-9]|[9][0])$/"
+                                                                       class="input-sm" required/>%</span>
+                    <span ng-hide="sysconsole.editMode.storage">{{sysconsole.storageStrategy.strategyRules[0].ruleData}}%</span>
+                    <div class="content-text">，超过上限系统将会报警。</div>
+                  </div>
+                  <div class="col-md-6">
+                    <span class="input-alert-error"
+                          ng-show="(storageConf.storageSpace.$error.pattern||!storageConf.storageSpace.$valid)&&sysconsole.editMode.storage"> 请设置报警范围为60%-90%的整数</span>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-6">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-lg padding-zero log-reset-config-panel">
+            <div class="panel-header panel-header-border">
+              定期删除信息<i class="fa fa-info-circle fa-beside-button-left"></i>
+              <button id="setting-systemconsole_button_editInfor"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-hide="sysconsole.editMode.scheduleDelete||!sysconsole.editRight"
+                      ng-disabled="sysconsole.disableEditTimeSyncButton" ng-click="sysconsole.editScheduleDelete()"><i
+                class="fa fa-pencil-square-o"></i></button>
+              <button id="setting-systemconsole_button_editInforCheck"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.scheduleDelete" ng-disabled="false"
+                      ng-click="sysconsole.changeScheduleDelete()"><i class="fa fa-check text-lime"></i></button>
+              <button id="setting-systemconsole_button_editInforClose"
+                      class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.scheduleDelete" ng-click="sysconsole.cancelScheduleDelete()"><i
+                class="fa fa-remove"></i></button>
+            </div>
+            <div class="panel-body">
+              <form name="timeConf">
+                <div class="row">
+                  <div class="col-md-12">
+                    <span>定期自动删除{{$root.PLATFORM_NAME}}上所有日志和系统记录</span>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="sysconsole-dropdown-label">保存周期</span>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="row">
+                      <div class="col-md-12 margin-top-zero">
+                        <div class="select-styled" ng-if="sysconsole.editMode.scheduleDelete">
+                          <select class="select select-styled log-delete-select"
+                                  ng-model="sysconsole.logDeletionManagementTmp">
+                            <option value="-1">永久</option>
+                            <option disabled>______________</option>
+                            <option value="90">90天</option>
+                            <option value="180">180天</option>
+                            <option value="365">365天</option>
+                          </select>
+                        </div>
+                        <div class="select read-only-mode" ng-show="!sysconsole.editMode.scheduleDelete">
+                          {{sysconsole.logDeletionManagementTmp === '-1' ? "永久" : sysconsole.logDeletionManagementTmp +
+                          "天"}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-3 margin-top-zero" ng-if="sysconsole.logDeletionManagementTmp !== '-1'">
+                    <span class="sysconsole-dropdown-label">每天删除时间</span>
+                  </div>
+                  <div class="col-md-6 margin-top-zero" ng-if="sysconsole.logDeletionManagementTmp !== '-1'">
+                    <div class="row">
+                      <div class="col-md-12 margin-top-zero">
+                        <div ng-if="sysconsole.editMode.scheduleDelete">
+                          <form name="sysconsole.scheduleDelete.time">
+                            <label>
+                              <!-- <input type="time" placeholder="HH:mm" ng-model="sysconsole.logDeletionTimeTmp" style="width: 100px;"/> -->
+                              <time-picker ng-model="sysconsole.logDeletionTimeTmp" style="width: 130px;"></time-picker>
+                            </label>
+                          </form>
+                        </div>
+                        <div ng-if="!sysconsole.editMode.scheduleDelete" style="margin-top:9px;margin-left:13px">
+                          {{((sysconsole.logDeletionTimeTmp.getHours()<10)?'0' +
+                          sysconsole.logDeletionTimeTmp.getHours(): sysconsole.logDeletionTimeTmp.getHours()) + ':' +
+                          (sysconsole.logDeletionTimeTmp.getMinutes()<10? '0' +
+                          sysconsole.logDeletionTimeTmp.getMinutes() : sysconsole.logDeletionTimeTmp.getMinutes())}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="panel-title">
+          <h3>用户通知设置</h3>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-lg padding-zero incedent-inform-config" ng-if="$root.userRoleTypeC05!==0">
+            <div class="panel-header panel-header-border">
+              事件通知设置<i class="fa fa-info-circle fa-beside-button-left"></i>
+              <button id="setting-systemconsole_button_editSoundOption"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-hide="sysconsole.editMode.soundOption||!sysconsole.editRight"
+                      ng-disabled="sysconsole.disableEditTimeSyncButton" ng-click="sysconsole.editSoundOption()"><i
+                class="fa fa-pencil-square-o"></i></button>
+              <button id="setting-systemconsole_button_changeSoundOption"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.soundOption" ng-click="sysconsole.changeSoundOption()"><i
+                class="fa fa-check text-lime"></i></button>
+              <button id="setting-systemconsole_button_cancelSoundOption"
+                      class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.soundOption" ng-click="sysconsole.cancelSoundOption()"><i
+                class="fa fa-remove"></i></button>
+            </div>
+            <div class="panel-body">
+              <form name="timeConf">
+                <div class="row">
+                  <div class="col-md-7">
+                    <span>当系统收到事件消息后，会通过以下方式通知用户:</span>
+                  </div>
+                </div>
+                <div class="row" ng-if="sysconsole.notificationDropDown">
+                  <div class="col-md-2">
+                    <span class="sysconsole-dropdown-label">通知方式</span>
+                  </div>
+                  <div class="col-md-5">
+                    <div ng-show="sysconsole.editMode.soundOption" class="select-styled input-stacked select-input">
+                      <select ng-disabled="!sysconsole.editMode.soundOption" class="select-styled"
+                              ng-model="sysconsole.setSoundModeTmp" style="width:100%">
+                        <option value="visual">只提供屏幕提示</option>
+                        <option value="visual_audio">屏幕和声音提示</option>
+                      </select>
+                    </div>
+                    <div class="select read-only-mode" ng-show="!sysconsole.editMode.soundOption">
+                      {{sysconsole.setSoundModeTmp == 'visual' ? '只提供屏幕提示' : '屏幕和声音提示'}}
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="select read-only-mode"><i class="fa fa-info-circle fa-beside-button-left"></i>
+                      通知提示频率限制为每分钟最多一次
+                    </div>
+                  </div>
+                </div>
+                <div class="row" ng-show="sysconsole.setSoundModeTmp == 'visual_audio'">
+                  <div class="col-md-2">
+                    <span class="sysconsole-dropdown-label">告警对象</span>
+                  </div>
+                  <div class="col-md-5">
+                    <div ng-show="sysconsole.editMode.soundOption" class="select-styled input-stacked select-input">
+                      <select ng-disabled="!sysconsole.editMode.soundOption" class="select-styled"
+                              ng-model="sysconsole.notificationManagementTmp" style="width:100%">
+                        <option value="incident">安全事件</option>
+                        <option value="incident_event">安全和系统事件</option>
+                      </select>
+                    </div>
+                    <div class="select read-only-mode" ng-show="!sysconsole.editMode.soundOption">
+                      {{sysconsole.soundSettingsMap[sysconsole.notificationManagementTmp]}}
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-lg padding-zero" ng-hide="sysconsole.noViewRight" ng-if="$root.userRoleTypeC05!==1">
+            <div class="panel-header panel-header-border">
+              设备无流量报警设定<i class="fa fa-info-circle fa-beside-button-left"></i>
+              <button id="setting-systemconsole_button_editIPTraffic"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-hide="sysconsole.editMode.IPTraffic||!sysconsole.editRight"
+                      ng-click="sysconsole.editIPTraffic()"><i class="fa fa-pencil-square-o"></i></button>
+              <button id="setting-systemconsole_button_changeIPTrafficStatus"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.IPTraffic" ng-click="sysconsole.changeIPTrafficStatus()"><i
+                class="fa fa-check text-lime"></i></button>
+              <button id="setting-systemconsole_button_cancelIPTrafficStatus"
+                      class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.IPTraffic" ng-click="sysconsole.cancelIPTrafficStatus()"><i
+                class="fa fa-remove"></i></button>
+            </div>
+            <div class="panel-body">
+              <form name="iptrafficConf">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="toggle-bg toggle-alternate"
+                         ng-class="{true: 'on', false: 'off'}[sysconsole.iptrafficConfSwitch.iptrafficConfSwitchVal]">
+                      <label
+                        ng-class="{true: 'on', false: 'off'}[sysconsole.iptrafficConfSwitch.iptrafficConfSwitchVal]">{{sysconsole.iptrafficConfSwitch.iptrafficConfSwitchVal
+                        ? '开启':'关闭'}}</label>
+                      <input id="setting-systemconsole_checkbox_iptrafficConfSwitch" type="checkbox" name="toggle"
+                             ng-disabled="!sysconsole.editMode.IPTraffic"
+                             ng-model="sysconsole.iptrafficConfSwitch.iptrafficConfSwitchVal">
+                      <span class="switch"
+                            ng-class="{true: 'on', false: 'off'}[sysconsole.iptrafficConfSwitch.iptrafficConfSwitchVal]"></span>
+                    </div>
+                    设备无流量报警
+                  </div>
+                </div>
+                <div class="row" ng-show="sysconsole.iptrafficConfSwitch.iptrafficConfSwitchVal">
+                  <div class="col-md-8">
+                      <span>
+                        设备在
+                        <span ng-show="sysconsole.editMode.IPTraffic"><input
+                          id="setting-systemconsole_text_iptrafficmanagement" name="iptrafficmanagement" type="text"
+                          ng-model="sysconsole.IPTrafficManagement.strategyRules[0].ruleData"
+                          ng-pattern="/^([3-9][0-9]|[1-5][0-9][0-9]|[6][0][0])$/" class="input-3-letter" required
+                          maxlength="3"/></span>
+                        <span ng-hide="sysconsole.editMode.IPTraffic">{{sysconsole.IPTrafficManagement.strategyRules[0].ruleData}}</span>秒内无流量，将视为掉线并触发警告信息。
+                      </span>
+                  </div>
+                  <div class="col-md-3">
+                    <span class="input-alert-error"
+                          ng-show="(iptrafficmanagement.iptrafficmanagement.$error.pattern||!iptrafficConf.iptrafficmanagement.$valid)&&sysconsole.editMode.IPTraffic"> 请设置在报警范围为30-600秒</span>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-6">
+            </div>
+          </div>
+          <div class="panel panel-lg padding-zero" ng-hide="sysconsole.noViewRight" ng-if="$root.userRoleTypeC05!==1">
+            <div class="panel-header panel-header-border">
+              域名规则检测设定<i class="fa fa-info-circle fa-beside-button-left"></i>
+              <button id="setting-systemconsole_button_editMaliciousDomainConf"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-hide="sysconsole.editMode.maliciousdomainConf || !sysconsole.editRight"
+                      ng-click="sysconsole.editMaliciousDomainConf()"><i class="fa fa-pencil-square-o"></i></button>
+              <button id="setting-systemconsole_button_changeMaliciousDomainConf"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.maliciousdomainConf"
+                      ng-click="sysconsole.changeMaliciousDomainConf()"><i class="fa fa-check text-lime"></i></button>
+              <button id="setting-systemconsole_button_cancelMaliciousDomainConf"
+                      class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                      ng-show="sysconsole.editMode.maliciousdomainConf"
+                      ng-click="sysconsole.cancelMaliciousDomainConf()"><i class="fa fa-remove"></i></button>
+            </div>
+            <div class="panel-body">
+              <form name="maliciousdomainConf">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="toggle-bg toggle-alternate"
+                         ng-class="{'true': 'on', 'false': 'off'}[sysconsole.maliciousdomainConfSwitchVal]">
+                      <label ng-class="{'true': 'on', 'false': 'off'}[sysconsole.maliciousdomainConfSwitchVal]">{{sysconsole.maliciousdomainConfSwitchVal
+                        ? '开启' : '关闭'}}</label>
+                      <input id="setting-systemconsole_checkbox_maliciousdomainConfSwitch" type="checkbox" name="toggle"
+                             ng-disabled="!sysconsole.editMode.maliciousdomainConf"
+                             ng-model="sysconsole.maliciousdomainConfSwitchVal">
+                      <span class="switch"
+                            ng-class="{'true': 'on', 'false': 'off'}[sysconsole.maliciousdomainConfSwitchVal]"></span>
+                    </div>
+                    域名规则检测
+                  </div>
+                </div>
+                <div class="row" ng-show="sysconsole.maliciousdomainConfSwitchVal">
+                  <div class="col-md-3">
+                    <span class="sysconsole-dropdown-label">域名规则检测周期</span>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="row">
+                      <div class="col-md-12 margin-top-zero">
+                        <div class="select-styled"
+                             ng-show="sysconsole.editRight && sysconsole.editMode.maliciousdomainConf">
+                          <select class="select select-styled log-delete-select"
+                                  ng-model="sysconsole.maliciousdomainConfScanInterval">
+                            <option value="5">5分钟</option>
+                            <option value="10">10分钟</option>
+                            <option value="30">30分钟</option>
+                            <option value="60">60分钟</option>
+                          </select>
+                        </div>
+                        <div class="select read-only-mode"
+                             ng-show="!sysconsole.editRight || !sysconsole.editMode.maliciousdomainConf">
+                          {{sysconsole.maliciousdomainConfScanInterval + "分钟"}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-6">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-container-body" ng-switch-when="SYSTEM_RESET" privilege="SETTINGS_PLATFORM_REBOOT" disable="true">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-lg padding-zero" ng-if="$root.userRoleTypeC05!==1">
+            <div class="panel-header panel-header-border">系统重启<i class="fa fa-info-circle fa-beside-button-left"></i>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <p>{{$root.PLATFORM_NAME}}重启后，会导致所有当前用户退出，请确保重要信息已经保存备份。</p>
+                </div>
+              </div>
+              <button id="setting-systemconsole_button_restartModal" type="button" class="btn btn-default"
+                      ng-click="sysconsole.reset.restartModal()"><i class="fa fa-refresh icon-left"></i>重新启动
+              </button>
+            </div>
+          </div>
+          <div class="panel panel-lg padding-zero" ng-if="$root.userRoleTypeC05!==1">
+            <div class="panel-header panel-header-border">恢复原厂设置<i class="fa fa-info-circle fa-beside-button-left"></i>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <p>恢复原厂设置，会删除所有已经部署的策略和网络审计规则，停止当前的学习，并清除以往学习历史。</p>
+                </div>
+              </div>
+
+              <button id="setting-systemconsole_button_resetModal" type="button" class="btn btn-default"
+                      ng-click="sysconsole.reset.resetModal()">恢复原厂设置
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-container-body" ng-switch-when="SYSTEM_UPGRADE" privilege="SETTINGS_PLATFORM_UPGRADE_RESET"
+         disable="true">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="system-upgrade-top-note warning">
+            <i class="fa fa-exclamation-triangle"></i> &nbsp; 系统只支持升级到较新版本，系统升级过程会清除当前系统数据，此动作将无法还原，请确认升级操作。
+          </div>
+          <div class="system-upgrade-main">
+            <div class="panel-header">系统升级</div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-xs-4">
+                  <img class="upgrade-logo" ng-src="{{$root.HEADER_LOGO}}">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  {{$root.PLATFORM_NAME}}序列号: {{sysconsole.serialNumber}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  当前系统版本号: {{$root.VERSION_NUMBER}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  上次更新: <span ng-hide="sysconsole.lastupgrade">未知</span>
+                  <span ng-show="sysconsole.lastupgrade">{{sysconsole.lastupgrade | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+                </div>
+              </div>
+              <div class="row"
+                   ng-hide="sysconsole.uploader.queue.length > 0 && !sysconsole.uploadImageFail && !sysconsole.uploadImageSuccess">
+                <div class="col-xs-1">
+                  升级包文件:
+                </div>
+                <div class="col-xs-4">
+                  <span
+                    ng-class="sysconsole.uploadImageFail ? 'upload-error' : ''"><u>{{ sysconsole.uploadedImage
+                    }}</u></span>
+                </div>
+              </div>
+              <div class="btn-group btn-group-column"
+                   ng-hide="sysconsole.uploader.queue.length > 0 && !sysconsole.uploadImageFail && !sysconsole.uploadImageSuccess">
+                <button type="button" class="btn btn-default" id="setting-systemconsole_li_systemUpgrade_browse"
+                        ng-disabled="!sysconsole.hasDpiData">
+                  <input type="file" accept=".bin" nv-file-select="" uploader="sysconsole.uploader"
+                         ng-click="sysconsole.uploader.clearQueue();" multiple/>
+                  <i class="fa fa-folder-open-o"></i> &nbsp; 上传
+                </button>
+                <span class="upload-error input-alert-error" ng-show="sysconsole.uploadImageFail">{{sysconsole.uploadImageFail ? sysconsole.uploadImageFail : '上传失败，请重新上传。'}}</span>
+              </div>
+              <div class="row" ng-repeat="item in sysconsole.uploader.queue"
+                   ng-hide="sysconsole.uploadImageFail || sysconsole.uploadImageSuccess">
+                <div class="col-xs-1">
+                  升级包文件:
+                </div>
+                <div class="col-xs-3">
+                  <div class="progress" style="margin-bottom: 0;">
+                    <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-default" ng-click="sysconsole.cancelUpload(item)">取消</button>
+              </div>
+              <div class="row" style="height: 4px"></div>
+              <div class="btn-group btn-group-column">
+                <button type="button" class="btn btn-default" ng-click="sysconsole.showUpgradeConfirmationModal()"
+                        ng-disabled="!sysconsole.uploadImageSuccess" id="setting-systemconsole_li_systemUpgrade_start">
+                  <span><i class="fa fa-arrow-circle-up text-lime"></i> &nbsp; 开始升级</span></button>
+
+              </div>
+              <br/>
+              <br/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-container-body" ng-switch-when="IP_CONFIG">
+      <remote-ip></remote-ip>
+    </div>
+    <div class="tab-container-body" ng-switch-when="PROTOCOL_SETTING">
+      <protocol-setting></protocol-setting>
+    </div>
+    <div class="tab-container-body" ng-switch-when="PROTOCOL_PORT_SETTING">
+      <protocol-port-setting></protocol-port-setting>
+    </div>
+    <div class="tab-container-body" ng-switch-when="DEBUG_INFO_COLLECTION">
+      <debug-info-collection></debug-info-collection>
+    </div>
+    <div class="tab-container-body" ng-switch-when="CONFIGURATION_BACKUP">
+      <configuration-backup target="MW"></configuration-backup>
+    </div>
+    <div class="tab-container-body" ng-switch-when="RUNNING_MODE">
+      <running-mode-setting></running-mode-setting>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div>
+  <div class="table-title infsafety-result-table-heading">
+    <span>建议优化方法</span>
+    <a class="modal-close"
+       ng-click="resultOptions.optimizationPlan.dropDown = false; resultOptions.optimizationPlan.table = false"><i
+      class="fa fa-times"></i></a>
+  </div>
+
+  <div class="table-body infsafety-result-table-body">
+    <table class="table table-hover icon-hidden infsafety-result-table-body">
+      <thead>
+      <tr>
+        <th>方法</th>
+        <th>目标</th>
+        <th>建议</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in table">
+        <td>{{item.method}}</td>
+        <td>{{item.location}}</td>
+        <td>{{item.suggestion}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,201 @@
+// ===============
+// KEYFRAMES
+// ===============
+
+@keyframes blink {
+  0% {
+    color: red;
+    text-shadow: 0px 0px 25px @red-orange;
+  }
+  65% {
+    color: green;
+  }
+  100% {
+    color: red;
+    text-shadow: 0px 0px 25px @red-orange;
+  }
+}
+
+@-webkit-keyframes blink {
+  0% {
+    color: @red-orange;
+    text-shadow: 0px 0px 25px @red-orange;
+  }
+  50% {
+    color: orange;
+    text-shadow: 0px 0px 0px @red-orange;
+  }
+  100% {
+    color: @red-orange;
+    text-shadow: 0px 0px 25px @red-orange;
+  }
+}
+
+// FLASHING KEYFRAME
+// =================
+
+.keyframes-flashing(@flash-color) {
+  0% {
+    color: @gray60;
+    text-shadow: 0 0 20 @gray60;
+  }
+
+  50% {
+    color: @flash-color;
+    text-shadow: 0 0 10px @flash-color;
+  }
+
+  100% {
+    color: @gray60;
+    text-shadow: 0 0 0 @gray60;
+  }
+}
+
+.keyframes-bg-flashing-2(@color1, @color2) {
+  0% {
+    background-color: @color1;
+  }
+
+  50% {
+    background-color: @color2;
+  }
+
+  100% {
+    background-color: @color1;
+  }
+}
+
+.keyframes-bg-flashing(@flash-color) {
+  0% {
+    background-color: transparent;
+  }
+
+  20% {
+    background-color: transparent;
+  }
+
+  50% {
+    background-color: @flash-color;
+  }
+
+  70% {
+    background-color: transparent;
+  }
+
+  100% {
+    background-color: transparent;
+  }
+}
+
+// GREEN FLASH
+@-webkit-keyframes green-flashing {
+  .keyframes-flashing(@green);
+}
+
+@-moz-keyframes green-flashing {
+  .keyframes-flashing(@green);
+}
+
+// ORANGE FLASH
+@-webkit-keyframes orange-flashing {
+  .keyframes-flashing(@orange);
+}
+
+@-moz-keyframes orange-flashing {
+  .keyframes-flashing(@orange);
+}
+
+// ORANGE FLASH
+@-webkit-keyframes primary-flashing {
+  .keyframes-flashing(@primary);
+}
+
+@-moz-keyframes primary-flashing {
+  .keyframes-flashing(@primary);
+}
+
+// ORANGE BG FLASH
+@-webkit-keyframes green-bg-flashing {
+  .keyframes-bg-flashing(@lime);
+}
+
+@-moz-keyframes green-bg-flashing {
+  .keyframes-bg-flashing(@lime);
+}
+
+.flashing-green {
+  .animation(green-bg-flashing, 3s, infinite);
+}
+
+.flashing-green-faster {
+  .animation(green-bg-flashing, 1s, infinite);
+}
+
+.flashing-green-fastest {
+  .animation(green-bg-flashing, 500ms, infinite);
+}
+.btn-flashing{
+  .animation(primary-flashing, 2s, infinite);
+}
+
+.flashing(@name, @color1, @color2) {
+  @-webkit-keyframes @name {
+    .keyframes-bg-flashing-2(@color1, @color2);
+  }
+  @keyframes @name {
+    .keyframes-bg-flashing-2(@color1, @color2);
+  }
+  .animation(@name, 3s, infinite);
+}
+
+@-webkit-keyframes status-running {
+  0%{
+    background: rgba(149,244,118,0.6);
+  }
+  100%{
+    background: rgba(149,244,118,1);
+  }
+}
+
+@-webkit-keyframes status-down{
+  0%{
+    background: rgba(245,190,0,0.6);
+  }
+  100%{
+    background: rgba(245,190,0,1);
+  }
+}
+
+
+@-webkit-keyframes status-disconnect{
+  0%{
+    background: rgba(236,69,62,0.6);
+  }
+  80%{
+    background: rgba(236,69,62,0.6);
+  }
+  100%{
+    background: rgba(236,69,62,1);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  80% {
+    transform: scale(0.9);
+  }
+  90% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

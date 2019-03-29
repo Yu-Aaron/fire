@@ -1,0 +1,115 @@
+<div class="panel panel-lg" id="audit-setting-panel" disable="true">
+  <div class="panel panel-lg padding-zero">
+    <div class="panel-header panel-header-border">
+        <span class="panel-header-title">
+          配置内容审计用户
+        </span>
+      <i class="fa fa-info-circle icon-right"></i>
+      <div class="pull-right">
+        <div ng-if="!editMode" class="topo-btn-group">
+          <button type="button" class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-click="contentAuditCtrl.edit()" privilege><i class="fa fa-edit"></i></button>
+        </div>
+        <div ng-if="editMode" class="topo-btn-group">
+          <button type="button" class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  ng-click="contentAuditCtrl.confirm()" ng-disabled="!contentAuditCtrl.allowConfirm"><i
+            class="fa fa-check text-lime"></i></button>
+          <button type="button"
+                  class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                  ng-click="contentAuditCtrl.cancel()"><i class="fa fa-times"></i></button>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="panel-body panel-body-light" ng-if="contentAuditList.length > 0">
+      <div class="audit-table-header">
+        <div class="row">
+          <div class="col-md-11">
+            <div class="audit-top-note warning">
+              <i class="fa fa-exclamation-triangle"></i> &nbsp; 说明:
+              <br>1、IP地址格式支持单IP、IP/子网掩码、IP网段，&nbsp;&nbsp;例如：【192.168.1.1】【192.168.1.1/24】【192.168.1.1-192.168.1.110】
+              <br>2、默认为空，表示0.0.0.0-0.0.0.0，审计全网IP
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            源IP地址
+          </div>
+          <div class="col-md-4">
+            目的IP地址
+          </div>
+          <div class="col-md-3">
+            启用状态
+          </div>
+        </div>
+        <div class="row all-buttons-wrap">
+          <div class="col-md-8"></div>
+          <div class="col-md-3 no-padding">
+            <div class="btn btn-default" ng-show="editMode" ng-click="contentAuditCtrl.enableAll(contentAuditList)">
+              开启全部
+            </div>
+            <div class="btn btn-default" ng-show="editMode" ng-click="contentAuditCtrl.disableAll(contentAuditList)">
+              关闭全部
+            </div>
+          </div>
+          <div ng-show="editMode">
+            <div class="btn btn-default" ng-click="removeAllCfg()">删除全部</div>
+          </div>
+        </div>
+        <div class="audit-setting-table">
+          <div class="row" ng-repeat="contentAudit in contentAuditList">
+            <div class="col-md-4">
+              <input type="text" ng-disabled="!editMode" ng-model="contentAudit.srcIp"
+                     ng-change="validateAuditIp(contentAudit);validateDuplicate();validateAll()" maxlength="64">
+              <div>
+                <span class="input-alert-error" ng-show="contentAudit.srcIpError">请输入合法IP格式</span>
+                <span class="input-alert-error" ng-show="contentAudit.duplicateError">源IP和目的IP不能同时与其他设置重复</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <input name="input" type="text" ng-disabled="!editMode" ng-model="contentAudit.destIp"
+                     ng-change="validateAuditIp(contentAudit);validateDuplicate();validateAll()">
+              <div>
+                <span class="input-alert-error" ng-show="contentAudit.destIpError">请输入合法IP格式</span>
+                <span class="input-alert-error" ng-show="contentAudit.duplicateError">源IP和目的IP不能同时与其他设置重复</span>
+              </div>
+            </div>
+            <div class="col-md-3 audit-switch">
+              <div class="toggle-bg toggle-alternate" ng-class="{true: 'on', false: 'off'}[contentAudit.enabled]"
+                   ng-show="editMode">
+                <label ng-class="{true: 'on', false: 'off'}[contentAudit.enabled]">{{contentAudit.enabled ?
+                  '开启':'关闭'}}</label>
+                <input type="checkbox" name="toggle" ng-disabled="!editMode" ng-model="contentAudit.enabled"
+                       ng-change="">
+                <span class="switch" ng-class="{true: 'on', false: 'off'}[contentAudit.enabled]"></span>
+              </div>
+              <div ng-show="!editMode">
+                <label class="label-default label {{!contentAudit.enabled ? '': 'label-success'}}">{{contentAudit.enabled?
+                  '开启':'关闭'}}</label>
+              </div>
+            </div>
+            <div ng-show="editMode">
+              <button class="btn btn-default" ng-click="removeCfg($index);validateDuplicate();validateAll()"><i
+                class="fa fa-trash"></i></button>
+            </div>
+          </div>
+          <div>
+            <button class="btn btn-default" id="add-audit-button" ng-show="editMode" ng-disabled="!editMode"
+                    ng-click="addcontentAuditCfg();validateAll()"><i class="fa fa-plus text-lime"></i>添加
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="default-audit-empty" ng-if="contentAuditList.length===0">
+      <button class="btn btn-default" id="add-audit-button" ng-show="editMode" ng-disabled="!editMode"
+              ng-click="addcontentAuditCfg();validateAll()"><i class="fa fa-plus text-lime"></i>添加
+      </button>
+      <div>
+        <h4>当前审计所有用户</h4>
+      </div>
+    </div>
+  </div>
+</div>

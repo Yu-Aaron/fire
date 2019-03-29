@@ -1,0 +1,152 @@
+<div class="detail-page-wrapper">
+  <div class="modal-header" style="margin-bottom:0">
+    <h3 class="modal-header-title">事件详情</h3>
+    <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+  </div>
+  <div class="modal-body-content panel panel-detail padding-default" style="margin-bottom:0">
+    <div class="detail-panel">
+      <div class="detail-information-content">
+        <div class="row">
+          <div class="col-xs-4 col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span><i class="fa fa-folder-open"></i> 事件内容</span>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <!-- col 1 -->
+                  <div class="col-xs-6">
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">事件等级</h5>
+                      <p><i class="fa"
+                            ng-class="{REJECTBOTH': 'fa-ban text-red', 'DROP': 'fa-ban text-red', 'ALERT': 'fa-warning text-yellow', 'ALLOW':'fa-check text-green'}[detail.action.toUpperCase()]"></i>
+                        {{detail.action | eventAction}}</p>
+                    </div>
+
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">事件类别</h5>
+                      <p>安全事件</p>
+                    </div>
+                  </div>
+
+                  <!-- col 2 -->
+                  <div class="col-xs-6">
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">发生日期</h5>
+                      <p>{{detail.timestamp | date:'yyyy-MM-dd'}}</p>
+                    </div>
+
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">发生时间</h5>
+                      <p>{{detail.timestamp | date:'HH:mm:ss'}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span><i class="fa fa-hdd-o"></i> 事件数据</span>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">包长度</h5>
+                      <p>{{detail.packetLength}}字节</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4 col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span><i class="fa fa-cogs"></i> 事件协议</span>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <!-- col 1 -->
+                  <div class="col-xs-6">
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">网络层协议</h5>
+                      <p>{{detail.protocol==='0'?'无':detail.protocol}}</p>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-6">
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">协议细节</h5>
+                      <p>{{detail.protocolDetail || '无'}}</p>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-6">
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">备注</h5>
+                      <p>{{detail.memo || '无'}}</p>
+                    </div>
+                  </div>
+
+                  <!-- col 2 -->
+                  <div class="col-xs-6">
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">网络应用协议</h5>
+                      <p>{{detail.appLayerProtocol==='0'?'无':detail.appLayerProtocol}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="event-detail-package-content col-xs-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span><i class="fa fa-suitcase"></i> 数据包内容</span>
+              </div>
+              <div class="panel-body">
+                <div class="event-package-content">
+                  {{detail.packet.hb | toHex}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="event-detail-block-rule col-xs-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span><i class="fa fa-wrench"></i> 相应规则</span>
+              </div>
+              <div class="panel-body">
+                <div class="event-package-detail-content">
+                  <div class="col-xs-12">
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">规则名称</h5>
+                      <p>{{detail.signatureName}}</p>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12">
+                    <div class="detail-page-list-item">
+                      <h5 class="detail-page-list-item-title">基本描述</h5>
+                      <p>{{detail.signatureMessage}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="modal-footer">-->
+  <!--<button class="btn btn-default" ng-disabled="true" ng-click="ok()"><i class="fa fa-history text-green icon-left"></i>生成优化方案</button>-->
+  <!--<button class="btn btn-default" ng-disabled="true" ng-click="ok()"><i class="fa fa-search text-green icon-left"></i>事件追踪</button>-->
+  <!--</div>-->
+</div>

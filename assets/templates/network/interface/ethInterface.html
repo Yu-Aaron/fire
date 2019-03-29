@@ -1,0 +1,209 @@
+<div id="eth-busy-container" class="modal-interface" cg-busy="{promise:configPromise,message:'正在保存...'}" global-events>
+    <div class="modal-header">
+        <h3 class="modal-header-title">物理接口配置</h3>
+        <!--<a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>-->
+    </div>
+
+    <div class="modal-body">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="col-width-4">
+                            <span>接口名称：</span>
+                        </div>
+                        <div class="col-width-6">
+                            <select class="select-styled" ng-disabled="!isEditing||!isNew"
+                                    ng-model="interfaceData.interfaceName"
+                                    ng-options="interface for interface in interfaceNames">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="col-width-4">
+                            <span>安全区域：</span>
+                        </div>
+                        <div class="col-width-6">
+                            <input id="netInterface_eth_dmz" ng-model="interfaceData.dmz"
+                                   maxlength="20" type="text"
+                                   ng-disabled="!isEditing||!isNew" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="col-width-4">
+                            <span>MAC地址：</span>
+                        </div>
+                        <div class="col-width-6">
+                            <input ng-model="interfaceData.mac" maxlength="17" type="text"
+                                   class="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength"
+                                   ng-disabled="true">
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="hr-small-margin">
+                <h4>接口IP</h4>
+
+                <div class="row">
+                    <div class="col-xs-3">
+                        <label>
+                            <input id="network_interface-eth_ipType_dhcp" custom-radio type="radio" ng-value=1
+                                   ng-model="interfaceData.ipType" ng-change="validateIpType()"
+                                   ng-disabled="!isEditing"/><span>DHCP</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <label>
+                            <input id="network_interface-eth_ipType_static" custom-radio type="radio" ng-value=0
+                                   ng-model="interfaceData.ipType" ng-change="validateIpType()"
+                                   ng-disabled="!isEditing"/><span>自定义</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="col-width-4">
+                            <span>IP地址/掩码：&nbsp;</span>
+                        </div>
+                        <div class="col-width-6">
+                            <input id="network_interface-eth_ipAddressMask" style="width: 200px;" type="text"
+                                   ng-model="interfaceData.ipAddressMask" ng-change="validateIpMask()"
+                                   ng-disabled="!isEditing || interfaceData.ipType===1"
+                                   placeholder="192.168.1.2/255.255.255.0"/>
+                        </div>
+                    </div>
+                    <div class="col-width-4 input-alert-error"
+                         ng-show="isEditing && interfaceData.ipType===0 && error.ipAddressMask">
+                        <span>请输入有效的IP地址/掩码</span>
+                    </div>
+                </div>
+
+                <hr class="hr-small-margin">
+                <h4 class="clearfix" ng-init="expanded=true" ng-click="expanded=!expanded;">管理访问
+                    <i class="fa pull-right" aria-hidden="true"
+                       ng-class="{false: 'fa-angle-double-up', true: 'fa-angle-double-down'}[expanded]"></i>
+                </h4>
+
+                <div class="row" collapse="expanded">
+                    <div class="col-xs-3">
+                        <label>
+                            <input id="network_interface-eth_ssh" custom-checkbox name="ssh" type="checkbox"
+                                   ng-value="interfaceData.ssh" ng-model="interfaceData.ssh"
+                                   ng-disabled="!isEditing"/><span>ssh</span>
+                        </label>
+                    </div>
+                    <div class="col-xs-3">
+                        <label>
+                            <input id="network_interface-eth_https" custom-checkbox name="https" type="checkbox"
+                                   ng-value="interfaceData.https" ng-model="interfaceData.https"
+                                   ng-disabled="!isEditing"/><span>https</span>
+                        </label>
+                    </div>
+                  <!--
+                    <div class="col-xs-3">
+                        <label>
+                            <input id="network_interface-eth_snmp" custom-checkbox name="snmp" type="checkbox"
+                                   ng-value="interfaceData.snmp" ng-model="interfaceData.snmp"
+                                   ng-disabled="!isEditing"/><span>snmp</span>
+                        </label>
+                    </div>
+                    -->
+                    <div class="col-xs-3">
+                        <label>
+                            <input id="network_interface-eth_ping" custom-checkbox name="ping" type="checkbox"
+                                   ng-value="interfaceData.ping" ng-model="interfaceData.ping"
+                                   ng-disabled="!isEditing"/><span>ping</span>
+                        </label>
+                    </div>
+                </div>
+
+                <hr class="hr-small-margin">
+                <h4 class="clearfix" ng-init="expanded1=true" ng-click="expanded1=!expanded1;">高级设置
+                    <i class="fa pull-right" aria-hidden="true"
+                       ng-class="{false: 'fa-angle-double-up', true: 'fa-angle-double-down'}[expanded1]"></i>
+                </h4>
+
+                <div collapse="expanded1">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="col-width-4">
+                                <span>协商：</span>
+                            </div>
+                            <div class="col-width-6">
+                                <select id="network_interface-eth_confer" class="select-styled"
+                                        ng-model="interfaceData.confer" ng-change=changeConfer();
+                                        ng-disabled="!isEditing">
+                                    <option id="network_interface-eth_confer_0" value='0'>自动</option>
+                                    <option id="network_interface-eth_confer_1" value='1'>手动</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="col-width-4">
+                                <span>速度：</span>
+                            </div>
+                            <div class="col-width-6">
+                                <select id="network_interface-eth_speed" class="select-styled"
+                                        ng-model="interfaceData.speed"
+                                        ng-disabled="!isEditing || interfaceData.confer === '0'">
+                                    <option ng-if="interfaceData.confer === '0'" id="network_interface-eth_speed_0" value='0'>自动</option>
+                                    <option id="network_interface-eth_speed_10" value='10'>10</option>
+                                    <option id="network_interface-eth_speed_100" value='100'>100</option>
+                                    <option id="network_interface-eth_speed_1000" value='1000'>1000</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="col-width-4">
+                                <span>MTU：</span>
+                            </div>
+                            <div class="col-width-6">
+                                <input id="network_interface-eth_mtu" ng-model="interfaceData.mtu" maxlength="4"
+                                       type="text"
+                                       ng-change="validateMTU()"
+                                       class="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength"
+                                       placeholder="请输入256-1500" ng-disabled="!isEditing">
+
+                                <div class="input-alert-error" ng-show="isEditing && error.mtu">
+                                    <span>有效范围256-1500</span></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="col-width-4">
+                                <span>MAC：</span>
+                            </div>
+                            <div class="col-width-6">
+                                <input id="network_interface-eth_mac" ng-model="interfaceData.mac" maxlength="17"
+                                       placeholder="00:00:00:00:00:00" type="text"
+                                       ng-change="validateMac()"
+                                       class="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength"
+                                       ng-disabled="!isEditing">
+
+                                <div class="input-alert-error" ng-show="isEditing && error.mac"><span>请输入有效的MAC地址</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <a id="network_interface-eth_cancel" ng-show="isEditing" class="btn btn-default pull-left"
+           ng-click="cancel()"><i
+                class="fa fa-times icon-left"></i>取消</a>
+        <a id="network_interface-eth_ok" ng-show="isEditing" class="btn btn-default pull-right" ng-click="ok()"
+           ng-disabled="error.ipAddressMask||error.mtu||error.mac"><i
+                class="fa fa-check text-lime icon-left"></i>保存</a>
+        <a id="network_interface-eth_close" ng-show="!isEditing" class="btn btn-default pull-middle"
+           ng-click="cancel()"><i
+                class="fa fa-times icon-left"></i>关闭</a>
+    </div>
+</div>

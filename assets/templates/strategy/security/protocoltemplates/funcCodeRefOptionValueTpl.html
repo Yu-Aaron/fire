@@ -1,0 +1,72 @@
+<div ng-init="!node.objs ? node.objs = [] : null;"></div>
+<div class="col-xs-6 value-detail-container" ng-repeat-start="value in node.value track by $index">
+  <div class="value-detail-input-container">
+    <span class="info-label">{{value.name | protocolTranslation:appProtocolType}}</span>
+    <select id="func-code-value-ref-options" class="select-styled info-value"
+            name="{{value.name + node.nodeIndex + $index}}"
+            ng-model="node.objs[value.refValueIndex]"
+            ng-options="value.name | protocolTranslation:appProtocolType for value in value.option"
+            ng-if="isTypeRefOption(value.type)" ng-disabled="isViewOnly">
+    </select>
+  </div>
+    <!--<div class="input-alert-error"-->
+         <!--ng-show="isTypeRefOption(value.type) &&-->
+                <!--(newStrategyForm[value.name + node.nodeIndex + $index].$error.required ||-->
+                <!--editStrategyForm[value.name + node.nodeIndex + $index].$error.required)">-->
+        <!--选择项不能为空-->
+    <!--</div>-->
+</div>
+<div class="col-xs-6 value-detail-container"
+     ng-repeat-start="refoption in node.objs[value.refValueIndex].option track by refoption.name">
+    <div class="value-detail-input-container">
+      <span class="info-label">{{refoption.name | protocolTranslation:appProtocolType}}</span>
+      <input name="{{refoption.name + node.nodeIndex + value.refValueIndex + $index}}"
+             type="text" ng-model="node.objs[value.refValueIndex][refoption.name]"
+             ng-if="isTypeInputSingle(refoption.type)" custom-val="range" validator="checkRangeVal" class="info-value"
+             val-args="{'min': refoption.min, 'max': refoption.max}" ng-pattern="/^\d$|^[1-9]\d{1,4}$/"
+             ng-disabled="isViewOnly" maxlength="5">
+      <input name="{{refoption.name + node.nodeIndex + value.refValueIndex + $index}}"
+             type="text" ng-model="node.objs[value.refValueIndex][refoption.name]"
+             ng-if="isTypeInputMulti(refoption.type)" custom-val="range" validator="checkRangeVal" class="info-value"
+             val-args="{'type': refoption.type, 'min': refoption.min, 'max': refoption.max}"
+             ng-disabled="isViewOnly">
+      <expression-input ng-model="node.objs[value.refValueIndex][refoption.name]"
+                        form-name="refoption.name + node.nodeIndex + value.refValueIndex + $index"
+                        min="refoption.min" max="refoption.max" ng-disabled="isViewOnly"
+                        ng-if="isTypeExpression(refoption.type)">
+      </expression-input>
+      <select id="func-code-value-options" name="{{refoption.name + node.nodeIndex + value.refValueIndex + $index}}"
+              class="select-styled info-value" ng-model="node.objs[value.refValueIndex][refoption.name]"
+              ng-options="refvalue for refvalue in refoption.option" ng-if="isTypeOption(refoption.type)"
+              ng-disabled="isViewOnly">
+      </select>
+    </div>
+    <div class="input-alert-error"
+         ng-show="(isTypeInputSingle(refoption.type) || isTypeExpression(refoption.type)) &&
+                ((newStrategyForm[refoption.name + node.nodeIndex + value.refValueIndex + $index].$error.pattern ||
+                    newStrategyForm[refoption.name + node.nodeIndex + value.refValueIndex + $index].$error.range) ||
+                (editStrategyForm[refoption.name + node.nodeIndex + value.refValueIndex + $index].$error.pattern ||
+                        editStrategyForm[refoption.name + node.nodeIndex + value.refValueIndex + $index].$error.range))">
+        必须输入数字{{refoption.type.indexOf('RANGE')>=0 ? '(范围'+ refoption.min +' - ' + refoption.max + ')' : ''}}
+        {{node.objs[value.refValueIndex][refoption.name].expression=='rg' ? "，值界限输入时请用' " + "-" + "' 分隔" : ''}}
+    </div>
+    <div class="input-alert-error"
+         ng-show="isTypeInputMulti(refoption.type) &&
+                (newStrategyForm[refoption.name + node.nodeIndex + value.refValueIndex + $index].$error.range ||
+                    editStrategyForm[refoption.name + node.nodeIndex + value.refValueIndex + $index].$error.range)">
+        {{(refoption.type.indexOf('DISCRETE')>=0 && refoption.type.indexOf('LIMIT')<0) ? "请用逗号分隔多个值" : ''}}
+        {{(refoption.type.indexOf('DISCRETE')<0 && refoption.type.indexOf('LIMIT')>=0) ?
+            "值界限输入时请用' " + "-" + "' 分隔" : ''}}
+        {{(refoption.type.indexOf('DISCRETE')>=0 && refoption.type.indexOf('LIMIT')>=0) ?
+            "值界限输入时请用' " + "-" + " '分隔，或用逗号分隔多个值" : ""}}
+        {{refoption.type.indexOf('RANGE')>=0 ? '(范围'+ refoption.min +' - ' + refoption.max + ')' : ''}}
+    </div>
+    <!--<div class="input-alert-error"-->
+         <!--ng-show="isTypeOption(refoption.type) &&-->
+            <!--(newStrategyForm[refoption.name + node.nodeIndex + value.refValueIndex + $index].$error.required ||-->
+             <!--editStrategyForm[refoption.name + node.nodeIndex + value.refValueIndex + $index].$error.required)">-->
+        <!--选择项不能为空-->
+    <!--</div>-->
+</div>
+<div ng-repeat-end class="clearfix" ng-if="$index % 2 === 0"></div>
+<div ng-repeat-end class="clearfix"></div>

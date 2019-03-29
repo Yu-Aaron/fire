@@ -1,0 +1,70 @@
+<div style="position: relative;">
+  <div cg-busy="{promise:dtable.deletePromise,message:'SNAT策略删除中，请稍侯...'}"
+       style="position: absolute; width: 100%;height: 100%;"></div>
+  <div cg-busy="{promise:dtable.changeStatusPromise,message:'SNAT状态却换中，请稍候...'}"
+       style="position: absolute; width: 100%;height: 100%;"></div>
+
+  <div class="router-button-container">
+    <a class="btn btn-default" ng-click="dtable.addNew()" setting-privilege
+       privilege-name="STRATEGY_NAT" privilege-require="MIXED" privilege-handle="hidden">
+      <i class="fa fa-file-o fa-after-blue fa-plus-overlay icon-left"></i>新增</a>
+    <a class="btn btn-default" ng-click="dtable.delete()"
+       ng-disabled="!dtable.table.length" setting-privilege
+       privilege-name="STRATEGY_NAT" privilege-require="MIXED" privilege-handle="hidden">
+      <i class="fa fa-trash-o icon-left"></i>删除</a>
+  </div>
+  <table class="table table-hover icon-hidden" style="position: relative; z-index: 1;">
+    <thead>
+    <tr>
+      <th class="text-center"><input custom-checkbox tri-state-checkbox type="checkbox"
+                                     ng-model="dtable.selectAllValue"
+                                     ng-click="dtable.selectAll()"/>
+      </th>
+      <!--<th>序号</th>-->
+      <th order-by="snatName">策略名称</th>
+      <th order-by="sourceAddress">源地址</th>
+      <th order-by="destinationAddress">目的地址</th>
+      <th order-by="serversApps">服务/应用</th>
+      <th order-by="transAddress">转换地址</th>
+      <th order-by="status">启用状态</th>
+      <th order-by="logs">输出日志</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="snatData in dtable.table">
+      <td class="text-center">
+        <input custom-checkbox type="checkbox" id="selectedItem-snatTable-{{$index}}"
+               ng-click="dtable.selectItem()" ng-model="dtable.selectedItems[snatData.snatId]"/>
+      </td>
+      <!--<td>{{skip + $index + 1}}</td>-->
+      <td>{{snatData.snatName}}</td>
+      <td>{{snatData.sourceAddress}}</td>
+      <td>{{snatData.destinationAddress}}</td>
+      <td>{{snatData.serversApps}}</td>
+      <td>{{snatData.transAddress}}</td>
+
+      <td class="switch-toggle-td">
+        <switch-toggle status="snatData.status" change="dtable.changeStatus(snatData,'status')"
+                       on-label="开启"></switch-toggle>
+                  <span ng-show="isSwitching['status'][snatData.snatName]">
+                      <i class="fa fa-spinner fa-spin icon-left"></i>{{switchMsg}}中
+                  </span>
+      </td>
+
+      <td class="switch-toggle-td">
+        <switch-toggle status="snatData.logs" change="dtable.changeStatus(snatData,'logs')"
+                       on-label="开启"></switch-toggle>
+                  <span ng-show="isSwitching['logs'][snatData.snatName]">
+                      <i class="fa fa-spinner fa-spin icon-left"></i>{{switchMsg}}中
+                  </span>
+      </td>
+      <td>
+        <a id="strategy_snat_edit_{{$index}}" class="btn btn-sm btn-default" ng-click="dtable.edit(snatData)"
+           title="编辑" setting-privilege privilege-name="STRATEGY_NAT" privilege-require="MIXED"
+           privilege-handle="hidden"><i class="fa fa-edit"></i></a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,26 @@
+<div style="padding:30px">
+  <div class="panel" ng-if="$root.MW_SETTING !== 'remote'">
+    <div class="panel-header">
+      <h5 class="panel-header-title">新发现设备</h5>
+    </div>
+    <div class="panel-body panel-body-light">
+      <security-new-device-table></security-new-device-table>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-header">
+      <h5 class="panel-header-title">已安装设备</h5>
+    </div>
+    <div class="panel-body panel-body-light">
+
+      <div class="pull-right margin-bottom-default" ng-show="true">
+        <!--<a class="btn btn-default" ui-sref="asset.ucddevice.new"><i class="fa fa-plus text-lime icon-left" ></i>新建设备</a>-->
+      </div>
+
+      <div class="clearfix"></div>
+      <dtable>
+        <ucd-device-table></ucd-device-table>
+      </dtable>
+    </div>
+  </div>
+</div>

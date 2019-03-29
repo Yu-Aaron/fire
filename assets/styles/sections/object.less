@@ -1,0 +1,464 @@
+//启动\关闭
+.switch-toggle-td {
+  width: 150px;
+}
+//新增 删除按钮
+.object-new-delete-container {
+  position: absolute;
+  margin-top: -40px;
+}
+//新建地址池
+.modal-ippool-info {
+  background: @bg-gray-dark;
+  .modal-body {
+    &:extend(.panel.panel-lg);
+    margin: 10px 10px;
+    .modal-body-ippool-info {
+      padding-bottom: 100px;
+      > .row {
+        padding: 15px 15px;
+        background: #252934;
+        color: #878787;
+        border: 1px black solid;
+        margin: 1px;
+      }
+      .row {
+        margin-bottom: 10px;
+        > .col-xs-3 {
+          height: 2.5rem;
+          line-height: 2.5rem;
+        }
+      }
+      input[type="text"] {
+        width: 220px;
+      }
+      .ippool-dropdown {
+        padding-left: 0;
+        @dropdown-width: 120px;
+        button {
+          width: @dropdown-width;
+          text-align: left;
+          border-radius : 0;
+          color: @white;
+          span {
+            margin-top: 4px !important;
+          }
+        }
+        ul {
+          font-size: 11px;
+          min-width: @dropdown-width;
+        }
+      }
+    }
+  }
+  .modal-footer {
+    margin-top: -10px;
+  }
+}
+
+//新建安全区域(自定义modal size)
+.modal-securityarea-info {
+  position:absolute;
+  left:200px;
+  width: 700px;
+  background: @bg-gray-dark;
+  border: 1px solid @bg-gray-dark;
+  border-radius: 2px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.50), inset 0px 1px 2px 0px rgba(227, 227, 227, 0.2);
+  .modal-body {
+    &:extend(.panel.panel-lg);
+    margin: 10px 10px;
+    .modal-body-securityarea-info {
+      padding-bottom: 100px;
+      > .row {
+        padding: 15px 15px;
+        background: #252934;
+        color: #878787;
+        border: 1px black solid;
+        margin: 1px;
+      }
+      .row {
+        margin-bottom: 10px;
+        > .col-xs-2 {
+          padding-right: 0;
+        }
+        .row-container {
+          height: 2.5rem;
+          line-height: 2.5rem;
+        }
+        .interface-container {
+          .col-xs-3, .col-xs-10 {
+            padding-left: 0;
+          }
+          line-height: 5rem;
+          input[type="checkbox"]{
+            vertical-align:middle;
+            margin-top: -2px;
+            margin-right: 5px;
+          }
+        }
+      }
+      input[type="text"] {
+        width: 220px;
+      }
+    }
+  }
+  .modal-footer {
+    margin-top: -10px;
+  }
+}
+
+//设备资产列表
+.device-asset-quick-to-panel {
+  select {
+    width: 150px;
+    text-indent: 10px;
+  }
+}
+.device-asset-add-new-container {
+  .input-text {
+    width: auto;
+    max-width:120px;
+  }
+  .input-stacked {
+    width: auto;
+    max-width: 170px;
+    input[type="text"] {
+      width:100%
+    }
+  }
+  button {
+    width: 35px;
+  }
+}
+.device-asset-edit-container{
+  &:extend(.device-asset-add-new-container all);
+}
+
+//服务-预定义列表
+.service-predefine-container {
+  table {
+    .describe {
+      max-width: 500px;
+      .describe-ellipsis {
+        &:extend(.text-content-ellipsis);
+        display:inline-block;
+        max-width:100%;
+      }
+    }
+    .table-accordion-chevron {
+      width: 37px;
+    }
+    .table-accordion-bk {
+      @table-accordion-backgroud-color: #1F1E24;
+      background-color: @table-accordion-backgroud-color;
+      border: 0px;
+      &:hover{
+        background: @table-accordion-backgroud-color;
+      }
+    }
+  }
+}
+
+//服务-自定义列表
+.service-customize-container:extend(.service-predefine-container all) {
+  table {
+    .describe {
+      max-width: 400px;
+    }
+  }
+}
+
+//服务-新建自定义
+.modal-service-customize-info {
+  &:extend(.modal-securityarea-info);
+  .modal-body {
+    .modal-body-service-customize-info {
+      > .row {
+        padding: 15px 15px;
+        background: #252934;
+        color: #878787;
+        border: 1px black solid;
+        margin: 1px;
+      }
+      .row {
+        margin-bottom: 10px;
+        > .col-xs-2 {
+          padding-right: 0;
+        }
+        .row-container {
+          height: 2.5rem;
+          line-height: 2.5rem;
+          .name {
+            width: 220px;
+          }
+          .description {
+            width: 370px;
+          }
+        }
+        .rule-config-container {
+          padding: 15px 15px;
+          background: #1D2027;
+          color: #878787;
+          border: 1px black solid;
+          width: 400px;
+          .row {
+            > .col-xs-3 {
+              padding-right: 0;
+            }
+            .col-xs-6,
+            .col-xs-9,
+            .col-xs-10 {
+              padding-left: 0;
+            }
+          }
+          .fa-blue {
+            color: #168ab9;
+          }
+          span {
+            color: @txt-light-gray;
+          };
+          .port {
+            width:70px;
+          };
+          .alert-manual {
+            margin-left: 5px;
+          }
+        }
+        .rules-table {
+          margin-top: 7px;
+          width: 500px;
+          height: atuo;
+          max-height: 225px;
+          overflow-y: auto;
+          .operation {
+            text-align: center;
+            width: 50px;
+          }
+        }
+      }
+      /*Custom radio button*/
+      @service-radio-size: 20px;
+      .radio-container{
+        padding-left: 0;
+      }
+//      .custom-radio{
+//        line-height: @service-radio-size;
+//        height: @service-radio-size;
+//        margin: 5px 0 0 0;
+//        display: inline-block;
+//        .radio-btn {
+//          width: @service-radio-size;
+//          height: @service-radio-size;
+//          float: left;
+//          margin: 0 7px 0 0;
+//          position: relative;
+//          -webkit-border-radius: 100%;
+//          -moz-border-radius: 100%;
+//          border-radius: 100%;
+//          border: 1px solid #ccc;
+//          box-shadow: 0 0 1px #ccc;
+//          background: rgb(255, 255, 255);
+//          background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+//          background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
+//          background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+//          background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+//          background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+//          background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+//          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=0);
+//          label {
+//            border: 1px solid #E1E2E4;
+//            width: @service-radio-size * 0.6;
+//            height: @service-radio-size * 0.6;
+//            cursor: pointer;
+//            position: absolute;
+//            left: @service-radio-size * 0.2 - 1;
+//            top: @service-radio-size * 0.2 - 1;
+//            -webkit-border-radius: 100%;
+//            -moz-border-radius: 100%;
+//            border-radius: 100%;
+//            background-color: #0F88D9;
+//            opacity: 0;
+//          }
+//          input[type=radio] {
+//            visibility: hidden;
+//            &:checked + label {
+//              opacity: 1;
+//            }
+//          }
+//          .radio-btn-text {
+//            font-size:14px;
+//            position: absolute;
+//            left: 3rem;
+//          }
+//        }
+//      }
+    }
+  }
+}
+
+//应用-预定义列表
+.apply-predefine-container:extend(.service-predefine-container all) {
+  table {
+    .describe {
+      max-width: 700px;
+    }
+  }
+}
+
+//应用-新建自定义
+.modal-apply-customize-info:extend(.modal-securityarea-info) {
+  .modal-body {
+    .modal-body-apply-customize-info {
+      &:extend(.modal-service-customize-info .modal-body .modal-body-service-customize-info all);
+      .row {
+        .row-container {
+          .basic-input {
+            width: 220px;
+          }
+          .manual-input {
+            width: 70px;
+          }
+        }
+        .app-basic-info-container {
+          margin: 0 20px;
+          padding: 15px 15px;
+          background: #1D2027;
+          color: #878787;
+          border: 1px @black solid;
+          width: calc(~'100% - 2*20px');
+          .row {
+            .col-xs-10 {
+              padding-left: 0;
+            }
+            select {
+              width: 150px;
+              text-indent: 10px;
+            }
+          }
+        }
+        .app-signature-container {
+          &:extend(.modal-apply-customize-info .modal-body .modal-body-apply-customize-info
+              .row .app-basic-info-container all);
+          .fa-blue {
+            color: #168ab9;
+          }
+          .alert-manual {
+            margin-left: 5px;
+          }
+          .signature-manual-row {
+            height: 50px;
+            line-height: 50px;
+            .signature-manual-row-input {
+              margin-left: 11px;
+              border: 1px @border-gray-light dashed;
+              background-color: @bg-gray-darker;
+            }
+          }
+          .signature-btn-row {
+            padding-left: 25px;
+          }
+        }
+      }
+    }
+  }
+}
+
+//时间表-列表
+.object-schedule-container:extend(.service-predefine-container all) {
+  table {
+    .describe {
+      max-width: 170px;
+    }
+  }
+  .addScheduleMenu {
+    position: absolute;
+    top: 30px;
+    left: 3px;
+    z-index: 1;
+    border:1px solid @black;
+    li {
+      border: @black;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 35px;
+      width: 75px;
+      background: linear-gradient(#1f2229, #1f2229);
+      color: #527bb1;
+      text-align: center;
+      span {
+        vertical-align: middle;
+        text-align: center;
+        line-height: 35px;
+      }
+    }
+    li:hover {
+      background: #144D94;
+      color: @white;
+    }
+  }
+}
+
+//新建-单次时间
+.modal-schedule-single-info:extend(.modal-ippool-info) {
+  .modal-body {
+    .modal-body-schedule-info {
+      padding-bottom: 100px;
+      > .row {
+        padding: 15px 15px;
+        background: #252934;
+        color: #878787;
+        border: 1px black solid;
+        margin: 1px;
+      }
+      .row {
+        margin-bottom: 10px;
+        > .col-xs-3 {
+          height: 2.5rem;
+          line-height: 2.5rem;
+        }
+      }
+      input[type="text"] {
+        width: 235px;
+      }
+      .date-time-input {
+        input[type="text"] {
+          width: 80px;
+          min-width: auto;
+        }
+      }
+      .description {
+        height:90px;
+        textarea {
+          width: 235px;
+        }
+        span {
+          position: absolute;
+          bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+//新建-循环时间
+.modal-schedule-loop-info:extend(.modal-schedule-single-info all) {
+  .modal-body {
+    .modal-body-schedule-info {
+      .row {
+        > .col-xs-2 {
+          height: 2.5rem;
+          line-height: 2.5rem;
+        }
+        .col-xs-10 {
+          padding-left: 0px;
+          padding-right: 0px;
+        }
+      }
+      .btn-primary.active {
+        background-color: #144D94;
+      }
+    }
+  }
+}

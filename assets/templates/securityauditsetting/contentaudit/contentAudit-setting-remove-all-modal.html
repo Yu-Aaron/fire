@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">删除全部审计配置</h3>
+  <a id="setting-protocol-confirmExit" class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body-no-frame">
+  <div>
+    确定删除全部审计配置？
+  </div>
+</div>
+<div class="modal-footer">
+  <button id="setting-protocol-offlineConfirm_Cancel" class="btn btn-default pull-left" ng-click="cancel()"><i
+    class="fa fa-times icon-left"></i>取消
+  </button>
+  <button id="setting-protocol-offlineConfirm_Confirm" class="btn btn-default" ng-click="ok()"
+          ng-disabled="offlineDevices.length&&!check.OfflineWarning"><i class="fa icon-left"
+                                                                        ng-class="{'fa-check': !(offlineDevices.length&&!check.OfflineWarning), 'text-green':!(offlineDevices.length&&!check.OfflineWarning), 'fa-exclamation-triangle': (offlineDevices.length&&!check.OfflineWarning)}"></i>确认
+  </button>
+</div>
+

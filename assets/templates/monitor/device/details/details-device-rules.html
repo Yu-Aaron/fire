@@ -1,0 +1,26 @@
+<table class="table table-hover icon-hidden">
+  <thead>
+  <tr>
+    <th>
+      <span>名称</span>
+    </th>
+    <th>
+      <span>规则来源</span>
+    </th>
+    <th>
+      <span>规则项数量</span>
+    </th>
+    <th>
+      <span>部署时间</span>
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat="rule in dtable.table">
+    <td>{{rule.name}}</td>
+    <td>{{rule._typeDisplay}}</td>
+    <td>{{rule._rulesCount + rule._signaturesCount}}</td>
+    <td>{{rule.updatedAt | date: 'yyyy-MM-dd'}}</td>
+  </tr>
+  </tbody>
+</table>

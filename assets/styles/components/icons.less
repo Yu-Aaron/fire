@@ -1,0 +1,100 @@
+// FONT AWESOME CLASSES
+.fa-after-lime:after {
+  color: @primary;
+}
+
+.fa-before-lime:before {
+  color: @primary;
+}
+
+.fa-after-blue:after {
+  color: #168ab9;
+}
+
+.fa-before-blue:before {
+  color: #168ab9;
+}
+.fa-2x {
+  font-size: 2em;
+}
+
+.fa-3x {
+  font-size: 3em;
+}
+
+.fa-large {
+  font-size: 1.5em;
+}
+
+.fa-small {
+  font-size: 0.70em;
+}
+
+.fa-default {
+  font-size: 14px;
+}
+
+.fa-push-down {
+  margin-top: 3px;
+}
+
+.fa-plus-overlay {
+  position: relative;
+
+  &:after {
+    position: absolute;
+    font-family: FontAwesome;
+    bottom: -5px;
+    right: -5px;
+    content: "\f067";
+  }
+
+  &.fa-plus-overlay-lime {
+    &:after {
+      color: @lime;
+    }
+  }
+}
+
+// CIRCLE ICON (INDICATING STATUS)
+.icon-status-circle {
+  &.glow-disabled {
+    color: @gray70;
+    text-shadow: 0px 1px 5px @gray50;
+  }
+
+  // ACTIVE GREEN GLOW
+  &.glow-active {
+    color: @lime;
+    text-shadow: 0px 0px 5px @lime;
+  }
+
+  &.glow-orange {
+    color: @orange;
+    text-shadow: 0px 0px 5px @orange;
+  }
+}
+
+// ORANGE FLASHING ICON
+.fa-flashing-orange {
+  .animation(orange-flashing, 3s, infinite);
+}
+
+// GREEN FLASHING ICON
+.fa-flashing-green {
+  .animation(green-flashing, 3s, infinite);
+}
+
+// Faster ORANGE FLASHING ICON
+.fa-flashing-green-faster {
+  .animation(green-flashing, 1s, infinite);
+}
+
+// Fastest ORANGE FLASHING ICON
+.fa-flashing-green-fastest {
+  .animation(green-flashing, 500ms, infinite);
+}
+
+.icon{
+  display: inline-block;
+}

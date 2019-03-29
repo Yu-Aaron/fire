@@ -1,0 +1,111 @@
+<div class="row margin-bottom-default">
+  <div class="col-xs-6 text-right">
+    <!-- SEARCH -->
+    <!--
+    <div class="search" style="">
+      <input class="form-control" type="text" placeholder="搜索">
+    </div>
+    -->
+  </div>
+</div>
+
+<div class="table-scroll-wrapper table-scroll-wrapper-striped">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-1 padding-zero">
+        <input type="checkbox" ng-disabled="learnings.task.state=='PROCESSING' || learnings.task.state=='PAUSED' "
+               ng-change="learnings.toggle()" ng-model="learnings.selectAll"/>
+      </div>
+      <div class="col-xs-2">
+        <span>编号</span>
+      </div>
+      <div class="col-xs-6">
+        <span>规则名</span>
+      </div>
+      <div class="col-xs-2">
+        <span>规则项</span>
+      </div>
+      <div class="col-xs-1">
+      </div>
+    </div>
+
+    <div class="row" data-index="0" ng-repeat="learning in learnings.table">
+      <div class="col-xs-1 padding-zero">
+        <div class="row padding-sm">
+          <div class="col-xs-6">
+            <input type="checkbox" ng-hide="learning.deployed"
+                   ng-disabled="learnings.task.state=='PROCESSING' || learnings.task.state=='PAUSED' || learning.deployed"
+                   ng-change="learnings.countSelected(learning)" ng-model="learning.checked">
+          </div>
+          <div class="col-xs-6 padding-sm">
+            <span ng-show="learning.deployed" class="fa-stack fa-small">
+              <i class="fa fa-circle fa-stack-2x text-lime"></i>
+              <i class="fa fa-circle-o fa-stack-2x text-black"></i>
+              <i class="fa fa-check fa-stack-1x text-black"></i>
+              <!--
+
+							<i class="fa fa-book fa-stack-2x"></i>
+							<div ng-show="learning.deployed" class="fa-position-bottom-right">
+							  <span class="fa-stack fa-stack-sm">
+								<i class="fa fa-circle fa-stack-2x text-lime"></i>
+								<i class="fa fa-circle-o fa-stack-2x text-black"></i>
+								<i class="fa fa-check fa-stack-1x text-black"></i>
+							  </span>
+							</div>
+			  -->
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-2">
+        {{$index+1}}
+      </div>
+      <div class="col-xs-6">
+        {{learning.name}}
+      </div>
+      <div class="col-xs-2">
+        {{learning['_rulesCount']}}
+      </div>
+      <div class="col-xs-1">
+        <span><button ng-click="learnings.showDetail(learning)" class="btn btn-sm btn-default"><i
+          class="fa fa-file-text-o"></i></button></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <p id="rule_blacklist_learning_totalnum" ng-if="!learnings.selectedBlockCount">
+    总共{{learnings.table.length}}条规则，{{learnings.blockCount}}条规则项</p>
+  <p id="rule_blacklist_learning_selectnum" ng-if="learnings.selectedBlockCount">
+    已选择{{learnings.selectedBlockCount}}/{{learnings.table.length}}条规则，{{learnings.selectedRuleCount}}/{{learnings.blockCount}}条规则项</p>
+</div>
+<!--   <div class="fixed-table-pagination">
+  <div class="table-total-count">
+    <span>总共条数: </span>
+    <span>{{template.totalCount}}</span>
+  </div>
+  <pagination ng-model="template.currentPage"
+              class="pagination-sm"
+              boundary-links="true"
+              total-items="template.totalCount"
+              items-per-page="template.numPerPage"
+              max-size="5"
+              num-pages="template.numPages"
+              previous-text="&lsaquo;"
+              next-text="&rsaquo;"
+              first-text="&laquo;"
+              last-text="&raquo;"
+              ng-change="template.pageChanged()"
+    ></pagination>
+  <div class="table-number-per-page">
+    <span>每页显示:</span>
+    <select ng-model="template.numPerPage" ng-options="pageNum for pageNum in [20, 40, 60]" ng-change="template.updateNumPerPage()"></select>
+    <span>条</span>
+  </div>
+  <div class="table-jump">
+      <span>跳转自:</span>
+      <span><input type="number" name="page-num" ng-model="currentPage"></span>
+      <span> / {{template.numPages}}</span>
+  </div>
+</div> -->

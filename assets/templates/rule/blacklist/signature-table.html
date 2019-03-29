@@ -1,0 +1,75 @@
+<div style="position: relative;">
+  <hr class="hr-small-margin">
+  <div class="spacing"></div>
+
+  <div id="blacklist_signature_table" class="table-scroll-wrapper table-scroll-wrapper-striped">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-1 padding-zero">
+          <input custom-checkbox id="rule-blackList-editor_checkbox_selectAll" type="checkbox" ng-disabled="dtable.selectAllSigs"
+                 ng-change="dtable.toggle()" tri-state-checkbox  ng-model="dtable.selectAll"/>
+        </div>
+        <div class="col-xs-1 padding-zero text-center">
+          <span>编号</span>
+        </div>
+        <div class="col-xs-6">
+          <span>漏洞名称</span>
+        </div>
+        <div class="col-xs-3">
+          <span>发布时间</span>
+        </div>
+        <div class="col-xs-1 padding-zero text-center">
+          <span>内容</span>
+        </div>
+      </div>
+      <div id="blacklist_signature_table_row_{{$index}}" class="row" data-index="0"
+           ng-repeat="signature in dtable.table" fade-in-list>
+        <div class="col-xs-1 padding-zero">
+          <div class="row padding-sm">
+            <div class="col-xs-6">
+              <input custom-checkbox id="rule-blackList-editor_checkbox_check{{(dtable.currentPage-1)*dtable.numPerPage+$index+1}}"
+                     type="checkbox" ng-hide="signature.deployed"
+                     ng-disabled="signature.deployed || dtable.selectAllSigs"
+                     ng-change="dtable.countSelected(signature)" ng-model="signature.checked">
+            </div>
+            <div class="col-xs-6 padding-sm">
+              <span class="fa-stack fa-small">
+                <i class="fa fa-bullseye fa-stack-2x text-red"></i>
+                <div ng-show="signature.deployed" class="fa-position-bottom-right">
+                  <span class="fa-stack fa-stack-sm">
+                    <i class="fa fa-circle fa-stack-2x text-lime"></i>
+                    <i class="fa fa-circle-o fa-stack-2x text-black"></i>
+                    <i class="fa fa-check fa-stack-1x text-black"></i>
+                  </span>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-1 padding-zero text-center">
+          <span>{{(dtable.currentPage-1)*dtable.numPerPage+$index+1}}</span>
+        </div>
+        <div class="col-xs-6">
+          <span>{{signature.name}}</span>
+        </div>
+        <div class="col-xs-3">
+          <span>{{signature._publishDate}}</span>
+        </div>
+        <div class="col-xs-1 text-center padding-zero">
+          <span><button
+            id="rule-blackList-editor_checkbox_contentFile{{(dtable.currentPage-1)*dtable.numPerPage+$index+1}}"
+            ng-click="dtable.showDetail(signature)" class="btn btn-sm btn-default"><i
+            class="fa fa-file-text-o"></i></button></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <p id="rule_blacklist_sigaturetable_totalnum" ng-if="!dtable.selectedBlockCount">总共{{dtable.totalNum}}条规则</p>
+    <!--<p ng-if="!dtable.selectedBlockCount">总共{{dtable.table.length}}条规则，{{dtable.blockCount}}条规则项</p>-->
+    <p id="rule_blacklist_signaturetable_selectednum" ng-if="dtable.selectedBlockCount">
+      已选择{{dtable.selectedBlockCount}}/{{dtable.totalNum}}条规则</p>
+    <!--<p ng-if="dtable.selectedBlockCount">已选择{{dtable.selectedBlockCount}}/{{dtable.table.length}}条规则，{{dtable.selectedSignatureCount}}/{{dtable.blockCount}}条规则项</p>-->
+  </div>
+</div>

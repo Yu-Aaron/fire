@@ -1,0 +1,16 @@
+<div id="rule_delete_modal_start" class="modal-header">
+  <h3 class="modal-header-title">{{msg.title}}</h3>
+</div>
+<div class="modal-body-no-frame">
+  <br>
+  <div>
+    <div>{{msg.text}}</div>
+  </div>
+  <div>
+    {{msg.qus}}
+  </div>
+</div>
+<div class="modal-footer">
+  <button id="rule_delete_button_startCancel" class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times icon-left"></i>取消</button>
+  <button id="rule_delete_button_startConfirm" class="btn btn-default" ng-click="delete()"><i class="fa {{msg.fontAwesomeText}} icon-left"></i>{{msg.buttonText}}</button>
+</div>

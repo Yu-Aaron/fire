@@ -1,0 +1,47 @@
+<!-- Device Details -->
+<div class="row">
+  <div class="col-md-1">
+    <button ui-sref="asset.securitydevice({panel: securitydetail.device.backTo})" class="btn btn-default"
+            ng-click="rlogger.viewDetail=false;">
+      <i class="fa fa-arrow-circle-left icon-left"></i>返回
+    </button>
+  </div>
+  <div class="col-md-11">
+    <h2 id="security_detail_device_name" class="title-page-main">{{securitydetail.device.name}}</h2>
+  </div>
+</div>
+<div class="tab-container" ng-controller="TabCtrl as tab">
+  <ul class="nav nav-tabs nav-tabs-lime" ng-init="tab.active || tab.activatePanel('BASIC_INFO')">
+    <li ng-class="{active: tab.isActive('BASIC_INFO')}" id="asset_securitydevice_detail_basic">
+      <a ui-sref="asset.securitydevice.detail({deviceID: securitydetail.device.deviceId, panel: 'BASIC_INFO'})"
+         ng-click="tab.activatePanel('BASIC_INFO')">
+        <span>基本信息</span>
+      </a>
+    </li>
+    <li ng-class="{active: tab.isActive('POTRS_CONFIG')}" ng-if="securitydetail.device.category === 'SECURITY_DEVICE'"
+        id="asset_securitydevice_detail_ports">
+      <a ui-sref="asset.securitydevice.detail({deviceID: securitydetail.device.deviceId, panel: 'POTRS_CONFIG'})"
+         ng-click="tab.activatePanel('POTRS_CONFIG')">
+        <span>端口配置</span>
+      </a>
+    </li>
+    <li ng-class="{active: tab.isActive('ACCESS_CTRL')}" ng-if="securitydetail.device.showRoutingInfo"
+        id="asset_securitydevice_detail_access">
+      <a ui-sref="asset.securitydevice.detail({deviceID: securitydetail.device.deviceId, panel: 'ACCESS_CTRL'})"
+         ng-click="tab.activatePanel('ACCESS_CTRL')">
+        <span>访问控制</span>
+      </a>
+    </li>
+  </ul>
+  <div ng-switch on="tab.active" class="tab-container-body">
+    <div ng-switch-when="BASIC_INFO">
+      <div class="device-details" ng-include="'templates/asset/securitydevice/details/basic-info.html'"></div>
+    </div>
+    <div ng-switch-when="POTRS_CONFIG">
+      <div class="device-details" ng-include="'templates/asset/securitydevice/details/ports-info.html'"></div>
+    </div>
+    <div ng-switch-when="ACCESS_CTRL">
+      <div class="device-details" ng-include="'templates/asset/securitydevice/details/acl-info.html'"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">导入记录</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+
+<div class="modal-body">
+  <div class="modal-container">
+    <h5>请选择上传CSV文件： </h5><br/>
+    <div style="font-size: 1.2em">
+      上传文件 (*.csv):<br/><span ng-hide="uploader.queue[0].file" class="warning" style="padding-left: 10px;">尚未选择文件</span>
+      <span ng-show="uploader.queue[0].file"
+            ng-class="extension && '.'+uploader.queue[0].file.name.split('.').pop() !== extension ? 'invalid': ''"
+            class="file-select-frame text-overflow">
+        <i class="fa fa-file icon-left"
+           ng-class="extension && '.'+uploader.queue[0].file.name.split('.').pop() !== extension ? 'text-red': 'text-lime'"></i>{{uploader.queue[0].file.name}}</span>
+    </div>
+    <br/>
+    <span>
+      <button class="btn btn-default">
+          <input type="file" ng-if="extension" accept="{{extension}}" nv-file-select uploader="uploader"
+                 style="width: 123px; height: 31px; margin: 10px; margin-top: 121px;" ng-click="uploader.queue=[]"/>
+          <input type="file" ng-if="!extension" nv-file-select uploader="uploader"
+                 style="width: 123px; height: 31px; margin: 10px; margin-top: 121px;" ng-click="uploader.queue=[]"/>
+          <i class="fa fa-file icon-left"></i>选择导入文件
+      </button>
+    </span>
+    <br/>
+    <span ng-hide="true">
+      <input type="checkbox" ng-model="overwrite"> 覆盖相同的记录
+    </span>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-default pull-right"
+          ng-disabled="!uploader.queue[0].file || (extension && '.'+uploader.queue[0].file.name.split('.').pop() !== extension)"
+          ng-click="uploader.queue[0].upload(); upload();"><i class="fa fa-upload icon-left"></i>上传文件
+  </button>
+</div>

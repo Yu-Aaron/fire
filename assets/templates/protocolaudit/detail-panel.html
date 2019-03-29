@@ -1,0 +1,56 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">详细信息</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body-no-frame">
+  <div id="audit_auditdetailpanel_container" class="modal-container">
+    <div>
+      <div class="row">
+        <div class="col-xs-2">
+          <h5>协议类型</h5>
+          <div class="gray-content">{{auditDataDetail.protocolSourceName === 'telnet' ? 'Telnet' :
+            auditDataDetail.protocolSourceName === 'modbus' ? 'Modbus' : auditDataDetail.protocolSourceName ===
+            'profinetio' ? 'Profinetio' : auditDataDetail.protocolSourceName.toUpperCase()}}
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <h5>起始时间</h5>
+          <div class="gray-content">{{auditDataDetail.flowTimestampLocal | date:'yyyy-MM-dd HH:mm:ss'}}</div>
+        </div>
+        <div class="col-xs-2" ng-if="supportIpAndPort(auditDataDetail.protocolSourceName)">
+          <h5>端口</h5>
+          <div class="gray-content">{{auditDataDetail.sourcePort}} <=> {{auditDataDetail.destinationPort}}</div>
+        </div>
+        <div class="col-xs-3" ng-if="supportIpAndPort(auditDataDetail.protocolSourceName)">
+          <h5>IP地址</h5>
+          <div class="gray-content">{{auditDataDetail.sourceIp}} <=> {{auditDataDetail.destinationIp}}</div>
+        </div>
+        <div class="col-xs-3">
+          <h5>MAC地址</h5>
+          <div class="gray-content">{{auditDataDetail.sourceMac | uppercase}} <=> {{auditDataDetail.destinationMac |
+            uppercase}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="audit_auditdetailpanel_footer" class="modal-footer">
+  <div class="panel panel-gradient audittable-detail-panel-panel audittable-detail-panel-panel-content-scrollable">
+    <div class="audittable-detail-panel-panel-header text-left">
+      <span ng-class="{true:'text-lime', false:'text-red'}[trim(auditDataDetail.fileZipPsw).length>0]"
+            style="font-size: 1.5em;">*</span> 设置解压密码： &nbsp; <input type="password"
+                                                                     ng-model="auditDataDetail.fileZipPsw"> &nbsp;
+      &nbsp;
+      <button class="btn btn-default" ng-disabled="!trim(auditDataDetail.fileZipPsw).length"
+              ng-click="exportFile(false,auditDataDetail.flowdataHeadId)"><i class="fa fa-download icon-left"></i>导出
+      </button>
+    </div>
+    <div class="audittable-detail-panel-panel-container">
+      <dtable>
+        <audit-detail-table listinfohead="{{auditDataDetail.listInfoHead}}"
+                            listinfo="{{auditDataDetail.listInfo}}"></audit-detail-table>
+      </dtable>
+    </div>
+  </div>
+</div>

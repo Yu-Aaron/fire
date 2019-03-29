@@ -1,0 +1,46 @@
+.session-pool-overview-container{
+  .action-wrap{
+    display: flex;
+    .col{
+      flex-grow: 1;
+      display: flex;
+      line-height: 28px;
+      margin-right: 20px;
+      &:nth-child(1) {
+        width: 230px;
+      }
+      &.col-button{
+        flex-grow: 0;
+        width: 76px;
+        min-width: 0;
+      }
+      *{
+        vertical-align: middle;
+      }
+      >span{
+        display: inline-block;
+        width: 60px;
+        margin-right: 6px;
+      }
+      .wrap{
+        width: 10%;
+        flex-grow: 1;
+
+        input{
+          width: 100%;
+          max-width: 250px;
+        }
+      }
+    }
+  }
+}
+
+.page-session-state #dtable-toolbar_button_highAdvancedSearch {
+  display: none;
+}
+.page-session-protocol .chart-container .toolbox {
+  position: absolute;
+  z-index: 100;
+  top: 20px;
+  left: 20px;
+}

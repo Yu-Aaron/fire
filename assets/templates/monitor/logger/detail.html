@@ -1,0 +1,26 @@
+<!-- LOGGERS DETAILS PAGE -->
+<!-- ==================== -->
+
+<!-- THE TOOLBAR -->
+<!-- ========================= -->
+<div class="bg-gray-75 padding-default">
+  <a ui-sref="monitor.logger" class="btn btn-default"><i class="fa fa-arrow-circle-left icon-left"></i>返回</a>
+  <h5 class="margin-left-default display-inline-block">{{loggerDetail.logInfo.fileName}}</h5>
+</div>
+
+
+<div class="panel padding-default">
+
+  <div class="container-tab margin-top-default" ng-controller="TabCtrl as tab">
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div style="height: 500px; overflow-y: scroll;">
+          <pre ng-show="loggerDetail.detailLog =='LOADING'">加载中 <i class="fa fa-spinner fa-spin"></i></pre>
+          <pre ng-hide="loggerDetail.detailLog =='LOADING'">{{loggerDetail.detailLog}}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,30 @@
+<div class="sessionState-container">
+    <table class="table table-hover icon-hidden">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>源IP</th>
+          <th>源端口</th>
+          <th>目标IP</th>
+          <th>目标端口</th>
+          <th>会话协议</th>
+          <th>应用名称</th>
+          <th>连接状态</th>
+          <th>策略引用</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="ss in dtable.table" fade-in-list>
+          <td>{{skip + $index + 1}}</td>
+          <td>{{ss.sourceIp}}</td>
+          <td>{{ss.sourcePort}}</td>
+          <td>{{ss.targetIp}}</td>
+          <td>{{ss.targetPort}}</td>
+          <td>{{ss.sessionProtocol}}</td>
+          <td>{{ss.applicationName==='modbus-tcp'?'Modbus-TCP':ss.applicationName}}</td>
+          <td>{{ss.connectionState}}</td>
+          <td>{{ss.strategyRefName}}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>

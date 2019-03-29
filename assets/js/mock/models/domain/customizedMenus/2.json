@@ -1,0 +1,162 @@
+[
+    {
+        "customizedMenuId": 2,
+        "description": "总览",
+        "target": "OVERVIEW",
+        "parentTarget": "REAL_TIME_PROTECTION",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 3,
+        "description": "事件",
+        "target": "INCIDENT",
+        "parentTarget": "REAL_TIME_PROTECTION",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 4,
+        "description": "日志",
+        "target": "OPERATION_LOG",
+        "parentTarget": "REAL_TIME_PROTECTION",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 5,
+        "description": "设备",
+        "target": "DEVICE",
+        "parentTarget": "REAL_TIME_PROTECTION",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 7,
+        "description": "安全设备",
+        "target": "SECURITY_DEVICE",
+        "parentTarget": "ASSET_MANAGEMENT",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 10,
+        "description": "工控设备",
+        "target": "FACTORY_DEVICE",
+        "parentTarget": "ASSET_MANAGEMENT",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 11,
+        "description": "网络设备",
+        "target": "NETWORK_DEVICE",
+        "parentTarget": "ASSET_MANAGEMENT",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 13,
+        "description": "黑名单",
+        "target": "BLACK_LIST",
+        "parentTarget": "RULE",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 14,
+        "description": "白名单",
+        "target": "WHITE_LIST",
+        "parentTarget": "RULE",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 15,
+        "description": "IP/MAC",
+        "target": "IP_MAC",
+        "parentTarget": "RULE",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 20,
+        "description": "实时检测",
+        "target": "ONLINE_DETECTION",
+        "parentTarget": "INTRUSION_DETECTION",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 21,
+        "description": "离线检测",
+        "target": "OFFLINE_DETECTION",
+        "parentTarget": "INTRUSION_DETECTION",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 24,
+        "description": "流量总览",
+        "target": "FLOWDATA",
+        "parentTarget": "AUDIT",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 25,
+        "description": "安全设备流量",
+        "target": "DPIDEVICE",
+        "parentTarget": "AUDIT",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 33,
+        "description": "工控设备流量",
+        "target": "ICDEVICE",
+        "parentTarget": "AUDIT",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 26,
+        "description": "协议审计",
+        "target": "PROTOCOL_AUDIT",
+        "parentTarget": "AUDIT",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 28,
+        "description": "安全监管平台",
+        "target": "SYSTEM_CONSOLE",
+        "parentTarget": "SYSTEM_MANAGEMENT",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 29,
+        "description": "安全设备",
+        "target": "SYSTEM_DEVICE",
+        "parentTarget": "SYSTEM_MANAGEMENT",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 30,
+        "description": "私有协议设置",
+        "target": "PRIVATE_PROTOCOL",
+        "parentTarget": "SYSTEM_MANAGEMENT",
+        "menuLevel": 2,
+        "active": true
+    },
+    {
+        "customizedMenuId": 31,
+        "description": "系统版本",
+        "target": "SYSTEM_VERSION",
+        "parentTarget": "SYSTEM_MANAGEMENT",
+        "menuLevel": 2,
+        "active": true
+    }
+]

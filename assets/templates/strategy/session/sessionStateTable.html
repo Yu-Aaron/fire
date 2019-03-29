@@ -1,0 +1,44 @@
+<div class="sessionState-container">
+    <table class="table table-hover icon-hidden">
+      <thead>
+        <tr>
+          <!--
+          <th class="text-center">
+            <input type="checkbox" custom-checkbox ng-model="dtable.selectAllValue" ng-click="dtable.selectAll()"/>
+          </th>
+          -->
+          <th>序号</th>
+          <th order-by="sourceIp">源IP</th>
+          <th order-by="sourcePort">源端口</th>
+          <th order-by="targetIp">目的IP</th>
+          <th order-by="targetPort">目的端口</th>
+          <th order-by="sessionProtocol">会话协议</th>
+          <th order-by="applicationName">应用名称</th>
+          <th order-by="connectionState">连接状态</th>
+          <th order-by="strategyRef">策略引用</th>
+          <th order-by=""></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="ss in dtable.table">
+          <!--
+          <td class="text-center">
+            <input type="checkbox" id="selected-item-{{$index}}"
+                       ng-checked="dtable.selectedItems[ss.deviceAssetId]"
+                       ng-model="dtable.selectedItems[ss.deviceAssetId]"/>
+          </td>
+          -->
+          <td>{{skip + $index + 1}}</td>
+          <td>{{ss.sourceIp}}</td>
+          <td>{{ss.sourcePort}}</td>
+          <td>{{ss.targetIp}}</td>
+          <td>{{ss.targetPort}}</td>
+          <td>{{ss.sessionProtocol}}</td>
+          <td>{{ss.applicationName}}</td>
+          <td>{{ss.connectionState}}</td>
+          <td>{{ss.strategyRefName}}</td>
+          <td> 详情 </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

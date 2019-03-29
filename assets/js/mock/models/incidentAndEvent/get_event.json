@@ -1,0 +1,14 @@
+{
+    "eventId": 5,
+    "type": "DPI_ON_OFF",
+    "sourceName": "KEV-C400-0118-57",
+    "timestamp": "2015-11-27T23:03:06Z",
+    "occurredDate": "2015-11-27",
+    "occurredTime": "23:03:06",
+    "content": "连接",
+    "level": "INFO",
+    "status": "NEW",
+    "createdAt": "2015-11-27T23:03:06Z",
+    "updatedAt": "2015-11-27T23:03:06Z",
+    "deviceId": "c68b3c7f-adc0-4b53-a044-3daad00a2ecf"
+}

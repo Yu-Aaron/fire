@@ -1,0 +1,16 @@
+<div class="btn-group pull-left">
+  <label id="userGroupPrivilege_{{privilege}}_edit" class="btn btn-editRight"
+         ng-model="systemuser.userGroupPrivilege[privilege]" btn-radio="30"
+         ng-if="systemuser.hasPrivilege(privilege, 30)"
+         ng-disabled="systemuser.userPrivilegeDisabled||!systemuser.hasPrivilege(privilege, 30)"
+         ng-change="systemuser.privilegeChanged(privilege,30)">{{type === 3 ? '编辑' : '开启'}}</label>
+  <label id="userGroupPrivilege_{{privilege}}_view" class="btn btn-viewRight"
+         ng-model="systemuser.userGroupPrivilege[privilege]" btn-radio="2"
+         ng-if="type === 3 && systemuser.hasPrivilege(privilege, 2)"
+         ng-disabled="systemuser.userPrivilegeDisabled||!systemuser.hasPrivilege(privilege, 2)"
+         ng-change="systemuser.privilegeChanged(privilege, 2)">查看</label>
+  <label id="userGroupPrivilege_{{privilege}}_none" class="btn btn-forbidden"
+         ng-model="systemuser.userGroupPrivilege[privilege]" btn-radio="1"
+         ng-disabled="systemuser.userPrivilegeDisabled"
+         ng-change="systemuser.privilegeChanged(privilege,1)">{{type === 3 ? '禁止' : '关闭'}}</label>
+</div>

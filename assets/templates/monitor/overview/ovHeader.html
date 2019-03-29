@@ -1,0 +1,42 @@
+<div class="ov-header">
+  <div class="flex-row">
+    <div class="left-wrap">
+      <div class="flex-row">
+        <div class="box">
+          <circle-meter percent="overview.CPU" name="CPU"></circle-meter>
+        </div>
+        <div class="box">
+          <circle-meter percent="overview.memory" name="内存" surplus="overview.memoryFree"></circle-meter>
+        </div>
+        <div class="box">
+          <circle-meter percent="overview.storage" name="磁盘" surplus="overview.partitionFree"></circle-meter>
+        </div>
+
+        <div class="box box-time">
+          <system-time time="overview.time" uptime="overview.uptime" size="170"></system-time>
+        </div>
+      </div>
+      <ov-incidence></ov-incidence>
+    </div>
+    <div class="right-wrap">
+      <div class="box">
+        <div class="box-hd">
+          <i class="icon icon-clock"></i>
+          <span class="title">今日事件</span>
+          <span class="count" style="color: #428dc4;" ng-bind="todayCount"></span>
+          <button type="button" class="btn btn-sm btn-default pull-right text-lime"
+                  manual-fetch="shouldFlashTodayCount"
+                  fetch-action="refreshIncidentBoard()"
+                  blink="btn-flashing"
+          >
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+        <div class="box-bd">
+          <div class="chart-content" id="incident-chart" ng-init="initIncidentChart()"></div>
+          <error-incident></error-incident>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

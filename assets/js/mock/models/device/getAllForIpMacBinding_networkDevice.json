@@ -1,0 +1,41 @@
+[
+    {
+        "deviceId": "00560892-ff73-47db-8c84-b8e36cc62d82",
+        "topologyId": "999c3f9c-d209-417b-9694-62e464534b0f",
+        "modelId": "1d856711-77c3-4417-a095-a5b3d903202a",
+        "name": "Switch(5 ports)",
+        "modelIdentifier": "V1000",
+        "_zoneNames": [
+            "NA"
+        ],
+        "portsNumber": 0,
+        "_configMismatch": false,
+        "protectedDevicesNumber": 0,
+        "devicePorts": [],
+        "category": "NETWORK_DEVICE",
+        "knownVulnerabilitiesNumber": 0,
+        "protectedVulnerabilitiesNumber": 0,
+        "hasUSB": false,
+        "hasWireless": false,
+        "hasPort": true,
+        "cmmnPortnumber": 0,
+        "isProtected": false,
+        "make": "CISCO",
+        "blocksRef": {
+            "baseUrl": "/policies/topology/999c3f9c-d209-417b-9694-62e464534b0f/device/00560892-ff73-47db-8c84-b8e36cc62d82/blocks",
+            "type": "policyblock"
+        },
+        "iconType": "switch",
+        "hidden": 0,
+        "deviceOnline": 0,
+        "updatedAt": "2015-11-27T22:35:58Z",
+        "createdAt": "2015-11-27T22:35:58Z",
+        "_remoteRoutings": [],
+        "selected": 0,
+        "_subCategory": "NORMAL",
+        "deviceSource": "UPLOAD",
+        "_model_name": "SWITCH / SWITCH",
+        "_ipmac": 0,
+        "_ipmacStatus": 0
+    }
+]

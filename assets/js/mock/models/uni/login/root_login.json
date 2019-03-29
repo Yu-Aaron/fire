@@ -1,0 +1,29 @@
+{
+    "success": true,
+    "message": "SUCCESS",
+    "loginedUser": {
+        "userId": "Acornbb0-406c-400c-b806-4d8e1af111fe",
+        "name": "root",
+        "failedLoginAttemptCount": 0,
+        "locked": false,
+        "lastLogin": "2015-10-27T23:36:55Z",
+        "createdBy": "INITIAL_SETUP",
+        "updatedBy": "INITIAL_SETUP",
+        "createdAt": "2015-06-24T17:16:09Z",
+        "updatedAt": "2015-06-24T17:16:09Z",
+        "_roles": [
+            {
+                "roleId": "0",
+                "name": "分区管理员",
+                "createdAt": "2015-06-24T17:16:04Z",
+                "updatedAt": "2015-06-24T17:16:04Z",
+                "comment": "分区管理员",
+                "priority": 1,
+                "defaultRole": false,
+                "roleLevel": "ROOT"
+            }
+        ],
+        "stuffName": "分区管理",
+        "_type": 1
+    }
+}

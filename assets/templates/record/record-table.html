@@ -1,0 +1,50 @@
+<div>
+  <div class="padding-zero" privilege>
+    <button type="button" class="btn btn-default" ng-click="record.generateRecord()"
+            style="position: absolute; margin-top: -52px;"><i class="fa fa-file-text-o icon-left"></i>产生记录
+    </button>
+  </div>
+  <table class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th class="table-col-sm">&nbsp;</th>
+      <th class="table-col-20">名称</th>
+      <th class="table-col-md">日期</th>
+      <th class="table-col-md">时间</th>
+      <th>&nbsp;</th>
+      <th class="table-col-lg">&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="rec in dtable.table">
+      <td>&nbsp;</td>
+      <td>{{rec.logname}}</td>
+      <td>{{rec.createdAt | date:'yyyy-MM-dd'}}</td>
+      <td>{{rec.createdAt | date:'HH:mm:ss'}}</td>
+      <td>&nbsp;</td>
+      <td>
+        <button class="btn btn-default" ng-click="record.downloadRecord(rec.logPath)" privilege><i
+          class="fa fa-arrow-circle-down icon-left"></i>下载
+        </button>
+        <button class="btn btn-default" ng-click="record.deleteRecord(rec.backUpHistoryID)" privilege><i
+          class="fa fa-trash-o"></i></button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <script type="text/ng-template" id="delete-record-confirmation.html">
+    <div class="modal-header">
+      <h3 class="modal-header-title">删除记录</h3>
+    </div>
+    <div class="modal-body">
+      确认是否删除此记录？
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-default pull-right" ng-click="ok()"><i class="fa fa-check text-lime icon-left"></i>确定
+      </button>
+      <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times-circle icon-left"></i>取消
+      </button>
+    </div>
+  </script>
+</div>

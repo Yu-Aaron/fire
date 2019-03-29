@@ -1,0 +1,30 @@
+<div>
+  <div class="table-title infsafety-result-table-heading">
+    <span>路径</span>
+    <a class="modal-close"
+       ng-click="resultOptions.shortestPath.dropDown = false;resultOptions.shortestPath.table = false"><i
+      class="fa fa-times"></i></a>
+  </div>
+
+  <div class="table-body infsafety-result-table-body">
+    <table class="table table-hover icon-hidden">
+      <thead>
+      <tr>
+        <th>界面设备</th>
+        <th>目标设备</th>
+        <th>跳转次数</th>
+        <th>安全数值</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in table">
+        <td>{{nodeMap[item.source].name}}</td>
+        <td>{{nodeMap[item.target].name}}</td>
+        <td>{{item.count}}</td>
+        <td ng-style="{color: item.score <= 60 ? '#FF6D28' : item.score >= 80 ? '#92D219' : '#FFF319'}">{{item.score}}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

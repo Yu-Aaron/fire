@@ -1,0 +1,91 @@
+<!-- Event Main -->
+<div class="event-inner-main inner-main">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-lg">
+        <div class="panel-header panel-header-border">
+          <h5 class="panel-header-title">事件详情总览</h5>
+        </div>
+        <div class="panel-body panel-dashboard">
+          <div class="row text-right">
+            <div class="col-xs-2 bg-icon bg-icon-bookmark">
+              <div class="mid-line spin-container" style="font-size:27px;" ng-if="incident.notInitTodayCount">
+                <i class="fa fa-spinner fa-spin"></i><br/>
+                <span class="spin-text">加载中...</span>
+              </div>
+              <h1 class="panel-dashboard-value text-green" ng-if="!incident.notInitTodayCount">{{incident.todayCount ||
+                0}}</h1>
+              <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-green fa fa-bookmark"></i>今日事件总数
+              </h4>
+            </div>
+            <div class="col-xs-3 bg-icon bg-icon-paperclip">
+              <div class="mid-line spin-container" style="font-size:27px;" ng-if="incident.notInitIncidentCount">
+                <i class="fa fa-spinner fa-spin"></i><br/>
+                <span class="spin-text">加载中...</span>
+              </div>
+              <h1 class="panel-dashboard-value text-light-blue" ng-if="!incident.notInitIncidentCount">
+                {{incident.unReadIncidentCount || 0}}</h1>
+              <h4 class="panel-dashboard-title"><i
+                class="panel-dashboard-title-icon text-light-blue fa fa-paperclip"></i>未读事件</h4>
+            </div>
+            <div class="col-xs-3 bg-icon bg-icon-clock">
+              <div class="mid-line spin-container" style="font-size:27px;" ng-if="incident.notInitPeakHour">
+                <i class="fa fa-spinner fa-spin"></i><br/>
+                <span class="spin-text">加载中...</span>
+              </div>
+              <h1 class="panel-dashboard-value text-red-darkor" style="font-size:27px"
+                  ng-if="!incident.notInitPeakHour">{{incident.peakHour}}</h1>
+              <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-red-dark fa fa-clock-o"></i>高峰时段
+              </h4>
+            </div>
+            <div class="col-xs-3 bg-icon bg-icon-ban">
+              <div class="mid-line spin-container" style="font-size:27px;" ng-if="incident.notInitErrorCount">
+                <i class="fa fa-spinner fa-spin"></i><br/>
+                <span class="spin-text">加载中...</span>
+              </div>
+              <h1 class="panel-dashboard-value text-red-orange" ng-if="!incident.notInitErrorCount">
+                {{incident.errorIncidentCount || 0}}</h1>
+              <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-red-orange fa fa-ban"></i>阻断事件
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="tab-container margin-top-medium" ng-controller="TabCtrl as tab">
+    <ul class="nav nav-tabs nav-tabs-lg nav-tabs-lime" ng-init="tab.active || tab.activatePanel('graph')">
+      <li ng-class="{ active: tab.isActive('graph') }">
+        <a ui-sref="monitor.incident.graph" ui-sref-opts="{ reload: false }" ng-click="tab.activatePanel('graph');incident.refreshCounts();incident.shouldFlashIncident = false">
+          <i class="fa fa-bar-chart nav-tab-icon"></i><span>图表模式</span>
+        </a>
+      </li>
+      <li id="incidentListModule" ng-class="{ active: tab.isActive('list') }">
+        <a ui-sref="monitor.incident.list" ui-sref-opts="{ reload: false }" ng-click="tab.activatePanel('list');incident.refreshCounts();incident.shouldFlashIncident = false">
+          <i class="fa fa-list nav-tab-icon"></i><span>列表模式</span>
+        </a>
+      </li>
+    </ul>
+
+    <div ng-switch on="tab.active">
+      <div class="tab-container-body" ng-switch-when="graph">
+        <timeline></timeline>
+      </div>
+
+      <div class="tab-container-body" ng-switch-when="list">
+        <div class="panel padding-zero">
+          <div class="panel-header">安全事件</div>
+            <div class="panel-body" cg-busy="{promise:$root.deleteAllIncidentsPromise,message:'清空所有事件中，请稍侯...'}">
+            <dtable>
+              <incident-table></incident-table>
+            </dtable>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

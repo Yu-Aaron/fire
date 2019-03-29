@@ -1,0 +1,77 @@
+{
+    "deviceId": "92b1a79c-c98e-4224-a505-a1763f77c814",
+    "topologyId": "999c3f9c-d209-417b-9694-62e464534b0f",
+    "modelId": "Acorn001-296d-47d3-8ec6-fe76fdea8d02",
+    "name": "DPI-IPS-Modbus",
+    "modelIdentifier": "1.0",
+    "serialNumber": "ZB0101B500000118",
+    "_zoneNames": [
+        "NA"
+    ],
+    "portsNumber": 0,
+    "_configMismatch": true,
+    "protectedDevicesNumber": 0,
+    "installationState": "INSTALLED",
+    "devicePorts": [
+        {
+            "portName": "p0",
+            "deployedRulesNumber": 0,
+            "protectedDevicesNumber": 0,
+            "linkState": 0,
+            "isMgmtPort": false,
+            "portId": "ae7b6ba7-7bff-4d6e-859b-828943fbf413",
+            "deviceId": "92b1a79c-c98e-4224-a505-a1763f77c814",
+            "status": 0,
+            "_subnets": []
+        },
+        {
+            "portName": "p1",
+            "deployedRulesNumber": 0,
+            "protectedDevicesNumber": 0,
+            "linkState": 0,
+            "isMgmtPort": false,
+            "portId": "05e2e443-221c-4854-9fe8-0fb07499fcab",
+            "deviceId": "92b1a79c-c98e-4224-a505-a1763f77c814",
+            "status": 0,
+            "_subnets": []
+        },
+        {
+            "portName": "p2",
+            "deployedRulesNumber": 0,
+            "protectedDevicesNumber": 0,
+            "linkState": 0,
+            "isMgmtPort": true,
+            "portId": "891f145b-6099-42c2-8197-1b896888c501",
+            "portIp": "10.0.10.59",
+            "mac": "90:C6:82:A0:01:19",
+            "deviceId": "92b1a79c-c98e-4224-a505-a1763f77c814",
+            "status": 0,
+            "updatedAt": "2015-11-28 02:20:46.0",
+            "_subnets": []
+        }
+    ],
+    "category": "SECURITY_DEVICE",
+    "knownVulnerabilitiesNumber": 0,
+    "protectedVulnerabilitiesNumber": 0,
+    "hasUSB": true,
+    "hasWireless": false,
+    "hasPort": true,
+    "cmmnPortnumber": 0,
+    "isProtected": false,
+    "make": "Acorn",
+    "blocksRef": {
+        "baseUrl": "/policies/topology/999c3f9c-d209-417b-9694-62e464534b0f/device/92b1a79c-c98e-4224-a505-a1763f77c814/blocks",
+        "type": "policyblock"
+    },
+    "iconType": "ips",
+    "hidden": 0,
+    "deviceOnline": 0,
+    "updatedAt": "2015-11-27T22:35:59Z",
+    "createdAt": "2015-11-27T22:35:58Z",
+    "_remoteRoutings": [],
+    "selected": 0,
+    "deviceSource": "UPLOAD",
+    "_model_name": "IAD智能保护平台 / KEV-C200",
+    "_ipmac": 0,
+    "_ipmacStatus": 0
+}

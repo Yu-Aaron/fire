@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <h3 class="modal-header-title" ng-if="item.todoListType==='DEVICE_MODE_CHANGE'">设备模式变动</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+
+<div class="modal-body">
+  <div class="modal-container">
+    <div>
+      {{item.content}}
+      <span ng-if="item.todoListStatus==='DECLINED'"> - (已忽略) </span>
+      <span ng-if="item.todoListStatus==='DONE'"> - (已完成) </span>
+    </div>
+    <div
+      ng-if="item.todoListType==='DEVICE_MODE_CHANGE' && (item.todoListStatus==='PENDING'||item.todoListStatus==='READ')">
+      请确认是否重新配置,并重新加入拓扑.
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button
+    ng-if="item.todoListType==='DEVICE_MODE_CHANGE' && (item.todoListStatus==='PENDING'||item.todoListStatus==='READ')"
+    class="btn btn-default pull-left" ng-click="decline(item)"><i class="fa fa-close icon-left"></i> 忽略
+  </button>
+  <button
+    ng-if="item.todoListType==='DEVICE_MODE_CHANGE' && (item.todoListStatus==='PENDING'||item.todoListStatus==='READ')"
+    class="btn btn-default pull-right" ng-click="confirm(item)"><i class="fa fa-check icon-left"></i> 重新配置
+  </button>
+</div>

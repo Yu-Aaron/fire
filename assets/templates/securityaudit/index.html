@@ -1,0 +1,54 @@
+<nav ng-if="securityaudit.displayNav" class="left-navbar" ng-class="{'left-navbar-collapsed': securityaudit.expanded}">
+  <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat="tab in $root.rootMenu.getChild('SECURITY_AUDIT').getChilds()" disable="true" class="highlight"
+        style="min-width:100px">
+      <a ng-if="tab.getState()!=='audit'&&tab.getState()!=='contentaudit'" id="securityaudit_a_{{tab.getState()}}"
+         class="left-navbar-item left-navbar-item-{{tab.getState()}} highlight"
+         ng-click="securityaudit.entry(tab); securityaudit.closeAudit=true; securityaudit.closeContent=true"
+         ng-class="{active: securityaudit.isActive(tab.getState())}" ui-sref-opts="{{tab.getOptions()}}">
+        <span
+          class="svg-side_nav_icons_{{tab.getIcon()}} svg-side_nav_icons_{{tab.getIcon()}}-dims left-navbar-item-icon"></span>
+        <div class="left-navbar-item-name">{{tab.getDescription()}}</div>
+      </a>
+      <a id="securityaudit_a_{{tab.getState()}}" ng-if="tab.getState()==='audit'"
+         class="left-navbar-item left-navbar-item-{{tab.getState()}} menu-container"
+         ng-class="{hoverActive: !securityaudit.closeAudit, active: securityaudit.isActive(tab.getState())}"
+         ng-click="securityaudit.closeAudit = !securityaudit.closeAudit; securityaudit.closeContent=true">
+        <span
+          class="svg-side_nav_icons_{{tab.getIcon()}} svg-side_nav_icons_{{tab.getIcon()}}-dims left-navbar-item-icon"></span>
+        <span class="left-navbar-item-name">{{tab.getDescription()}}</span>
+        <span class="pull-right"><i class="fa fa-chevron-right whitelist-icon" ng-if="securityaudit.closeAudit"></i><i
+          class="fa fa-chevron-down whitelist-icon" ng-if="!securityaudit.closeAudit"></i></span>
+      </a>
+      <div class="whitelist-submenu" ng-show="tab.getState()==='audit'" ng-if="!securityaudit.closeAudit">
+        <div id="rule_a_sub_{{child.getState()}}" class="whitelist-submenu-item" ng-repeat="child in tab.getChilds()"
+             ng-if="!child.ifDisabledByVersion()" ng-click="securityaudit.entry(child)"
+             ng-class="{active: securityaudit.isActiveSub(child.getState())}">
+          <div>{{child.getDescription()}}</div>
+        </div>
+      </div>
+
+      <a id="securityaudit_a_{{tab.getState()}}" ng-if="tab.getState()==='contentaudit'"
+         class="left-navbar-item left-navbar-item-{{tab.getState()}} menu-container"
+         ng-class="{hoverActive: !securityaudit.closeContent, active: securityaudit.isActive(tab.getState())}"
+         ng-click="securityaudit.closeContent = !securityaudit.closeContent; securityaudit.closeAudit=true">
+        <span
+          class="svg-side_nav_icons_{{tab.getIcon()}} svg-side_nav_icons_{{tab.getIcon()}}-dims left-navbar-item-icon"></span>
+        <span class="left-navbar-item-name">{{tab.getDescription()}}</span>
+        <span class="pull-right"><i class="fa fa-chevron-right whitelist-icon" ng-if="securityaudit.closeContent"></i><i
+          class="fa fa-chevron-down whitelist-icon" ng-if="!securityaudit.closeContent"></i></span>
+      </a>
+      <div class="whitelist-submenu" ng-show="tab.getState()==='contentaudit'" ng-if="!securityaudit.closeContent">
+        <div id="rule_a_sub_{{child.getState()}}" class="whitelist-submenu-item" ng-repeat="child in tab.getChilds()"
+             ng-if="!child.ifDisabledByVersion()" ng-click="securityaudit.entry(child)"
+             ng-class="{active: securityaudit.isActiveSub(child.getState())}">
+          <div>{{child.getDescription()}}</div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+<div ng-style="securityaudit.notJAStyle" class="main-content main-content-with-nav"
+     ng-class="{'navbar-collapsed': securityaudit.expanded}" ui-view></div>
+<div class="clearfix"></div>

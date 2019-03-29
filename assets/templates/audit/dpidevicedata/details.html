@@ -1,0 +1,153 @@
+<div class="row margin-bottom-default">
+  <div class="col-xs-2">
+    <button ui-sref="audit.dpidevice_data" class="btn btn-default pull-left">
+      <i class="fa fa-arrow-circle-left icon-left"/>返回
+    </button>
+  </div>
+</div>
+
+<div class="row" style="padding-left: 36px; padding-right: 36px;">
+  <div class="panel">
+    <div class="panel-heading">
+      <span><i class="fa fa-folder-open icon-left"></i>设备规格</span>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-xs-2">
+          <div class="detail-page-list-item">
+            <h5 class="detail-page-list-item-title">设备名称：</h5>
+
+            <p>{{dpidevicetrafficdata.device.name || '未知设备'}}</p>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="detail-page-list-item">
+            <h5 class="detail-page-list-item-title">设备序列号：</h5>
+
+            <p>{{dpidevicetrafficdata.boxID || '未知'}}</p>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="detail-page-list-item">
+            <h5 class="detail-page-list-item-title">IP地址：</h5>
+
+            <p>
+              <!--<span ng-repeat="port in dpidevicetrafficdata.device.devicePorts | filter:search.isMgmtPort=true">{{port.portIp || '未知'}}</span>-->
+              {{dpidevicetrafficdata.dpiIp || '未知'}}
+            </p>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="detail-page-list-item">
+            <h5 class="detail-page-list-item-title">MAC地址：</h5>
+
+            <p>
+              <span ng-repeat="port in dpidevicetrafficdata.device.devicePorts | filter:search.isMgmtPort=true">{{port.mac || '未知'}} </span>
+            </p>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="detail-page-list-item">
+            <h5 class="detail-page-list-item-title">端口数量：</h5>
+
+            <p>{{dpidevicetrafficdata.device.devicePorts.length || '未知'}}个</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-2">
+          <div class="detail-page-list-item">
+            <h5 class="detail-page-list-item-title">设备状态：</h5>
+            <span>
+                <div class="bullet bullet-online" title="连线"
+                     ng-if="dpidevicetrafficdata.device.deviceOnline===1&&dpidevicetrafficdata.device.deviceSource==='DISCOVERY'"></div>
+                <div class="bullet bullet-offline" title="掉线"
+                     ng-if="dpidevicetrafficdata.device.deviceOnline!==1&&dpidevicetrafficdata.device.deviceSource==='DISCOVERY'"></div>
+                <div class="bullet bullet-unactivated" title="未激活"
+                     ng-if="dpidevicetrafficdata.device.deviceSource!=='DISCOVERY'"></div>
+                {{dpidevicetrafficdata.device.deviceSource === 'DISCOVERY' ? dpidevicetrafficdata.device.deviceOnline : 0 | deviceConnection}}
+              </span>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="detail-page-list-item">
+            <h5 class="detail-page-list-item-title">设备型号：</h5>
+
+            <p>{{dpidevicetrafficdata.simplifyModelName(dpidevicetrafficdata.device._model_name) || '未知' |
+              deviceModel}}</p>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="detail-page-list-item">
+            <h5 class="detail-page-list-item-title">设备版本：</h5>
+
+            <p>{{dpidevicetrafficdata.device.version || '未知'}}</p>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="detail-page-list-item">
+            <h5 class="detail-page-list-item-title">更新时间：</h5>
+
+            <p>{{dpidevicetrafficdata.device.updatedAt || '未知' | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="detail-page-list-item">
+            <h5 class="detail-page-list-item-title">设备厂商：</h5>
+
+            <p>{{dpidevicetrafficdata.device.make || '未知'}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tab-container margin-top-medium" ng-controller="TabCtrl as tab">
+  <ul class="nav nav-tabs nav-tabs-lg nav-tabs-lime" ng-init="tab.active || tab.activatePanel('REALTIME')">
+    <li id="audit_dpidevice_realtime_tab" ng-class="{ active: tab.isActive('REALTIME') }">
+      <a href="#" ng-click="tab.activatePanel('REALTIME');dpidevicetrafficdata.changeLineChart();">
+        <span>实时流量</span>
+      </a>
+    </li>
+    <li id="audit_dpidevice_total_tab" ng-class="{ active: tab.isActive('TOTAL') }">
+      <a href="#" ng-click="tab.activatePanel('TOTAL');dpidevicetrafficdata.changePieChart();">
+        <span>汇总流量</span>
+      </a>
+    </li>
+  </ul>
+
+  <div ng-switch on="tab.active">
+    <div class="tab-container-body" ng-switch-when="REALTIME">
+      <div class="panel padding-zero">
+        <div class="panel-header"><i class="fa fa-area-chart"></i> 数据流量</div>
+        <div id="dpidevice-protocol-line-chart" style="min-width: 510px; height: 400px; margin: 0 auto"></div>
+      </div>
+    </div>
+
+    <div class="tab-container-body" ng-switch-when="TOTAL">
+      <div class="panel padding-zero">
+        <div class="panel-header"><i class="fa fa-pie-chart"></i> 协议流量</div>
+        <div class="row">
+          <div class="col-sm-10">
+            <div id="dpidevice-protocol-pie-chart"/>
+          </div>
+          <div class="col-sm-2">
+            <div class="padding-default protocol-set">
+              查看时间: &nbsp;
+              <select class="select-styled" ng-change="dpidevicetrafficdata.changePieChart()"
+                      ng-init="dpidevicetrafficdata.protocolTime = '1h'" ng-model="dpidevicetrafficdata.protocolTime">
+                <option value="1h" selected="selected">1小时</option>
+                <option value="24h">24小时内</option>
+                <option value="168h">一周内</option>
+              </select><br/>
+              流量总量: {{dpidevicetrafficdata.protocolTotal}}<br/>
+              协议种类: {{dpidevicetrafficdata.protocolNum}}<br/>
+              更新时间: {{dpidevicetrafficdata.protocolReportTime | date : 'yyyy-MM-dd HH:mm:ss'}}<br/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

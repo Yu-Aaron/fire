@@ -1,0 +1,41 @@
+body.ie-lt-10.page-download {
+  background: #09173c url('/images/placeholders/pl-cb-bg1.jpg') 0 0 no-repeat;
+  background-size: cover;
+  width: 100%;
+
+  .download-logo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: @gray20;
+    width: 100%;
+    padding: 20px 30px;
+  }
+
+  .download-product-logo {
+    position: absolute;
+    left: 100px;
+    top: 150px;
+  }
+
+  .download-button {
+    display: block;
+    margin-top: 100px;
+  }
+
+  .container {
+    margin-top: 250px;
+  }
+
+  &.ie-lt-8 { // for IE versions lower than 8 (ie. 5, 6, 7)
+    .download-logo {
+      visibility: hidden;
+    }
+    .download-product-logo {
+      visibility: hidden;
+    }
+    .container {
+      margin-top: 0px;
+    }
+  }
+}

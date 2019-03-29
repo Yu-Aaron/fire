@@ -1,0 +1,496 @@
+.device-container {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: @gray88;
+  overflow: hidden;
+}
+
+.main-container.page-device-detail {
+  background-color: @gray88;
+  overflow: hidden;
+}
+
+.main-container.page-asset-ucddevice-detail {
+  background-color: @gray88;
+  overflow: hidden;
+}
+
+.panel-body-device {
+  // padding: 20px 0px;
+  // margin-top: 5px;
+  // margin-bottom: 5px;
+  // margin-left: auto;
+  // margin-right: auto;
+  // width: 300px;
+  // background-color: @gray85;
+  // border: @gray95;
+}
+
+.device-image {
+  height: 150px;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-origin: content-box;
+}
+
+// badge
+.device-badge {
+  display: inline-block;
+  color: @color-font;
+  border-bottom: 0;
+  border-radius: 10px;
+  padding: @spacing-default;
+  width: 80px;
+  background-color: @gray90;
+
+  &.red {
+    color: @red;
+  }
+}
+
+// ==============================
+// STYLES FOR ACL DEVICE
+// ==============================
+.acl-input {
+  &:focus {
+    color: @gray40;
+
+    &:before {
+      color: @gray40;
+    }
+  }
+}
+
+.acl-input-disable {
+
+}
+
+.acl-num {
+  width: 50px;
+}
+
+.acl-port {
+  width: 60px;
+}
+
+.acl-error {
+  border: 2px solid red;
+  display: inline-block;
+}
+
+.acl-correct {
+  border: none;
+}
+
+.acl-add-button {
+  margin-top: 10px;
+}
+
+.acl-icon-green {
+  color: green;
+}
+
+.acl-center {
+  width: 100%;
+  padding-top: 5px;
+  text-align: center;
+}
+
+// ==============================
+// STYLES FOR PORT DEVICE
+// ==============================
+
+.device-view-panel-wrapper {
+  float: left;
+}
+
+.device-view {
+  position: relative;
+}
+
+.device-view-inner {
+  position: relative;
+  height: 300px;
+  margin: auto;
+  margin-top: 15px;
+  text-align: center;
+
+  .device-view-inner-main {
+    position: relative;
+    margin: 0 auto;
+    height: 300px;
+
+    .device-cable {
+      position: absolute;
+      opacity: 0;
+
+      &.visible {
+        opacity: 100;
+      }
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    &.all-in-one-back {
+      width: 700px;
+    }
+
+    &.ips2 {
+      width: 380px;
+
+      .device-cable {
+        top: 95px;
+        &.cable-mgmt {
+          left: 182px;
+        }
+        &.cable-p0 {
+          left: 238px;
+        }
+        &.cable-p1 {
+          left: 284px;
+        }
+      }
+    }
+
+    &.ips4 {
+      width: 550px;
+
+      .device-cable {
+        top: 95px;
+        &.cable-mgmt {
+          left: 182px;
+        }
+        &.cable-p0 {
+          left: 238px;
+        }
+        &.cable-p1 {
+          left: 284px;
+        }
+        &.cable-p2 {
+          left: 342px;
+        }
+        &.cable-p3 {
+          left: 388px;
+        }
+      }
+    }
+
+    &.ips8 {
+      width: 1000px;
+
+      .device-cable {
+        top: 42px;
+        &.cable-p0 {
+          left: 177px;
+        }
+        &.cable-p1 {
+          left: 212px;
+        }
+        &.cable-p2 {
+          left: 257px;
+        }
+        &.cable-p3 {
+          left: 292px;
+        }
+        &.cable-p4 {
+          left: 339px;
+        }
+        &.cable-p5 {
+          left: 374px;
+        }
+        &.cable-p6 {
+          left: 419px;
+        }
+        &.cable-p7 {
+          left: 454px;
+        }
+        &.cable-mgmt {
+          left: 513px;
+        }
+      }
+    }
+  }
+
+  .device-mgmt {
+    margin-left: 159px;
+  }
+
+  .border-mgmt {
+    position: absolute;
+    top: 61px;
+    left: 193px;
+    width: 46px;
+    height: 41px;
+    border: 1px solid #555;
+    border-radius: 5px;
+  }
+
+  .border-p0 {
+    position: absolute;
+    top: 61px;
+    left: 244px;
+    width: 43px;
+    height: 41px;
+    border: 1px solid #555;
+    border-radius: 5px;
+  }
+
+  .border-p1 {
+    position: absolute;
+    top: 61px;
+    left: 286px;
+    width: 43px;
+    height: 41px;
+    border: 1px solid #555;
+    border-radius: 5px;
+  }
+
+  .border-p2 {
+    position: absolute;
+    top: 61px;
+    left: 335px;
+    width: 43px;
+    height: 41px;
+    border: 1px solid #555;
+    border-radius: 5px;
+  }
+
+  .border-p3 {
+    position: absolute;
+    top: 61px;
+    left: 378px;
+    width: 43px;
+    height: 41px;
+    border: 1px solid #555;
+    border-radius: 5px;
+  }
+}
+
+.device-view-panels {
+  .device-view-panel {
+    position: relative;
+    display: inline-table;
+    width: 185px;
+    height: 174px;
+    margin-left: 15px;
+    // background-color: rgb(37,37,37);
+    // border: 1px solid black;
+    font-size: 12px;
+    // color: #999;
+  }
+
+  .device-view-routing-panel {
+    width: 260px;
+    // height: 190px;
+    // margin-bottom: 20px;
+    position: relative;
+    display: inline-table;
+    // margin-left: 15px;
+    // background-color: rgb(37,37,37);
+    // border: 1px solid black;
+    font-size: 12px;
+    // color: #999;
+
+    h5 {
+      font-size: 12px !important;
+    }
+  }
+
+  .device-view-panel-head {
+    padding: 3px 10px;
+    // background: rgb(47, 47, 47);
+    // border-top: 1px solid #444;
+    // border-left: 1px solid #444;
+
+    .device-view-panel-head-w-icon {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
+
+  .device-view-panel-content {
+    padding: 10px;
+    color: #C9C9C9;
+    // .title {
+    //   color: #999;
+    // }
+    .device-view-panel-content-row {
+      padding-top: 10px;
+
+      .routing-title {
+        display: inline-block;
+        padding-right: 0px;
+      }
+      .routing-value {
+        padding-top: 10px;
+        padding-left: 0px;
+      }
+      .routing-input {
+        padding-left: 0px;
+      }
+
+      .toggle-bg label.off {
+        left: 2.5em;
+      }
+
+      .toggle-bg label {
+        left: 1em;
+      }
+
+      span {
+        font-size: 12px;
+      }
+
+      .device-subnet-address {
+        span {
+          display: inline-block;
+        }
+
+        input[type=text] {
+          padding: 3px;
+          // margin-bottom: 5px;
+        }
+
+        .device-show-message {
+          padding: 3px;
+        }
+      }
+    }
+  }
+
+  .device-large-form-panel {
+    width: 225px;
+    height: 254px;
+
+    span > button {
+      margin-left: 5px;
+    }
+    .device-add-routing-subnet {
+      // margin-top: 5px;
+    }
+  }
+
+  .port-angle {
+    position: absolute;
+    top: 252px;
+    left: 86px;
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid grey;
+    opacity: 0;
+  }
+
+}
+
+.port-selected {
+  border-color: #15b20a !important;
+
+  .port-angle {
+    opacity: 100 !important;
+    border-top-color: #15b20a !important;
+  }
+}
+
+.high-line {
+  line-height: 3em !important;
+  vertical-align: middle !important;
+}
+
+.factory-device-table {
+  tbody {
+    tr {
+      td {
+        vertical-align: middle;
+        .inline-table {
+          background-color: rgba(0, 0, 0, 0);
+          tr {
+            border-bottom: 1px solid #777;
+            &:last-child {
+              border-bottom: 0;
+            }
+            td {
+              min-width: 220px;
+              div {
+                display: inline-block;
+                width: 110px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+main.page-asset-factorydevice-new {
+  .ip-mac-row {
+    .ip-mac-grid {
+      display: inline-block;
+      margin-right: 5px;
+      width: 80%;
+    }
+    .delete-button {
+      display: inline-block;
+      float: right;
+    }
+    .no-padding {
+      padding: 0;
+    }
+    label {
+      position: relative;
+      top: 5px;
+      width: 20%
+    }
+    input {
+      display: inline-block;
+      // width: 65%;
+      width: 70%;
+      float: right;
+    }
+    .error-msg {
+      & > div {
+        margin-top: 15px;
+        margin-left: 30%;
+      }
+    }
+  }
+  .add-ip-mac-button {
+    float: right;
+    margin-right: 14px;
+  }
+}
+
+main.page-asset-factorydevice-detail {
+  .detail-information-content {
+    .padding-right-zero {
+      padding-right: 0;
+    }
+    .remove-ip-mac {
+      padding-top: 2px;
+    }
+    .add-ip-mac-button {
+      button {
+        float: right;
+      }
+    }
+    .panel-min-height {
+      min-height: 300px;
+    }
+  }
+}
+
+#device-model-list {
+  option:empty {
+    display: none;
+  }
+}
+

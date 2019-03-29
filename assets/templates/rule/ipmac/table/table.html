@@ -1,0 +1,111 @@
+
+
+
+<div>
+
+  <div class="margin-bottom-default"  ng-show="ipmac.isEditing">
+    <span class="">安全区域：</span>
+    <div class="multiselect-parent btn-group dropdown-multiselect dropdown" style="margin-right: 6px;">
+      <button type="button" id="ipmac-dtableSelect_button"
+              class="dropdown-toggle ng-binding btn btn-default"
+              ng-click="dtable.open = !dtable.open">
+        <div class="multiselect-view">请选择</div>&nbsp;
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-form"
+          ng-style="{display: dtable.open ? 'block' : 'none', height : settings.scrollable ? settings.scrollableHeight : 'auto' }"
+          style="overflow-x: hidden; overflow-y: auto; display: none; height: 180px; width: 210px;max-height: 288px;padding: 10px;">
+        <li ng-repeat="area in dtable.dropdownAreas" style="padding: 2px 0">
+            <span>
+              <label style="padding-left: 8px"><input custom-checkbox ng-checked="dtable.selectedItems[area.name]"
+                                                      type="checkbox" ng-model="dtable.selectedItems[area.name]" style="width: 25px; padding-left:8px;"/>
+                <span style="margin-left: 4px;">{{area.name}}</span></label>
+            </span>
+        </li>
+      </ul>
+    </div>
+    <a id="ipmac-import" class="btn btn-default" ng-click="dtable.import();ipmac.selectAll(dtable,ipmac.switchStatus)" setting-privilege
+       privilege-name="RULE_IP_MAC" privilege-require="MIXED">
+      &nbsp;<i class="fa fa-file-o fa-after-blue fa-plus-overlay icon-left"></i> 导入&nbsp;</a>
+  </div>
+  <table class="table table-hover icon-hidden" id="rule_ipmac_table">
+    <thead>
+    <tr>
+      <th class="table-col-xsm">
+        <span>&nbsp;</span>
+      </th>
+      <th order-by="securityAreaName" class="table-col-20">安全区域</th>
+      <th order-by="name" class="table-col-20">设备名称</th>
+      <th class="table-col-20">IP</th>
+      <th class="table-col-md" class="ip-mac">MAC</th>
+      <th class="table-col-sm" style="padding-top:0; padding-bottom:0; padding-right: 15px;">
+        <button id="rule-ipmac_button_tableSelectAll" class="btn btn-default"
+                ng-click="dtable.selectAllorNone();ipmac.validateBindingTable(dtable.table);"
+                style="margin: auto; display: block; width: 92px;" ng-disabled="!ipmac.isEditing"
+                ng-if="ipmac.isEditing">
+          {{!dtable.selectAll?'全部启用':'全部禁用'}}
+        </button>
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat-start="area in dtable.table"
+        ng-init="dtable.initSelectAll();" ng-click="dtable.toggleCurrent(area)" fade-in-list>
+      <td><i class="fa {{area.current ? 'fa-chevron-down' : 'fa-chevron-right'}}"
+            ng-show="area.name" ></i>
+      </td>
+      <td>{{area.name}}</td>
+      <td>&nbsp;</td>
+      <td class="ip-mac">&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>
+        <switch-toggle status="area._ipmacBoolean"
+                       disabled="(!ipmac.isEditing)||!dtable.enableIpmac"
+                       change="ipmac.areaSelect(area);ipmac.validateBindingTable(dtable.table); checkAll(); dtable.toggleCurrent(area, true)">
+        </switch-toggle>
+          <button id="rule-ipmac-editor_button_delete" ng-click="dtable.deleteSecurityArea(area)" class="btn btn-default ng-isolate-scope" ng-disabled="area._ipmacBoolean"
+          ng-show="ipmac.isEditing"><i class="fa fa-trash-o icon-left"></i>
+            删除
+          </button>
+        <!--<div class="toggle-container" style="margin: auto; display: block; width: 100px;">
+
+          <div class="toggle-bg toggle-alternate" ng-class="{true: 'on', false: 'off'}[asset._ipmacBoolean]">
+            <label ng-class="{true: 'on', false: 'off'}[asset._ipmacBoolean]">{{area._ipmacBoolean? '开启' :
+              '关闭'}}</label>
+            <input id="rule-ipmac-area_checkbox_tableToggle{{$index+1}}" type="checkbox" name="toggle"
+                   ng-disabled="(!ipmac.isEditing)||!dtable.enableIpmac" ng-model="area._ipmacBoolean"
+                   ng-change="ipmac.validateBindingTable(dtable.table); checkAll();">
+            <span class="switch" ng-class="{true: 'on', false: 'off'}[area._ipmacBoolean]"></span>
+          </div>
+        </div>-->
+      </td>
+    </tr>
+    <tr ng-repeat-end ng-if="area.current"  ng-repeat="asset in area.assetInfos">
+      <td>
+        <span>&nbsp;</span>
+      </td>
+      <td>{{asset.securityAreaName}}</td>
+      <td>{{asset.name}}</td>
+      <td class="ip-mac">{{asset.ipAddress}}</td>
+      <td class="table-col-serial">{{asset.macAddress}}</td>
+      <td>
+        <switch-toggle status="asset._ipmacBoolean"
+                       disabled="(!ipmac.isEditing)||!dtable.enableIpmac"
+                       change="ipmac.assetSelect(dtable.table);ipmac.validateBindingTable(dtable.table); checkAll();">
+        </switch-toggle>
+        <!--<div class="toggle-container" style="margin: auto; display: block; width: 100px;">
+
+		  <div class="toggle-bg toggle-alternate" ng-class="{true: 'on', false: 'off'}[asset._ipmacBoolean]">
+			<label ng-class="{true: 'on', false: 'off'}[asset._ipmacBoolean]">{{asset._ipmacBoolean? '开启' :
+			  '关闭'}}</label>
+			<input id="rule-ipmac-asset_checkbox_tableToggle{{$index+1}}" type="checkbox" name="toggle"
+				   ng-disabled="(!ipmac.isEditing)||!dtable.enableIpmac" ng-model="asset._ipmacBoolean"
+				   ng-change="ipmac.validateBindingTable(dtable.table); checkAll();">
+			<span class="switch" ng-class="{true: 'on', false: 'off'}[asset._ipmacBoolean]"></span>
+		  </div>
+		</div>-->
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

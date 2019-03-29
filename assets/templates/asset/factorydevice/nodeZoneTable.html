@@ -1,0 +1,80 @@
+<div ng-init="factorydevice.getAllNodeZones()">
+  <div class="pull-right margin-bottom-default" ng-show="true">
+    <a class="btn btn-default" ng-click="factorydevice.addNodeZone()"><i class="fa fa-plus icon-lime icon-left"></i>新建分区</a>
+  </div>
+  <div class="clearfix"></div>
+  <form name="nodeZoneLst">
+    <hidden ng-model="refresh"/>
+    <table class="table table-hover icon-hidden">
+      <thead>
+      <tr>
+        <th order-by="name">逻辑分区</th>
+        <th>
+          <span>&nbsp;</span>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-if="isAddNodeZone">
+        <td>
+          <input id="new_zonename" name="newZoneName" type="text" ng-model="newZoneName"
+                 ng-change="factorydevice.checkUniqueOrNA(newZoneName)" class="input-sm margin-md" ng-maxlength="255"
+                 required/>
+          <a class="btn btn-default btn-sm btn-middle-pull-left-margin-back"
+             ng-disabled="nodeZoneLst.newZoneName.$invalid || isNotUnique || isNA"
+             ng-click="factorydevice.doAddNodeZone(newZoneName)"><i class="fa fa-check text-lime"></i></a>
+          <a class="btn btn-default btn-sm margin-right-default btn-middle-pull-left-margin-back"
+             ng-click="factorydevice.cancelAddNodeZone()"><i class="fa fa-remove"></i></a>
+          <p class="input-alert-error" ng-show="nodeZoneLst.newZoneName.$error.required">逻辑分区名称不能为空</p>
+          <p class="input-alert-error" ng-show="nodeZoneLst.newZoneName.$error.maxlength">逻辑分区名称过长</p>
+          <p class="input-alert-error" ng-show="isNotUnique && !nodeZoneLst.newZoneName.$pristine">
+            逻辑分区名称不允许重复，请重新设置后提交</p>
+          <p class="input-alert-error" ng-show="isNA && !nodeZoneLst.newZoneName.$pristine">逻辑分区名称非法，请重新设置后提交</p>
+        </td>
+      </tr>
+      <tr ng-repeat="nodeZone in dtable.table">
+        <td class="table-overflow-nowrap" ng-hide="factorydevice.isEditMode($index)">{{nodeZone.zoneName}}</td>
+        <td class="table-overflow-nowrap" ng-if="factorydevice.isEditMode($index)">
+          <input id="edit_zonename" name="editedZoneName" type="text" ng-model="inputZoneName"
+                 ng-change="factorydevice.checkUniqueOrNA(inputZoneName, $index)" class="input-sm margin-md"
+                 ng-maxlength="255" required/>
+          <a class="btn btn-default btn-sm btn-middle-pull-left-margin-back"
+             ng-disabled="nodeZoneLst.editedZoneName.$invalid || isNotUnique || isNA"
+             ng-show="factorydevice.isEditMode($index)"
+             ng-click="factorydevice.doEditNodeZone(nodeZone, inputZoneName)"><i class="fa fa-check text-lime"></i></a>
+          <a class="btn btn-default btn-sm margin-right-default btn-middle-pull-left-margin-back"
+             ng-show="factorydevice.isEditMode($index)" ng-click="factorydevice.cancelEditNodeZone()"><i
+            class="fa fa-remove"></i></a>
+          <p class="input-alert-error" ng-show="nodeZoneLst.editedZoneName.$error.required">逻辑分区名称不能为空</p>
+          <p class="input-alert-error" ng-show="nodeZoneLst.editedZoneName.$error.maxlength">逻辑分区名称过长</p>
+          <p class="input-alert-error" ng-show="isNotUnique && !nodeZoneLst.editedZoneName.$pristine">
+            逻辑分区名称不允许重复，请重新设置后提交</p>
+          <p class="input-alert-error" ng-show="isNA && !nodeZoneLst.editedZoneName.$pristine">逻辑分区名称非法，请重新设置后提交</p>
+        </td>
+        <td>
+          <a class="btn btn-default" ng-disabled="factorydevice.isEditMode($index)"
+             ng-click="factorydevice.editNodeZone(nodeZone, $index)">编辑 <i class="fa fa-pencil-square-o icon-right"></i></a>
+          <a class="btn btn-default" ng-disabled="factorydevice.isEditMode($index)"
+             ng-click="factorydevice.deleteNodeZones(nodeZone)">删除<i class="fa fa-trash-o icon-right"></i></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </form>
+  <script type="text/ng-template" id="delete-record-confirmation.html">
+    <div class="modal-wrapper">
+      <div class="modal-header">
+        <h3 class="modal-header-title">删除分区</h3>
+      </div>
+      <div class="modal-body">
+        {{deleteMsg}}
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default pull-left" ng-show="deleteFlg" ng-click="cancel()"><i
+          class="fa fa-times-circle icon-left"></i>取消
+        </button>
+        <button class="btn btn-default" ng-click="ok()"><i class="fa fa-check text-lime icon-left"></i>确定</button>
+      </div>
+    </div>
+  </script>
+</div>

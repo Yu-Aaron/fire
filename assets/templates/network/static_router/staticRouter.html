@@ -1,0 +1,126 @@
+<div cg-busy="{promise:configPromise,message:'正在保存...'}" global-events>
+    <div class="modal-header">
+        <h3 class="modal-header-title">静态路由配置</h3>
+    </div>
+
+    <div class="modal-body modal-nat">
+        <div class="panel">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <span>目的IP掩码：</span>
+                    </div>
+                    <div class="col-xs-6">
+                        <input id="network_router-destIpMask" ng-model="routerData.destIpMask" maxlength="31"
+                               type="text"
+                               ng-disabled="!isEditing"
+                               class="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength"
+                               ng-change="validateDestIpMask(routerData.destIpMask)"
+                               placeholder="192.168.1.2/255.255.255.0">
+
+                        <div class="input-alert-error" ng-show="error.destIpMask">
+                            <span>目的IP掩码输入不合法</span>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+                <div class="row">
+                    <div class="col-xs-3">
+                        <span>出接口：</span>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="dropdown toolbar-dropdown ippool-dropdown" dropdown>
+                            <button id="network_router-outInterfaceName" type="button"
+                                    class="btn dropdown-toggle dropdown-btn"
+                                    dropdown-toggle>
+                                {{routerData.outInterfaceName | outerInterface}} <span class="caret pull-right"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a id="network_router-outInterfaceName_{{$index}}"
+                                       ng-repeat="interface in interfaces"
+                                       ng-class="{active: routerData.outInterfaceName == interface}"
+                                       ng-click="changeInterface(interface)">{{interface | outerInterface}}
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+
+                <div ng-if="routerData.outInterfaceName==='any'">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <span>网关(下一跳)：</span>
+                        </div>
+                        <div class="col-xs-6">
+                            <input id="network_router-gateWayNextJump" ng-model="routerData.gateWayNextJump"
+                                   maxlength="31"
+                                   type="text"
+                                   ng-disabled="!isEditing || routerData.outInterfaceName!=='any'"
+                                   class="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength"
+                                   ng-change="validateGateWayNextJump(routerData.gateWayNextJump)"
+                                   placeholder="192.168.1.1">
+
+                            <div class="input-alert-error"
+                                 ng-show="error.gateWayNextJump&&routerData.outInterfaceName==='any'">
+                                <span>网关(下一跳)输入不合法</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+
+              <!--      <div class="row">
+                    <div class="col-xs-3">
+                        <span>优先级：</span>
+                    </div>
+                    <div class="col-xs-6">
+                        <input id="network_router-priority" ng-model="routerData.priority" type="text"
+                               ng-disabled="!isEditing" placeholder="1-255"
+                               ng-change="validatePriority(routerData.priority)"
+                               class="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength"
+                               onkeyup="this.value=this.value.replace(/\D/g,'')" maxlength="3"
+                               onafterpaste="this.value=this.value.replace(/\D/g,'')">
+
+                        <div class="input-alert-error" ng-show="error.priority">
+                            <span>请输入有效优先级1-255,或者不填</span>
+                        </div>
+                    </div>
+                </div>
+                <br/>-->
+
+            <div class="row">
+                    <div class="col-xs-3">
+                        <span>管理距离：</span>
+                    </div>
+                    <div class="col-xs-6">
+                        <input id="network_router-manageScope" ng-model="routerData.manageScope" maxlength="3"
+                               type="text"
+                               ng-disabled="!isEditing" placeholder="0-255"
+                               ng-change="validateManageScope(routerData.manageScope)"
+                               class="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength"
+                               onkeyup="this.value=this.value.replace(/\D/g,'')"
+                               onafterpaste="this.value=this.value.replace(/\D/g,'')">
+
+                        <div class="input-alert-error" ng-show="error.manageScope">
+                            <span>请输入有效管理距离0-255,或者不填</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <a id="network_router-cancel" ng-show="isEditing" class="btn btn-default pull-left" ng-click="cancel()"><i
+                class="fa fa-times icon-left"></i>取消</a>
+        <a id="network_router-ok" ng-show="isEditing"
+           ng-disabled="error.destIpMask||error.gateWayNextJump||error.priority||error.manageScope"
+           class="btn btn-default pull-right"
+           ng-click="ok()"><i
+                class="fa fa-check text-lime icon-left"></i>保存</a>
+        <a id="network_router-close" ng-show="!isEditing" class="btn btn-default pull-middle" ng-click="cancel()"><i
+                class="fa fa-times icon-left"></i>关闭</a>
+    </div>
+</div>

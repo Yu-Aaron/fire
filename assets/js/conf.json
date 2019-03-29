@@ -1,0 +1,316 @@
+{
+    "dashboard": [
+        {
+            "target": "MONITOR",
+            "state": "monitor",
+            "name": "监控",
+            "icon": "top-monitor",
+            "children": [
+                {
+                    "target": "MONITOR_OVERVIEW",
+                    "state": "monitor.overview",
+                    "name": "总览",
+                    "icon": "monitor-overview"
+                },
+                {
+                    "target": "MONITOR_INCIDENT",
+                    "state": "monitor.incident",
+                    "name": "事件",
+                    "icon": "monitor-incident"
+                },
+                {
+                    "target": "MONITOR_LOGGER",
+                    "state": "monitor.logger",
+                    "name": "日志",
+                    "icon": "monitor-log"
+                },
+                {
+                    "target": "MONITOR_REPORT",
+                    "state": "monitor.report",
+                    "name": "定期报告",
+                    "icon": "monitor-report",
+                    "children": [
+                        {
+                            "target": "MONITOR_REPORT_EVENT",
+                            "state": "monitor.report_event",
+                            "name": "事件报告"
+                        },
+                        {
+                            "target": "MONITOR_REPORT_LOG",
+                            "state": "monitor.report_log",
+                            "name": "日志报告"
+                        },
+                        {
+                            "target": "MONITOR_REPORT_PROTOCOL",
+                            "state": "monitor.report_protocol",
+                            "name": "协议报告"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "target": "SESSION",
+            "state": "session",
+            "name": "会话",
+            "icon": "top-session",
+            "children": [
+                {
+                    "target": "SESSION_STATE",
+                    "state": "session.state",
+                    "name": "会话状态",
+                    "icon": "session-status"
+                },
+                {
+                    "target": "SESSION_FLOWDATA",
+                    "state": "session.flowdata",
+                    "name": "会话流量",
+                    "icon": "session-flow",
+                    "children": [
+                        {
+                            "target": "SESSION_FLOWDATA_OVERVIEW",
+                            "state": "session.flowdata_overview",
+                            "name": "流量总览"
+                        },
+                        {
+                            "target": "SESSION_FLOWDATA_INDUSTRY",
+                            "state": "session.flowdata_industry",
+                            "name": "设备流量"
+                        }
+                    ]
+                },
+                {
+                    "target": "SESSION_PROTOCOL",
+                    "state": "session.protocol",
+                    "name": "会话协议",
+                    "icon": "session-protocol"
+                }
+            ]
+        },
+        {
+            "target": "RULE",
+            "state": "rule",
+            "name": "规则",
+            "icon": "top-rule",
+            "children": [
+                {
+                    "target": "RULE_BLACKLIST",
+                    "state": "rule.blacklist",
+                    "name": "黑名单",
+                    "icon": "rule-blacklist"
+                },
+                {
+                    "target": "RULE_WHITELIST",
+                    "state": "rule.whitelist",
+                    "name": "工控白名单",
+                    "icon": "rule-whitelist",
+                    "children": [
+                        {
+                            "target": "RULE_WHITELIST_LEARNING",
+                            "state": "rule.whitelist_learning",
+                            "name": "规则学习"
+                        },
+                        {
+                            "target": "RULE_WHITELIST_MANAGER",
+                            "state": "rule.whitelist_manager",
+                            "name": "规则管理"
+                        }
+                    ]
+                },
+                {
+                    "target": "RULE_IPMAC",
+                    "state": "rule.ipmac",
+                    "name": "IP/MAC绑定",
+                    "icon": "rule-binding"
+                }
+            ]
+        },
+        {
+            "target": "NETWORK",
+            "state": "network",
+            "name": "网络",
+            "icon": "top-net",
+            "children": [
+                {
+                    "target": "NETWORK_INTERFACE",
+                    "state": "network.interface",
+                    "name": "接口",
+                    "icon": "net-interface"
+                },
+                {
+                    "target": "NETWORK_STATIC_ROUTER",
+                    "state": "network.static_router",
+                    "name": "静态路由",
+                    "icon": "net-route"
+                }
+            ]
+        },
+        {
+            "target": "OBJECT",
+            "state": "object",
+            "name": "对象",
+            "icon": "top-object",
+            "children": [
+                {
+                    "target": "OBJECT_NETWORK_ASSET",
+                    "state": "object.network_asset",
+                    "name": "网络资产",
+                    "icon": "object-network",
+                    "children": [
+                        {
+                            "target": "OBJECT_NETWORK_ASSET_ADDRESS",
+                            "state": "object.network_asset_address",
+                            "name": "地址池"
+                        },
+                        {
+                            "target": "OBJECT_NETWORK_ASSET_SECURITY_AREA",
+                            "state": "object.network_asset_security_area",
+                            "name": "安全区域"
+                        },
+                        {
+                            "target": "OBJECT_NETWORK_ASSET_DEVICE_ASSET",
+                            "state": "object.network_asset_device_asset",
+                            "name": "设备资产"
+                        }
+                    ]
+                },
+                {
+                    "target": "OBJECT_SERVICE",
+                    "state": "object.service",
+                    "name": "服务",
+                    "icon": "object-service",
+                    "children": [
+                        {
+                            "target": "OBJECT_SERVICE_PREDEFINED",
+                            "state": "object.service_predefined",
+                            "name": "预定义"
+                        },
+                        {
+                            "target": "OBJECT_SERVICE_CUSTOMIZEDEFINED",
+                            "state": "object.service_customizedefined",
+                            "name": "自定义"
+                        }
+                    ]
+                },
+                {
+                    "target": "OBJECT_APPLY",
+                    "state": "object.apply",
+                    "name": "应用",
+                    "icon": "object-app",
+                    "children": [
+                        {
+                            "target": "OBJECT_APPLY_PREDEFINED",
+                            "state": "object.apply_predefined",
+                            "name": "预定义"
+                        },
+                        {
+                            "target": "OBJECT_APPLY_CUSTOMIZEDEFINED",
+                            "state": "object.apply_customizedefined",
+                            "name": "自定义"
+                        }
+                    ]
+                },
+                {
+                    "target": "OBJECT_SCHEDULE",
+                    "state": "object.schedule",
+                    "name": "时间表",
+                    "icon": "object-time"
+                }
+            ]
+        },
+        {
+            "target": "STRATEGY",
+            "state": "strategy",
+            "name": "策略",
+            "icon": "top-strategy",
+            "children": [
+                {
+                    "target": "STRATEGY_SECURITY",
+                    "state": "strategy.security",
+                    "name": "安全策略",
+                    "icon": "strategy-safety"
+                },
+                {
+                    "target": "STRATEGY_NAT",
+                    "state": "strategy.nat",
+                    "name": "NAT策略",
+                    "icon": "strategy-nat",
+                    "children": [
+                        {
+                            "target": "STRATEGY_NAT_SNAT",
+                            "state": "strategy.nat_snat",
+                            "name": "SNAT"
+                        },
+                        {
+                            "target": "STRATEGY_NAT_DNAT",
+                            "state": "strategy.nat_dnat",
+                            "name": "DNAT"
+                        }
+                    ]
+                },
+                {
+                    "target": "STRATEGY_SESSION",
+                    "state": "strategy.session",
+                    "name": "会话策略",
+                    "icon": "strategy-session"
+                },
+                {
+                    "target": "STRATEGY_ANTI_PENETRATION",
+                    "state": "strategy.anti_penetration",
+                    "name": "抗渗透",
+                    "icon": "strategy-defense"
+                }
+            ]
+        },
+        {
+            "target": "SETTING",
+            "state": "setting",
+            "name": "设置",
+            "icon": "top-setting",
+            "children": [
+                {
+                    "target": "SETTING_BASIC",
+                    "state": "setting.basic",
+                    "name": "基本设置",
+                    "icon": "setting-basic"
+                },
+                {
+                    "target": "SETTING_SWITCH",
+                    "state": "setting.switch",
+                    "name": "开关设置",
+                    "icon": "setting-switch"
+                },
+                {
+                    "target": "SETTING_RELIABLE",
+                    "state": "setting.reliable",
+                    "name": "可靠性",
+                    "icon": "setting-reliable"
+                },
+                {
+                    "target": "SETTING_SECURITY_OPERATION",
+                    "state": "setting.security_operation",
+                    "name": "安全操作",
+                    "icon": "setting-upgrade"
+                },
+                {
+                    "target": "SETTING_USERCONTROL",
+                    "state": "setting.usercontrol",
+                    "name": "用户管理",
+                    "icon": "setting-manage"
+                },
+                {
+                    "target": "SETTING_ROOTCONTROL",
+                    "state": "setting.rootcontrol",
+                    "name": "用户管理",
+                    "icon": "setting-manage"
+                },
+                {
+                    "target": "SETTING_MYACCOUNT",
+                    "state": "setting.myaccount",
+                    "name": "我的账户",
+                    "icon": "setting-account"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+<div>
+  <div class="table-title infsafety-result-table-heading">
+    <span>目标设备</span>
+    <a class="modal-close"
+       ng-click="resultOptions.itemInThread.dropDown = false; resultOptions.itemInThread.table = false"><i
+      class="fa fa-times"></i></a>
+  </div>
+
+  <div class="table-body infsafety-result-table-body">
+    <table class="table table-hover icon-hidden">
+      <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>安全值</th>
+        <th>目标设备</th>
+        <th>设备厂商</th>
+        <th>设备型号</th>
+        <th>设备序号</th>
+        <th>区域</th>
+        <th>IP</th>
+        <th>未保护漏洞数</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in table">
+        <td style="text-align: center;"><img ng-src="images/{{nodeMap[item.id]._iconType}}-icon.png"
+                                             style="width:50px;height:50px"></td>
+        <td
+          ng-style="{color: item.score <= 60 ? '#FF6D28' : item.score >= 80 ? '#92D219' : '#FFF319', 'font-size' : '18px'}">
+          {{item.score}}
+        </td>
+        <td>{{nodeMap[item.id].name}}</td>
+        <td>{{nodeMap[item.id]._make}}</td>
+        <td>{{nodeMap[item.id]._modelIdentifier}}</td>
+        <td>{{nodeMap[item.id]._serialNumber}}</td>
+        <td>{{nodeMap[item.id]._zoneNames}}</td>
+        <td>{{nodeMap[item.id]._ip}}</td>
+        <td>{{nodeMap[item.id]._knownVulnerabilitiesNumber}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

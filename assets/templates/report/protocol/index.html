@@ -1,0 +1,186 @@
+<div class="panel panel-lg padding-zero" ng-if="!rprotocol.viewDetail">
+  <div class="panel-header panel-header-border">
+    <span class="panel-header-title">定期审计报告设置</span>
+    <button id="report_protocol_setting_edit_button"
+            class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back" privilege
+            ng-hide="rprotocol.protocol.editMode" ng-click="rprotocol.protocol.editSetting()"><i
+      class="fa fa-pencil-square-o"></i></button>
+    <button id="report_protocol_setting_confirm_button"
+            class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back" privilege
+            ng-show="rprotocol.protocol.editMode" ng-click="rprotocol.protocol.confirmSetting()"><i
+      class="fa fa-check text-lime"></i></button>
+    <button id="report_protocol_setting_cancel_button"
+            class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+            ng-show="rprotocol.protocol.editMode" ng-click="rprotocol.protocol.cancelSetting()"><i
+      class="fa fa-remove"></i></button>
+  </div>
+  <div class="panel-body">
+    <div ng-show="rprotocol.protocol.editMode">
+      <div class="row report-setting-padding">
+        <div class="col-xs-2 setting-tag">
+          频率
+        </div>
+        <div class="col-xs-3">
+          <select id="report_protocol_frequency_select"
+                  class="select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"
+                  ng-model="rprotocol.protocol.tempSetting.frequency">
+            <option id="report_protocol_frequency_everyday" class="btn btn-default" value="daily">每天</option>
+            <option id="report_protocol_frequency_everyweek" class="btn btn-default" value="weekly">每周</option>
+            <option id="report_protocol_frequency_everymonthfirstday" class="btn btn-default" value="monthly">每月一号
+            </option>
+          </select>
+          <select id="report_protocol_weekly_select"
+                  class="select-styled select-styled-report btn btn-default btn-dropdown-report dropdown-toggle"
+                  ng-model="rprotocol.protocol.tempSetting.weekday"
+                  ng-show="rprotocol.protocol.tempSetting.frequency==='weekly'">
+            <option id="report_protocol_weekly_mon" class="btn btn-default" value="星期一">星期一</option>
+            <option id="report_protocol_weekly_tue" class="btn btn-default" value="星期二">星期二</option>
+            <option id="report_protocol_weekly_wed" class="btn btn-default" value="星期三">星期三</option>
+            <option id="report_protocol_weekly_thu" class="btn btn-default" value="星期四">星期四</option>
+            <option id="report_protocol_weekly_fri" class="btn btn-default" value="星期五">星期五</option>
+            <option id="report_protocol_weekly_sat" class="btn btn-default" value="星期六">星期六</option>
+            <option id="report_protocol_weekly_sun" class="btn btn-default" value="星期天">星期天</option>
+          </select>
+        </div>
+        <div class="col-xs-6 setting-tag">
+        </div>
+      </div>
+    </div>
+    <div ng-hide="rprotocol.protocol.editMode">
+      <div class="row report-setting-padding">
+        <div class="col-xs-2 setting-tag">
+          频率
+        </div>
+        <div class="col-xs-3 setting-tag">
+          {{rprotocol.protocol.setting.frequency==='daily'?'每天':rprotocol.protocol.setting.frequency==='weekly'?('每周' +
+          rprotocol.protocol.setting.weekday):'每月一号'}}
+        </div>
+        <div class="col-xs-6 setting-tag">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-lg padding-zero bottom-Table" ng-if="!rprotocol.viewDetail">
+  <div class="panel-header panel-header-border">
+    <span class="panel-header-title">审计报告一览</span>
+  </div>
+  <div class="panel-body">
+    <table id="report_protocol_table" class="table table-hover icon-hidden">
+      <thead>
+      <tr>
+        <th class="table-col-sm"></th>
+        <th class="table-col-20">报告名称</th>
+        <th>报告日期</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr id="report_protocol_table_row_{{$index}}" ng-repeat="event in rprotocol.protocol.curData">
+        <td></td>
+        <td>
+          审计_每{{rprotocol.protocol.setting.frequency==='daily'?'日':rprotocol.protocol.setting.frequency==='weekly'?'周':'月'}}报告_{{event.start
+          | date: 'yyyy-MM-dd'}}
+        </td>
+        <td>
+          <span ng-if="rprotocol.protocol.setting.frequency==='daily'">{{event.start | date: 'yyyy-MM-dd'}}</span>
+          <span ng-if="rprotocol.protocol.setting.frequency==='weekly'">{{event.start | date: 'yyyy-MM-dd'}} - {{event.end | date: 'yyyy-MM-dd'}}</span>
+          <span ng-if="rprotocol.protocol.setting.frequency==='monthly'">{{event.start | date: 'yyyy-MM'}}</span>
+        </td>
+        <td>
+          <button id="report_protocol_table_row_detail_button_{{$index}}" class="btn btn-default" privilege
+                  ng-click="rprotocol.protocol.showDetail(event)">
+            查看 <i class="fa fa-chevron-circle-right icon-right"></i>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <br/>
+    <div class="text-center">
+      <ul id="report_protocol_pagination_list" class="pagination-sm pagination ng-isolate-scope ng-valid">
+        <li>
+          <a href="" ng-click="rprotocol.protocol.gotoPageHead()" class="ng-binding">«</a>
+        </li>
+        <li>
+          <a href="" ng-click="rprotocol.protocol.changePage(-1)" class="ng-binding"
+             ng-disabled="rprotocol.protocol.curPage<=0">‹</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rprotocol.protocol.changePage(-4)"
+             ng-hide="rprotocol.protocol.curPage <= 3 || rprotocol.protocol.curPage < rprotocol.protocol.maxPage-2">{{rprotocol.protocol.curPage-3}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rprotocol.protocol.changePage(-3)"
+             ng-hide="rprotocol.protocol.curPage <= 2 || rprotocol.protocol.curPage < rprotocol.protocol.maxPage-1">{{rprotocol.protocol.curPage-2}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rprotocol.protocol.changePage(-2)"
+             ng-hide="rprotocol.protocol.curPage <= 1">{{rprotocol.protocol.curPage-1}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rprotocol.protocol.changePage(-1)"
+             ng-hide="rprotocol.protocol.curPage <= 0">{{rprotocol.protocol.curPage}}</a>
+        </li>
+        <li>
+          <a href="" class="selectedPage">{{rprotocol.protocol.curPage+1}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rprotocol.protocol.changePage(1)"
+             ng-hide="rprotocol.protocol.curPage >= rprotocol.protocol.maxPage-1">{{rprotocol.protocol.curPage+2}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rprotocol.protocol.changePage(2)"
+             ng-hide="rprotocol.protocol.curPage >= rprotocol.protocol.maxPage-2">{{rprotocol.protocol.curPage+3}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rprotocol.protocol.changePage(3)"
+             ng-hide="rprotocol.protocol.curPage >= rprotocol.protocol.maxPage-3 || rprotocol.protocol.curPage > 1">{{rprotocol.protocol.curPage+4}}</a>
+        </li>
+        <li>
+          <a href="" class="ng-binding" ng-click="rprotocol.protocol.changePage(4)"
+             ng-hide="rprotocol.protocol.curPage >= rprotocol.protocol.maxPage-4 || rprotocol.protocol.curPage > 0">{{rprotocol.protocol.curPage+5}}</a>
+        </li>
+        <li>
+          <a href="" ng-click="rprotocol.protocol.changePage(1)" class="ng-binding"
+             ng-disabled="rprotocol.protocol.curPage >= rprotocol.protocol.maxPage-1">›</a>
+        </li>
+        <li>
+          <a href="" ng-click="rprotocol.protocol.gotoPageEnd()" class="ng-binding">»</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div ng-if="rprotocol.viewDetail">
+  <div class="panel padding-default">
+    <div class="panel-body">
+      <div class="row margin-bottom-default">
+        <div class="col-xs-9">
+          <button id="report_protocol_detail_return_button" class="btn btn-default pull-left"
+                  ng-click="rprotocol.viewDetail=false;">
+            <i class="fa fa-arrow-circle-left icon-left"></i>返回
+          </button>
+          <h4 class="margin-left-default vertical-mid display-inline-block">{{rprotocol.protocol.detail.all.title}}</h4>
+        </div>
+        <div class="col-xs-3">
+          <button id="report_protocol_detail_downloadhtml_button" class="btn btn-default pull-right"
+                  ng-click="rprotocol.protocol.genPDF(protocoldata, rprotocol.protocol.detail.all.title, 'html')">
+            <i class="fa fa-download icon-left text-lime"></i>下载 HTML
+          </button>
+          <button id="report_protocol_detail_downloadpdf_button" class="btn btn-default pull-right"
+                  ng-click="rprotocol.protocol.genPDF(protocoldata, rprotocol.protocol.detail.all.title)">
+            <i class="fa fa-download icon-left text-lime"></i>下载 PDF
+          </button>
+        </div>
+      </div>
+      <div id="protocolBarChart" style="min-width: 800px; height: 400px; margin: 0 auto"></div>
+      <br/>
+      <dtable>
+        <protocol-report-table></protocol-report-table>
+      </dtable>
+    </div>
+  </div>
+</div>

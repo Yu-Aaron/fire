@@ -1,0 +1,109 @@
+{
+    "user": {
+        "userId": "Acornbb0-406c-400c-b806-4d8e1af111fe",
+        "name": "root",
+        "failedLoginAttemptCount": 0,
+        "locked": false,
+        "lastLogin": "2015-10-27T23:55:12Z",
+        "createdBy": "INITIAL_SETUP",
+        "updatedBy": "INITIAL_SETUP",
+        "createdAt": "2015-06-24T17:16:09Z",
+        "updatedAt": "2015-06-24T17:16:09Z",
+        "_roles": [
+            {
+                "roleId": "0",
+                "name": "分区管理员",
+                "createdAt": "2015-06-24T17:16:04Z",
+                "updatedAt": "2015-06-24T17:16:04Z",
+                "comment": "分区管理员",
+                "priority": 1,
+                "defaultRole": false,
+                "roleLevel": "ROOT"
+            }
+        ],
+        "stuffName": "分区管理",
+        "_type": 1
+    },
+    "targetAndActionValueFormList": [
+        {
+            "actionValue": 1
+        },
+        {
+            "name": "REAL_TIME_PROTECTION",
+            "actionValue": 1,
+            "description": "实时监控"
+        },
+        {
+            "name": "INCIDENT",
+            "actionValue": 1,
+            "description": "安全事件"
+        },
+        {
+            "name": "EVENT",
+            "actionValue": 1,
+            "description": "系统事件"
+        },
+        {
+            "name": "DEVICE_MANAGEMENT",
+            "actionValue": 1,
+            "description": "设备管理"
+        },
+        {
+            "name": "POLICY",
+            "actionValue": 1,
+            "description": "规则管理"
+        },
+        {
+            "name": "TOPOLOGY",
+            "actionValue": 1,
+            "description": "网络拓扑"
+        },
+        {
+            "name": "STRUCTURE_SAFETY",
+            "actionValue": 1,
+            "description": "结构安全性"
+        },
+        {
+            "name": "ATTACKPATH",
+            "actionValue": 1,
+            "description": "攻击路径"
+        },
+        {
+            "name": "INTRUSION_DETECTION",
+            "actionValue": 1,
+            "description": "入侵检测"
+        },
+        {
+            "name": "AUDIT_MANAGEMENT",
+            "actionValue": 1,
+            "description": "网络审计"
+        },
+        {
+            "name": "SYSTEM_MANAGEMENT",
+            "actionValue": 30,
+            "description": "系统设置"
+        },
+        {
+            "name": "USER_MANAGEMENT",
+            "actionValue": 30,
+            "description": "用户管理"
+        },
+        {
+            "name": "DOMAIN_SUBNET",
+            "actionValue": 30,
+            "description": "分区管理"
+        },
+        {
+            "name": "STRATEGY_MANAGEMENT",
+            "actionValue": 30,
+            "description": "策略管理"
+        },
+        {
+            "name": "PRIVATE_PROTOCOL",
+            "actionValue": 1,
+            "description": "私有协议"
+        }
+    ],
+    "deviceIds": [],
+    "userWidgetOptionSettings": []
+}

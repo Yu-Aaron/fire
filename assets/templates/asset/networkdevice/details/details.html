@@ -1,0 +1,33 @@
+<!-- Device Details -->
+<div class="row">
+  <div class="col-md-1">
+    <button ui-sref="asset.networkdevice" class="btn btn-default" ng-click="rlogger.viewDetail=false;">
+      <i class="fa fa-arrow-circle-left icon-left"></i>返回
+    </button>
+  </div>
+  <div class="col-md-11">
+    <h2 id="network_detail_device_name" class="title-page-main">{{networkdetail.device.name}}</h2>
+  </div>
+</div>
+<div class="tab-container" ng-controller="TabCtrl as tab">
+  <ul class="nav nav-tabs" ng-init="tab.active || tab.activatePanel('BASIC_INFO')">
+    <li ng-class="{active: tab.isActive('BASIC_INFO')}">
+      <a ui-sref="asset.networkdevice.detail({deviceID: networkdetail.device.deviceId, panel: 'BASIC_INFO'})"
+         ng-click="tab.activatePanel('BASIC_INFO')">
+        <span>基本信息</span>
+      </a>
+    </li>
+  </ul>
+  <div ng-switch on="tab.active" class="tab-container-body">
+    <div class="row device-view-delete-btn">
+      <div class="col-md-12">
+        <button type="button" class="btn btn-default pull-right" title="删除设备" privilege
+                ng-click="asset.deleteOneDevice(networkdetail.device)"><i class="fa fa-trash-o icon-left"></i>删除设备
+        </button>
+      </div>
+    </div>
+    <div ng-switch-when="BASIC_INFO">
+      <div class="device-details" ng-include="'templates/asset/networkdevice/details/basic-info.html'"></div>
+    </div>
+  </div>
+</div>

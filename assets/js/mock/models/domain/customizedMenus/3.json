@@ -1,0 +1,18 @@
+[
+    {
+        "customizedMenuId": 8,
+        "description": "全部安装设备",
+        "target": "NORMAL",
+        "parentTarget": "SECURITY_DEVICE",
+        "menuLevel": 3,
+        "active": true
+    },
+    {
+        "customizedMenuId": 9,
+        "description": "数据采集设备",
+        "target": "DATA_COLLECTION_DEVICE",
+        "parentTarget": "SECURITY_DEVICE",
+        "menuLevel": 3,
+        "active": true
+    }
+]

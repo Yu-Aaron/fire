@@ -1,0 +1,330 @@
+<div class="container-attack {{tab.activeView}}" ng-controller="TabCtrl as tab">
+  <div class="container-tab">
+    <ul class="attack-tab nav nav-pills" ng-init="tab.activateTab('tab1')"></ul>
+    <div class="attack-tab-content">
+      <ul>
+        <li ng-if='tab.activeTab==="management"'>
+          <div>
+            <ul>
+              <li ng-repeat="path in attack.attackPathArray track by $index"></li>
+            </ul>
+          </div>
+        </li>
+        <li ng-if='tab.activeTab===("tab"+($index+1))' ng-repeat="path in attack.attackPathArray track by $index">
+          <!-- ATTACK TOOLBAR -->
+          <div class="attack-toolbar">
+            <button class="tiny-button pull-right" ng-hide="true"><i class="fa fa-arrows-alt"></i></button>
+            <div class="btn-group pull-right" role="group" aria-label="..." ng-init="tab.activateView('single')">
+              <button class="btn btn-default btn-default-hover-lime" ng-click="tab.activateView('single')"
+                      ng-class="{'btn-selected': tab.isActiveView('single')}" tooltip="单路径" tooltip-placement="bottom">
+                <i class="fa fa-code-fork" ng-class="{'text-lime':tab.isActiveView('single')}"></i></button>
+              <button class="btn btn-default btn-default-hover-lime" ng-click="tab.activateView('multiple')"
+                      ng-class="{'btn-selected': tab.isActiveView('multiple')}" ng-hide="true" tooltip="多路径"
+                      tooltip-placement="bottom"><i class="fa fa-sitemap"
+                                                    ng-class="{'text-lime':tab.isActiveView('multiple')}"></i></button>
+              <button class="btn btn-default btn-default-hover-lime" ng-click="tab.activateView('topology')"
+                      ng-class="{'btn-selected': tab.isActiveView('topology')}" tooltip="拓扑查看"
+                      tooltip-placement="bottom"><img ng-if="!tab.isActiveView('topology')"
+                                                      src="/images/topology-gray.png" width="10" height="15"/><img
+                ng-if="tab.isActiveView('topology')" src="/images/topology-green.png" width="10" height="15"/></button>
+            </div>
+            <div class="btn-group pull-left" role="group" aria-label="...">
+              <button class="small-button" ng-hide="true"><i class="fa fa-pencil"></i> 攻击路径分析</button>
+              <button class="save-button" ng-hide="true"><i class="fa fa-save"></i> 保存</button>
+            </div>
+            <div class="btn-group pull-middle" role="group" aria-label="...">
+              <button class="small-button" ng-hide="true"><i class="fa fa-file-text" style="color: #76B900;"></i> 生成报告
+              </button>
+              <button class="small-button hidden"><i class="fa fa-folder-open"></i> 打开报告</button>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+
+
+          <!-- ATTACK PATH VIEW -->
+          <div class="attack-path-view" ng-if="tab.isActiveView('single')">
+            <div class="attack-element start-element" style="padding-top: 20px; padding-left: 20px;">
+              <a href=""><img class="attacker" src="/images/hacker.png">
+              </a>
+            </div>
+            <div class="attack-element">
+              <ul>
+                <li class="attack-element-item" ng-class="{active: tab.actBtn ===('attack-target-tab'+$index)}"
+                    ng-repeat="attackTarget in attack.attackTarget track by $index">
+                  <div>
+                    <div class="attack-edit-btn-group attack-new-btn-group" ng-show="$last" privilege>
+                      <button class="attack-new-target" ng-disabled="tab.actBtn ===('attack-target-tab'+$index)"
+                              ng-click="tab.activeBtn('attack-target-tab', $index); attack.createTargetTab($index); tab.activatePanel('attack-target-tab', $index); attack.attackDeviceTableHide($index); attack.clearTab();">
+                        <i class="fa fa-plus fa-3x"></i>
+                        <span class="attack-new-target-text">新建攻击目标</span>
+                      </button>
+                    </div>
+
+                    <div class="attack-edit-btn-group" ng-hide="$last">
+                      <div class="attack-edit-btn-sub-group">
+                        <button class="btn btn-round btn-attack-order-number" disabled>{{attackTarget.targetOrder}}
+                        </button>
+                        </br>
+                        <span class="attack-target-name">{{attackTarget.targetName}}</span>
+                        <span class="text-center"></br>{{attackTarget.attackMethod}}</span>
+                        <button type="button" class="btn btn-sm btn-default btn-attack-edit margin-left-default"
+                                ng-click="tab.activeBtn('attack-target-tab', $index); attack.clearTab();attack.editTargetTab($index);tab.activatePanel('attack-target-tab', $index);attack.attackDeviceTableHide($index);attack.attackDeviceTableToggle($index);attack.attackActive = 'active';"
+                                privilege><i class="fa fa-pencil"></i></button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="attack-device fadein fadeout attack-device-{{$index}}" ng-if="attack.targetQuery[$index]">
+                    <div class="inner-container-target-panel">
+                      <ul class="target-tab nav nav-pills">
+                        <li class="target-tab-item" ng-click="tab.activatePanel('attack-target-tab', $index)"
+                            ng-class="{active: tab.isActive('attack-target-tab', $index), finished: tab.isActive('attack-method-tab', $index)||tab.isActive('attack-result-tab', $index)}">
+                          <div>
+                            <div class="attack-query-table-result-tab">
+                              <span class="badge attack-dropdown-round-span"
+                                    ng-if="tab.isActive('attack-method-tab', $index)||tab.isActive('attack-result-tab', $index)"><i
+                                class="fa fa-check text-lime"></i></span>
+                              <span class="badge attack-dropdown-round-span"
+                                    ng-if="!(tab.isActive('attack-method-tab', $index)||tab.isActive('attack-result-tab', $index))">1</span>
+                              <span class="attack-margin-left">攻击目标</span>
+                            </div>
+                            <div class="attack-query-table-tab">
+                              <span></span>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="target-tab-item"
+                            ng-click="!tab.isActive('attack-result-tab', $index) || (tab.activatePanel('attack-method-tab', $index))"
+                            ng-class="{active: tab.isActive('attack-method-tab', $index), finished: tab.isActive('attack-result-tab', $index)}">
+                          <div>
+                            <div class="attack-query-table-result-tab">
+                              <span class="badge attack-dropdown-round-span"
+                                    ng-if="tab.isActive('attack-result-tab', $index)"><i
+                                class="fa fa-check text-lime"></i></span>
+                              <span class="badge attack-dropdown-round-span"
+                                    ng-if="!(tab.isActive('attack-result-tab', $index))">2</span>
+                              <span class="attack-margin-left">攻击方法</span>
+                            </div>
+                            <div class="attack-query-table-tab">
+
+                              <span></span>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="target-tab-item" ng-click="true || tab.activatePanel('attack-result-tab', $index)"
+                            ng-class="{active: tab.isActive('attack-result-tab', $index)}">
+                          <div>
+                            <div class="attack-query-table-result-tab">
+                              <span class="badge attack-dropdown-round-span">3</span>
+                              <span class="attack-margin-left">攻击结果</span>
+                            </div>
+                            <div class="attack-query-table-tab">
+                              <span></span>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+
+
+                    </div>
+                    <div class="attack-device-query">
+                      <div class="attack-sm-tip">
+													<span ng-show="tab.active ===('attack-target-tab'+{{$index}})">
+														<span ng-hide="attack.attackDeviceTableShow[$index]">
+														小贴士：在网络中寻找满足查询条件的攻击目标，用户可以自定义添加，修改和删除查询条件。
+														</span>
+														<span ng-show="attack.attackDeviceTableShow[$index]">
+														小贴士：可查看满足上步查询条件的所有设备，可选择是否根据该漏洞攻破该设备。
+														</span>
+													</span>
+                        <span ng-show="tab.active ==='attack-method-tab'+{{$index}}">
+													小贴士：添加黑客攻击目标的手段，可选择已知漏洞和攻击手段。
+													</span>
+                        <span ng-show="tab.active ===('attack-result-tab'+{{$index}})">
+													小贴士：手动添加黑客攻击目标所造成的结果。
+													</span>
+                      </div>
+                      <div class="attack-target-tab" ng-show="tab.active ===('attack-target-tab'+{{$index}})">
+                        <div class="query-tab">
+                          <div class="query-group" ng-hide="attack.attackDeviceTableShow[$index]">
+                            <div class="query-element">
+                              <div class="row">
+                                <div class="col-xs-10 col-xs-offset-1">
+                                  <ul class="attack-query-list">
+                                    <li class="attack-query-list-li"
+                                        ng-repeat="query in attack.queryArray track by $index">
+                                      <div class="attack-query-list-content">
+                                        <div class="btn-group attack-query-and-or" role="group" aria-label="..."
+                                             ng-hide='$first'>
+
+                                          <div class="switch-toggle switch-istuary">
+                                            <input id="switch-and-{{$index}}" name="view-{{$index}}"
+                                                   ng-model="query.relatedCondition" type="radio" value="and">
+                                            <label for="switch-and-{{$index}}" onclick="">并且</label>
+
+                                            <input id="switch-or-{{$index}}" name="view-{{$index}}"
+                                                   ng-model="query.relatedCondition" type="radio" value="or">
+                                            <label for="switch-or-{{$index}}" onclick="">或者</label>
+
+                                            <a></a>
+                                          </div>
+                                        </div>
+                                        <div class="attack-query-select-box">
+                                          <select class="select-default margin-right-default" ng-model="query.detail"
+                                                  ng-change="attack.setDefaultTargetValue(query, $index)"
+                                                  ng-options="target.searchField for target in attack.targets"></select>
+                                          <select class="select-default margin-right-default"
+                                                  ng-model="query.selectedOperator"
+                                                  ng-options="relation for relation in query.detail.operatorType | selectConvertHTML"></select>
+                                          <div ng-switch on="query.method">
+                                            <div ng-switch-when="text">
+                                              <input ng-model="query.target.infor" type="text"
+                                                     name="{{query.target.method}}" value="自定义条件">
+                                            </div>
+                                            <div ng-switch-when="select">
+																								<span>
+																									<select class="select-default margin-right-default"
+                                                          ng-model="query.selectedInfor"
+                                                          ng-options="content for content in query.infor"></select>
+																								</span>
+                                            </div>
+                                          </div>
+                                          <button type="button" class="btn btn-default margin-left-default text-lime"
+                                                  ng-click="attack.deleteQueryElement($index)"
+                                                  ng-if="attack.queryArray.length>1"><i class="fa fa-trash-o"></i>
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                  <button class="btn btn-round btn-primary attack-query-add-btn text-lime"
+                                          ng-click="attack.addQueryElement($index)"><i class="fa fa-plus"></i></button>
+                                  <div class="margin-top-lg">
+                                    <button class="btn btn-primary"
+                                            ng-click="attack.sendQueryRequest($index); attack.attackDeviceTableToggle($index)">
+                                      <i class="fa fa-search icon-left"></i> 开始查询
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div> <!-- query-element ending div -->
+                          </div> <!-- query-group ending div -->
+                          <div class="attack-query-table" ng-show="attack.attackDeviceTableShow[$index]">
+                            <dtable>
+                              <attack-table></attack-table>
+                            </dtable>
+                            <div class="padding-medium bg-gray-95">
+                              <button class="btn btn-default btn-wider"
+                                      ng-click="attack.attackDeviceTableToggle($index)"><i
+                                class="fa fa-caret-left icon-left"></i>上一步
+                              </button>
+                              <button class="btn btn-primary pull-right btn-wider"
+                                      ng-click="tab.activatePanel('attack-method-tab',$index); attack.deviceChecked();"
+                                      ng-disabled="!attackDirective.selectedDevice">下一步 <i
+                                class="fa fa-caret-right"></i></button>
+                            </div>
+
+                          </div>
+                        </div> <!-- query tab ending div -->
+                      </div>
+
+                      <div class="clear"></div>
+                    </div>
+                    <div class="attack-method-tab bg-gray-95" ng-show="tab.active ==='attack-method-tab'+{{$index}}">
+                      <div class="attack-tab-inner-content">
+                        <div class="row">
+                          <div class="col-md-6 col-md-offset-1">
+                            <div class="row">
+                              <div class="col-md-2 text-right">
+                                <span>*攻击目标</span>
+                              </div>
+                              <div class="col-md-10">
+                                <span>{{attack.deviceSelectedName}}</span>
+                              </div>
+                            </div>
+
+                            <div class="row margin-top-lg">
+                              <div class="col-md-2 text-right">
+                                <span>自定义描述</span>
+                              </div>
+                              <div class="col-md-10">
+                                <textarea ng-model="attack.selectedDescription" rows="4" cols="40"></textarea>
+                              </div>
+                            </div>
+
+                          </div>
+                          <div class="col-md-1 text-right">
+                            <span><i class="fa fa-paperclip fa-large icon-left"></i>附件</span>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="upload-attack-method">
+                              <attack-upload></attack-upload>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <button type="button" class="btn btn-default btn-wider"
+                              ng-click="tab.activatePanel('attack-target-tab',$index)"><i
+                        class="fa fa-caret-left icon-left"></i>上一步
+                      </button>
+                      <button type="button" class="btn btn-primary btn-wider pull-right"
+                              ng-click="tab.activatePanel('attack-result-tab',$index); attack.sendMethod()">下一步<i
+                        class="fa fa-caret-right icon-right"></i></button>
+                    </div>
+                    <div class="attack-result-tab bg-gray-95" ng-show="tab.active ===('attack-result-tab'+{{$index}})">
+                      <div class="attack-tab-inner-content">
+                        <div class="row">
+                          <div class="col-md-6 col-md-offset-1">
+                            <div class="row">
+                              <div class="col-xs-2 text-right">
+                                <span>攻击结果描述</span>
+                              </div>
+                              <div class="col-xs-10">
+                                <textarea ng-model="attack.selectedResult" rows="4" cols="40"></textarea>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-1 text-right">
+                            <span><i class="fa fa-paperclip fa-large icon-left"></i>附件</span>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="upload-attack-method">
+                              <attack-upload></attack-upload>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <button type="button" class="btn btn-default btn-wider"
+                              ng-click="tab.activatePanel('attack-method-tab',$index)"><i
+                        class="fa fa-caret-left icon-left"></i>上一步
+                      </button>
+                      <button type="button" class="btn btn-primary btn-wider pull-right"
+                              ng-click="tab.activeBtn('attack-target-tab', $index); attack.finish($index); attack.createTargetTab($index); tab.activatePanel('attack-target-tab', $index);">
+                        <i class="fa fa-check-square-o icon-left"></i>完成
+                      </button>
+                    </div>
+                    <!--  attack device query -->
+                  </div>
+            </div>
+
+        </li>
+      </ul>
+    </div>
+
+    <div ng-if="tab.isActiveView('multiple')">
+      <attack-multiple></attack-multiple>
+    </div>
+    <div ng-if="tab.isActiveView('topology')">
+      <cdiagram>
+        <attack-new-diagram></attack-new-diagram>
+      </cdiagram>
+    </div>
+  </div>
+  </li>
+  </ul>
+  <!-- container tab ending div -->
+</div>
+<!-- container-tab ending div  and tab ctrl ending-->
+</div>
+</div>

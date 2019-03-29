@@ -1,0 +1,818 @@
+/*
+    Detail Panel
+ */
+
+.main-container.page-monitor-device-detail {
+  // background-color: @gray88;
+  // overflow: hidden;
+}
+
+.panel-body-device {
+  // padding: 20px 0px;
+  // margin-top: 5px;
+  // margin-bottom: 5px;
+  // margin-left: auto;
+  // margin-right: auto;
+  // width: 300px;
+  // background-color: @gray85;
+  // border: @gray95;
+}
+
+// badge
+.device-badge {
+  display: inline-block;
+  color: @color-font;
+  border-bottom: 0;
+  border-radius: 10px;
+  padding: @spacing-default;
+  width: 80px;
+  background-color: @gray90;
+
+  &.red {
+    color: @red;
+  }
+}
+
+// ==============================
+// STYLES FOR ACL DEVICE
+// ==============================
+.acl-input {
+  &:focus {
+    color: @gray40;
+
+    &:before {
+      color: @gray40;
+    }
+  }
+}
+
+.acl-input-disable {
+
+}
+
+.acl-num {
+  width: 50px;
+}
+
+.acl-port {
+  width: 60px;
+}
+
+.acl-error {
+  border: 2px solid red;
+  display: inline-block;
+}
+
+.acl-correct {
+  border: none;
+}
+
+.acl-add-button {
+  margin-top: 10px;
+}
+
+.acl-icon-green {
+  color: green;
+}
+
+.acl-center {
+  width: 100%;
+  padding-top: 5px;
+  text-align: center;
+}
+
+// ==============================
+// STYLES FOR PORT DEVICE
+// ==============================
+
+.device-view-panel-wrapper {
+  float: left;
+}
+
+.device-view {
+  position: relative;
+}
+
+.device-view-inner {
+  position: relative;
+  height: auto;
+  padding-bottom: 50px;
+  margin: auto;
+  margin-top: 15px;
+  text-align: center;
+
+  .device-view-inner-main {
+    position: relative;
+    margin: 0 auto;
+
+    .device-cable {
+      position: absolute;
+      opacity: 0;
+
+      &.visible {
+        opacity: 100;
+      }
+    }
+
+    img {
+      max-width: 100%;
+    }
+    &.KEV-C200 {
+      width: 570px;
+
+      .device-cable {
+        top: 138px;
+        &.cable-mgmt {
+          left: 197px;
+        }
+        &.cable-p0 {
+          left: 241px;
+        }
+        &.cable-p1 {
+          left: 276px;
+        }
+        &.cable-p2 {
+          left: 352px;
+        }
+        &.cable-p3 {
+          left: 391px;
+        }
+      }
+    }
+
+    &.KEV-C400 {
+      width: 570px;
+
+      .device-cable {
+        top: 97px;
+        &.cable-mgmt {
+          left: 213px;
+        }
+        &.cable-p0 {
+          left: 262px;
+        }
+        &.cable-p1 {
+          left: 302px;
+        }
+        &.cable-p2 {
+          left: 352px;
+        }
+        &.cable-p3 {
+          left: 391px;
+        }
+      }
+    }
+    &.KED-C400 {
+      width: 570px;
+
+      .device-cable {
+        top: 97px;
+        &.cable-mgmt {
+          left: 213px;
+        }
+        &.cable-p0 {
+          left: 262px;
+        }
+        &.cable-p1 {
+          left: 300px;
+        }
+        &.cable-p2 {
+          left: 350px;
+        }
+        &.cable-p3 {
+          left: 389px;
+        }
+      }
+    }
+    &.KEC-U1000 {
+      width: 1000px;
+      top: 100px;
+      height: 300px;
+      .device-cable {
+        top: 52px;
+        &.cable-mgmt {
+          left: 522px;
+        }
+        &.cable-p0 {
+          left: 319px;
+        }
+        &.cable-p1 {
+          left: 360px;
+        }
+        &.cable-p2 {
+          left: 400px;
+        }
+        &.cable-p3 {
+          left: 441px;
+        }
+      }
+    }
+    &.KEA-U2000 {
+      width: 1000px;
+      top: 0px;
+      .device-cable {
+        top: 142px;
+        &.cable-mgmt {
+          left: 495px;
+        }
+        &.cable-p0 {
+          left: 195px;
+        }
+        &.cable-p1 {
+          left: 233px;
+        }
+        &.cable-p2 {
+          left: 378px;
+        }
+        &.cable-p3 {
+          left: 418px;
+        }
+      }
+    }
+
+    &.KEA-C200 {
+      width: 1000px;
+      top: 50px;
+      height: 300px;
+      .device-cable {
+        top: 78px;
+        &.cable-mgmt {
+          left: 400px;
+        }
+        &.cable-p0 {
+          left: 451px;
+        }
+        &.cable-p1 {
+          left: 492px;
+        }
+      }
+    }
+    &.KEA-C400 {
+      width: 1000px;
+      top: 50px;
+      height: 300px;
+      .device-cable {
+        top: 94px;
+        &.cable-mgmt {
+          left: 461px;
+        }
+        &.cable-p3 {
+          left: 269px;
+        }
+        &.cable-p2 {
+          left: 311px;
+        }
+        &.cable-p1 {
+          left: 364px;
+        }
+        &.cable-p0 {
+          left: 406px;
+        }
+      }
+    }
+    &.KEA-U1000 {
+      width: 1000px;
+      top: 50px;
+      height: 220px;
+      .device-cable {
+        top: 70px;
+        &.cable-mgmt {
+          left: 469px;
+        }
+        &.cable-p0 {
+          left: 353px;
+        }
+        &.cable-p1 {
+          left: 392px;
+        }
+      }
+    }
+    &.KEA-U1000E {
+      width: 1000px;
+      top: 50px;
+      height: 220px;
+      .device-cable {
+        top: 76px;
+        &.cable-mgmt {
+          left: 497px;
+        }
+        &.cable-p0 {
+          left: 301px;
+        }
+        &.cable-p1 {
+          left: 341px;
+        }
+        &.cable-p2 {
+          left: 380px;
+        }
+        &.cable-p3 {
+          left: 420px;
+        }
+        &.cable-p4 {
+          left: 459px;
+        }
+      }
+    }
+
+    &.KEA-U1142 {
+      width: 1000px;
+      top: 50px;
+      height: 220px;
+      .device-cable {
+        top: 62px;
+        &.cable-mgmt {
+          left: 204px;
+        }
+        &.cable-p0 {
+          left: 285px;
+        }
+        &.cable-p1 {
+          left: 325px;
+        }
+        &.cable-p2 {
+          left: 210px;
+          top: 22px;
+        }
+        &.cable-p3 {
+          left: 266px;
+          top: 22px;
+        }
+        &.cable-p4 {
+          left: 315px;
+          top: 22px;
+        }
+        &.cable-p5 {
+          left: 355px;
+          top: 22px;
+        }
+      }
+    }
+
+    &.ips4 {
+      width: 550px;
+
+      .device-cable {
+        top: 95px;
+        &.cable-mgmt {
+          left: 182px;
+        }
+        &.cable-p0 {
+          left: 238px;
+        }
+        &.cable-p1 {
+          left: 284px;
+        }
+        &.cable-p2 {
+          left: 342px;
+        }
+        &.cable-p3 {
+          left: 388px;
+        }
+      }
+    }
+
+    &.ips8 {
+      width: 1000px;
+
+      .device-cable {
+        top: 42px;
+        &.cable-p0 {
+          left: 177px;
+        }
+        &.cable-p1 {
+          left: 212px;
+        }
+        &.cable-p2 {
+          left: 257px;
+        }
+        &.cable-p3 {
+          left: 292px;
+        }
+        &.cable-p4 {
+          left: 339px;
+        }
+        &.cable-p5 {
+          left: 374px;
+        }
+        &.cable-p6 {
+          left: 419px;
+        }
+        &.cable-p7 {
+          left: 454px;
+        }
+        &.cable-mgmt {
+          left: 513px;
+        }
+      }
+    }
+  }
+
+  .device-mgmt {
+    margin-left: 159px;
+  }
+
+  .border-mgmt {
+    position: absolute;
+    top: 61px;
+    left: 193px;
+    width: 46px;
+    height: 41px;
+    border: 1px solid #555;
+    border-radius: 5px;
+  }
+
+  .border-p0 {
+    position: absolute;
+    top: 61px;
+    left: 244px;
+    width: 43px;
+    height: 41px;
+    border: 1px solid #555;
+    border-radius: 5px;
+  }
+
+  .border-p1 {
+    position: absolute;
+    top: 61px;
+    left: 286px;
+    width: 43px;
+    height: 41px;
+    border: 1px solid #555;
+    border-radius: 5px;
+  }
+
+  .border-p2 {
+    position: absolute;
+    top: 61px;
+    left: 335px;
+    width: 43px;
+    height: 41px;
+    border: 1px solid #555;
+    border-radius: 5px;
+  }
+
+  .border-p3 {
+    position: absolute;
+    top: 61px;
+    left: 378px;
+    width: 43px;
+    height: 41px;
+    border: 1px solid #555;
+    border-radius: 5px;
+  }
+  //////// The following code might be deprecated ///////
+  // #left-port-box,
+  // #right-port-box {
+  //     position: absolute;
+  //     width: 70px;
+  //     height: 30px;
+  //     border: 3px solid grey;
+  //     border-radius: 3px;
+  //     cursor: pointer;
+  // }
+  // #left-port-detail,
+  // #right-port-detail {
+  //     position: absolute;
+  //     width: 250px;
+  //     height: 250px;
+  //     border: 3px solid grey;
+  //     border-radius: 3px;
+
+  //     span {
+  //         margin-right: 4px;
+  //     }
+
+  //     .title-label {
+  //         width: 139px;
+  //         height: 28px;
+  //         margin: 5px;
+  //         background-color: rgb(52, 52, 52);
+  //         font-size: 12px;
+  //         color: #C9C9C9;
+
+  //         .title-label-content {
+  //             padding: 5px 13px;
+  //         }
+  //     }
+
+  //     .port-ip {
+  //         width: 192px;
+  //         height: 30px;
+  //         margin: 10px auto;
+  //         background-color: rgb(54, 54, 54);
+  //         border: 1px solid black;
+  //         box-shadow: inset 0 0 5px rgb(24, 18, 18);
+
+  //         .port-ip-content {
+  //             padding: 4px 14px;
+  //         }
+  //         .port-ip-name {
+  //             float: left;
+  //             width: 106px;
+  //             text-align: center;
+  //         }
+  //         .status {
+  //             float: right
+  //         }
+  //         .connected {
+  //             color: #76B900;
+  //         }
+  //     }
+
+  //     .port-info {
+  //         width: 168px;
+  //         margin: 10px auto;
+
+  //         .port-info-name {
+  //             text-align: center;
+  //         }
+  //     }
+
+  //     .port-view {
+  //         width: 108px;
+  //         margin: auto;
+  //         padding-top: 8px;
+  //     }
+  // }
+  // #left-port-angle,
+  // #right-port-angle{
+  //     position: absolute;
+  //     top: 247px;
+  //     left: 100px;
+  //     width: 0;
+  //     height: 0;
+  //     border-left: 20px solid transparent;
+  //     border-right: 20px solid transparent;
+  //     border-top: 20px solid grey;
+  //     opacity: 0;
+  // }
+
+  // /*
+  //     LEFT PORT BOX
+  //  */
+  // #left-port-box {
+  //     top: 36px;
+  //     left: 184px;
+  // }
+  // #left-port-line {
+  //     .left-line {
+  //         position: absolute;
+  //         top: 117px;
+  //         left: -80px;
+  //         width: 277px;
+  //         height: 10px;
+  //         border-top: 1px solid grey;
+  //         transform: rotate(337deg);
+  //     }
+
+  //     .right-line {
+  //         position: absolute;
+  //         top: 116px;
+  //         left: 151px;
+  //         width: 132px;
+  //         height: 10px;
+  //         border-top: 1px solid grey;
+  //         transform: rotate(305deg);
+  //     }
+  // }
+  // #left-port-detail {
+  //     top: 171px;
+  //     left: -73px;
+  // }
+
+  // /*
+  //     RIGHT PORT BOX
+  //  */
+  // #right-port-box {
+  //     top: 36px;
+  //     left: 255px;
+  // }
+  // #right-port-line {
+  //     .left-line {
+  //         position: absolute;
+  //         top: 117px;
+  //         left: 203px;
+  //         width: 116px;
+  //         height: 10px;
+  //         border-top: 1px solid grey;
+  //         transform: rotate(270deg);
+  //     }
+
+  //     .right-line {
+  //         position: absolute;
+  //         top: 110px;
+  //         left: 310px;
+  //         width: 209px;
+  //         height: 10px;
+  //         border-top: 1px solid grey;
+  //         transform: rotate(211deg);
+  //     }
+  // }
+  // #right-port-detail {
+  //     top: 171px;
+  //     left: 255px;
+  // }
+
+  // /*
+  //     PORT BORDER
+  //  */
+  // .port-selected {
+  //     .port-border{
+  //         border-color: #15b20a !important;
+  //     }
+  //     .port-angle {
+  //         opacity: 100 !important;
+  //         border-top-color: #15b20a !important;
+  //     }
+  // }
+}
+
+.device-view-panels {
+  .device-view-panel {
+    position: relative;
+    display: inline-table;
+    width: 185px;
+    height: 174px;
+    margin-left: 15px;
+    // background-color: rgb(37,37,37);
+    // border: 1px solid black;
+    font-size: 12px;
+    // color: #999;
+  }
+
+  .device-view-routing-panel {
+    width: 260px;
+    // height: 190px;
+    // margin-bottom: 20px;
+    position: relative;
+    display: inline-table;
+    // margin-left: 15px;
+    // background-color: rgb(37,37,37);
+    // border: 1px solid black;
+    font-size: 12px;
+    // color: #999;
+
+    h5 {
+      font-size: 12px !important;
+    }
+  }
+
+  .device-view-panel-head {
+    padding: 3px 10px;
+    // background: rgb(47, 47, 47);
+    // border-top: 1px solid #444;
+    // border-left: 1px solid #444;
+
+    .device-view-panel-head-w-icon {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
+
+  .device-view-panel-content {
+    padding: 10px;
+    color: #C9C9C9;
+    // .title {
+    //   color: #999;
+    // }
+    .device-view-panel-content-row {
+      padding-top: 10px;
+
+      .routing-title {
+        display: inline-block;
+        padding-right: 0px;
+      }
+      .routing-value {
+        padding-top: 10px;
+        padding-left: 0px;
+      }
+      .routing-input {
+        padding-left: 0px;
+      }
+
+      .toggle-bg label.off {
+        left: 2.5em;
+      }
+
+      .toggle-bg label {
+        left: 1em;
+      }
+
+      span {
+        font-size: 12px;
+      }
+
+      .device-subnet-address {
+        span {
+          display: inline-block;
+        }
+
+        input[type=text] {
+          padding: 3px;
+          // margin-bottom: 5px;
+        }
+
+        .device-show-message {
+          padding: 3px;
+        }
+      }
+    }
+  }
+
+  .device-large-form-panel {
+    width: 225px;
+    height: 254px;
+
+    span > button {
+      margin-left: 5px;
+    }
+    .device-add-routing-subnet {
+      // margin-top: 5px;
+    }
+  }
+
+  .port-angle {
+    position: absolute;
+    top: 252px;
+    left: 86px;
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid grey;
+    opacity: 0;
+  }
+
+}
+
+.port-selected {
+  border-color: #15b20a !important;
+
+  .port-angle {
+    opacity: 100 !important;
+    border-top-color: #15b20a !important;
+  }
+}
+
+.device-name-space {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.device-sn-space {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.table-overflow-nowrap-short {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 140px;
+  white-space: nowrap;
+}
+
+.panel-info {
+  .col-xs-3 {
+    padding: 0px 5px;
+    margin: 0px;
+
+    > .row {
+      margin: 0px;
+    }
+  }
+
+  .panel-info-title {
+    text-align: center;
+  }
+
+  .panel-info-graph {
+    text-align: center;
+    margin: auto;
+    width: 86%;
+    min-width: 270px;
+  }
+
+  .panel-info-border-gray-top {
+    //    padding: 5px;
+    //    margin: 15px 0px 0px 0px;
+    border-top: 1px solid #282828;
+  }
+
+  .panel-info-border-gray-right {
+    border-right: 1px solid #282828;
+  }
+
+  .panel-info-font {
+    font-size: 12px;
+  }
+
+  .panel-info-large-font {
+    font-size: 14px;
+  }
+}

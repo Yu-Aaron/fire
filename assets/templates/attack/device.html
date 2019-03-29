@@ -1,0 +1,134 @@
+<div class="attack-path-view media">
+  <div class="attack-element start-element">
+    <a href=""><img src="/images/hacker.png">
+      <i class="fa fa-arrow-right"></i></a>
+  </div>
+  <div class="attack-element">
+    <ul>
+      <li ng-repeat="attackTarget in attack.attackTargetArray">
+        <button type="button" class="large-button" ng-click="attack.createTarget();"><i
+          class="fa fa-plus fa-3x"></i></br>新建攻击目标
+        </button>
+      </li>
+    </ul>
+  </div>
+  <div class="attack-device fadein fadeout" ng-show="attack.targetQuery" ng-init="attack.targetQuery('false')"
+       style="display:block">
+    <div class="inner-container-target-panel">
+      <ul class="target-tab nav nav-pills" ng-init="tab.activatePanel('attack-target-tab')">
+        <li ng-click="tab.activatePanel('attack-target-tab')" ng-class="{active: tab.isActive('attack-target-tab')}">
+          <span>1</span> 攻击目标
+        </li>
+        <li ng-click="tab.activatePanel('attack-method-tab')" ng-class="{active: tab.isActive('attack-method-tab')}">
+          <span>2</span> 攻击方法
+        </li>
+        <li ng-click="tab.activatePanel('attack-result-tab')" ng-class="{active: tab.isActive('attack-result-tab')}">
+          <span>3</span> 攻击结果
+        </li>
+      </ul>
+    </div>
+    <div class="attack-device-query" ng-switch on="tab.active">
+      <div class="attack-target-tab" ng-switch-when="attack-target-tab">
+        <div class="query-tab">
+          <div class="query-group" ng-hide="attack.attackDeviceTableShow">
+            <div class="query-element" style="padding-left:90px;">
+              <div>
+                <ul>
+                  <li class="" ng-repeat="query in attack.queryArray">
+                    <div class="btn-group" role="group" aria-label="...">
+                      <button type="button" class="btn btn-primary">并且</button>
+                      <button type="button" class="btn btn-primary">或者</button>
+                    </div>
+                    <span>
+											<select ng-model="query.target" ng-change="attack.setDefaultTargetValue(query.target)"
+                              ng-options="target.name for target in attack.targets"></select>
+										</span>
+                    <span>
+											<select ng-model="query.relation" ng-options="relation for relation in attack.relations"></select>
+										</span>
+                    <div ng-switch on="query.target.method">
+                      <div ng-switch-when="text">
+                        <input ng-model="query.target.infor" type="text" name="{{query.target.method}}" value="自定义条件">
+                      </div>
+                      <div ng-switch-when="select">
+												<span>
+													<select ng-model="query.target.targetValue"
+                                  ng-options="content for content in query.target.infor"></select>
+												</span>
+                      </div>
+                    </div>
+                    <button type="button" class="attack-query-{{$index}} small-button"
+                            ng-click="attack.deleteQueryElement($index)">delete
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              <button type='btn' class="btn-round" ng-click="attack.addQueryElement()">+</button>
+              <div>
+                <button class="btn btn-primary btn-sm" type='btn'
+                        ng-click="attack.sendRequest(); attack.attackDeviceTableToggle()">开始查询
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="attack-query-table" ng-show="attack.attackDeviceTableShow">
+            <button type="button" class="btn btn-sm" ng-click="attack.attackDeviceTableToggle()">back</button>
+            <button type="button" class="btn btn-sm"
+                    ng-click="tab.activatePanel('attack-method-tab'); attack.deviceChecked()">Next Step
+            </button>
+            <attack-table></attack-table>
+          </div>
+        </div>
+      </div>
+      <div class="attack-method-tab" ng-switch-when="attack-method-tab">
+        <div class="row">
+          <div class="col-md-6">
+            <ul>
+              <li><span>*攻击目标 </span> <span>OPC</span></li>
+              <li><span>*攻击手段	</span> <select ng-model="attack.selectedMethod"
+                                               ng-options="option for option in attack.attackMethod"
+                                               ng-init="attack.selectedMethod = attack.attackMethod[0]"></select>{{attack.attackMethod}}
+              </li>
+              <li>
+				  			<textarea rows="4" cols="50">
+							</textarea>
+              </li>
+            </ul>
+            <button type="button" class="small-button" ng-click="tab.activatePanel('attack-target-tab')">last step
+            </button>
+          </div>
+          <div class="col-md-6">
+            <div class="upload-attack-method">
+              <attack-upload></attack-upload>
+            </div>
+            <button type="button" class="small-button"
+                    ng-click="tab.activatePanel('attack-result-tab'); attack.sendMethed()">next step
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="attack-result-tab" ng-switch-when="attack-result-tab">
+        <div class="row">
+          <div class="col-md-6">
+            <ul>
+              <li>
+				  			<textarea rows="4" cols="50">
+							</textarea>
+              </li>
+            </ul>
+            <button type="button" class="small-button" ng-click="tab.activatePanel('attack-method-tab')">last step
+            </button>
+          </div>
+          <div class="col-md-6">
+            <div class="upload-attack-method">
+              <attack-upload></attack-upload>
+            </div>
+            <button type="button" class="small-button" ng-click="attack.finish(); createTarget(); createAttactTarget()">
+              finish
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

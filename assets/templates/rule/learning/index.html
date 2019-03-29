@@ -1,0 +1,178 @@
+<div id="learning-panel-container" cg-busy="{promise:$root.protocolDeployTaskPromise,message:'处理中...'}">
+  <div class="signature-learning" ng-init="learningCtrl.checklearningTasks()">
+
+    <!-- 开始学习 -->
+    <!-- 新增规则学习 -->
+    <div class="signature-learning-list">
+      <div id="top-learning-panel" ng-if="!learningCtrl.viewLearningDetail">
+        <div class="panel panel-default-threat-main" ng-if="learningCtrl.enableAddSchedule">
+          <div class="panel-header">
+            <h5><span class="panel-header-title"><i class="fa fa-default fa-plus"></i>规则学习</span> <span
+              style="float:right"><i
+              class="fa fa-info-circle"></i>规则学习可以把网络里所有监控设备支持的正常和非正常运作学习成规则，让不正常运行的事件可以更快速的找到</span>
+            </h5>
+          </div>
+          <div class="panel-body panel-body-light">
+            <div id="rule-whiteList-learningCtrl_li_addRules" class="learning-enable-schedule"
+                 ng-if="learningCtrl.titleshow">
+              <div ng-click="learningCtrl.isCollapsed = !learningCtrl.isCollapsed; learningCtrl.initTimePicker();"
+                   ng-hide="learningCtrl.isDPIUpgrading">
+              </div>
+              <span ng-if="learningCtrl.isDPIUpgrading" class="warning">&nbsp; (DPI设备升级中，无法学习规则)</span>
+              <div class="row">
+                <div class="col-xs-6">
+                  <div class="row">
+                    <span class="col-xs-2 conf-label">开始日期:</span>
+                    <div class="col-xs-10" id="preset-setting" ng-class="{active:true}">
+                      <div ng-include src="'templates/includes/learning-time-picker.html'"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-6">
+                  <div class="row">
+                    <div class="col-xs-2 conf-label">时长设置:</div>
+                    <div class="col-xs-8" id="duration-setting" ng-class="{active:true}">
+                      <div ng-include src="'templates/includes/learning-interval.html'"
+                           onload="learningCtrl.initTimePicker()"></div>
+                    </div>
+                    <div class="col-xs-2">
+                      <button type="submit" id="rule-whiteList-learningCtrl_startLearning"
+                              ng-click="!learningCtrl.intervalError && learningCtrl.setTimeInterval(); learningCtrl.isCollapsed=true"
+                              class="btn btn-default"
+                              setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED"
+                              ng-disabled="learningCtrl.disabledAdd">新增学习
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style="min-height: calc(50vh - 100px)">
+              <hr>
+              <div class="row blank-hint" ng-if="learningCtrl.learningTasks.length<1 && !learningCtrl.titleshow"
+                   style="height: calc(50vh - 100px)">
+                <div>
+                  <i class="fa fa-hourglass-o"></i>
+                  <p>没有学习内容</p>
+                </div>
+              </div>
+              <div class="row" ng-if="learningCtrl.learningTasks.length>=1 || learningCtrl.titleshow">
+                <div class="col-lg-1 conf-label">规则学习结果:</div>
+              </div>
+              <ul ng-if="learningCtrl.learningTasks.length>=1" id="rule-whiteList-learningCtrl_li_learningTasks"
+                  ng-init="learningCtrl.stopCountDown()"
+                  class="no-bullets padding-zero margin-default">
+
+                <li id="rule-whiteList-learningCtrl_li_learningTasks_{{task.taskId}}"
+                    ng-class="task.state === 'SUCCESS'?'learnt-li':'learning-li'" class="learning-item"
+                    ng-repeat="task in learningCtrl.learningTasks" ng-if="task.state == 'SUCCESS'" fade-in-list>
+                  <div class="row">
+                    <div class="col-xs-1">
+                      <span ng-class="task.status" ng-show="task.state == 'PENDING'"><i
+                        class="fa fa-large fa-clock-o text-lime"></i></span>
+                      <span ng-class="task.status" ng-show="task.state == 'PROCESSING'|| task.state=='PAUSED'"><i
+                        class="fa fa-circle fa-large fa-flashing-orange"></i></span>
+                      <!--<span ng-class="task.status" ng-show="task.state == 'SUCCESS'"><input type="checkbox">&nbsp;</span>-->
+                    </div>
+                    <div id="learning-result-{{$index}}"
+                         ng-click="learningCtrl.learningDetail(task.taskId);learningCtrl.loopLearningDetail(task.taskId);learningCtrl.showDetailPanel = true;learningCtrl.value=0; learningCtrl.viewLearningDetail=true;">
+                      <div class="col-xs-8 padding-zero task-name">
+                        <span>{{task.taskName}}</span>
+                      </div>
+                      <div class="col-xs-2 status-label" ng-show="task.state == 'PENDING'">
+                        <span class="label label-success">等待</span>
+                      </div>
+                      <div class="col-xs-2 status-label" ng-show="task.state == 'PROCESSING'">
+                        <span class="label label-warning">学习中</span>
+                      </div>
+                      <div class="col-xs-2 status-label" ng-show="task.state == 'PAUSED'">
+                        <span class="label label-warning">暂停</span>
+                      </div>
+                      <div class="col-xs-2 status-label" ng-show="task.state == 'SUCCESS'">
+                      </div>
+                    </div>
+                    <div class="col-xs-1 remove-button">
+                      <button class="btn btn-default" ng-click="learningCtrl.remove(task)" setting-privilege
+                              privilege-name="RULE_WHITELIST" privilege-require="MIXED"><i class="fa fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default-threat-main"
+             ng-if="learningCtrl.detailPanelItem.state=='PENDING' && !learningCtrl.enableAddSchedule">
+          <div class="panel-header">
+            <h5 class="panel-header-title"><i class="fa fa-file"></i>等待中的规则学习</h5>
+          </div>
+          <div class="panel-body panel-body-light">
+            <div ng-include src="'templates/rule/learning/paddingLearningInfo.html'"></div>
+          </div>
+        </div>
+        <div class="panel panel-default-threat-main"
+             ng-if="learningCtrl.detailPanelItem.state!='PENDING' && !learningCtrl.enableAddSchedule">
+          <div class="panel-header">
+            <h5 class="panel-header-title"><i class="fa fa-file"></i>进行中的规则学习</h5>
+          </div>
+          <div class="panel-body panel-body-light">
+            <div ng-include src="'templates/rule/learning/learningInfo.html'"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!--      <div id="result-panel" class="panel" ng-if="!learningCtrl.showDetailPanel && learningCtrl.hasSuccessTask()">
+              <div class="panel-heading">
+                <h5><i class="fa fa-file"></i>已完成的规则学习</h5>
+              </div>
+              <ul id="rule-whiteList-learningCtrl_li_learningTasks" ng-init="learningCtrl.stopCountDown()"
+                  class="no-bullets padding-zero margin-default">
+
+                <li id="rule-whiteList-learningCtrl_li_learningTasks_{{task.taskId}}"
+                    ng-class="task.state === 'SUCCESS'?'learnt-li':'learning-li'" class="learning-item"
+                    ng-repeat="task in learningCtrl.learningTasks" ng-if="task.state == 'SUCCESS'">
+                  <div class="row">
+                    <div class="col-xs-1">
+                      <span ng-class="task.status" ng-show="task.state == 'PENDING'"><i
+                        class="fa fa-large fa-clock-o text-lime"></i></span>
+                      <span ng-class="task.status" ng-show="task.state == 'PROCESSING'|| task.state=='PAUSED'"><i
+                        class="fa fa-circle fa-large fa-flashing-orange"></i></span>
+                      &lt;!&ndash;<span ng-class="task.status" ng-show="task.state == 'SUCCESS'"><input type="checkbox">&nbsp;</span>&ndash;&gt;
+                    </div>
+                    <div id="learning-result-{{$index}}"
+                         ng-click="learningCtrl.learningDetail(task.taskId);learningCtrl.loopLearningDetail(task.taskId);learningCtrl.showDetailPanel = true;learningCtrl.value=0; learningCtrl.viewLearningDetail=true;">
+                      <div class="col-xs-8 padding-zero task-name">
+                        <span>{{task.taskName}}</span>
+                      </div>
+                      <div class="col-xs-2 status-label" ng-show="task.state == 'PENDING'">
+                        <span class="label label-success">等待</span>
+                      </div>
+                      <div class="col-xs-2 status-label" ng-show="task.state == 'PROCESSING'">
+                        <span class="label label-warning">学习中</span>
+                      </div>
+                      <div class="col-xs-2 status-label" ng-show="task.state == 'PAUSED'">
+                        <span class="label label-warning">暂停</span>
+                      </div>
+                      <div class="col-xs-2 status-label" ng-show="task.state == 'SUCCESS'">
+                      </div>
+                    </div>
+                    <div class="col-xs-1 remove-button">
+                      <button class="btn btn-default" ng-click="learningCtrl.remove(task)"><i class="fa fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>-->
+      <div class="panel" ng-if="learningCtrl.showDetailPanel">
+        <div class="panel-body panel-body-light">
+          <div ng-include src="'templates/rule/learning/learningInfo.html'"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

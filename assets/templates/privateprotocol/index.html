@@ -1,0 +1,84 @@
+<div class="panel panel-light-gray padding-default">
+  <h2>私有协议设置</h2>
+
+  <hr class="hr-thick hr-lime hr-with-title">
+
+  <div class="panel panel-wrapper">
+    <div class="row panel-container">
+      <div class="col-xs-12 panel-spacer">
+        <div class="panel panel-lg">
+          <div class="panel-header panel-header-border clearfix">
+            <h5 class="panel-header-title">设置私有协议</h5>
+            <div class="pull-right">
+              <div ng-if="!privateprotocol.isEditing">
+                <button type="button" class="btn btn-sm btn-default" ng-click="privateprotocol.edit()" privilege><i
+                  class="fa fa-edit"></i></button>
+              </div>
+              <div ng-if="privateprotocol.isEditing">
+                <button type="button" class="btn btn-sm btn-default" ng-click="privateprotocol.cancel()"><i
+                  class="fa fa-times"></i></button>
+                <button type="button" ng-disabled="!privateprotocol.noErrors" class="btn btn-sm btn-default"
+                        ng-click="privateprotocol.showConfirmUI()"><i class="fa fa-check text-lime"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="protocols">
+              <div ng-if="privateprotocol.isEditing" class="row">
+                <div class="protocol-item col-xs-6" ng-repeat="protocol in privateprotocol.protocols">
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <span class="toggle-square {{protocol.disabled ? 'off' : 'on'}} protocol-toggle">
+                        <div class="toggle-trigger" ng-if="protocol.disabled">
+                          <input type="radio" name="toggle" value=1 ng-change="privateprotocol.switch(protocol, 1)"
+                                 ng-model="protocol.disabled">
+                          <input type="radio" name="toggle" value=0 ng-change="privateprotocol.switch(protocol, 0)"
+                                 ng-model="protocol.disabled">
+                        </div>
+                        <div class="toggle-trigger" ng-if="!protocol.disabled">
+                          <input type="radio" name="toggle" value=0 ng-change="privateprotocol.switch(protocol, 0)"
+                                 ng-model="protocol.disabled">
+                          <input type="radio" name="toggle" value=1 ng-change="privateprotocol.switch(protocol, 1)"
+                                 ng-model="protocol.disabled">
+                        </div>
+                        <label class="toggle-label {{protocol.disabled ? 'off' : 'on'}}">{{protocol.disabled ? '关闭':'开启'}}</label>
+                        <span class="toggle-switch {{protocol.disabled ? 'off' : 'on'}}"><i
+                          class="fa fa-bars"></i></span>
+                      </span>
+                    </div>
+                    <div class="col-xs-2">{{protocol.protocolName}}</div>
+                    <div class="col-xs-4">
+                      <span ng-show="!protocol.disabled"><b>端口:</b></span>
+                      <input class="protocol-item-port" type="text" name="protocolPort" ng-model="protocol.protocolPort"
+                             ng-change="privateprotocol.checkAllPorts()" ng-show="!protocol.disabled" required>
+                    </div>
+                    <div class="col-xs-3"><span ng-show="protocol.message" class="input-alert-error">{{protocol.message}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div ng-if="!privateprotocol.isEditing" class="row">
+                <div class="protocol-item col-xs-6" ng-repeat="protocol in privateprotocol.protocols">
+                  <div class="row">
+                    <div class="col-xs-3">
+                      <label class="label-default {{protocol.disabled ? '' : 'label-success'}}">{{protocol.disabled ?
+                        '关闭':'开启'}}</label>
+                    </div>
+                    <div class="col-xs-3">
+                      <div class="protocol-item-name">{{protocol.protocolName}}</div>
+                    </div>
+                    <div class="col-xs-6">
+                      <span ng-show="!protocol.disabled"><b> 端口: </b></span>
+                      <span ng-show="!protocol.disabled"><b> {{protocol.protocolPort}} </b></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="panel" cg-busy="{promise:$root.deployAllTaskPromise,message:'部署中...'}">
+  <div class="panel-header">
+    <h5><span class="panel-header-title">IP/MAC绑定</span>
+      <span class="pull-right">
+        <button type="button" privilege ng-show="!IpMacAllDpi.showEdit" ng-click="IpMacAllDpi.showEdit=true"
+                class="btn btn-default pull-right btn-top-pull-right-margin-back">批量绑定</button>
+          <button type="button" privilege ng-show="IpMacAllDpi.showEdit" ng-click="IpMacAllDpi.showEdit=false"
+                  class="btn btn-default btn-top-pull-right-margin-back">取消</button>
+          <button class="btn btn-default btn-top-pull-right-margin-back" privilege ng-click="IpMacAllDpi.deploy()"
+                  ng-show="IpMacAllDpi.showEdit">
+            批量部署IP/MAC绑定
+          </button> &nbsp;
+      </span>
+    </h5>
+  </div>
+  <div class="panel-body panel-body-light">
+    <div ng-show="IpMacAllDpi.showEdit">
+      <div class="ipmac-top-select" privilege>
+        <p>IP/MAC绑定：
+          <span class="toggle-container">
+            <span class="toggle-bg toggle-alternate" ng-class="{true: 'on', false: 'off'}[IpMacAllDpi.turnOnAll]">
+              <label
+                ng-class="{true: 'on', false: 'off'}[IpMacAllDpi.turnOnAll]">{{IpMacAllDpi.turnOnAll? '开启' : '关闭'}}</label>
+              <input type="checkbox" name="toggle" ng-model="IpMacAllDpi.turnOnAll">
+              <span class="switch" ng-class="{true: 'on', false: 'off'}[IpMacAllDpi.turnOnAll]"></span>
+            </span>
+          </span><br/><br/>
+        </p>
+        <p ng-show="IpMacAllDpi.turnOnAll">
+          处理措施:
+          <span>
+            <label class="label-setting-lime-border">
+              <input type="radio" class="input-setting-lime-border" ng-model="IpMacAllDpi.actionAll" value="DROP"/>
+              <span><i class="fa fa-ban icon-left"></i>阻断</span>
+            </label>
+          </span>
+          <span>
+            <label class="label-setting-lime-border">
+              <input type="radio" class="input-setting-lime-border" ng-model="IpMacAllDpi.actionAll" value="ALERT"/>
+              <span><i class="fa fa-exclamation-triangle icon-left"></i>警告</span>
+            </label>
+          </span>
+        </p>
+      </div>
+    </div>
+    <table class="table table-hover icon-hidden all-api-table">
+      <thead>
+      <tr>
+        <th><input type="checkbox" privilege ng-model="IpMacAllDpi.dpiSelectAll" ng-click="IpMacAllDpi.selectAllDPI()"
+                   class="pull-right" ng-show="IpMacAllDpi.showEdit"></th>
+        <th>设备名称</th>
+        <th>IP地址</th>
+        <th>MAC地址</th>
+        <th>关联安全设备</th>
+        <th>启用绑定</th>
+        <th>处理措施</th>
+      </tr>
+      </thead>
+      <tbody class="row">
+      <tr ng-repeat="item in IpMacAllDpi.dpiData" ng-click="expend[$index]=!expend[$index]">
+        <td><input type="checkbox" privilege ng-model="IpMacAllDpi.selectDPI[$index]"
+                   ng-disabled="item.deviceOnline !== 1" class="pull-right" ng-show="IpMacAllDpi.showEdit"></td>
+        <td class="col-sm-5">
+          <div ng-repeat="device in item.factoryDevice">
+            - {{device.name}}
+          </div>
+        </td>
+        <td class="col-sm-1">
+          <div ng-repeat="device in item.factoryDevice">
+            {{device.ip}}
+          </div>
+        </td>
+        <td class="col-sm-1">
+          <div ng-repeat="device in item.factoryDevice">
+            {{device.mac}}
+          </div>
+        </td>
+        <td class="col-sm-3">
+          <div ng-repeat="device in item.factoryDevice">
+            {{item.name}} ({{item.mgmtIp}})
+          </div>
+        </td>
+        <td class="col-sm-1">
+          <div ng-repeat="ipmacItem in item.ipmac">
+            <i class="fa fa-{{ipmacItem._ipmac?'check':'times'}}"></i>
+          </div>
+        </td>
+        <td class="col-sm-1">
+          <div ng-repeat="device in item.factoryDevice">
+            {{item.ipmacPolicy.ipMacAction==='ALERT'?'警告':''}}
+            {{item.ipmacPolicy.ipMacAction==='DROP'?'阻断':''}}
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

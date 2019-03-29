@@ -1,0 +1,340 @@
+<div class="padding-default">
+  <div class="row">
+    <div class="col-xs-4">
+      <h5 class="display-inline-block">设备状态:</h5>
+      <span class="device-badge" id="device_info_online_status">
+        <div class="bullet bullet-online" title="连线"
+             ng-if="securitydetail.device.deviceOnline===1&&securitydetail.device.deviceSource==='DISCOVERY'"></div>
+        <div class="bullet bullet-offline" title="掉线"
+             ng-if="securitydetail.device.deviceOnline!==1&&securitydetail.device.deviceSource==='DISCOVERY'"></div>
+        <div class="bullet bullet-unactivated" title="未激活"
+             ng-if="securitydetail.device.deviceSource!=='DISCOVERY'"></div>
+        {{securitydetail.device.deviceSource === 'DISCOVERY' ? securitydetail.device.deviceOnline : 0 | deviceConnection}}
+      </span>
+    </div>
+    <div class="col-xs-4"></div>
+    <div class="col-xs-4" ng-show="securitydetail.device.deviceOnline !== 1">
+      <div class="pull-right">
+        <button type="button" class="btn btn-default delete-device-btn" privilege title="删除设备"
+                ng-click="asset.deleteOneDevice(securitydetail.device)">
+          <i class="fa fa-trash-o icon-left"></i>删除设备
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="detail-page-wrapper bg-gray-85">
+  <div class="detail-page-body">
+    <section id="device-info">
+      <div class="detail-information detail-panel">
+        <div class="detail-information-content">
+          <div class="row">
+            <div class="col-xs-4 col-md-4">
+              <div class="panel">
+                <div class="panel-heading">
+                  <span><i class="fa fa-picture-o icon-left"></i>设备图</span>
+                </div>
+                <div class="panel-body text-center panel-body-fixed-height-300">
+                  <div class="panel-body-device text-center">
+                    <div class="device-image"
+                         ng-style="{'background-image': 'url(/images/devices/security/' + securitydetail.device._iconName + '-icon.png)'}"
+                         ng-if="!securitydetail.isEdited"></div>
+                    <div class="device-image"
+                         ng-style="{'background-image': 'url(/images/devices/security/' + securitydetail.editedInfo.iconType + '-icon.png)'}"
+                         ng-if="securitydetail.isEdited"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-4 col-md-4">
+              <div class="panel">
+                <div class="panel-heading">
+                  <span><i class="fa fa-folder-open icon-left"></i>设备规格</span>
+                  <div privilege class="pull-right btn-top-pull-right-margin-back">
+                    <button class="btn btn-default btn-sm pull-right" ng-hide="securitydetail.isEdited"
+                            ng-disabled="securitydetail.isIPEdited"
+                            ng-click="securitydetail.editDevice();securitydetail.fillValidate()"><i
+                      class="fa fa-pencil-square-o"></i></button>
+                    <button class="btn btn-default btn-sm pull-right" ng-show="securitydetail.isEdited"
+                            ng-disabled="securitydetail.nameError || securitydetail.modelError || securitydetail.serialError || securitydetail.serialFormatError || securitydetail.hasDuplicateSN"
+                            ng-click="securitydetail.editDone('basic')"><i class="fa fa-check text-lime"></i></button>
+                    <button class="btn btn-default btn-sm margin-right-default pull-right"
+                            ng-show="securitydetail.isEdited" ng-click="securitydetail.editCancel(true)"><i
+                      class="fa fa-remove"></i></button>
+                  </div>
+                </div>
+                <div class="panel-body panel-body-fixed-height-300">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title"><span class="text-red"
+                                                                      ng-show="securitydetail.isEdited">&#42;</span>设备名称
+                        </h5>
+                        <p ng-hide="securitydetail.isEdited" class="device-name-space">{{securitydetail.device.name ||
+                          '未知'}}</p>
+                        <input type="text" ng-show="securitydetail.isEdited" ng-model="securitydetail.editedInfo.name"
+                               ng-change="securitydetail.validateDevice()" maxlength="100" size="15">
+                        <error-msg ng-show="securitydetail.isEdited" validator="securitydetail"
+                                   obj="securitydetail.editedInfo" type="'name'"></error-msg>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title"><span class="text-red"
+                                                                      ng-show="securitydetail.isEdited && (securitydetail.device.deviceOnline === 0 || securitydetail.device.deviceSource !== 'DISCOVERY')">&#42;</span>设备序列号
+                        </h5>
+                        <p
+                          ng-hide="securitydetail.isEdited && (securitydetail.device.deviceOnline === 0 || securitydetail.device.deviceSource !== 'DISCOVERY')">
+                          {{securitydetail.device.serialNumber || '未知'}}</p>
+                        <input type="text"
+                               ng-show="securitydetail.isEdited && (securitydetail.device.deviceOnline === 0 || securitydetail.device.deviceSource !== 'DISCOVERY')"
+                               ng-model="securitydetail.editedInfo.serialNumber"
+                               ng-change="securitydetail.serialNumberChanged(securitydetail.editedInfo.serialNumber);securitydetail.validateDevice()"
+                               maxlength="255" size="15">
+                        <error-msg ng-show="securitydetail.isEdited" validator="securitydetail"
+                                   obj="securitydetail.editedInfo" type="'serialNumber'"></error-msg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">设备型号</h5>
+                        <p
+                          ng-hide="securitydetail.isEdited && (securitydetail.device.deviceOnline === 0 || securitydetail.device.deviceSource !== 'DISCOVERY')">
+                          {{securitydetail.simplifyModelName(securitydetail.device._model_name) || '未知' |
+                          deviceModel}}</p>
+                        <p
+                          ng-show="securitydetail.isEdited && (securitydetail.device.deviceOnline === 0 || securitydetail.device.deviceSource !== 'DISCOVERY')">
+                          {{securitydetail.simplifyModelName(securitydetail.editedInfo._model_name) || '未知' |
+                          deviceModel}}</p>
+                        <div class="select-styled input-stacked"
+                             ng-show="securitydetail.isEdited && (securitydetail.device.deviceOnline === 0 || securitydetail.device.deviceSource !== 'DISCOVERY') && false">
+                          <div class="input-stacked-wrap" ng-show="securitydetail.newModel">
+                            <input class="form-control" ng-show="securitydetail.newModel" type="text"
+                                   placeholder="请输入设备型号名称" ng-model="securitydetail.editedInfo._model_name"
+                                   ng-change="securitydetail.validateDevice()" maxlength="255">
+                          </div>
+                          <select class="form-control" ng-model="securitydetail.editedInfo.modelId"
+                                  ng-options="item.modelId as (item.model_name + (item.model && (item.model !== item.model_name) ? ' / ' + item.model : '')) for item in securitydetail.forms.models"
+                                  ng-change="securitydetail.validateDevice()">
+                          </select>
+                        </div>
+                      </div>
+                      <div class="detail-page-list-item" ng-show="securitydetail.newModel">
+                        <h5 class="detail-page-list-item-title">型号</h5>
+                        <input type="text" class="form-control" ng-model="securitydetail.editedInfo.model"
+                               maxlength="255">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">设备厂商</h5>
+                        <p ng-hide="securitydetail.isEdited">{{securitydetail.device.make || '未知'}}</p>
+                        <p ng-show="securitydetail.isEdited && !securitydetail.newModel">
+                          {{securitydetail.editedInfo.make || '未知'}}</p>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">端口数量</h5>
+                        <p ng-hide="securitydetail.isEdited">{{securitydetail.device.devicePorts.length}}个</p>
+                        <p ng-show="securitydetail.isEdited && !securitydetail.newModel">
+                          {{securitydetail.editedInfo.numOfPorts ? (securitydetail.editedInfo.numOfPorts + 1) + '个' :
+                          ''}}</p>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">设备版本</h5>
+                        <p>{{securitydetail.device.version || '未知'}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">更新时间</h5>
+                        <p>{{securitydetail.device.updatedAt || '未知' | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-4 col-md-4">
+              <div class="panel" ng-hide="true">
+                <div class="panel-heading">
+                  <span><i class="fa fa-cogs icon-left"></i>设备设置</span>
+                </div>
+                <div class="panel-body ">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">安装时间</h5>
+                        <p>{{securitydetail.device.installedAt | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                    </div>
+                  </div>
+                  <div class="detail-page-list-item" ng-hide="true">
+                    <h5 class="detail-page-list-item-title">分区</h5>
+                    <p ng-hide="securitydetail.isEdited">{{securitydetail.device._zoneNames | deviceZoneFilter}}</p>
+                    <select class="form-control" ng-show="securitydetail.isEdited"
+                            ng-model="securitydetail.editedInfo.zone"
+                            ng-options="zone for zone in securitydetail.forms.setting.zones">
+                      <option value="">-- 请选择分区 --</option>
+                    </select>
+                  </div>
+                  <div class="detail-page-list-item" ng-hide="true">
+                    <h5 class="detail-page-list-item-title">权重</h5>
+                    <p ng-hide="securitydetail.isEdited">{{securitydetail.device.priority}}</p>
+                    <select class="form-control" ng-show="securitydetail.isEdited"
+                            ng-model="securitydetail.editedInfo.priority"
+                            ng-options="priority for priority in securitydetail.forms.setting.priorities"></select>
+                  </div>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-heading">
+                  <span><i class="fa fa-cogs icon-left"></i>设备管理端口</span>
+                  <div privilege class="pull-right btn-top-pull-right-margin-back"
+                       ng-show="securitydetail.device.deviceOnline === 0 || securitydetail.device.deviceSource !== 'DISCOVERY'">
+                    <span ng-if="securitydetail.isDPIUpgrading" class="warning">(DPI设备升级中) &nbsp;</span>
+                    <button class="btn btn-default btn-sm pull-right" ng-hide="securitydetail.isIPEdited"
+                            ng-disabled="securitydetail.isEdited||securitydetail.isDPIUpgrading"
+                            ng-click="securitydetail.editIP()"><i class="fa fa-pencil-square-o"></i></button>
+                    <button class="btn btn-default btn-sm pull-right" ng-show="securitydetail.isIPEdited"
+                            ng-disabled="securitydetail.invalidIp || securitydetail.invalidMac || securitydetail.hasDuplicateIP || securitydetail.hasDuplicateMAC"
+                            ng-click="securitydetail.editIPDone()"><i class="fa fa-check text-lime"></i></button>
+                    <button class="btn btn-default btn-sm margin-right-default pull-right"
+                            ng-show="securitydetail.isIPEdited" ng-click="securitydetail.editIPCancel()"><i
+                      class="fa fa-remove"></i></button>
+                  </div>
+                </div>
+                <div class="panel-body" style="height: 140px">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title"><span class="text-red"
+                                                                      ng-show="securitydetail.isIPEdited">&#42;</span>IP地址
+                        </h5>
+                        <p ng-hide="securitydetail.isIPEdited">
+                          <span ng-repeat="port in securitydetail.device.devicePorts | filter:search.isMgmtPort=true">{{port.portIp || '未知'}} </span>
+                        </p>
+                        <input type="text" ng-show="securitydetail.isIPEdited" ng-model="securitydetail.editedInfo.ip"
+                               ng-change="securitydetail.deviceIpChange()" maxlength="255" size="15">
+                        <error-msg ng-show="securitydetail.isIPEdited" obj="securitydetail.device"
+                                   validator="securitydetail" type="'ip'"></error-msg>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title"><span class="text-red"
+                                                                      ng-show="securitydetail.isIPEdited && false">&#42;</span>MAC地址
+                        </h5>
+                        <p ng-hide="securitydetail.isIPEdited">
+                          <span ng-repeat="port in securitydetail.device.devicePorts | filter:search.isMgmtPort=true">{{port.mac || '未知'}} </span>
+                        </p>
+                        <input type="text" ng-show="securitydetail.isIPEdited" ng-model="securitydetail.editedInfo.mac"
+                               ng-change="securitydetail.deviceMacChange()" maxlength="255" size="15">
+                        <error-msg ng-show="securitydetail.isIPEdited" obj="securitydetail.device"
+                                   validator="securitydetail" type="'mac'"></error-msg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-heading">
+                  <span><i class="fa fa-cogs icon-left"></i>规则部署配置</span>
+                  <div privilege class="pull-right btn-top-pull-right-margin-back"
+                       ng-if="securitydetail.device._subCategory!=='DATA_COLLECTION_DEVICE'">
+                    <span ng-if="securitydetail.isDPIUpgrading" class="warning">(DPI设备升级中) &nbsp;</span>
+                    <button id="securitydetail_rule_edit" class="btn btn-default btn-sm pull-right"
+                            ng-hide="securitydetail.device.nodes[0].isedting"
+                            ng-disabled="securitydetail.device.nodes[0].isedting||securitydetail.isDPIUpgrading"
+                            ng-click="securitydetail.device.nodes[0].isedting = true; securitydetail.device.nodes[0].tempNodeProperty = securitydetail.device.nodes[0].nodeProperty">
+                      <i class="fa fa-pencil-square-o"></i></button>
+                    <button id="securitydetail_rule_confirm" class="btn btn-default btn-sm pull-right"
+                            ng-show="securitydetail.device.nodes[0].isedting"
+                            ng-click="securitydetail.updateNodeProperty(securitydetail.device.nodes[0])"><i
+                      class="fa fa-check text-lime"></i></button>
+                    <button id="securitydetail_rule_cancel"
+                            class="btn btn-default btn-sm margin-right-default pull-right"
+                            ng-show="securitydetail.device.nodes[0].isedting"
+                            ng-click="securitydetail.device.nodes[0].isedting = false"><i class="fa fa-remove"></i>
+                    </button>
+                  </div>
+                  <div privilege class="pull-right btn-top-pull-right-margin-back"
+                       ng-if="securitydetail.device._subCategory==='DATA_COLLECTION_DEVICE'">
+                    <span ng-if="securitydetail.isDPIUpgrading" class="warning">(DPI设备升级中) &nbsp;</span>
+                    <button id="securitydetail_protocol_edit" class="btn btn-default btn-sm pull-right"
+                            ng-hide="securitydetail.device.nodes[0].isEdited"
+                            ng-disabled="securitydetail.device.nodes[0].isEdited||securitydetail.isDPIUpgrading"
+                            ng-click="securitydetail.device.nodes[0].isEdited = true; editNode(securitydetail.device.nodes[0])">
+                      <i class="fa fa-pencil-square-o"></i></button>
+                    <button id="securitydetail_protocol_confirm" class="btn btn-default btn-sm pull-right"
+                            ng-show="securitydetail.device.nodes[0].isEdited"
+                            ng-click="editNodeDone(securitydetail.device.nodes[0])"><i
+                      class="fa fa-check text-lime"></i></button>
+                    <button id="securitydetail_protocol_cancel"
+                            class="btn btn-default btn-sm margin-right-default pull-right"
+                            ng-show="securitydetail.device.nodes[0].isEdited"
+                            ng-click="editNodeCancel(securitydetail.device.nodes[0])"><i class="fa fa-remove"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="panel-body" style="height: 110px">
+                  <div class="row" ng-if="securitydetail.device._subCategory==='NORMAL'">
+                    <div class="col-xs-12">
+                      <div class="detail-page-list-item">
+                        <div class="high-line">
+                          <h5 class="detail-page-list-item-title">部署属性</h5>
+                          <span id="securitydetail_rule_text_all"
+                                ng-if="securitydetail.device.nodes[0].nodeProperty === 'AllRules' && !securitydetail.device.nodes[0].isedting">部署所有规则</span>
+                          <span id="securitydetail_rule_text_blacklist"
+                                ng-if="securitydetail.device.nodes[0].nodeProperty === 'SignatureONLY' && !securitydetail.device.nodes[0].isedting">只部署黑名单</span>
+                          <span ng-if="securitydetail.device.nodes[0].isedting">
+                            <select id="securitydetail_rule_select" name="passwordStrength"
+                                    ng-model="securitydetail.device.nodes[0].tempNodeProperty"
+                                    class="select-styled form-control">
+                              <option value="AllRules">部署所有规则</option>
+                              <option value="SignatureONLY">只部署黑名单</option>
+                            </select>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" ng-repeat="node in securitydetail.device.nodes"
+                       ng-if="securitydetail.device._subCategory==='DATA_COLLECTION_DEVICE'">
+                    <div class="col-xs-12">
+                      <div class="detail-page-list-item">
+                        <div class="high-line">
+                          <h5 class="detail-page-list-item-title">部署规则</h5>
+                          <span ng-hide="node.isEdited">
+                              <span ng-repeat="protocol in node.protocols" class="securitydetail_protocol_text">{{protocol.id}} &nbsp;</span>
+                              <span ng-hide="node.protocols.length">无</span>
+                          </span>
+                          <span ng-show="node.isEdited">
+                            <div id="securitydetail_protocol_select" ng-dropdown-multiselect="" options="protocols"
+                                 selected-model="node.protocols" checkboxes="false"></div>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

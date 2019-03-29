@@ -1,0 +1,214 @@
+.detect-container {
+  height: 100%;
+  .tab-container {
+    height: 100%;
+    .tab-container-body {
+      height: 100%;
+    }
+  }
+
+  .warning-container {
+    margin: 15px;
+    padding: 40px;
+    .warning-btn-container {
+      text-align: center;
+      width: 100%;
+      margin-top: 30px;
+      margin-bottom: 200px;
+    }
+    .warning-btn {
+      width: 300px;
+      height: 60px;
+    }
+  }
+  .detect-header-box {
+    margin: 80px auto auto;
+    text-align: center;
+    .detect-option-left {
+      width: 50%;
+      padding-left: 15%;
+      display: inline-block;
+      float: left;
+      border-right: 1px solid #fff;
+    }
+    .detect-option-right {
+      width: 50%;
+      display: inline-block;
+      padding-right: 15%;
+    }
+    .btn-group {
+      margin-top: 6px;
+      button {
+        width: 200px;
+        height: 40px;
+        // padding: 20px 80px;
+        margin-bottom: @spacing-default;
+      }
+      span {
+        display: block;
+      }
+    }
+  }
+  .detect-panel {
+    padding: 8px 0;
+    background-color: rgb(33, 33, 33);
+    .go-back-button {
+      margin-bottom: 10px;
+    }
+  }
+
+  .detect-control-menu {
+    position: relative;
+    z-index: 10;
+    margin: 10px;
+  }
+
+  .detect-panel-view .menu {
+    margin: 0 15px;
+  }
+
+  .detect-pattern {
+    margin: 30px 0 0 30px;
+    h5 {
+      color: white;
+      span {
+        margin-left: 10px;
+        color: #999;
+        font-size: 12px;
+        font-style: normal;
+      }
+    }
+  }
+  .detect-pattern-box {
+    position: relative;
+    display: inline-block;
+    width: 360px;
+    height: 140px;
+    margin-right: 50px;
+    border: 1px solid black;
+    box-shadow: 0 0 10px black;
+    background-image: linear-gradient(to bottom, #262626 0%, #1b1b1b 100%);
+    &.orange {
+      .pattern-left-panel {
+        color: orange;
+        border-left: 5px solid orange;
+      }
+      .pattern-level-type {
+        color: orange;
+      }
+    }
+    &.red {
+      .pattern-left-panel {
+        color: red;
+        border-left: 5px solid red;
+      }
+      .pattern-level-type {
+        color: red;
+      }
+    }
+    .pattern-left-panel {
+      width: 100px;
+      height: 100%;
+      padding: 18px;
+      float: left;
+      .pattern-counter-num {
+        font-size: 48px;
+        text-align: center;
+        display: block;
+        &.counter-num-3-digits {
+          font-size: 30px;
+        }
+        &.counter-num-4-digits {
+          font-size: 25px;
+        }
+        &.counter-num-5-digits {
+          font-size: 20px;
+        }
+        &.counter-num-6-digits {
+          font-size: 16px;
+        }
+      }
+      .pattern-counter-text {
+        font-size: 16px;
+        text-align: center;
+        display: block;
+      }
+    }
+    .pattern-right-panel {
+      padding: 15px 30px 5px;
+      .pattern-name {
+        font-size: 16px;
+        color: white;
+        &:hover {
+          text-decoration: none;
+        }
+        i {
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          margin-top: -10px;
+          font-size: 28px;
+        }
+      }
+      .pattern-level {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #999;
+      }
+      .pattern-button {
+        float: right;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.detect-header {
+  height: 100%;
+}
+
+.pattern-detail-page {
+  .figure-print-image {
+    position: relative;
+    display: inline-block;
+    margin: 20px 25px;
+  }
+  .pattern-matching-content {
+    display: inline-block;
+    margin-left: 50px;
+    .pattern-matching {
+      margin-top: 20px;
+      padding: 15px;
+      display: block;
+      text-align: left;
+    }
+  }
+}
+
+.detect-warning {
+  position: absolute !important;
+  top: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  z-index: 100000;
+  width: 500px;
+}
+
+.detect-graph {
+  padding: 15px;
+}
+
+.detect-no-vulnerability {
+  width: 380px;
+  margin: 100px auto 100px auto;
+  text-align: center;
+  //  background: #262626;
+  //  font-size: 16px;
+}
+
+.event-package-content {
+  max-height: 350px;
+  overflow-y: auto;
+}

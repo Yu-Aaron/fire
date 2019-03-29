@@ -1,0 +1,82 @@
+<div class='pl-container'>
+  <div ng-switch on="plSidebarSwitch">
+    <div ng-switch-when='0'>
+      <div class='pl-cn-contents'>
+        <div class='pl-cn-title'>
+          <h2>{{$root.PLATFORM_NAME}}</h2>
+        </div>
+        <div class='pl-cn-nav'>
+          <ul>
+            <li ng-class="{true : 'active'}[plCurrentTab == 0]" ng-click="selectTab(0)">功能模块</li>
+            <li ng-class="{true : 'active'}[plCurrentTab == 1]" ng-click="selectTab(1)">第三方插件</li>
+          </ul>
+        </div>
+        <div class="pl-cn-bd">
+          <div ng-switch on="plCurrentTab">
+            <div ng-switch-when='0'>
+              <div ng-repeat="tabRows in postlog.tabs" class="row">
+                <div ng-repeat="tab in tabRows" class="pl-cn-bd-item col-md-2"
+                     ng-class="{'active' : tab.state!='other'}">
+                  <a ui-sref="{{tab.state}}">
+                    <img ng-src="/images/nav-icons/{{tab.name}}.png" class="pl-cn-bd-it-icon"
+                         ng-class="{'highlight':isHover}" ng-mouseenter="isHover = tab.enabled"
+                         ng-mouseleave="isHover=false">
+                    <span class="pl-cn-bd-it-title" ng-class="{'highlight':isHover}"
+                          ng-mouseenter="isHover = tab.enabled" ng-mouseleave="isHover=false">{{tab.name}}</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div ng-switch-when='1'>
+              <div class='pl-cn-bd-stub'>
+                即将推出
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-switch-when='1'>
+      <div class='pl-cn-contents'>
+        <div class='pl-cn-title'>
+          <h2>漏洞库管理</h2>
+        </div>
+        <div class='pl-cn-nav'>
+          <ul>
+            <li ng-class="{true : 'active'}[plCurrentTab == 0]"><a></a>功能模块</li>
+          </ul>
+        </div>
+        <div class="pl-cn-bd">
+          <div ng-switch on="plCurrentTab">
+            <div ng-switch-default>
+              <div class='pl-cn-bd-stub'>
+                即将推出
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-switch-when='2'>
+      <div class='pl-cn-contents'>
+        <div class='pl-cn-title'>
+          <h2>设备库管理</h2>
+        </div>
+        <div class='pl-cn-nav'>
+          <ul>
+            <li ng-class="{true : 'active'}[plCurrentTab == 0]"><a></a>功能模块</li>
+          </ul>
+        </div>
+        <div class="pl-cn-bd">
+          <div ng-switch on="plCurrentTab">
+            <div ng-switch-default>
+              <div class='pl-cn-bd-stub'>
+                即将推出
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

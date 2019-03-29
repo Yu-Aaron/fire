@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-xs-12">
+
+    <!-- SEARCH -->
+    <div class="toolbar-search pull-right" ng-if="!dtable.disableSearch" ng-include
+         src="'templates/includes/search.html'"></div>
+
+    <div class="drag-grouping pull-right margin-left-default">
+      <range-selector ng-if="dtable.dateTimeRange && dtable.dateTimeRange.enable"></range-selector>
+    </div>
+
+    <div ng-if="dtable.advancedSearch && dtable.advancedSearch.enable">
+      <advanced-search></advanced-search>
+    </div>
+
+    <!-- DROPDOWN -->
+    <!--
+    <div class="dropdown pull-right" dropdown>
+      <button type="button" class="btn btn-default dropdown-toggle" id="filter" data-toggle="dropdown" dropdown-toggle><i class="fa fa-bars"></i><span class="caret"></span></button>
+      <ul class="dropdown-menu pull-right" role="menu" aria-labelledby="filter">
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+        <li role="presentation" class="divider"></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+      </ul>
+    </div>
+    -->
+
+    <div class="clearfix"></div>
+  </div>
+</div>

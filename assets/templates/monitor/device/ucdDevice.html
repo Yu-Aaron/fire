@@ -1,0 +1,155 @@
+<div>
+  <div class="table table-hover icon-hidden table-ucd-device">
+    <div class="table-head">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-1 table-th">
+              <span></span>
+            </div>
+            <div class="col-md-3 table-th">
+              <span>名称</span>
+            </div>
+            <div class="col-md-3 table-th">
+              <span>管理端口IP</span>
+            </div>
+            <div class="col-md-3 table-th">
+              <span>管理端口MAC</span>
+            </div>
+            <div class="col-md-2 table-th">
+              <span>厂商</span>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-2 table-th">
+              <span>型号</span>
+            </div>
+            <div class="col-md-2 table-th">
+              <span>功能模式</span>
+            </div>
+            <div class="col-md-3 table-th">
+              <span>序列号</span>
+            </div>
+            <div class="col-md-1 table-th">
+              <span>版本</span>
+            </div>
+            <div class="col-md-2 table-th">
+              <span>端口数量</span>
+            </div>
+            <div class="col-md-2 table-th">
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-body">
+      <div class="row table-hover-row" ng-repeat-start="device in dtable.table"
+           ng-click="accordion.current = !accordion.current; dtable.getSecondLevelTableData(device)"
+           style="margin: 0px;">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-1 table-tb">
+              <span><i class="fa {{accordion.current ? 'fa-chevron-down' : 'fa-chevron-right'}}"></i></span>
+            </div>
+            <div class="col-md-3 table-tb">
+              <span>{{device.name}}</span>
+            </div>
+            <div class="col-md-3 table-tb">
+              <span ng-repeat="port in device.devicePorts | filter:search.isMgmtPort=true">{{port.portIp}} </span>
+            </div>
+            <div class="col-md-3 table-tb">
+              <span ng-repeat="port in device.devicePorts | filter:search.isMgmtPort=true">{{port.mac}} </span>
+            </div>
+            <div class="col-md-2 table-tb">
+              <span>{{device.make}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-2 table-tb">
+              <span>{{device._model_name | deviceModel}}</span>
+            </div>
+            <div class="col-md-2 table-tb">
+              <span>{{device.nodes[0].type && device.nodes[0].type === 'ROUTING_IPS' ? '路由保护模式' :
+                    (device.nodes[0].type && device.nodes[0].type === 'IDS' ? '监测审计模式' :
+                    (device.nodes[0].type && device.nodes[0].type === 'IPS' ? (device._subCategory === 'DATA_COLLECTION_DEVICE' ? '数采隔离模式' : '智能保护模式') : ''))}}
+              </span>
+            </div>
+            <div class="col-md-3 table-tb">
+              <span>{{device.serialNumber}}</span>
+            </div>
+            <div class="col-md-1 table-tb">
+              <span>{{device.version}}</span>
+            </div>
+            <div class="col-md-2 table-tb">
+              <span>{{device.devicePorts.length}}个</span>
+            </div>
+            <div class="col-md-2 table-tb">
+              <span><a class="btn btn-default"
+                       ui-sref="monitor.device.detail({deviceID: device.deviceId, allInOneIP: device.mmIP})"
+                       ng-click="$event.stopPropagation()">查看 <i class="fa fa-chevron-circle-right icon-right"></i></a></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" ng-repeat-end ng-if="accordion.current"
+           class="angular-animate show-hide show-hide-table-row table-black-rows"
+           style="background-color: rgb(19, 19, 19); border-left: 3px solid rgb(117, 184, 0); margin-left:-3px; background: #;">
+        <div ng-repeat="sdevice in dtable.secondLevelTable" class="row high-line">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-1 table-tb">
+                <span></span>
+              </div>
+              <div class="col-md-3 table-tb">
+                <span>{{sdevice.name}}</span>
+              </div>
+              <div class="col-md-3 table-tb">
+                <span ng-repeat="port in sdevice.devicePorts | filter:search.isMgmtPort=true">{{port.portIp}} </span>
+              </div>
+              <div class="col-md-3 table-tb">
+                <span ng-repeat="port in sdevice.devicePorts | filter:search.isMgmtPort=true">{{port.mac}} </span>
+              </div>
+              <div class="col-md-2 table-tb">
+                <span>{{sdevice.make}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-2 table-tb">
+                <span>{{sdevice._model_name | deviceModel}}</span>
+              </div>
+              <div class="col-md-2 table-tb">
+                <span>{{sdevice.nodes[0].type && sdevice.nodes[0].type === 'ROUTING_IPS' ? '路由保护模式' :
+                    (sdevice.nodes[0].type && sdevice.nodes[0].type === 'IDS' ? '监测审计模式' :
+                    (sdevice.nodes[0].type && sdevice.nodes[0].type === 'IPS' ? (device._subCategory === 'DATA_COLLECTION_DEVICE' ? '数采隔离模式' : '智能保护模式') : ''))}}
+                </span>
+              </div>
+              <div class="col-md-3 table-tb">
+                <span>{{sdevice.serialNumber}}</span>
+              </div>
+              <div class="col-md-1 table-tb">
+                <span>{{sdevice.version}}</span>
+              </div>
+              <div class="col-md-2 table-tb">
+                <span>{{sdevice.devicePorts.length}}个</span>
+              </div>
+              <div class="col-md-2 table-tb">
+                <span><a class="btn btn-default"
+                         ui-sref="monitor.device.detail({deviceID: sdevice.deviceId, ip: device.mmIP})"
+                         ng-click="$event.stopPropagation()">查看 <i
+                  class="fa fa-chevron-circle-right icon-right"></i></a></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

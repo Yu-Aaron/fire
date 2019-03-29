@@ -1,0 +1,19 @@
+<form class="form-search" ng-submit="dtable.searchBar(dtable.q)">
+  <span ng-show="!dtable.advancedSearch.enable">
+    <input id="dtable-toolbar_input_search" type="text" ng-model="dtable.q" placeholder="搜索">
+    <button id="dtable-toolbar_button_search" class="btn btn-default margin-left-default" type="submit"
+            ng-disabled="dtable.dateTimeRange.enable && (dtable.dateTimeRange.startTime>dtable.dateTimeRange.endTime || dtable.dateTimeRange.startTime==null || dtable.dateTimeRange.endTime==null )"
+            ng-click="dtable.isSearching=dtable.q||dtable.dateTimeRange.enable; dtable.advancedSearchQuery=''">
+      <i class="fa fa-search icon-left"></i>
+      <span>搜索</span>
+    </button>
+  </span>
+  <button id="dtable-toolbar_button_rangeSearch" class="btn btn-default margin-left-default"
+          ng-if="dtable.dateTimeRange" type="button" ng-click="dtable.rangeSearch()">{{dtable.dateTimeRange.enable ?
+    '取消查找时间' : '开启查找时间'}}
+  </button>
+  <button id="dtable-toolbar_button_highAdvancedSearch" class="btn btn-default margin-left-default"
+          ng-if="dtable.advancedSearch" type="button" ng-click="dtable.highAdvancedSearch()"
+          ng-class="{'active': dtable.advancedSearch.enable}"><i class="fa fa-filter icon-left"></i>过滤条件
+  </button>
+</form>

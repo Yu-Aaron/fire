@@ -1,0 +1,101 @@
+<div class="row dtable-advanced-search">
+  <div class="col-md-10 padding-zero"  style="min-width: 890px">
+    <div ng-repeat="searchItem in dtable.advancedSearchOptions" style="padding-right: 0;"
+         ng-class="{'col-md-4 other-item':searchItem.input !== 'timerange', 'col-md-12 time-range': searchItem.input === 'timerange'}">
+      <div ng-if="searchItem.input !== 'timerange'">
+        <form class="form-inline" name="highEndSearch">
+          <span class="col-md-3 padding-zero" style="margin-top: 8px;">{{searchItem.display}}{{searchItem.display ? ': ':''}}</span>
+          <span class="col-md-9 padding-zero" ng-if="(searchItem.input === 'string')">
+            <input type="text" style="width: 60%" ng-model="searchItem.value"
+                   id="dtable-dtableAdvancedSearch_input_{{searchItem.name}}" name="{{searchItem.name}}"/>
+          </span>
+          <span class="col-md-9 padding-zero" ng-if="['ipAdress','macAdress','portNum'].indexOf(searchItem.input) >= 0">
+            <input type="text" style="width: 60%" ng-model="searchItem.value"
+                   id="dtable-dtableAdvancedSearch_input_{{searchItem.name}}" ng-change="validate(searchItem)"
+                   name="{{searchItem.name}}"/>
+            <span class="col-md-9 padding-zero input-alert-error"
+                  ng-show="searchItem.error">{{searchItem.invalidMsg}}</span>
+          </span>
+          <span class="col-md-9 padding-zero" ng-if="searchItem.input === 'checkbox'">
+            <select class="select-styled" name="{{searchItem.name}}"
+                    id="dtable-dtableAdvancedSearch_select_{{searchItem.name}}" style="width: 120px;"
+                    ng-model="searchItem.value">
+              <option ng-repeat="option in searchItem.options" value="{{option.value}}">{{option.text}}</option>
+            </select>
+          </span>
+          <span class="col-md-9 padding-zero dropdown" ng-if="searchItem.input === 'list_checkbox'">
+            <div class="multiselect-parent btn-group dropdown-multiselect">
+              <button type="button" id="dtable-dtableAdvancedSearch_button_{{searchItem.name}}"
+                      class="dropdown-toggle ng-binding btn btn-default" ng-class="settings.buttonClasses"
+                      ng-click="searchItem.open = !searchItem.open">
+                <div class="multiselect-view">{{getMultiselectItems(searchItem.options)}}</div>&nbsp;<span
+                class="caret"></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-form"
+                  ng-style="{display: searchItem.open ? 'block' : 'none', height : settings.scrollable ? settings.scrollableHeight : 'auto' }"
+                  style="overflow-x: hidden; overflow-y: scroll; display: none; height: 180px; width: 300px;max-height: 288px;padding: 10px;">
+                <li ng-repeat="op in searchItem.options">
+                  <span>
+                    <label style="padding-left: 8px"><input custom-checkbox type="checkbox" ng-model="op.value" style="width: 25px; padding-left:8px;"/><span style="margin-left: 4px;">{{op.name === 'NONSTANDARD' ? '其他' : op.name}}</span></label>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </span>
+        </form>
+      </div>
+      <div ng-if="searchItem.input === 'timerange'">
+        <form class="form-inline" name="myForm">
+          <div class="row">
+            <div class="col-md-4 padding-right-zero">
+              <span class="col-md-3 padding-zero" style="margin-top: 8px;">{{searchItem.display}}: </span>
+              <select class="select-styled col-md-9 padding-zero" id="dtable-dtableAdvancedSearch_select_timerange"
+                      ng-model="dtable.s" ng-init="dtable.s = 'n'; dtable.setAdvancedSearchTimeRange(dtable.s)"
+                      ng-change="dtable.setAdvancedSearchTimeRange(dtable.s)" style="width: 120px;">
+                <option id="dtable_timeRange_n" value="n">不限</option>
+                <option id="dtable_timeRange_h" value="h">过去1小时内</option>
+                <option id="dtable_timeRange_d" value="d">过去24小时内</option>
+                <option id="dtable_timeRange_w" value="w" ng-if="!dtable.disabledTimeOptions">过去1周内</option>
+                <option id="dtable_timeRange_m" value="m" ng-if="!dtable.disabledTimeOptions">过去30天内</option>
+                <option id="dtable_timeRange_y" value="y" ng-if="!dtable.disabledTimeOptions">过去1年内</option>
+                <option ng-if="!dtable.disabledTimeOptions" disabled>____________</option>
+                <option id="dtable_timeRange_r" value="r" ng-if="!dtable.disabledTimeOptions">自定义时间范围</option>
+              </select>
+            </div>
+          </div>
+          <div class="row time-range-row" ng-if="dtable.s === 'r'">
+            <div class="col-md-6 date-column">
+              <div>
+                <div class="col-md-2 time-range-label">开始时间:</div>
+                <date-picker ng-model="dtable.advancedSearchTimeRange.startDate"
+                             ng-change="validateTimePeriod(dtable.advancedSearchTimeRange, 'startdate')"></date-picker>
+                <time-picker ng-model="dtable.advancedSearchTimeRange.startTime"
+                             ng-change="validateTimePeriod(dtable.advancedSearchTimeRange, 'starttime')"></time-picker>
+                <br>
+                <span style="float:left" class="margin-left-default error input-alert-error" ng-show="invalidStartTime">{{invalidStartTime}}</span>
+              </div>
+            </div>
+            <div class="col-md-6 time-column">
+              <div>
+                <div class="col-md-2 time-range-label">结束时间:</div>
+                <date-picker ng-model="dtable.advancedSearchTimeRange.endDate"
+                             ng-change="validateTimePeriod(dtable.advancedSearchTimeRange, 'enddate')"></date-picker>
+                <time-picker ng-model="dtable.advancedSearchTimeRange.endTime"
+                             ng-change="validateTimePeriod(dtable.advancedSearchTimeRange, 'endtime')"></time-picker>
+                <br>
+                <span style="float:left" class="margin-left-default error input-alert-error" ng-show="invalidEndTime">{{invalidEndTime}}</span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 padding-zero">
+    <button id="dtable_advanceSearch_apply"
+            class="btn btn-default btn-wide margin-right-default margin-top-default pull-right" ng-disabled="false"
+            ng-click="dtable.doAdvancedSearch(dtable.s)"><i class="fa fa-check text-lime icon-left"></i>更新
+    </button>
+  </div>
+</div>

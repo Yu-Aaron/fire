@@ -1,0 +1,209 @@
+<div class="detail-page-wrapper bg-gray-85">
+  <div class="detail-page-body">
+    <section id="device-info">
+      <div class="detail-information detail-panel">
+        <div class="detail-information-content">
+          <div class="row">
+            <div class="col-xs-4 col-md-4">
+              <div class="panel">
+                <div class="panel-heading">
+                  <span><i class="fa fa-picture-o icon-left"></i>设备图</span>
+                </div>
+                <div class="panel-body text-center panel-body-fixed-height-300">
+                  <div class="panel-body-device text-center">
+                    <div class="device-image"
+                         ng-style="{'background-image': 'url(/images/' + networkdetail.device._iconName + '-icon.png)'}"
+                         ng-if="!networkdetail.isEdited"></div>
+                    <div class="device-image"
+                         ng-style="{'background-image': 'url(/images/' + networkdetail.editedInfo.iconType + '-icon.png)'}"
+                         ng-if="networkdetail.isEdited"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-4 col-md-4">
+              <div class="panel">
+                <div class="panel-heading">
+                  <span><i class="fa fa-folder-open icon-left"></i>设备规格</span>
+                  <div privilege class="pull-right btn-top-pull-right-margin-back">
+                    <button class="btn btn-default btn-sm pull-right" ng-hide="networkdetail.isEdited"
+                            ng-disabled="networkdetail.isIPEdited" ng-click="networkdetail.editDevice()"><i
+                      class="fa fa-pencil-square-o"></i></button>
+                    <button class="btn btn-default btn-sm pull-right" ng-show="networkdetail.isEdited"
+                            ng-disabled="networkdetail.nameError || networkdetail.modelError || networkdetail.hasDuplicateSN"
+                            ng-click="networkdetail.editDone()"><i class="fa fa-check text-lime"></i></button>
+                    <button class="btn btn-default btn-sm margin-right-default pull-right"
+                            ng-show="networkdetail.isEdited" ng-click="networkdetail.editCancel()"><i
+                      class="fa fa-remove"></i></button>
+                  </div>
+                </div>
+                <div class="panel-body panel-body-fixed-height-300">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title"><span class="text-red" ng-show="networkdetail.isEdited">&#42;</span>设备名称
+                        </h5>
+                        <p ng-hide="networkdetail.isEdited" class="device-name-space">{{networkdetail.device.name ||
+                          '未知'}}</p>
+                        <input type="text" ng-show="networkdetail.isEdited" ng-model="networkdetail.editedInfo.name"
+                               ng-change="networkdetail.validateDevice()" maxlength="100" size="15">
+                        <error-msg ng-show="networkdetail.isEdited" validator="networkdetail"
+                                   obj="networkdetail.editedInfo" type="'name'"></error-msg>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">设备序列号</h5>
+                        <p ng-hide="networkdetail.isEdited" class="device-sn-space">{{networkdetail.device.serialNumber
+                          || '未知'}}</p>
+                        <input type="text" ng-show="networkdetail.isEdited"
+                               ng-model="networkdetail.editedInfo.serialNumber"
+                               ng-change="networkdetail.validateDevice()" maxlength="255" size="15">
+                        <error-msg obj="device" ng-show="networkdetail.isEdited" validator="networkdetail"
+                                   type="'serialNumber'"></error-msg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title"><span class="text-red" ng-show="networkdetail.isEdited">&#42;</span>设备型号
+                        </h5>
+                        <p ng-hide="networkdetail.isEdited">{{networkdetail.device._model_name || '未知' |
+                          deviceModel}}</p>
+                        <div class="select-styled input-stacked" ng-show="networkdetail.isEdited">
+                          <div class="input-stacked-wrap" ng-show="networkdetail.newModel">
+                            <input class="form-control" ng-show="networkdetail.newModel" type="text"
+                                   placeholder="请输入设备型号名称" ng-model="networkdetail.editedInfo._model_name"
+                                   ng-change="networkdetail.validateDevice()" maxlength="255">
+                          </div>
+                          <select id="device-model-list" class="form-control"
+                                  ng-model="networkdetail.editedInfo.modelId"
+                                  ng-options="item.modelId as (item.model_name + (item.model && (item.model !== item.model_name) ? ' / ' + item.model : '')) for item in networkdetail.forms.models"
+                                  ng-change="networkdetail.modelChange(networkdetail.editedInfo.modelId)">
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">设备厂商</h5>
+                        <p ng-hide="networkdetail.isEdited">{{networkdetail.device.make || '未知'}}</p>
+                        <p ng-show="networkdetail.isEdited && !networkdetail.newModel">{{networkdetail.editedInfo.make
+                          || '未知'}}</p>
+                        <input type="text" ng-show="networkdetail.isEdited && networkdetail.newModel"
+                               ng-model="networkdetail.editedInfo.make" ng-change="networkdetail.validateDevice()"
+                               maxlength="255" size="15">
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item" ng-hide="true">
+                        <h5 class="detail-page-list-item-title">设备版本</h5>
+                        <p>{{networkdetail.device.version || '未知'}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">更新时间</h5>
+                        <p>{{networkdetail.device.updatedAt || '未知' | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-4 col-md-4">
+              <div class="panel" ng-hide="true">
+                <div class="panel-heading">
+                  <span><i class="fa fa-cogs icon-left"></i>设备设置</span>
+                </div>
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">安装时间</h5>
+                        <p>{{networkdetail.device.installedAt | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">更新时间</h5>
+                        <p>{{networkdetail.device.updatedAt | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="detail-page-list-item" ng-hide="true">
+                    <h5 class="detail-page-list-item-title">分区</h5>
+                    <p ng-hide="networkdetail.isEdited">{{networkdetail.device._zoneNames | deviceZoneFilter}}</p>
+                    <select class="form-control" ng-show="networkdetail.isEdited"
+                            ng-model="networkdetail.editedInfo.zone"
+                            ng-options="zone for zone in networkdetail.forms.setting.zones">
+                      <option value="">-- 请选择分区 --</option>
+                    </select>
+                  </div>
+                  <div class="detail-page-list-item" ng-hide="true">
+                    <h5 class="detail-page-list-item-title">权重</h5>
+                    <p ng-hide="networkdetail.isEdited">{{networkdetail.device.priority}}</p>
+                    <select class="form-control" ng-show="networkdetail.isEdited"
+                            ng-model="networkdetail.editedInfo.priority"
+                            ng-options="priority for priority in networkdetail.forms.setting.priorities"></select>
+                  </div>
+                </div>
+              </div>
+              <div class="panel" ng-show="networkdetail.device.nodes[0].type === 'ROUTER'">
+                <div class="panel-heading">
+                  <span><i class="fa fa-cogs icon-left"></i>设备端口</span>
+                  <div privilege class="pull-right btn-top-pull-right-margin-back">
+                    <button class="btn btn-default btn-sm pull-right" ng-hide="networkdetail.isIPEdited"
+                            ng-disabled="networkdetail.isEdited" ng-click="networkdetail.editIP()"><i
+                      class="fa fa-pencil-square-o"></i></button>
+                    <button class="btn btn-default btn-sm pull-right" ng-show="networkdetail.isIPEdited"
+                            ng-disabled="networkdetail.invalidIp || networkdetail.invalidMac || networkdetail.hasDuplicateIP || networkdetail.invalidRange || networkdetail.hasDuplicateMAC"
+                            ng-click="networkdetail.editIPDone()"><i class="fa fa-check text-lime"></i></button>
+                    <button class="btn btn-default btn-sm margin-right-default pull-right"
+                            ng-show="networkdetail.isIPEdited" ng-click="networkdetail.editIPCancel()"><i
+                      class="fa fa-remove"></i></button>
+                  </div>
+                </div>
+                <div class="panel-body panel-body-fixed-height-300">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">IP地址</h5>
+                        <p ng-hide="networkdetail.isIPEdited">
+                          <span ng-repeat="port in networkdetail.device.devicePorts | filter:search.isMgmtPort=true">{{port.portIp || '未知'}} </span>
+                        </p>
+                        <input type="text" ng-show="networkdetail.isIPEdited" ng-model="networkdetail.editedInfo.ip"
+                               ng-change="networkdetail.deviceIpChange()" maxlength="255" size="15">
+                        <error-msg ng-show="networkdetail.isIPEdited" validator="networkdetail"
+                                   obj="networkdetail.editedInfo" type="'ip'"></error-msg>
+                        <!-- <span class="text-red" ng-show="networkdetail.isIPEdited && networkdetail.invalidIp"> 请输入合法IP地址</span> -->
+                      </div>
+                    </div>
+                    <div class="col-xs-6">
+                      <div class="detail-page-list-item">
+                        <h5 class="detail-page-list-item-title">MAC地址</h5>
+                        <p ng-hide="networkdetail.isIPEdited">
+                          <span ng-repeat="port in networkdetail.device.devicePorts | filter:search.isMgmtPort=true">{{port.mac || '未知'}} </span>
+                        </p>
+                        <input type="text" ng-show="networkdetail.isIPEdited" ng-model="networkdetail.editedInfo.mac"
+                               ng-change="networkdetail.deviceMacChange()" maxlength="255" size="15">
+                        <error-msg ng-show="networkdetail.isIPEdited" validator="networkdetail"
+                                   obj="networkdetail.editedInfo" type="'mac'"></error-msg>
+                        <!-- <span class="text-red" ng-show="networkdetail.isIPEdited && networkdetail.invalidMac"> 请输入合法MAC地址</span> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

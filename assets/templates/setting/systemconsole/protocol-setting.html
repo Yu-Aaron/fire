@@ -1,0 +1,251 @@
+<div id="system-protocol-setting-panel" privilege="SETTINGS_PROTOCOL" disable="true">
+  <div class="row" ng-if="false">
+    <div class="col-xs-12">
+      <div class="panel panel-lg padding-zero">
+        <div class="panel-header panel-header-border">
+          <span>
+            FTP 协议配置
+          </span>
+          <i class="fa fa-info-circle icon-right"></i>
+          <div class="pull-right">
+            <div ng-if="!protocolsetting.isEditingFTP" class="topo-btn-group">
+              <button id="protocol_ftp_setting_edit_button" type="button"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-click="protocolsetting.editFTP()" privilege><i class="fa fa-edit"></i></button>
+            </div>
+            <div ng-if="protocolsetting.isEditingFTP" class="topo-btn-group">
+              <button id="protocol_ftp_setting_confirm_button" type="button"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-click="protocolsetting.confirmFTP()"><i class="fa fa-check text-lime"></i></button>
+              <button id="protocol_ftp_setting_cancel_button" type="button"
+                      class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                      ng-click="protocolsetting.cancelFTP()"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-body panel-body-light">
+          <div class="protocols row">
+            <div class="col-xs-6 row">
+              <div class="toggle-container col-xs-3"> &nbsp; &nbsp; 启用状态</div>
+              <div class="col-xs-7">协议名</div>
+            </div>
+          </div>
+          <div class="protocols row">
+            <div id="ftp_protocol_table" ng-if="protocolsetting.isEditingFTP" class="row">
+              <div id="ftp_protocol_{{$index}}" class="col-xs-6 row">
+                <div class="toggle-container col-xs-3">
+                  <span
+                    class="toggle-bg toggle-alternate {{protocolsetting.FTPprotocols.strategyRules[0].ruleData==='ON' ? 'on' : 'off'}}">
+                    <label class="{{protocolsetting.FTPprotocols.strategyRules[0].ruleData==='ON' ? 'on' : 'off'}}">{{protocolsetting.FTPprotocols.strategyRules[0].ruleData==='ON' ? '开启':'关闭'}}</label>
+                    <div ng-if="protocolsetting.FTPprotocols.strategyRules[0].ruleData==='ON'">
+                      <input type="radio" name="toggle" value='"OFF"' ng-change="protocolsetting.switchFTP('ON')"
+                             ng-model="protocolsetting.FTPprotocols.strategyRules[0].ruleData">
+                      <input type="radio" name="toggle" value='"ON"' ng-change="protocolsetting.switchFTP('OFF')"
+                             ng-model="protocolsetting.FTPprotocols.strategyRules[0].ruleData">
+                    </div>
+                    <div ng-if="protocolsetting.FTPprotocols.strategyRules[0].ruleData==='OFF'">
+                      <input type="radio" name="toggle" value='"ON"' ng-change="protocolsetting.switchFTP('OFF')"
+                             ng-model="protocolsetting.FTPprotocols.strategyRules[0].ruleData">
+                      <input type="radio" name="toggle" value='"OFF"' ng-change="protocolsetting.switchFTP('ON')"
+                             ng-model="protocolsetting.FTPprotocols.strategyRules[0].ruleData">
+                    </div>
+                    <span
+                      class="switch {{protocolsetting.FTPprotocols.strategyRules[0].ruleData==='ON' ? 'on' : 'off'}}"></span>
+                  </span>
+                </div>
+                <div class="col-xs-7">FTP 协议切换</div>
+              </div>
+            </div>
+            <div ng-if="!protocolsetting.isEditingFTP" class="row">
+              <div class="col-xs-6 row">
+                <div class="protocol-item-status col-xs-3"><label
+                  class="label-default label {{protocolsetting.FTPprotocols.strategyRules[0].ruleData==='ON' ? 'label-success' : ''}}">{{protocolsetting.FTPprotocols.strategyRules[0].ruleData==='ON'
+                  ? '开启':'关闭'}}</label></div>
+                <div class="col-xs-7">FTP 协议切换</div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" cg-busy="{promise:$root.protocolDeployTaskPromise,message:'部署中...'}">
+    <div class="col-xs-12">
+      <div class="panel panel-lg padding-zero">
+        <div class="panel-header panel-header-border">
+          <span
+            ng-show="$root.MW_SETTING==='remote'||$root.MW_SETTING==='allInOne'||$root.MW_SETTING==='allInOneOffLine'">
+          {{'数控审计保护协议配置'|resFilter:'auditProtocolConfig'}}
+          </span>
+          <span ng-show="$root.MW_SETTING==='normal'||!$root.MW_SETTING">
+          设置工控协议
+          </span>
+          <span ng-show="$root.MW_SETTING==='allInOneAudit'">
+          监测审计保护协议配置
+          </span>
+          <i class="fa fa-info-circle icon-right"></i>
+          <div class="pull-right">
+            <div ng-if="!protocolsetting.isEditingDP" class="topo-btn-group">
+              <button id="protocol_setting_edit_button" type="button"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-click="protocolsetting.editDP()" privilege="SETTINGS_PROTOCOL"><i class="fa fa-edit"></i>
+              </button>
+            </div>
+            <div ng-if="protocolsetting.isEditingDP" class="topo-btn-group">
+              <button id="protocol_setting_confirm_button" type="button" ng-disabled="!protocolsetting.noErrors"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-click="protocolsetting.showOfflineDeviceConfirmUI('DP')"><i class="fa fa-check text-lime"></i>
+              </button>
+              <button id="protocol_setting_cancel_button" type="button"
+                      class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                      ng-click="protocolsetting.cancelDP()"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-body panel-body-light">
+          <div class="margin-left-default" style="height: 20px;">
+            <button type="button" class="btn btn-default" ng-show="protocolsetting.isEditingDP"
+                    ng-click="protocolsetting.enableAllDP()">启用全部协议
+            </button>
+            <button type="button" class="btn btn-default" ng-show="protocolsetting.isEditingDP"
+                    ng-click="protocolsetting.disableAllDP()">禁用全部协议
+            </button>
+          </div>
+          <div class="protocols row">
+            <div class="col-xs-6 row">
+              <div class="toggle-container col-xs-3"> &nbsp; &nbsp; 启用状态</div>
+              <div class="col-xs-7">协议名</div>
+            </div>
+            <div class="col-xs-6 row">
+              <div class="col-xs-3"> &nbsp; &nbsp; 启用状态</div>
+              <div class="col-xs-7">协议名</div>
+            </div>
+            <div id="dp_protocol_table" ng-if="protocolsetting.isEditingDP" class="row">
+              <div id="dp_protocol_{{$index}}" class="protocol-item col-xs-6 row"
+                   ng-repeat="protocol in protocolsetting.DPprotocols">
+                <div class="toggle-container col-xs-3">
+                  <span class="toggle-bg toggle-alternate {{protocol.status ? 'on' : 'off'}}">
+                    <label class="{{protocol.status ? 'on' : 'off'}}">{{protocol.status ? '开启':'关闭'}}</label>
+                    <div ng-if="protocol.status">
+                      <input type="radio" name="toggle" value="false"
+                             ng-change="protocolsetting.switchDP(protocol, true)" ng-model="protocol.status">
+                      <input type="radio" name="toggle" value="true"
+                             ng-change="protocolsetting.switchDP(protocol, false)" ng-model="protocol.status">
+                    </div>
+                    <div ng-if="!protocol.status">
+                      <input type="radio" name="toggle" value="true"
+                             ng-change="protocolsetting.switchDP(protocol, false)" ng-model="protocol.status">
+                      <input type="radio" name="toggle" value="false"
+                             ng-change="protocolsetting.switchDP(protocol, true)" ng-model="protocol.status">
+                    </div>
+                    <span class="switch {{protocol.status ? 'on' : 'off'}}"></span>
+                  </span>
+                </div>
+                <div class="protocol-item-name col-xs-7">{{protocol.protocolSwitchCN}}</div>
+              </div>
+            </div>
+            <div ng-if="!protocolsetting.isEditingDP" class="row">
+              <div class="protocol-item col-xs-6 row" ng-repeat="protocol in protocolsetting.DPprotocols">
+                <div class="protocol-item-status col-xs-3"><label
+                  class="label-default label {{protocol.status ? 'label-success' : ''}}">{{protocol.status ?
+                  '开启':'关闭'}}</label></div>
+                <div class="protocol-item-name-noedit col-xs-7">{{protocol.protocolSwitchCN}}</div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" ng-if="dashboard.uiEnable('PRIVATE_PROTOCOL', 3)&&$root.isC02" privilege="SETTINGS_PROTOCOL"
+       disable="true">
+    <div class="col-xs-12">
+      <div class="panel panel-lg padding-zero">
+        <div class="panel-header panel-header-border">
+          设置私有协议<i class="fa fa-info-circle icon-right"></i>
+          <div class="pull-right">
+            <div ng-if="!protocolsetting.isEditingPP" class="topo-btn-group">
+              <button type="button" class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-click="protocolsetting.editPP()" privilege><i class="fa fa-edit"></i></button>
+            </div>
+            <div ng-if="protocolsetting.isEditingPP" class="topo-btn-group">
+              <button type="button" ng-disabled="!protocolsetting.noErrors"
+                      class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                      ng-click="protocolsetting.showConfirmUIPP()"><i class="fa fa-check text-lime"></i></button>
+              <button type="button"
+                      class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                      ng-click="protocolsetting.cancelPP()"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="panel-body panel-body-light">
+          <div class="button-wrap" ng-if="protocolsetting.isEditingPP">
+            <button type="button" class="btn btn-default" ng-click="protocolsetting.enableAllCustomProtocol(0)">启用全部协议
+            </button>
+            <button type="button" class="btn btn-default" ng-click="protocolsetting.enableAllCustomProtocol(1)">禁用全部协议
+            </button>
+          </div>
+          <div class="protocols row">
+            <div class="col-xs-6 row">
+              <div class="toggle-container col-xs-3"> &nbsp; &nbsp; 启用状态</div>
+              <div class="col-xs-3">协议名</div>
+              <div class="col-xs-3"> &nbsp; &nbsp; 端口</div>
+            </div>
+            <div class="col-xs-6 row">
+              <div class="col-xs-3"> &nbsp; &nbsp; 启用状态</div>
+              <div class="col-xs-3">协议名</div>
+              <div class="col-xs-3"> &nbsp; &nbsp; 端口</div>
+            </div>
+            <div ng-if="protocolsetting.isEditingPP" class="row">
+              <div class="protocol-item col-xs-6 row" ng-repeat="protocol in protocolsetting.protocols">
+                <div class="toggle-container col-xs-3">
+                  <span class="toggle-bg toggle-alternate {{protocol.disabled ? 'off' : 'on'}}">
+                    <label class="{{protocol.disabled ? 'off' : 'on'}}">{{protocol.disabled ? '关闭':'开启'}}</label>
+                    <div ng-if="protocol.disabled">
+                      <input type="radio" name="toggle" value=1 ng-change="protocolsetting.switchPP(protocol, 1)"
+                             ng-model="protocol.disabled">
+                      <input type="radio" name="toggle" value=0 ng-change="protocolsetting.switchPP(protocol, 0)"
+                             ng-model="protocol.disabled">
+                    </div>
+                    <div ng-if="!protocol.disabled">
+                      <input type="radio" name="toggle" value=0 ng-change="protocolsetting.switchPP(protocol, 0)"
+                             ng-model="protocol.disabled">
+                      <input type="radio" name="toggle" value=1 ng-change="protocolsetting.switchPP(protocol, 1)"
+                             ng-model="protocol.disabled">
+                    </div>
+                    <span class="switch {{protocol.disabled ? 'off' : 'on'}}"></span>
+                  </span>
+                </div>
+                <div class="protocol-item-name col-xs-3">{{protocol.protocolName}}</div>
+                <span class="col-xs-6 protocol-item-port">
+                  <input class="protocol-item-port-input" type="text" name="protocolPort"
+                         ng-model="protocol.protocolPort" ng-change="protocolsetting.checkAllPorts()"
+                         ng-show="!protocol.disabled" required>
+                </span>
+                <span class="protocol-item-error"><i ng-show="protocol.message" class="fa fa-warning text-red"> </i> {{protocol.message}}</span>
+              </div>
+            </div>
+            <div ng-if="!protocolsetting.isEditingPP" class="row">
+              <div class="protocol-item col-xs-6 row" ng-repeat="protocol in protocolsetting.protocols">
+                <span class="protocol-item-status col-xs-3"><label
+                  class="label-default label {{protocol.disabled ? '' : 'label-success'}}">{{protocol.disabled ? '关闭':'开启'}}</label></span>
+                <div class="protocol-item-name-noedit col-xs-3">{{protocol.protocolName}}</div>
+                <span class="col-xs-5">
+                  <span ng-show="protocol.protocolPort>0"><b> {{protocol.protocolPort}} </b></span>
+                </span>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

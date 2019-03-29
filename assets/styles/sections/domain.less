@@ -1,0 +1,139 @@
+.domain-panel {
+  .domain-init {
+    min-height: 75vh;
+    padding-top: 100px;
+    text-align: center;
+    font-size: 22px;
+    background: @gray85;
+    border-top: 4px solid #76B900;
+    .domain-init-info {
+      font-size: 12px;
+    }
+    .domain-init-option {
+      font-size: 16px;
+    }
+  }
+  .error {
+    border: 1px solid red;
+  }
+  .correct {
+    border: none;
+  }
+  .error-info {
+    color: red;
+    font-size: 14px;
+    padding: 5px;
+    padding-bottom: 10px;
+  }
+  .domain-row {
+    width: 200vw;
+  }
+  .add-domain-btn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .table-search {
+    float: right;
+    padding: 5px;
+    margin-bottom: 5px;
+    width: 250px;
+  }
+  .table-search-text {
+    width: 140px;
+  }
+  .domain-left-col-shrink {
+    padding: 20px;
+    margin-top: 10px;
+    border-top: 4px solid #76B900;
+    background: @gray85;
+    width: 50vw;
+    float: left;
+    overflow-y: auto;
+    position: fixed;
+    max-height: 80vh;
+  }
+  .domain-left-col-expend {
+    padding: 20px;
+    border-top: 4px solid #76B900;
+    background: @gray85;
+    margin-left: 10px;
+    width: 100vw;
+    float: left;
+  }
+  .domain-left-col-item {
+    background: #333333;
+  }
+  .domain-left-col-item:hover {
+    background: #434343;
+  }
+  .domain-left-col-item-select {
+    background: #666666;
+  }
+  .domain-right-col-expend {
+    padding: 20px;
+    margin-top: 10px;
+    margin-left: 4px;
+    border-top: 4px solid #76B900;
+    background: @gray85;
+    width: 48.6vw;
+    max-height: 80vh;
+    display: inline-block;
+    overflow-y: auto;
+    float: left;
+    right: 0;
+    position: fixed;
+  }
+  .domain-right-col-shrink {
+    padding: 20px;
+    margin-left: 4px;
+    border-top: 4px solid #76B900;
+    background: @gray85;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 40vw;
+    display: inline-block;
+    overflow: hidden;
+    float: left;
+  }
+  .panel-title {
+    font-size: 18px;
+  }
+  .domain-right-col-title {
+    font-size: 16px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+  }
+  .domain-subnet-table {
+    max-width: 100%;
+    input {
+      width: 9vw;
+    }
+  }
+
+  .domain-right-col-dn-edit {
+    border-radius: 5px;
+    background: @gray80;
+    .domain-right-col-title-edit {
+      background: @gray75;
+      padding: 5px;
+      font-size: 16px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+  }
+  .domain-right-col-dn-btn {
+    padding: 10px;
+    text-align: center;
+  }
+  .domain-panel-header {
+    margin-top: 15px;
+  }
+  .input-valid {
+    margin-left: 8px;
+  }
+}
+
+.domain-confirm-panel {
+  width: 100%;
+  text-align: center;
+}

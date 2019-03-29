@@ -1,0 +1,15 @@
+<span class="info-value expression-container">
+    <span class="dropdown toolbar-dropdown" dropdown>
+        <button id="expresion-selecter" type="button" class="btn btn-default dropdown-toggle"
+                ng-disabled="ngDisabled" dropdown-toggle>
+            {{expression | strategyExpression}}</button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a ng-click="expression = 'le'">{{'le' | strategyExpression}}</a></li>
+            <li><a ng-click="expression = 'eq'">{{'eq' | strategyExpression}}</a></li>
+            <li><a ng-click="expression = 'ge'">{{'ge' | strategyExpression}}</a></li>
+            <li><a ng-click="expression = 'rg'">{{'rg' | strategyExpression}}</a></li>
+        </ul>
+    </span>
+    <input name="{{formName}}" type="text" ng-model="value" custom-val="range" validator="checkRangeVal"
+           val-args="{'min': min, 'max': max}" ng-pattern="regex" ng-disabled="ngDisabled" maxlength="{{maxlen}}">
+</span>

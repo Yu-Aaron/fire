@@ -1,0 +1,21 @@
+<div class="modal-wrapper">
+  <div class="modal-header">
+    <h3 ng-show="!device.length" class="modal-header-title"><i
+      class="fa fa-exclamation-triangle text-red icon-left"></i>删除设备 {{device.name || device.nameInDetail}}</h3>
+    <h3 ng-show="device.length" class="modal-header-title"><i class="fa fa-exclamation-triangle text-red icon-left"></i>批量删除设备
+    </h3>
+  </div>
+  <div class="modal-body">
+    <p>删除设备后所有分析、评估、事件与审计也会跟随拓扑改变移除。</p>
+    <p>请在删除设备前完成备份工作，确保信息不会丢失。</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-close icon-left"></i>取消</button>
+    <button id="delete_a_node_from_topo" ng-show="!device.length" class="btn btn-default" ng-click="ok()"><i
+      class="fa fa-trash icon-left"></i>删除设备
+    </button>
+    <button ng-show="device.length" class="btn btn-default" ng-click="ok()"><i class="fa fa-trash icon-left"></i>删除
+      {{device.length}} 台设备
+    </button>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+[
+    {
+        "snatId": 1,
+        "snatName": "snat1",
+        "status": true,
+        "logs": false,
+        "sourceAddressType": "0",
+        "sourceAddress": "eth1",
+        "destinationAddressType": "0",
+        "destinationAddress": "eht5",
+        "serversAppsType": "",
+        "serversApps": "",
+        "transAddressType": "0",
+        "transAddress": "192.168.81.254"
+    },
+    {
+        "snatId": 2,
+        "snatName": "snat2",
+        "status": true,
+        "logs": false,
+        "sourceAddressType": "0",
+        "sourceAddress": "eth2",
+        "destinationAddressType": "0",
+        "destinationAddress": "eht3",
+        "serversAppsType": "",
+        "serversApps": "",
+        "transAddressType": "0",
+        "transAddress": "192.168.22.254"
+    }
+]

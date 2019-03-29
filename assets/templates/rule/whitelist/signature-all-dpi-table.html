@@ -1,0 +1,88 @@
+<div class="panel">
+  <div class="panel-header">
+    <h5>
+      <span class="panel-header-title">规则学习</span>
+      <span class="pull-right">
+        <button type="button" privilege ng-show="!whitelistAllDpi.showEdit" ng-click="whitelistAllDpi.showEdit=true"
+                class="btn btn-default pull-right btn-top-pull-right-margin-back">批量学习</button>
+          <button type="button" privilege ng-show="whitelistAllDpi.showEdit" ng-click="whitelistAllDpi.showEdit=false"
+                  class="btn btn-default btn-top-pull-right-margin-back">取消</button> &nbsp;
+         <button type="submit" privilege ng-show="whitelistAllDpi.showEdit"
+                 ng-click="!whitelistAllDpi.intervalError && whitelistAllDpi.setTimeInterval(whitelistAllDpi.setInterval);"
+                 class="btn btn-default btn-top-pull-right-margin-back">完成设置</button>
+      </span>
+    </h5>
+  </div>
+  <div class="panel-body panel-body-light">
+    <div ng-if="whitelistAllDpi.showEdit">
+      <div class="signature-tab-inside-library whitelist-block row" privilege>
+        <div class="col-xs-12">
+          <div ng-if="!whitelistAllDpi.setInterval" ng-include
+               src="'templates/includes/all-dpi-learning-time-picker.html'"
+               onload="whitelistAllDpi.initTimePicker()"></div>
+          <div ng-if="whitelistAllDpi.setInterval" ng-include src="'templates/includes/all-dpi-learning-interval.html'"
+               onload="whitelistAllDpi.initTimePicker()"></div>
+        </div>
+      </div>
+      <div>
+        <p class="link-blue" privilege ng-if="!whitelistAllDpi.setInterval"
+           ng-click="whitelistAllDpi.setInterval = true">切换至时长设置</p>
+        <p class="link-blue" privilege ng-if="whitelistAllDpi.setInterval"
+           ng-click="whitelistAllDpi.setInterval = false">切换至结束日期设置</p>
+      </div>
+    </div>
+    <table class="table table-striped all-api-table">
+      <thead>
+      <tr>
+        <th><input type="checkbox" privilege ng-model="whitelistAllDpi.dpiSelectAll"
+                   ng-click="whitelistAllDpi.selectAllDPI()" ng-show="whitelistAllDpi.showEdit"></th>
+        <th>设备名称</th>
+        <th>状态</th>
+        <!-- <th>功能模式</th> -->
+        <th>管理端口IP</th>
+        <th>
+          <span>最近学习时间</span>
+        </th>
+        <th width="100px">
+              <span class="pull-right">
+                <button type="button" privilege ng-click="whitelistAllDpi.refreshPage()"
+                        class="btn btn-default pull-right">刷新状态</button>
+              </span>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in whitelistAllDpi.dpiData">
+        <td><input type="checkbox" privilege ng-model="whitelistAllDpi.selectDPI[$index]"
+                   ng-disabled="item.learning[0]&&item.learning[0].state !== 'SUCCESS'"
+                   ng-show="whitelistAllDpi.showEdit"></td>
+        <td>{{item.name}}</td>
+        <td>{{item.deviceOnline?'在线':'离线'}}</td>
+        <!-- <td>
+			{{item.nodes[0].type && item.nodes[0].type === 'ROUTING_IPS' ? '路由保护模式' :
+		  (item.nodes[0].type && item.nodes[0].type === 'IDS' ? '监测审计模式' :
+		   (item.nodes[0].type && item.nodes[0].type === 'IPS' ? (item._subCategory === 'DATA_COLLECTION_DEVICE' ? '数采隔离模式' : '智能保护模式') : ''))}}
+		</td> -->
+        <td>{{item.mgmtIp}}</td>
+        <td>{{item.learning[0].state?(item.learning[0].state==='SUCCESS'?(item.learning[0].endDatetime |
+          date:'yyyy-MM-dd HH:mm:ss'):'进行中'):'未发现'}}
+        </td>
+        <td>
+          <div class="col-xs-2 status-label" ng-show="item.learning[0].state == 'PENDING'">
+            <span class="label label-success">等待</span>
+          </div>
+          <div class="col-xs-2 status-label" ng-show="item.learning[0].state == 'PROCESSING'">
+            <span class="label label-warning">学习中</span>
+          </div>
+          <div class="col-xs-2 status-label" ng-show="item.learning[0].state == 'PAUSED'">
+            <span class="label label-warning">暂停</span>
+          </div>
+          <div class="col-xs-2 status-label" ng-show="item.learning[0].state == 'SUCCESS'">
+            <span class="label label-success">完成</span>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

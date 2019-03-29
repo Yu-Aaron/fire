@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">系统版本 <i id="mc_version_window_close_button" class="fa fa-times pull-right"
+                                         ng-click="cancel()"></i></h3>
+</div>
+<div id="dashboard_version_modal_container" class="modal-body modal-body-version">
+  <p class="logo-wrap">
+    <img ng-src="{{$root.VERSION_LOGO}}">
+  </p>
+  <div class="info-wrap">
+    <p class="text-left">
+      <i class="fa fa-cube"></i>
+      <span>产品名称: {{$root.certification.name}}</span>
+    </p>
+    <p class="text-left">
+      <i class="fa fa-flag"></i>
+      <span>产品型号: {{$root.certification.type}}</span>
+    </p>
+    <p class="text-left">
+      <i class="fa fa-flag-o"></i>
+      <span>版本号: {{$root.VERSION_NUMBER}}</span>
+    </p>
+    <p class="text-left">
+      <i class="fa fa-info-circle"></i>
+      <span>序列号: {{$root.serialNumber}}</span>
+    </p>
+  </div>
+</div>
+<hr class="hr-thick hr-lime hr-small-margin">
+<div id="dashboard_version_modal_footer" class="modal-footer margin-zero">
+  <p class="text-center margin-zero">{{$root.logo.text}}</p>
+</div>

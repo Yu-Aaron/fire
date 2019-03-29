@@ -1,0 +1,74 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">规则内容</h3>
+  <a id="rule_sync_ic_detail_previewCancel" class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body" id="rule_sync_ic_detail_modal">
+  <div class="bg-gray-80">
+    <div class="rules-info">
+      <div class="row">
+        <div class="col-xs-4">
+          <div class="rules-info-item">
+            <h6 class="rules-info-item-title">规则类型</h6>
+            <span>工控白名单</span>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="rules-info-item">
+            <h6 class="rules-info-item-title">起源组</h6>
+            <span>{{rule.sourceZoneName}}</span>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="rules-info-item">
+            <h6 class="rules-info-item-title">目标组</h6>
+            <span>{{rule.destinationZoneName}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <div class="rules-info-item">
+            <h6 class="rules-info-item-title">优先级</h6>
+            <span>{{rule.priority}}</span>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="rules-info-item">
+            <h6 class="rules-info-item-title">协议名称</h6>
+            <span>{{getProtocolType(rule, 'whitelist')}}</span>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="rules-info-item">
+            <h6 class="rules-info-item-title">规则描述</h6>
+            <span>{{rule.sourceZoneName}}&nbsp;到&nbsp;{{rule.destinationZoneName}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          <div class="rules-info-item">
+            <h6 class="rules-info-item-title">操作码</h6>
+            <div ng-repeat="field in rule.fields">
+              <span ng-if="$index >0">{{field.name}}:
+                {{field.value}}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="rules-info-item">
+            <h6 class="rules-info-item-title">处理方式</h6>
+            <span>{{rule.action | actionName}}</span>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="rules-info-item">
+            <h6 class="rules-info-item-title">风险等级</h6>
+            <span>{{rule.riskLevel | riskLevel}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

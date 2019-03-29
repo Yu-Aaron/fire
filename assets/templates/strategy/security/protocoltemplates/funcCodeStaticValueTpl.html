@@ -1,0 +1,49 @@
+<div class="col-xs-6 value-detail-container" ng-repeat-start="value in node.value track by value.name">
+  <div class="value-detail-input-container">
+    <span class="info-label">{{value.name | protocolTranslation:appProtocolType}}</span>
+    <input name="{{value.name + node.nodeIndex + $index}}"
+           type="text" ng-model="node[value.name]"
+           ng-if="isTypeInputSingle(value.type)" custom-val="range" validator="checkRangeVal" class="info-value"
+           val-args="{'min': value.min, 'max': value.max}" ng-pattern="/^\d$|^[1-9]\d{1,4}$/"
+           ng-disabled="isViewOnly" maxlength="5">
+    <input name="{{value.name + node.nodeIndex + $index}}"
+           type="text" ng-model="node[value.name]"
+           ng-if="isTypeInputMulti(value.type)" custom-val="range" validator="checkRangeVal" class="info-value"
+           val-args="{'type': value.type, 'min': value.min, 'max': value.max}" ng-disabled="isViewOnly">
+    <expression-input ng-model="node[value.name]" form-name="value.name + node.nodeIndex + $index"
+                      min="value.min" max="value.max" ng-disabled="isViewOnly"
+                      ng-if="isTypeExpression(value.type)">
+    </expression-input>
+    <select id="func-code-value-options" name="{{value.name + node.nodeIndex + $index}}"
+            class="select-styled info-value" ng-model="node[value.name]"
+            ng-options="value for value in value.option" ng-if="isTypeOption(value.type)"
+            ng-disabled="isViewOnly">
+    </select>
+  </div>
+    <div class="input-alert-error"
+         ng-show="(isTypeInputSingle(value.type) || isTypeExpression(value.type)) &&
+                ((newStrategyForm[value.name + node.nodeIndex + $index].$error.pattern ||
+                    newStrategyForm[value.name + node.nodeIndex + $index].$error.range) ||
+                (editStrategyForm[value.name + node.nodeIndex + $index].$error.pattern ||
+                    editStrategyForm[value.name + node.nodeIndex + $index].$error.range))">
+        必须输入数字{{value.type.indexOf('RANGE')>=0 ? '(范围'+ value.min +' - ' + value.max + ')' : ''}}
+        {{node[value.name].expression=='rg' ? "，值界限输入时请用' " + "-" + "' 分隔" : ''}}
+    </div>
+    <div class="input-alert-error"
+         ng-show="isTypeInputMulti(value.type) &&
+                (newStrategyForm[value.name + node.nodeIndex + $index].$error.range ||
+                    editStrategyForm[value.name + node.nodeIndex + $index].$error.range)">
+        {{(value.type.indexOf('DISCRETE')>=0 && value.type.indexOf('LIMIT')<0) ? "请用逗号分隔多个值" : ''}}
+        {{(value.type.indexOf('DISCRETE')<0 && value.type.indexOf('LIMIT')>=0) ?
+            "值界限输入时请用' " + "-" + "' 分隔" : ''}}
+        {{(value.type.indexOf('DISCRETE')>=0 && value.type.indexOf('LIMIT')>=0) ?
+            "值界限输入时请用' " + "-" + " '分隔，或用逗号分隔多个值" : ""}}
+        {{value.type.indexOf('RANGE')>=0 ? '(范围'+ value.min +' - ' + value.max + ')' : ''}}
+    </div>
+    <!--<div class="input-alert-error"-->
+         <!--ng-show="isTypeOption(value.type) && (newStrategyForm[value.name + node.nodeIndex + $index].$error.required ||-->
+                <!--editStrategyForm[value.name + node.nodeIndex + $index].$error.required)">-->
+        <!--选择项不能为空-->
+    <!--</div>-->
+</div>
+<div ng-repeat-end class="clearfix" ng-if="$index % 2 === 1"></div>

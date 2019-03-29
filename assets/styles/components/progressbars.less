@@ -1,0 +1,46 @@
+/* ----------------------------------------
+  New Progress Bars
+---------------------------------------- */
+
+.progress {
+  background: linear-gradient(@bg-gray-light, @bg-gray-lighter);
+  border: 1px solid @bg-gray-darker;
+  border-radius: 2px;
+  box-shadow: none;
+  font-family: "Lucida Grande";
+  height: 20px;
+  padding: 0;
+}
+
+.progress-bar {
+  margin-top: 1px;
+  border-radius: 1px;
+  line-height: inherit;
+}
+
+// green progress bar
+.progress-bar-success,
+.progress-bar-default {
+  background: linear-gradient(@primary, @primary-dark);
+  color: @txt-white-gray;
+}
+
+.progress-bar-error {
+  background: linear-gradient(@error-light, @error-dark);
+  color: @txt-white-gray;
+}
+
+.progress-bar-warning {
+  background: linear-gradient(@warning-light, @warning-dark);
+  color: @txt-white-gray;
+}
+
+.progress-bar-white {
+  background: linear-gradient(@secondary-light, @secondary-dark);
+  color: @txt-light-black;
+}
+
+.progress-bar-blue {
+  background: linear-gradient(@info, @info-dark);
+  color: @txt-light-black;
+}

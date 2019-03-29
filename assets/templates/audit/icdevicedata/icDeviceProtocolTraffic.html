@@ -1,0 +1,93 @@
+<div class="tab-container margin-top-medium">
+  <div class="row margin-bottom-default">
+    <div class="col-xs-12">
+      <button ui-sref="audit.icdevice_data" class="btn btn-default pull-left">
+        <i class="fa fa-arrow-circle-left icon-left"/>返回
+      </button>
+    </div>
+  </div>
+
+  <div class="row" style="padding-left: 36px; padding-right: 36px;">
+    <div class="panel">
+      <div class="panel-heading">
+        <span><i class="fa fa-folder-open icon-left"></i>设备规格</span>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-2">
+            <div class="detail-page-list-item">
+              <h5 class="detail-page-list-item-title">设备名称：</h5>
+
+              <p>{{icdeviceprotocoltrafficdata.device.deviceName || '未知设备'}}</p>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="detail-page-list-item">
+              <h5 class="detail-page-list-item-title">IP地址：</h5>
+
+              <p>{{icdeviceprotocoltrafficdata.device.ipAddr || '未知'}}</p>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="detail-page-list-item">
+              <h5 class="detail-page-list-item-title">MAC地址：</h5>
+
+              <p>{{icdeviceprotocoltrafficdata.device.macAddr || '未知'}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tab-container margin-top-medium" ng-controller="TabCtrl as tab">
+  <ul class="nav nav-tabs nav-tabs-lg nav-tabs-lime" ng-init="tab.active || tab.activatePanel('REALTIME')">
+    <li id="audit_icdevice_realtime_tab" ng-class="{ active: tab.isActive('REALTIME') }">
+      <a href="#" ng-click="tab.activatePanel('REALTIME');icdeviceprotocoltrafficdata.changeProtocolLineChart();">
+        <span>实时流量</span>
+      </a>
+    </li>
+    <li id="audit_icdevice_total_tab" ng-class="{ active: tab.isActive('TOTAL') }">
+      <a href="#"
+         ng-click="tab.activatePanel('TOTAL');icdeviceprotocoltrafficdata.changeDeviceTrafficPieChartTimeSpan();">
+        <span>汇总流量</span>
+      </a>
+    </li>
+  </ul>
+
+  <div ng-switch on="tab.active">
+    <div class="tab-container-body" ng-switch-when="REALTIME">
+      <div class="panel padding-zero">
+        <div class="panel-header"><i class="fa fa-area-chart"></i> 数据流量</div>
+        <div id="icdevice-device-protocol-line-chart" style="min-width: 510px; height: 400px; margin: 0 auto"/>
+      </div>
+    </div>
+
+    <div class="tab-container-body" ng-switch-when="TOTAL">
+      <div class="panel padding-zero">
+        <div class="panel-header"><i class="fa fa-pie-chart"></i> 汇总流量</div>
+        <div class="row">
+          <div class="col-sm-10">
+            <div id="icdevice-traffic-statistics-pie-chart"></div>
+          </div>
+          <div class="col-sm-2">
+            <div class="padding-default protocol-set">
+              查看时间: &nbsp;
+              <select class="select-styled"
+                      ng-change="icdeviceprotocoltrafficdata.changeDeviceTrafficPieChartTimeSpan()"
+                      ng-init="icdeviceprotocoltrafficdata.timeSpan = '1h'"
+                      ng-model="icdeviceprotocoltrafficdata.timeSpan">
+                <option value="1h" selected="selected">1小时</option>
+                <option value="24h">24小时内</option>
+                <option value="168h">一周内</option>
+              </select><br/>
+              流量总量: {{icdeviceprotocoltrafficdata.totalTraffics}}<br/>
+              更新时间: {{icdeviceprotocoltrafficdata.protocolReportTime | date : 'yyyy-MM-dd HH:mm:ss'}}<br/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

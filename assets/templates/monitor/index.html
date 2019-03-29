@@ -1,0 +1,51 @@
+<nav class="left-navbar with-icons" ng-class="{'left-navbar-collapsed': monitor.expanded}">
+  <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat="tab in $root.rootMenu.getChild('MONITOR').getChilds()"
+        disable="true" class="highlight" id="{{tab.getTarget()}}">
+      <a ng-if="!(tab.getChilds()&&tab.getChilds()!==[]&&tab.getChilds().length>0)" id="monitor_a_{{tab.getState()}}"
+         class="left-navbar-item left-navbar-item-{{tab.getState()}}"
+         ui-sref="{{tab.getState()}}" ng-class="{active: monitor.isActive(tab)}">
+        <!--ui-sref-opts="{{tab.getOptions()}}"-->
+        <span
+          class="svg-side_nav_icons_{{tab.getIcon()}} svg-side_nav_icons_{{tab.getIcon()}}-dims left-navbar-item-icon"></span>
+        <div class="left-navbar-item-name-collapse">{{tab.getDescription()}}</div>
+      </a>
+
+      <a ng-if="tab.getChilds()&&tab.getChilds()!==[]&&tab.getChilds().length>0" id="monitor_a_{{tab.getState()}}"
+         class="left-navbar-item left-navbar-item-{{tab.getState()}} menu-container"
+         ng-class="{hoverActive: $root.subMenusSelected(tab), active: $root.isSubMenusActive(tab)}"
+         ng-click="$root.displaySubMenus(tab);">
+        <span
+          class="svg-side_nav_icons_{{tab.getIcon()}} svg-side_nav_icons_{{tab.getIcon()}}-dims left-navbar-item-icon"></span>
+        <span class="left-navbar-item-name">{{tab.getDescription()}}</span>
+        <span class="pull-right" ng-if="monitor.expanded?false:tab.expanded">
+          <!--<i class="fa fa-chevron-right whitelist-icon"-->
+                                    <!--ng-if="monitor.expanded?false:!tab.expanded"></i>-->
+          <i class="fa fa-chevron-up whitelist-icon"></i></span>
+      </a>
+      <div class="whitelist-submenu" ng-if="monitor.expanded?false:tab.expanded">
+        <div class="whitelist-submenu-item" ng-repeat="child in tab.getChilds()">
+          <a id="monitor_a_sub_{{child.getState()}}"
+             class="left-navbar-item left-navbar-item-{{child.getState()}}"
+             ui-sref="{{child.getState()}}" ng-class="{active: monitor.isActive(child)}">
+            <!--ui-sref-opts="{{tab.getOptions()}}"-->
+        <span
+          class="svg-side_nav_icons_{{child.getIcon()}} svg-side_nav_icons_{{child.getIcon()}}-dims left-navbar-item-icon"></span>
+            <div class="left-navbar-item-name-collapse" style="left: 36px;top: 7px;width: 60px;">
+              {{child.getDescription()}}
+            </div>
+          </a>
+        </div>
+      </div>
+    </li>
+    <li class="left-navbar-expand-toggle reset-highlight">
+      <a href="javascript:void(0)" ng-click="monitor.toggleExpand()">
+        <i class="fa" ng-class="{false: 'fa-angle-double-left', true: 'fa-angle-double-right'}[monitor.expanded]"></i>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<div class="main-content main-content-with-nav" ng-class="{'navbar-collapsed': monitor.expanded}" ui-view></div>
+
+<div class="clearfix"></div>

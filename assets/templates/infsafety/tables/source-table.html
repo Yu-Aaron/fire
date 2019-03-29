@@ -1,0 +1,57 @@
+<div class="source-table-content">
+  <div class="table-header">
+    <span class="infsafety-table-heading">攻击界面</span>
+    <!--     <button class="btn btn-default btn-wider pull-right"><i class="fa fa-pencil-square-o icon-left"></i> 设置攻击界面</button> -->
+    <hr>
+  </div>
+
+  <div class="table-utility">
+    <div class="row">
+      <div class="col-md-5">
+        <!--         <button class="btn btn-default btn-wider">攻击界面设备</button> -->
+      </div>
+      <div class="col-md-3">
+        <span class="infsafety-table-heading">已选 {{count}}/{{table.length}} 台设备</span>
+      </div>
+      <div class="col-md-4 infsafety-source-table-search">
+        <!--         <button class="btn btn-default pull-right"><i class="fa fa-search"></i></button>
+				<input class="pull-right" type="text" placeholder="输入关键字" ng-disabled="true"> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="table-body">
+    <table class="table table-hover icon-hidden">
+      <thead>
+      <tr>
+        <th><input type="checkbox" ng-model="selectAll" ng-change="checkAll(selectAll)"></th>
+        <th>设备名称</th>
+        <th>分区</th>
+        <!--<th>分类</th>-->
+        <th>厂商</th>
+        <th>型号</th>
+        <!--<th>备注</th>-->
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="source in table">
+        <td><input type="checkbox" ng-model="source.checked" ng-change="check(source.nodeName,source.checked)"></td>
+        <td>{{source.deviceName}}</td>
+        <td>{{source.zoneName}}</td>
+        <!--<td>{{source.category}}</td>-->
+        <td>{{source.make}}</td>
+        <td>{{source.model}}</td>
+        <!--<td>{{source.memo}}</td>-->
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-footer">
+    <button class="btn btn-default pull-right" ng-click="selectOption('')"><i
+      class="fa fa-check text-lime icon-left"></i>关闭
+    </button>
+    <button class="btn btn-default pull-right" ng-click="selectOption('target')">下一步<i
+      class="fa fa-chevron-right icon-right"></i></button>
+  </div>
+</div>

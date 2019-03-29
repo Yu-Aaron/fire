@@ -1,0 +1,76 @@
+/* ----------------------------------------
+  New Tabs
+---------------------------------------- */
+
+.nav-tabs {
+  border-bottom: 0;
+  > li {
+    position: relative;
+    height: 36px;
+    background: linear-gradient(@bg-gray, @bg-gray-darker);
+    border: solid @bg-gray-dark;
+    border-width: 1px 1px 0 1px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    box-shadow: inset 0px 1px 2px 0px rgba(227, 227, 227, 0.2);
+    + li {
+      margin-left: 0; //2px;
+    }
+    > a {
+      margin-right: 0;
+      // padding: 9px 12px 11px !important;
+      border: 1px solid transparent;
+      color: @txt-base !important;
+      > i {
+        margin-right: 12px;
+      }
+    }
+    &:before,
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 1px;
+    }
+    &:before {
+      bottom: 0;
+      background-color: @bg-gray-dark;
+    }
+    &:after {
+      bottom: 1px;
+      background-color: @bg-gray-darker;
+    }
+    &.active {
+      background: linear-gradient(@bg-gray-lighter, @bg-gray);
+      z-index: 2;
+      a {
+        border: 1px solid transparent;
+      }
+      &:before {
+        display: none;
+      }
+      &:after {
+        bottom: -1px;
+        height: 3px;
+        background-color: @bg-gray;
+      }
+    }
+  }
+}
+
+.tab-container {
+  .tab-container-body {
+    position: relative;
+    z-index: 1;
+    margin-top: -2px;
+    padding: 22px 20px 20px;
+    background: @bg-gray;
+    border: solid @bg-gray-dark;
+    border-width: 0 1px 1px 1px;
+    border-radius: 0;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.5),
+    inset 0px 1px 2px 0px rgba(227, 227, 227, 0.2);
+  }
+}

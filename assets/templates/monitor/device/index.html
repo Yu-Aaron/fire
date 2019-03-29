@@ -1,0 +1,93 @@
+<!-- Monitor Main -->
+<div class="monitor-inner-main inner-main">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-lg">
+        <div class="panel-header panel-header-border">
+          <h5 class="panel-header-title">设备管理</h5>
+        </div>
+        <div class="panel-body panel-dashboard">
+          <div class="row text-right">
+            <div class="col-xs-2 bg-icon bg-icon-device">
+              <h1 class="panel-dashboard-value text-red-orange">{{device.overview.all}}</h1>
+              <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-red-orange fa fa-shield"></i>全场设备总数
+              </h4>
+            </div>
+            <div class="col-xs-3 bg-icon bg-icon-shield">
+              <h1 class="panel-dashboard-value text-green">{{device.overview.securityCount}}<span
+                class="panel-dashboard-value-unit">台</span></h1>
+              <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-green fa fa-bookmark"></i>安全设备总数
+              </h4>
+            </div>
+            <div class="col-xs-3 bg-icon bg-icon-tool">
+              <h1 class="panel-dashboard-value text-light-blue">{{device.overview.managedSecurityCount}}<span
+                class="panel-dashboard-value-unit">台</span></h1>
+              <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-light-blue fa fa-gear"></i>可管理安全设备
+              </h4>
+            </div>
+            <div class="col-xs-3 bg-icon bg-icon-bullseye">
+              <h1 class="panel-dashboard-value text-orange">{{device.overview.ipsidsRate}}</h1>
+              <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-orange fa fa-clock-o"></i>保护与监测比例
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-container" ng-controller="TabCtrl as tab" ng-if="device.defaultTab&&device.defaultTab!=='none'">
+    <ul class="nav nav-tabs nav-tabs-lg nav-tabs-lime" ng-init="tab.active || tab.activatePanel(device.defaultTab)">
+      <li ng-class="{ active: tab.isActive('SECURITY_DEVICE') }"
+          ng-if="device.contentEnable('PROTECTION_SECURITY_DEVICE')">
+        <a ui-sref="monitor.device({panel: 'SECURITY_DEVICE'})" ng-click="tab.activatePanel('SECURITY_DEVICE')"><i
+          class="fa fa-shield nav-tab-icon"></i>
+          <span>安全设备</span>
+          <span class="badge text-green" ng-show="device.overview.managedSecurityCount">{{device.overview.managedSecurityCount}}</span>
+        </a>
+      </li>
+      <li ng-class="{ active: tab.isActive('FACTORY_DEVICE') }"
+          ng-if="device.contentEnable('PROTECTION_FACTORY_DEVICE')">
+        <a ui-sref="monitor.device({panel: 'FACTORY_DEVICE'})" ng-click="tab.activatePanel('FACTORY_DEVICE')"><i
+          class="fa fa-gear nav-tab-icon"></i>
+          <span>工控设备</span>
+          <span class="badge text-green" ng-show="device.overview.factoryCount">{{device.overview.factoryCount}}</span>
+        </a>
+      </li>
+      <li ng-class="{ active: tab.isActive('NETWORK_DEVICE') }"
+          ng-if="device.contentEnable('PROTECTION_NETWORK_DEVICE')">
+        <a ui-sref="monitor.device({panel: 'NETWORK_DEVICE'})" ng-click="tab.activatePanel('NETWORK_DEVICE')"><i
+          class="fa fa-gears nav-tab-icon"></i>
+          <span>网络设备</span>
+          <span class="badge text-green" ng-show="device.overview.networkCount">{{device.overview.networkCount}}</span>
+        </a>
+      </li>
+    </ul>
+    <div ng-switch on="tab.active" class="tab-container-body">
+      <!-- Security equipment -->
+      <div ng-switch-when="SECURITY_DEVICE">
+        <dtable>
+          <security-device></security-device>
+        </dtable>
+      </div>
+      <!-- Factory equipment -->
+      <div ng-switch-when="FACTORY_DEVICE">
+        <dtable>
+          <factory-device></factory-device>
+        </dtable>
+      </div>
+      <!-- Network equipment -->
+      <div ng-switch-when="NETWORK_DEVICE">
+        <dtable>
+          <network-device></network-device>
+        </dtable>
+      </div>
+    </div>
+  </div>
+  <div
+    ng-if="$root.MW_SETTING !== 'normal' && $root.MW_SETTING !== 'allInOneOffLine' && $root.MW_SETTING !== 'allInOneAudit'">
+    <dtable>
+      <ucd-device></ucd-device>
+    </dtable>
+  </div>
+</div>

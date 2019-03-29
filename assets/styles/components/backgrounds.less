@@ -1,0 +1,180 @@
+.bg-transparent {
+  background: transparent;
+}
+
+.bg-empty {
+  background-image: none !important;
+}
+
+.bg-dark-transparent {
+  background-color: fade(@black, 80%);
+}
+
+.bg-gray-95 {
+  background-color: @gray95;
+}
+
+.bg-gray-85 {
+  background-color: @gray85 !important;
+}
+
+.bg-gray-80 {
+  background-color: @gray80;
+}
+
+.bg-gray-75 {
+  background-color: @gray75;
+}
+
+.bg-icon {
+  position: relative;
+
+  > * {
+    position: relative;
+  }
+
+  &:before {
+    position: absolute;
+    font-family: FontAwesome;
+    font-size: 70px;
+    top: -20px;
+    right: -10px;
+    z-index: 0;
+    opacity: 0.1;
+  }
+
+  &.bg-icon-contain {
+    &:before {
+      right: 20px;
+      bottom: -10px;
+      font-size: 4.5em;
+      top: auto;
+    }
+  }
+
+  // ANGLE RIGHT
+  &.bg-icon-angle-right {
+    &:before {
+      content: "\f105";
+    }
+  }
+
+  // COGS
+  &.bg-icon-cogs {
+    &:before {
+      content: "\f085";
+    }
+  }
+
+  // DEVICES
+  &.bg-icon-device {
+    &:before {
+      content: "\f0a0";
+    }
+  }
+
+  // TOOLS
+  &.bg-icon-tool {
+    &:before {
+      content: "\f0ad";
+    }
+  }
+
+  // TARGET
+  &.bg-icon-target {
+    &:before {
+      content: "\f140";
+    }
+  }
+
+  // WARNING
+  &.bg-icon-warning {
+    &:before {
+      content: "\f071";
+    }
+  }
+
+  // BAN
+  &.bg-icon-ban {
+    &:before {
+      content: "\f05e";
+    }
+  }
+
+  // Bullseye
+  &.bg-icon-bullseye {
+    &:before {
+      content: "\f140";
+    }
+  }
+
+  // PAPERCLIP
+  &.bg-icon-paperclip {
+    &:before {
+      content: "\f0c6";
+    }
+  }
+
+  // CLOCK
+  &.bg-icon-clock {
+    &:before {
+      content: "\f017";
+    }
+  }
+
+  // BOOKMARK
+  &.bg-icon-bookmark {
+    &:before {
+      content: "\f02e";
+    }
+  }
+
+  // SHIELD
+  &.bg-icon-shield {
+    &:before {
+      content: "\f132";
+    }
+  }
+
+  // GEAR
+  &.bg-icon-gear {
+    &:before {
+      content: "\f013";
+    }
+  }
+
+  // UPLOAD
+  &.bg-icon-upload {
+    &:before {
+      font-family: FontAwesome;
+      font-size: 60px;
+      top: -80px;
+      right: 70px;
+      z-index: 0;
+      opacity: 0.1;
+      content: "\f093";
+    }
+  }
+
+  // CLOSED FOLDER
+  &.bg-icon-folder-closer {
+    &:before {
+      content: "\f114";
+    }
+  }
+
+  // OK
+  &.bg-icon-ok {
+    &:before {
+      content: "\f00c";
+    }
+  }
+
+  // OK
+  &.bg-icon-remove {
+    &:before {
+      content: "\f00d";
+    }
+  }
+
+}

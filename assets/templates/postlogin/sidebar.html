@@ -1,0 +1,36 @@
+<div class="pl-sidebar">
+  <!-- SIDEBAR HEADER -->
+  <div class="pl-sb-header">
+    <img class="pl-sb-header-logo" src="/images/placeholders/u121.png">
+    <div class="pl-sb-header-text">
+      <h4 class="text-lime">匡恩网络</h4>
+      <h4>工控安全系统</h4>
+    </div>
+  </div>
+
+  <div class="pl-sb-content">
+    <div ng-style="{'top':topVal}" id='arrow-left'></div>
+    <img class="pl-sb-content-image-first" src="/images/placeholders/icon_baohu_u214.png" ng-click="selectSideItem(0)">
+    <!-- Using image stubs, change the src when available -->
+    <img class="pl-sb-content-image" src="/images/placeholders/u265.png" ng-click="selectSideItem(1)">
+    <img class="pl-sb-content-image" src="/images/placeholders/u267.png" ng-click="selectSideItem(2)">
+
+    <!-- DROPUP -->
+    <div class="pl-sb-dropup">
+      <div class="btn-group dropup" dropdown>
+        <button type="button" class="btn dropdown-toggle border-gray" dropdown-toggle>设置<span
+          class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu">
+          <!-- Please note that these are only links. No actions are made -->
+          <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">账户设置</a></li> -->
+          <!--<li role="presentation" class="divider"></li> -->
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="/systemuser">用户管理</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="/setting">系统设置</a></li>
+          <li role="presentation" class="divider"></li>
+          <!--<li role="presentation"><a role="menuitem" tabindex="-1" href="#">帮助中心</a></li> -->
+          <li role="presentation"><a href="javascript:void(0)" ng-click="logout()">退出</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

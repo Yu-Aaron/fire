@@ -1,0 +1,509 @@
+{
+    "Modbus-TCP": {
+        "Read_Coils": {
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"endaddr", "value":"1-2000"}
+            ]
+        },
+        "Read_Discrete_Inputs":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"endaddr", "value":"1-2000"}
+            ]
+        },
+        "Read_Holding_Registers":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"endaddr", "value":"1-125"}
+            ]
+        },
+        "Read_Input_Register":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"endaddr", "value":"1-125"}
+            ]
+        },
+        "Write_Single_Coil":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"data", "value":"EXPRESSION,0-65535"}
+            ]
+        },
+        "Write_Single_Register":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"data", "value":"EXPRESSION,0-65535"}
+            ]
+        },
+        "Read_Exception_Status":{
+            "value": []
+        },
+        "Diagnostic":{
+            "value":[
+                {"name":"subfunc", "value":["0,4", "10,18", 20]}
+            ]
+        },
+        "Program_484":{
+            "value": []
+        },
+        "Poll_484":{
+            "value": []
+        },
+        "Get_Com_Event_Counter":{
+            "value": []
+        },
+        "Get_Com_Event_Log":{
+            "value": []
+        },
+        "Program_Controller":{
+            "value": []
+        },
+        "Poll_Controller":{
+            "value": []
+        },
+        "Write_Multiple_Coils":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"endaddr", "value":"1-1968"}
+            ]
+        },
+        "Write_Multiple_Registers":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"endaddr", "value":"1-120"}
+            ]
+        },
+        "Report_Slave_ID":{
+            "value": []
+        },
+        "Program_884/M84":{
+            "value": []
+        },
+        "Reset_Comm._Link":{
+            "value": []
+        },
+        "Read_File_Record":{
+            "value": []
+        },
+        "Write_File_Record":{
+            "value": []
+        },
+        "Mask_Write_Register":{
+            "value":[
+                {"name":"refaddr", "value":"0-65535"}
+            ]
+        },
+        "Read_Write_Multiple_Registers":{
+            "value":[
+                {"name":"rdstartaddr", "value":"0-65535"},
+                {"name":"rdendaddr", "value":"1-118"},
+                {"name":"wtstartaddr", "value":"0-65535"},
+                {"name":"wtendaddr", "value":"1-118"}
+            ]
+        },
+        "Read_FIFO_Queue":{
+            "value":[
+                {"name":"fifoaddr", "value":"0-65535"}
+            ]
+        },
+        "Read_Device_Identification":{
+            "value":[
+                {"name":"meitype", "value":[13, 14]}
+            ]
+        }
+    },
+    "Modbus-UDP": {
+        "Read_Coils": {
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"endaddr", "value":"1-2000"}
+            ]
+        },
+        "Read_Discrete_Inputs":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"endaddr", "value":"1-2000"}
+            ]
+        },
+        "Read_Holding_Registers":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"endaddr", "value":"1-125"}
+            ]
+        },
+        "Read_Input_Register":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"endaddr", "value":"1-125"}
+            ]
+        },
+        "Write_Single_Coil":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"data", "value":"EXPRESSION,0-65535"}
+            ]
+        },
+        "Write_Single_Register":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"data", "value":"EXPRESSION,0-65535"}
+            ]
+        },
+        "Read_Exception_Status":{
+            "value": []
+        },
+        "Diagnostic":{
+            "value":[
+                {"name":"subfunc", "value":["0,4", "10,18", 20]}
+            ]
+        },
+        "Program_484":{
+            "value": []
+        },
+        "Poll_484":{
+            "value": []
+        },
+        "Get_Com_Event_Counter":{
+            "value": []
+        },
+        "Get_Com_Event_Log":{
+            "value": []
+        },
+        "Program_Controller":{
+            "value": []
+        },
+        "Poll_Controller":{
+            "value": []
+        },
+        "Write_Multiple_Coils":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"endaddr", "value":"1-1968"}
+            ]
+        },
+        "Write_Multiple_Registers":{
+            "value":[
+                {"name":"startaddr", "value":"0-65535"},
+                {"name":"endaddr", "value":"1-120"}
+            ]
+        },
+        "Report_Slave_ID":{
+            "value": []
+        },
+        "Program_884/M84":{
+            "value": []
+        },
+        "Reset_Comm._Link":{
+            "value": []
+        },
+        "Read_File_Record":{
+            "value": []
+        },
+        "Write_File_Record":{
+            "value": []
+        },
+        "Mask_Write_Register":{
+            "value":[
+                {"name":"refaddr", "value":"0-65535"}
+            ]
+        },
+        "Read_Write_Multiple_Registers":{
+            "value":[
+                {"name":"rdstartaddr", "value":"0-65535"},
+                {"name":"rdendaddr", "value":"1-118"},
+                {"name":"wtstartaddr", "value":"0-65535"},
+                {"name":"wtendaddr", "value":"1-118"}
+            ]
+        },
+        "Read_FIFO_Queue":{
+            "value":[
+                {"name":"fifoaddr", "value":"0-65535"}
+            ]
+        },
+        "Read_Device_Identification":{
+            "value":[
+                {"name":"meitype", "value":[13, 14]}
+            ]
+        }
+    },
+    "DNP3": {
+        "ref-options":[
+            {"name": "obj0101", "refvalue":"0101", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj0102", "refvalue":"0102", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj0201", "refvalue":"0201", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj0202", "refvalue":"0202", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj0203", "refvalue":"0203", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj1001", "refvalue":"1001", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj1002", "refvalue":"1002", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj1201", "refvalue":"1201", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj1202", "refvalue":"1202", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2001", "refvalue":"2001", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2002", "refvalue":"2002", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2003", "refvalue":"2003", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2004", "refvalue":"2004", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2005", "refvalue":"2005", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2006", "refvalue":"2006", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2007", "refvalue":"2007", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2008", "refvalue":"2008", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2101", "refvalue":"2101", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2102", "refvalue":"2102", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2103", "refvalue":"2103", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2104", "refvalue":"2104", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2105", "refvalue":"2105", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2106", "refvalue":"2106", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2107", "refvalue":"2107", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2108", "refvalue":"2108", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2109", "refvalue":"2109", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2110", "refvalue":"2110", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2111", "refvalue":"2111", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2112", "refvalue":"2112", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2201", "refvalue":"2201", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2202", "refvalue":"2202", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2203", "refvalue":"2203", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2204", "refvalue":"2204", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2205", "refvalue":"2205", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2206", "refvalue":"2206", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2207", "refvalue":"2207", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2208", "refvalue":"2208", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2301", "refvalue":"2301", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2302", "refvalue":"2302", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2303", "refvalue":"2303", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2304", "refvalue":"2304", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2305", "refvalue":"2305", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2306", "refvalue":"2306", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2307", "refvalue":"2307", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj2308", "refvalue":"2308", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3001", "refvalue":"3001", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3002", "refvalue":"3002", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3003", "refvalue":"3003", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3004", "refvalue":"3004", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3101", "refvalue":"3101", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3102", "refvalue":"3102", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3103", "refvalue":"3103", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3104", "refvalue":"3104", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3105", "refvalue":"3105", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3106", "refvalue":"3106", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3201", "refvalue":"3201", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3202", "refvalue":"3202", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3203", "refvalue":"3203", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3204", "refvalue":"3204", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3301", "refvalue":"3301", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3302", "refvalue":"3302", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3303", "refvalue":"3303", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj3304", "refvalue":"3304", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj4001", "refvalue":"4001", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj4002", "refvalue":"4002", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj4101", "refvalue":"4101", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj4102", "refvalue":"4102", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj5001", "refvalue":"5001", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj5002", "refvalue":"5002", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj5101", "refvalue":"5101", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj5102", "refvalue":"5102", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj5201", "refvalue":"5201", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj5202", "refvalue":"5202", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj6001", "refvalue":"6001", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj6002", "refvalue":"6002", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj6003", "refvalue":"6003", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj6004", "refvalue":"6004", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj7001", "refvalue":"7001", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj8001", "refvalue":"8001", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj8101", "refvalue":"8101", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj8201", "refvalue":"8201", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj8301", "refvalue":"8301", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj8302", "refvalue":"8302", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj9001", "refvalue":"9001", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj10001", "refvalue":"10001", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj10002", "refvalue":"10002", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj10003", "refvalue":"10003", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj10101", "refvalue":"10101", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj10102", "refvalue":"10102", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]},
+            {"name": "obj10103", "refvalue":"10103", "option": [{"name":"value", "value":"DISCRETE,LIMIT"}]}
+        ],
+        "confirm":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "read":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "write":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "select":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "operate":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "direct_operate":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "direct_operate_no_ack ":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "immediate_freeze":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "immediate_freeze_no_ack ":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "freeze_and_clear":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "freeze_and_clear_no_ack":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "freeze_with_time":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "freeze_with_time_no_ack":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "cold_restart":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "warm_restart":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "initialize_data":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "initialize_application":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "start_application":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "stop_application":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "save_configuration":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "enable_spontaneous_msg":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "disable_spontaneous_msg":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "assign_classes":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "delay_measurement":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "record_current_time":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "open_file":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "close_file":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "delete_file":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "get_file_info":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "authenticate_file":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "abort_file":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "activate_config":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "authentication_request":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "authentication_error":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "response":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "unsolicited_response":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        },
+        "authentication_response":{
+            "value":[
+                {"name": "object", "ref": "ref-options"}
+            ]
+        }
+    }
+}

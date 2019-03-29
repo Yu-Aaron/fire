@@ -1,0 +1,36 @@
+<div cg-busy="{promise:$root.deployTaskPromise,message:'部署中...'}">
+  <div class="inner-main" id="rule_maliciousdomain_tabs">
+    <div class="alert-info" ng-show="!maliciousdomain.switchOn">域名规则检测没有开启，请到系统设置内开启检测。</div>
+    <div id="rule_maliciousdomain_tabs_div" class="tab-container" ng-controller="TabCtrl as tab">
+      <ul class="nav nav-tabs nav-tabs-inverted nav-tabs-lg nav-tabs-lime"
+          ng-init="tab.active || tab.activatePanel((tab.isActive('waiting') || (maliciousdomain.waitingDomainCount && maliciousdomain.waitingDomainCount > 0)) ? 'waiting' : 'deployed')">
+        <li id="rule_maliciousdomain_li_deployedTab" ng-class="{ active: tab.isActive('deployed') }">
+          <a ui-sref="rule.maliciousdomain({panel: 'deployed'})">
+            <i class="fa fa-wrench nav-tab-icon"></i><span class="nav-tab-title">已部署规则</span><span
+            ng-if="maliciousdomain.deployedDomainCount && maliciousdomain.deployedDomainCount > 0"
+            class="badge nav-tab-badge">{{maliciousdomain.deployedDomainCount}}
+          </a>
+        </li>
+        <li id="rule_maliciousdomain_li_waitingTab" ng-class="{ active: tab.isActive('waiting') }">
+          <a ui-sref="rule.maliciousdomain({panel: 'waiting'})">
+            <i class="fa fa-file-text-o nav-tab-icon"></i><span class="nav-tab-title">待处理规则</span><span
+            ng-if="maliciousdomain.waitingDomainCount && maliciousdomain.waitingDomainCount > 0"
+            class="badge nav-tab-badge">{{maliciousdomain.waitingDomainCount}}
+          </a></span>
+        </li>
+      </ul>
+      <div ng-switch on="tab.active" class="tab-container-body">
+        <div ng-switch-when="deployed">
+          <dtable>
+            <deployed-tab></deployed-tab>
+          </dtable>
+        </div>
+        <div ng-switch-when="waiting">
+          <dtable>
+            <waiting-tab></waiting-tab>
+          </dtable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

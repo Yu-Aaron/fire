@@ -1,0 +1,119 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">预览规则</h3>
+  <a id="rule-whiteList-editor_a_previewCancel" class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+
+<div class="modal-body" id="ip_rule_policy_detail">
+  <h4 class="modal-title spacing-small"><i class="fa fa-cogs icon-left"></i>规则信息</h4>
+
+  <div class="bg-gray-80">
+    <div class="rules-info">
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="row">
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">规则组名称</h6>
+                <span>{{policyBlock.name}}</span>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">起源IP</h6>
+                <span>{{policyBlock['_sourceZoneName']}}</span>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">目标IP</h6>
+                <span>{{policyBlock['_destinationZoneName']}}</span>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">协议名称</h6>
+                <span>{{rule.protocolType}}</span>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">起源端口</h6>
+                <span>{{rule.sourcePort}}</span>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">目标端口</h6>
+                <span>{{rule.destinationPort}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="row">
+            <div id="whitelist_policycontent_preview_window_createdate" class="rules-info-item">
+              <h6 class="rules-info-item-title">创建时间</h6>
+              <span>{{policyBlock.createdAt | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6 no-padding">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">处理方式</h6>
+                <div ng-if="policy.inUse">
+                  {{getRuleAction(rule.action)}}
+                </div>
+                <div class="dropdown display-inline-block" dropdown ng-if="!policy.inUse">
+                  <button class="btn btn-default pull-right dropdown-toggle" dropdown-toggle
+                          ng-disabled="$root.isX03">
+                    <i ng-if="rule.action =='REJECTBOTH'" class="fa fa-ban text-red"></i>
+                    <i ng-if="rule.action =='DROP'" class="fa fa-remove text-red"></i>
+                    <i ng-if="rule.action =='ALERT'" class="fa fa-exclamation-triangle text-yellow"></i>
+                    <i ng-if="rule.action =='ALLOW'" class="fa fa-check text-green"></i>
+                    {{getRuleAction(rule.action)}}
+                  </button>
+                  <ul class="dropdown-menu pull-left" role="menu" aria-labelledby="signature-drop-down">
+                    <li ng-click="rule.action = 'REJECTBOTH';changeAction(rule, 'REJECTBOTH')" role="presentation"><a
+                      class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                      class="fa fa-ban text-red"></i> 阻断</a></li>
+                    <li ng-click="rule.action = 'DROP';changeAction(rule, 'DROP')" role="presentation"><a
+                      class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                      class="fa fa-remove text-red"></i> 丢弃</a></li>
+                    <li ng-click="rule.action = 'ALERT';changeAction(rule, 'ALERT')" role="presentation"><a
+                      class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                      class="fa fa-exclamation-triangle text-yellow"></i> 警告</a></li>
+                    <li ng-click="rule.action = 'ALLOW';changeAction(rule, 'ALLOW')" role="presentation"><a
+                      class="dropdown-menu-item" role="menuitem" tabindex="-1" href="#"><i
+                      class="fa fa-check text-green"></i> 允许</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-6 no-padding">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">风险等级</h6>
+                <div ng-if="policy.inUse">{{getRuleRiskLevel(rule.riskLevel)}}</div>
+                <div class="dropdown display-inline-block" dropdown ng-if="!policy.inUse">
+                  <button class="btn dropdown-toggle" dropdown-toggle>
+                    {{rule.riskLevel | riskLevel}}
+                  </button>
+                  <ul class="dropdown-menu pull-left" role="menu" aria-labelledby="signature-drop-down">
+                    <li ng-click="changeRiskLevel(rule, 'LOW')" role="presentation"><a class="dropdown-menu-item"
+                                                                                       role="menuitem" tabindex="-1"
+                                                                                       href="#">低</a></li>
+                    <li ng-click="changeRiskLevel(rule, 'MEDIUM')" role="presentation"><a class="dropdown-menu-item"
+                                                                                          role="menuitem" tabindex="-1"
+                                                                                          href="#">中</a></li>
+                    <li ng-click="changeRiskLevel(rule, 'HIGH')" role="presentation"><a class="dropdown-menu-item"
+                                                                                        role="menuitem" tabindex="-1"
+                                                                                        href="#">高</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

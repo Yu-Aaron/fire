@@ -1,0 +1,93 @@
+<!-- Event Main -->
+<div class="event-inner-main inner-main">
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-lg">
+        <div class="panel-header panel-header-border">
+          <h5 class="panel-header-title">事件详情总览</h5>
+        </div>
+        <div class="panel-body panel-dashboard">
+          <div class="row text-right">
+            <div class="col-xs-2 bg-icon bg-icon-bookmark">
+              <div class="mid-line spin-container" style="font-size:27px;" ng-if="event.notInit">
+                <i class="fa fa-spinner fa-spin"></i><br/>
+                <span class="spin-text">加载中...</span>
+              </div>
+              <h1 class="panel-dashboard-value text-green" ng-if="!event.notInit">{{event.evtCnt.totalToday || 0}}</h1>
+              <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-green fa fa-bookmark"></i>今日事件总数
+              </h4>
+            </div>
+            <div class="col-xs-3 bg-icon bg-icon-paperclip">
+              <div class="mid-line spin-container" style="font-size:27px;" ng-if="event.notInit">
+                <i class="fa fa-spinner fa-spin"></i><br/>
+                <span class="spin-text">加载中...</span>
+              </div>
+              <h1 class="panel-dashboard-value text-light-blue" ng-if="!event.notInit">{{event.evtCnt.totalNew ||
+                0}}</h1>
+              <h4 class="panel-dashboard-title"><i
+                class="panel-dashboard-title-icon text-light-blue fa fa-paperclip"></i>未读事件</h4>
+            </div>
+            <div class="col-xs-3 bg-icon bg-icon-clock">
+              <div class="mid-line spin-container" style="font-size:27px;" ng-if="event.notInit">
+                <i class="fa fa-spinner fa-spin"></i><br/>
+                <span class="spin-text">加载中...</span>
+              </div>
+              <h1 class="panel-dashboard-value text-orange" style="font-size:27px" ng-if="!event.notInit">
+                {{event.evtCnt.peakHours.start | date: 'HH:mm'}} - {{event.evtCnt.peakHours.end | date: 'HH:mm'}}</h1>
+              <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-orange fa fa-clock-o"></i>高峰时段
+              </h4>
+            </div>
+            <div class="col-xs-3 bg-icon bg-icon-ban">
+              <div class="mid-line spin-container" style="font-size:27px;" ng-if="event.notInit">
+                <i class="fa fa-spinner fa-spin"></i><br/>
+                <span class="spin-text">加载中...</span>
+              </div>
+              <h1 class="panel-dashboard-value text-red-orange" ng-if="!event.notInit">{{event.evtCnt.errorIncident ||
+                0}}</h1>
+              <h4 class="panel-dashboard-title"><i class="panel-dashboard-title-icon text-red-orange fa fa-ban"></i>阻断事件
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="tab-container" ng-controller="TabCtrl as tab" ng-if="event.defaultTab&&event.defaultTab!=='none'">
+    <ul class="nav nav-tabs nav-tabs-lg nav-tabs-red-orange nav-tabs-top-border"
+        ng-init="tab.active || tab.activatePanel(event.defaultTab)">
+      <li id="monitor_incident_incident" ng-class="{ active: tab.isActive('incident') }"
+          ng-if="event.contentEnable('SEC_INCIDENT')" ng-hide="event.securityEventNoViewRight">
+        <a ui-sref="monitor.event({panel: 'incident'})" ng-click="tab.activatePanel('incident')"><i
+          class="fa fa-gear nav-tab-icon"></i>
+          <span>安全事件</span>
+          <span class="badge text-red" ng-show="event.evtCnt.newIncident">{{event.evtCnt.newIncident}}</span>
+        </a>
+      </li>
+      <li id="monitor_incident_event" ng-class="{ active: tab.isActive('sysEvent') }"
+          ng-if="event.contentEnable('EVENT')" ng-hide="event.systemEventNoViewRight">
+        <a ui-sref="monitor.event({panel: 'sysEvent'})" ng-click="tab.activatePanel('sysEvent')"><i
+          class="fa fa-dashboard nav-tab-icon"></i>
+          <span>系统事件</span>
+          <span class="badge text-red" ng-show="event.evtCnt.newEvent">{{event.evtCnt.newEvent}}</span>
+        </a>
+      </li>
+    </ul>
+    <div ng-switch on="tab.active" class="tab-container-body">
+      <!-- 安全事件 -->
+      <div ng-switch-when="incident">
+        <dtable>
+          <incident-table></incident-table>
+        </dtable>
+      </div>
+      <!-- 系统事件 -->
+      <div ng-switch-when="sysEvent">
+        <dtable>
+          <event-table></event-table>
+        </dtable>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,181 @@
+<div id="timeline-container">
+  <script type="text/ng-template" id="incidentPopoverTemplate">
+    <div>{{time.full}}<br>{{value.count}}条{{timeline.typeMap[key].name }}事件<br>点击左键查看详情</div>
+  </script>
+  <script type="text/ng-template" id="incidentClickPopoverTemplate">
+    <div>
+      <table ng-if="value.protocolGroups.length">
+        <tbody>
+          <tr>
+            <th>协议种类</th>
+            <th>事件数</th>
+            <th>操作</th>
+          </tr>
+          <tr ng-repeat="item in value.protocolGroups">
+            <td>{{item.name}}</td>
+            <td>{{item.count}}</td>
+            <td>
+              <button class="btn btn-default btn-sm" ng-click="timeline.clickProtocolItem(item, time, key)"><i class="fa fa-search"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p ng-if="!value.protocolGroups.length">0条事件信息</p>
+    </div>
+  </script>
+  <script type="text/ng-template" id="protocolIncidentsTemplate">
+    <div class="modal-wrapper">
+      <div class="modal-header">
+        <h3 class="modal-header-title"><i class="fa fa-exclamation-triangle text-red icon-left"></i>事件列表
+        </h3>
+      </div>
+      <div class="modal-body container-fluid">
+        <dtable>
+          <timeline-incident-table></timeline-incident-table>
+        </dtable>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default pull-right" ng-click="cancel()"><i class="fa fa-close icon-left"></i>关闭</button>
+      </div>
+    </div>
+
+  </script>
+  <script type="text/ng-template" id="configTemplate">
+    <div class="timeline-config-modal">
+      <div class="modal-header">
+        <h4 class="modal-header-title">事件时间线配置</h4>
+      </div>
+      <div class="modal-body form-horizontal">
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-3 control-label">是否显示过滤器</label>
+            <div class="col-sm-9">
+              <switch-toggle status="config.showFilter" on-label="显示" off-label="隐藏"></switch-toggle>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-3 control-label">实时模式</label>
+            <div class="col-sm-9">
+              <switch-toggle status="config.realtime" on-label="开启" off-label="关闭"></switch-toggle>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" ng-if="!config.realtime">
+          <div class="row">
+            <label class="col-sm-3 control-label">选择结束时间</label>
+            <div class="col-sm-9">
+              <date-picker ng-model="config.dateInput"
+                           placeholder="timeline.timeRulerEnd._d"
+                           end-date="{{timeline.nowDate}}">
+              </date-picker>
+              <time-picker ng-model="config.timeInput"
+                           placeholder="timeline.timeRulerEnd._d">
+              </time-picker>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label class="col-sm-3 control-label">x轴缩放大小</label>
+            <div class="col-sm-3">
+              <input type="range" ng-model="config.zoom" min="1" max="10" step="1"/>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default pull-right" ng-click="setConfig()">
+          <i class="fa fa-check text-lime icon-left"></i>确定
+        </button>
+
+        <button class="btn btn-default pull-left" ng-click="cancel()">
+          <i class="fa fa-times icon-left"></i>取消
+        </button>
+      </div>
+    </div>
+  </script>
+  <div class="title-box">
+    <h2>{{timeline.title}}</h2>
+    <h4>{{timeline.subTitle}}</h4>
+  </div>
+  <button class="btn btn-default btn-cog" ng-click="timeline.openConfigModal()"><i class="fa fa-cog"></i></button>
+  <div class="wrap" data-drag="true" data-drop="true" data-jqyoui-options="{{timeline.dragOptions}}" jqyoui-draggable="{{timeline.dragSettings}}" jqyoui-droppable ng-style="{width: timeline.wrapWidth}">
+    <ul class="time-box" ng-class="{'has-selected': timeline.hasSelected}">
+      <li class="group" ng-repeat="time in timeline.timeRulerList track by time.unix" ng-style="{width: timeline.widthPerMinute / 3}">
+        <ul class="incidents"
+
+        >
+          <li class="incident zeroHeight"
+              ng-repeat="incident in timeline.incidents[time.unix] track by incident.time"
+              ng-style="{height: incident.total/timeline.maxYAxis*100 + '%'}"
+              delay-remove-class="zeroHeight"
+              ng-mouseenter="timeline.mouseenter($event, incident)"
+              ng-mouseleave="timeline.mouseleave($event)"
+          >
+            <div
+              class="bar"
+              ng-show="value.filter"
+              ng-style="{flexGrow: value.count}"
+              ng-repeat="key in timeline.types"
+              ng-init="value = incident.data[key]"
+              ng-mouseenter="timeline.popover($event, this)"
+              ng-mouseleave="timeline.popoverHide($event)"
+              ng-click="timeline.clickIncidentItem($event, this)"
+              data-placement="auto right"
+              data-container="body"
+              data-html="true"
+              data-content="<div></div>"
+              data-trigger="manual"
+              data-template='<div class="popover popover-timeline" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+            >
+              <div class="content" style="background: {{timeline.typeMap[key].color}};"></div>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <ul class="time-ruler">
+      <li ng-repeat="time in timeline.timeRulerList track by time.unix" ng-class="time.className" ng-style="{width: timeline.widthPerMinute / 3}"><span class="time">{{time.format}}</span></li>
+    </ul>
+
+  </div>
+  <ul class="y-axis">
+    <li ng-repeat="item in timeline.YAxis"><span>{{item}}</span></li>
+  </ul>
+  <div class="ft">
+    <button class="btn btn-default" ng-click="timeline.moveLeft()"><i class="fa fa-angle-double-left"></i></button>
+    <button class="btn btn-default"
+            ng-click="timeline.prev()"
+            ng-disabled="timeline.noPrev"
+    >
+      <i class="fa fa-angle-left"></i>
+    </button>
+    <button class="btn btn-default" ng-click="timeline.toggleTimeMode()">
+      <i class="fa fa-clock-o"></i>
+    </button>
+    <button class="btn btn-default"
+            ng-click="timeline.next()"
+            ng-disabled="timeline.noNext"
+    >
+      <i class="fa fa-angle-right"></i>
+    </button>
+    <button class="btn btn-default" ng-click="timeline.moveRight()"><i class="fa fa-angle-double-right"></i></button>
+  </div>
+  <div class="filter-box" ng-if="timeline.showFilter">
+    <h5>过滤事件类型</h5>
+    <ul>
+      <li ng-repeat="(key, item) in timeline.typeMap"
+          ng-class="{negative: item.filter === false}"
+          style="color: {{item.color}};"
+          ng-click="item.filter = !!!item.filter"
+      >
+        <i class="fa {{item.icon}}"></i>
+        <span>{{item.name}}</span>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="row margin-bottom-default">
+  <div class="col-md-1">
+    <button ui-sref="setting.systemdevice({tab:'CONFIGURATION_DEVICE_BACKUP'})" class="btn btn-default">
+      <i class="fa fa-arrow-circle-left icon-left"></i>返回
+    </button>
+  </div>
+  <div class="col-md-11">
+    <h2 id="security_detail_device_name" class="title-page-main">{{deviceName}}</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-lg">
+      <div class="panel-header panel-header-border">
+        <h5 class="panel-header-title">安全设备备份文件</h5>
+      </div>
+      <div class="panel-body panel-body-light">
+        <dtable>
+          <conf-backup-file-table deviceid="{{deviceid}}"></conf-backup-file-table>
+        </dtable>
+      </div>
+    </div>
+  </div>
+</div>

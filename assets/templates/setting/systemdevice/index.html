@@ -1,0 +1,354 @@
+<div class="tab-container margin-top-medium system-config-page system-upgrade" ng-controller="TabCtrl as tab">
+  <ul class="nav nav-tabs nav-tabs-lg nav-tabs-lime"
+      ng-init="tab.active || tab.activatePanel(sysdevice.system_device_init_tab)">
+    <li id="security_device_reset" ng-class="{ active: tab.isActive('DEVICE_RESET') }" privilege="SETTINGS_DPI_REBOOT"
+        ng-if="sysdevice.systemConsoleTabEnabled('SYSTEM_DEVICE_RESET')">
+      <a href="#" ng-click="tab.activatePanel('DEVICE_RESET')">
+        <span>设备重置</span>
+      </a>
+    </li>
+    <li id="security_device_upgrade" ng-class="{ active: tab.isActive('DEVICE_UPGRADE') }"
+        privilege="SETTINGS_DPI_UPGRADE_RESET" ng-if="sysdevice.systemConsoleTabEnabled('SYSTEM_DEVICE_UPGRADE')">
+      <a href="#" ng-click="tab.activatePanel('DEVICE_UPGRADE')">
+        <span>设备升级</span>
+      </a>
+    </li>
+    <li id="security_config_dncp" ng-class="{ active: tab.isActive('CONFIG_DHCP') }">
+      <a href="#" ng-click="tab.activatePanel('CONFIG_DHCP')">
+        <span>配置DHCP开关</span>
+      </a>
+    </li>
+    <!--       CS-9802 hide dpi config backup
+		  <li id="security_device_confBackup" ng-class="{ active: tab.isActive('CONFIGURATION_BACKUP') }" privilege="DEVICE_MANAGEMENT">
+			<a href="#" ng-click="tab.activatePanel('CONFIGURATION_BACKUP')">
+			  <span>系统备份</span>
+			</a>
+		  </li> -->
+  </ul>
+
+  <div ng-switch on="tab.active">
+    <div class="tab-container-body" ng-switch-when="DEVICE_UPGRADE">
+      <div class="alert-warning">DPI设备升级时，请事先通知其他用户，以确保升级过程中不会有信息丢失。</div>
+      <div class="panel panel-lg" ng-if="!sysdevice.isUpgrading&&!sysdevice.firstConfirmUpgrade">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="panel-body panel-body-border">
+              <div class="system-upgrade-main">
+                <!--<div ng-show="!sysdevice.uploader.queue[0].isSuccess">-->
+                <div>
+                  <p class="title">第一步： 选择升级设备*</p>
+                  <div class="content">
+                    <div class="dpi-table">
+                      <table class="table">
+                        <thead>
+                        <tr>
+                          <th><input id="sysdevice_upgrade_dpi_select_all" ng-disabled="!sysdevice.editRight"
+                                     type="checkbox" ng-model="sysdevice.upgrade_dpiSelectAll"
+                                     ng-click="sysdevice.upgrade_selectAllDPI()"></th>
+                          <th>设备名称</th>
+                          <th>序列号</th>
+                          <th>型号</th>
+                          <th>IP地址</th>
+                          <th>设备版本</th>
+                          <th>上次升级信息</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr id="sysdevice_upgrade_dpi_row_{{$index}}" ng-repeat="item in sysdevice.dpiData"
+                            ng-if="item.topologyId !== '-1'">
+                          <td><input type="checkbox" ng-model="sysdevice.upgrade_selectDPI[$index]"
+                                     ng-click="sysdevice.changeUpdate()"
+                                     ng-disabled="(item.deviceOnline !== 1 || item.deviceSource !== 'DISCOVERY') && item.topologyId !== '-1'">
+                          </td>
+                          <td class="table-overflow-nowrap">{{item.name}}</td>
+                          <td>{{item.serialNumber}}</td>
+                          <td>{{sysdevice.simplifyModelName(item._model_name)}}</td>
+                          <td>{{item.ip}}</td>
+                          <td>{{item.version}}</td>
+                          <td>
+                            <div
+                              ng-if="sysdevice.upgradingDPIinfo&&sysdevice.upgradingDPIinfo[$index].state==='NONE'&&sysdevice.upgradingDPIinfo[$index].percentage===100">
+                              &nbsp;升级完成
+                            </div>
+                            <div
+                              ng-if="sysdevice.upgradingDPIinfo&&sysdevice.upgradingDPIinfo[$index].state==='NONE'&&sysdevice.upgradingDPIinfo[$index].percentage===0">
+                              &nbsp;上次未升级
+                            </div>
+                            <div
+                              ng-if="sysdevice.upgradingDPIinfo&&sysdevice.upgradingDPIinfo[$index].state==='COMMAND_RESOLVED'">
+                              设备升级命令解析完成
+                            </div>
+                            <div
+                              ng-if="sysdevice.upgradingDPIinfo&&sysdevice.upgradingDPIinfo[$index].state==='DOWNLOADING'">
+                              下载升级包
+                            </div>
+                            <div
+                              ng-if="sysdevice.upgradingDPIinfo&&sysdevice.upgradingDPIinfo[$index].state==='UPGRADING'">
+                              升级DPI设备
+                            </div>
+                            <div ng-if="sysdevice.upgradingDPIinfo[$index].error" class="input-alert-error">
+                              发生错误，升级失败<br/>错误信息： {{sysdevice.upgradingDPIinfo[$index].reason}}
+                            </div>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <br/>
+                <div ng-show="sysdevice.upgrade_isAnySelected()">
+                  <p class="title">第二步： 上传升级包*</p>
+                  <div class="content">
+                    <div ng-if="sysdevice.upgradeImageInfo.imageVersion">
+                      当前升级包：<br/>版本： {{sysdevice.upgradeImageInfo.imageVersion}} | 修改时间：
+                      {{sysdevice.upgradeImageInfo.updatedAt | date:'yyyy-MM-dd HH:mm'}} | 文件大小：
+                      {{sysdevice.upgradeImageInfo.imageSize/1024/1024|number:2}}MB<br/><br/>
+                    </div>
+                    <span ng-repeat="item in sysdevice.uploader.queue">
+			              <p><strong>{{ item.file.name }}</strong> &nbsp; {{item.file.lastModifiedDate | date:'yyyy-MM-dd HH:mm'}} &nbsp; {{ item.file.size/1024/1024|number:2 }} MB &nbsp;
+				          </p>
+				          <p>
+				            <div class="progress" style="margin-bottom: 0; width: 70%; display: inline-block;">
+				              <div class="progress-bar progress-bar-default" role="progressbar"
+                           ng-style="{ 'width': item.progress + '%' }"></div>
+				            </div> &nbsp;
+					        <button ng-if="item.isUploading" type="button" class="btn btn-default" ng-click="item.cancel()">
+					          <span><i class="fa fa-ban icon-left"></i>取消</span>
+					        </button>
+					        <button ng-if="item.isError" type="button" class="btn btn-default" ng-click="item.upload()">
+					          <span><i class="fa fa-refresh icon-left"></i>重试</span>
+					        </button><br/>
+			                <span class="text-lime" ng-show="item.isSuccess"><i class="fa fa-check"></i> 上传成功
+				            </span>
+				            <span class="text-orange" ng-show="item.isCancel"><i class="fa fa-ban"></i> 上传取消
+				            </span>
+				            <span class="text-red-orange" ng-show="item.isError"><i class="fa fa-times"></i> 上传失败 &nbsp; {{sysdevice.uploadImageFail}}
+				            </span>
+                      </p>
+				        </span>
+                    <div class="btn-group btn-group-column ">
+                      <button id="sysdevice_upgrade_upload_file_button" type="button" class="btn btn-default">
+                        <input id="sysdevice_upgrade_upload_file_input" type="file" nv-file-select=""
+                               uploader="sysdevice.uploader"
+                               ng-disabled="sysdevice.uploader.queue[0].progress && sysdevice.uploader.queue[0].progress !== 0 && !sysdevice.uploader.queue[0].isSuccess"
+                               ng-click="sysdevice.uploader.clearQueue()" multiple></input>
+                        <i class="fa fa-upload"></i> &nbsp; 上传
+                      </button>
+                    </div>
+                    <br/>
+                  </div>
+                </div>
+                <div
+                  ng-show="sysdevice.upgrade_isAnySelected()&&((sysdevice.upgradeImageInfo.imageVersion&&!sysdevice.uploader.queue[0])||sysdevice.uploader.queue[0].isSuccess)">
+                  <p class="title">第三步： 确认升级<span ng-if="sysdevice.downgradeWarning">警告</span>*</p>
+                  <div class="content">
+				    	<span ng-repeat="device in sysdevice.upgradeDevicelist">
+				    		<span ng-if="sysdevice.versionCompare[$index]==='LOWER'"><i
+                  class="fa fa-exclamation-triangle text-red"></i> {{device.name}}: （当前版本：{{device.version}}）将被降级至{{sysdevice.upgradeImageInfo.imageVersion.slice(0, sysdevice.upgradeImageInfo.imageVersion.lastIndexOf('-'))}}。</span><br/>
+				    		<span ng-if="sysdevice.versionCompare[$index]==='SAME'"><i class="fa fa-info-circle"></i> {{device.name}}: 升级包版本跟当前设备版本相同，设备系统将被覆盖。</span><br/>
+				    	</span>
+                    <p ng-if="sysdevice.downgradeWarning"><input id="sysdevice_upgrade_confirm_downgrade_warning"
+                                                                 type="checkbox"
+                                                                 ng-model="sysdevice.confirmDowngradeWarning"> 略过警告</p>
+                    <button id="sysdevice_upgrade_confirm_button" type="button" class="btn btn-default"
+                            ng-click="sysdevice.confirmUpgrade(); sysdevice.upgrade_dpiSelectAll=false"
+                            ng-disabled="!(sysdevice.uploader.queue[0].isSuccess||sysdevice.upgradeImageInfo.imageVersion)||!sysdevice.upgrade_isAnySelected()||!sysdevice.editRight||(sysdevice.downgradeWarning&&!sysdevice.confirmDowngradeWarning)">
+                      <span><i class="fa fa-level-up"></i> &nbsp; 升级</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel padding-default" ng-if="sysdevice.isUpgrading||sysdevice.firstConfirmUpgrade">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="panel-body panel-body-border">
+              <div class="alert-warning" ng-if="sysdevice.isUpgrading">DPI设备升级中...</div>
+              <div class="alert-warning" ng-if="!sysdevice.isUpgrading">DPI设备升级完成。</div>
+              <div class="system-upgrade-main">
+                <!--<div ng-show="!sysdevice.uploader.queue[0].isSuccess">-->
+                <div>
+                  <p class="title">升级设备列表:</p>
+                  <div class="content">
+                    <div class="dpi-table">
+                      <table class="table">
+                        <thead>
+                        <tr class="row">
+                          <th class="col-xs-2">设备名称</th>
+                          <th class="col-xs-2">序列号</th>
+                          <th class="col-xs-2">型号</th>
+                          <th class="col-xs-1">IP地址</th>
+                          <th class="col-xs-5">升级信息</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in sysdevice.upgradingDevices" class="row">
+                          <td class="col-xs-2 table-overflow-nowrap">{{item.name}}</td>
+                          <td class="col-xs-2">{{item.serialNumber}}</td>
+                          <td class="col-xs-2">{{sysdevice.simplifyModelName(item._model_name)}}</td>
+                          <td class="col-xs-1">{{item.ip}}</td>
+                          <td class="col-xs-5">
+                            <div
+                              ng-if="sysdevice.upgradingDPIinfo&&sysdevice.upgradingDPIinfo[$index].state==='NONE'&&sysdevice.upgradingDPIinfo[$index].percentage===100"
+                              class="text-lime">&nbsp;升级完成
+                            </div>
+                            <div
+                              ng-if="sysdevice.upgradingDPIinfo&&sysdevice.upgradingDPIinfo[$index].state==='NONE'&&sysdevice.upgradingDPIinfo[$index].percentage===0">
+                              &nbsp;此次未升级
+                            </div>
+                            <div
+                              ng-if="sysdevice.upgradingDPIinfo&&sysdevice.upgradingDPIinfo[$index].state==='COMMAND_RESOLVED'">
+                              设备升级命令解析完成
+                            </div>
+                            <div
+                              ng-if="sysdevice.upgradingDPIinfo&&sysdevice.upgradingDPIinfo[$index].state==='DOWNLOADING'">
+                              下载升级包
+                            </div>
+                            <div
+                              ng-if="sysdevice.upgradingDPIinfo&&sysdevice.upgradingDPIinfo[$index].state==='UPGRADING'">
+                              升级DPI设备
+                            </div>
+                            <div class="progress"
+                                 ng-hide="sysdevice.upgradingDPIinfo&&sysdevice.upgradingDPIinfo[$index].state==='NONE'&&sysdevice.upgradingDPIinfo[$index].percentage===0">
+                              <div
+                                class="progress-bar {{sysdevice.upgradingDPIinfo[$index].error ? 'progress-bar-error':'progress-bar-default'}}"
+                                role="progressbar" aria-valuenow="sysdevice.upgradingDPIinfo[$index].percentageShow"
+                                aria-valuemin="0" aria-valuemax="100"
+                                style="width:{{sysdevice.upgradingDPIinfo[$index].percentageShow}}%">
+                              </div>
+                            </div>
+                            <div ng-if="sysdevice.upgradingDPIinfo[$index].error" class="input-alert-error">
+                              发生错误，升级失败<br/>错误信息： {{sysdevice.upgradingDPIinfo[$index].reason}}
+                            </div>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <br/>
+                    <div ng-if="!sysdevice.isUpgrading">
+                      <button class="btn btn-default pull-right"
+                              ng-click="sysdevice.isUpgrading=false; sysdevice.firstConfirmUpgrade=false"><i
+                        class="fa fa-reply"></i> &nbsp;返回
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-switch on="tab.active">
+    <div class="tab-container-body" ng-switch-when="DEVICE_RESET">
+      <p class="alert-warning">DPI重启或恢复原厂设置会导致信息丢失，请先备份信息。</p>
+      <div class="panel panel-lg">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="panel-body panel-body-border">
+              <div class="system-upgrade-main">
+                <p class="title">第一步： 选择重置方式*</p>
+                <div class="content">
+                  <div class="btn-group btn-group-column ">
+                    <input id="setting-systemdevice_radio_restart" type="radio" ng-model="sysdevice.reset.type"
+                           value="restart"> &nbsp; 重启<br/>
+                    <input id="setting-systemdevice_radio_shutdown" type="radio" ng-model="sysdevice.reset.type"
+                           value="shutdown"> &nbsp; 关闭<br/>
+                    <input id="setting-systemdevice_radio_reset" type="radio" ng-model="sysdevice.reset.type"
+                           value="reset"> &nbsp; 恢复出厂设置<br/>
+                  </div>
+                  <br/>
+                  <br/>
+                  <br/>
+                </div>
+                <p class="title">第二步： 选择重置设备*</p>
+                <div class="content">
+                  <div class="dpi-table">
+                    <table class="table">
+                      <thead>
+                      <tr>
+                        <th><input id="setting-systemdevice_checkbox_SelectAll" type="checkbox"
+                                   ng-model="sysdevice.reset_dpiSelectAll" ng-click="sysdevice.reset_selectAllDPI()"
+                                   ng-disabled="!sysdevice.editRight"></th>
+                        <th>设备名称</th>
+                        <th>序列号</th>
+                        <th>型号</th>
+                        <th>IP地址</th>
+                        <th>设备版本</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr id="setting_systemdevice_row_{{$index}}" ng-repeat="item in sysdevice.dpiData"
+                          ng-if="item.topologyId !== '-1'">
+                        <td><input id="setting-systemdevice_checkbox_{{item.name}}" type="checkbox"
+                                   ng-model="sysdevice.reset_selectDPI[$index]"
+                                   ng-disabled="item.deviceOnline !== 1||(!sysdevice.editRight)||item.isUpgrading"></td>
+                        <td class="table-overflow-nowrap">{{item.name}}</td>
+                        <td>{{item.serialNumber}}</td>
+                        <td>{{sysdevice.simplifyModelName(item._model_name)}}</td>
+                        <td>{{item.ip}}</td>
+                        <td>{{item.version}}</td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <br/>
+                  <button id="setting-systemdevice_button_confirmReset" type="button" class="btn btn-primary pull-right"
+                          ng-click="sysdevice.confirmReset()" ng-disabled="!sysdevice.editRight">
+                    <span>确认重置</span></button>
+                </div>
+              </div>
+              <div ng-show="sysdevice.isDPIUpgrading">
+                <span class="warning">&nbsp; (DPI设备升级中，无法重置DPI设备)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-switch on="tab.active">
+    <div class="tab-container-body" ng-switch-when="CONFIG_DHCP">
+      <div class="panel panel-lg">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="panel-body panel-body-border">
+              <div class="system-upgrade-main">
+                <p class="title">选择服务开关*</p>
+                <div class="content">
+                  <div class="btn-group btn-group-column ">
+                    <input id="setting-dhcp_radio_open" type="radio" ng-model="sysdevice.dhcp.switch" value="1"> &nbsp;
+                    打开<br/>
+                    <input id="setting-dhcp_radio_close" type="radio" ng-model="sysdevice.dhcp.switch" value="0"> &nbsp;
+                    关闭<br/>
+                  </div>
+                  <br/>
+                  <br/>
+                  <br/>
+                </div>
+                <div class="content">
+                  <br/>
+                  <button id="setting-dhcp_button_confirmReset" type="button" class="btn btn-primary pull-right"
+                          ng-click="sysdevice.confirmExecuteDHCP()">
+                    <span>确认执行</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-container-body" ng-switch-when="CONFIGURATION_BACKUP">
+      <configuration-backup target="DEVICE"></configuration-backup>
+    </div>
+  </div>
+</div>

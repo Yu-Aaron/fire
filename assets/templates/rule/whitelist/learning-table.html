@@ -1,0 +1,76 @@
+<div class="row margin-bottom-default">
+  <div class="col-xs-6 text-right">
+    <!-- SEARCH -->
+    <!--
+    <div class="search" style="">
+      <input class="form-control" type="text" placeholder="搜索">
+    </div>
+    -->
+  </div>
+</div>
+
+<div id="whitelist_learning_table" class="table-scroll-wrapper table-scroll-wrapper-striped">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-1 padding-zero" ng-hide="checkbox===false">
+        <input custom-checkbox id="rule-whiteList-editor_checkbox_learningCheckAll" type="checkbox"
+               ng-disabled="learnings.task.state=='PROCESSING' || learnings.task.state=='PAUSED' "
+               ng-change="learnings.toggle()" tri-state-checkbox ng-model="learnings.selectAll"/>
+      </div>
+      <div class="col-xs-2">
+        <span>编号</span>
+      </div>
+      <div class="col-xs-6">
+        <span>规则组名称</span>
+      </div>
+      <div class="col-xs-2">
+        <span>规则项</span>
+      </div>
+      <div class="col-xs-1">
+      </div>
+    </div>
+
+    <div id="whitelist_learning_table_row_{{$index}}" class="row" data-index="0"
+         ng-repeat="learning in learnings.table" fade-in-list>
+      <div class="col-xs-1 padding-zero" ng-hide="checkbox===false">
+        <div class="row padding-sm">
+          <div class="col-xs-6">
+            <input custom-checkbox id="rule-whiteList-editor_checkbox_learningCheck{{$index+1}}" type="checkbox"
+                   ng-hide="learning.deployed"
+                   ng-disabled="learnings.task.state=='PROCESSING' || learnings.task.state=='PAUSED' || learning.deployed"
+                   ng-change="learnings.countSelected(learning)" ng-model="learning.checked">
+          </div>
+          <div class="col-xs-6 padding-sm">
+            <span ng-show="learning.deployed" class="fa-stack fa-small">
+              <i class="fa fa-circle fa-stack-2x text-lime"></i>
+              <i class="fa fa-circle-o fa-stack-2x text-black"></i>
+              <i class="fa fa-check fa-stack-1x text-black"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-2">
+        {{$index+1}}
+      </div>
+      <div class="col-xs-6">
+        {{learning.name}}
+      </div>
+      <div class="col-xs-2">
+        {{learning['_rulesCount']}}
+      </div>
+      <div class="col-xs-1">
+        <span><button id="rule-whiteList-editor_button_learningShowDetail-{{$index+1}}"
+                      ng-click="learnings.showDetail(learning)" class="btn btn-sm btn-default"
+                      setting-privilege privilege-name="RULE_WHITELIST" privilege-require="VIEW"><i
+          class="fa fa-file-text-o"></i></button></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <p id="rule_whitelist_learning_totalnum" ng-if="!learnings.selectedBlockCount">
+    总共{{learnings.table.length}}组规则，{{learnings.blockCount}}条规则项</p>
+  <p id="rule_whitelist_learning_selectednum" ng-if="learnings.selectedBlockCount">
+    已选择{{learnings.selectedBlockCount}}/{{learnings.table.length}}组规则，{{learnings.selectedRuleCount}}/{{learnings.blockCount}}条规则项</p>
+</div>

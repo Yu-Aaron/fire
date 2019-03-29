@@ -1,0 +1,499 @@
+<!-- DEVICE ACL -->
+<section id="device-acl" class="detail-acl" ng-if="detail.device.showRoutingInfo">
+  <div class="detail-information detail-panel">
+    <div class="detail-title">
+      <div class="row">
+        <div class="col-xs-6">
+          <h4>访问控制</h4>
+        </div>
+      </div>
+      <hr class="hr-lime hr-thick">
+    </div>
+
+    <div class="detail-information-content">
+      <div class="row">
+        <form name="form" role="form" class="col-xs-12">
+          <div class="panel">
+            <div class="panel-heading">
+              <span><i class="fa fa-cogs icon-left"></i>访问控制表</span>
+            </div>
+            <div class="panel-body">
+              <div class="detail-page-list-item">
+                <div ng-hide="!detail.isEdited">
+                  <table class="table table-hover icon-hidden">
+                    <thead>
+                    <tr>
+                      <th>编号</th>
+                      <th style="width:120px;">操作</th>
+                      <th style="min-width:175px;">起源地址</th>
+                      <th style="min-width:175px;">目标地址</th>
+                      <th style="min-width:130px;">协议</th>
+                      <th style="min-width:120px;">起源端口</th>
+                      <th style="width:120px;">目标端口</th>
+                      <th style="width:90px;">日志生成</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="acl in detail.aclData">
+                      <td>
+                        <div ng-class="detail.acl.acls_numValidate[$index] ?'acl-correct':'acl-error'">
+                          <input class="acl-num acl-input" type="text" placeholder="{{acl.aclNumber}}"
+                                 ng-model="acl.aclNumber" ng-keyup="detail.checkNum(acl.aclNumber, $index)"/>
+                        </div>
+                      </td>
+                      <td class="acl-ops">
+                        <div class="select-styled acl-ops">
+                          <select ng-model="acl.aclAction">
+                            <option value="permit">允许</option>
+                            <option value="deny">阻断</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="select-styled input-stacked">
+                          <div class="input-stacked-wrap"
+                               ng-class="detail.acl.acls_sourceIpValidate[$index] ?'acl-correct':'acl-error'">
+                            <input class="acl-ip acl-input"
+                                   ng-class="detail.acl.acls_sourceIpEdit[$index]? 'acl-input-enable':'acl-input-disable'"
+                                   ng-disabled="!detail.acl.acls_sourceIpEdit[$index]" type="text"
+                                   placeholder="{{acl.sourceIp}}" ng-model="acl.sourceIp"
+                                   ng-keyup="detail.checkIp(acl.sourceIp, $index, 'source')"/>
+                          </div>
+                          <select ng-model="detail.acl.acls_sourceIpEdit[$index]"
+                                  ng-options="o.v as o.n for o in [{ n: 'ANY', v: false }, { n: '填写范围', v: true }]"
+                                  ng-change="detail.ipChange($index, 'source')">
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="select-styled input-stacked">
+                          <div class="input-stacked-wrap"
+                               ng-class="detail.acl.acls_destinationIpValidate[$index] ?'acl-correct':'acl-error'">
+                            <input class="acl-ip acl-input"
+                                   ng-class="detail.acl.acls_destinationIpEdit[$index]? 'acl-input-enable':'acl-input-disable'"
+                                   ng-disabled="!detail.acl.acls_destinationIpEdit[$index]" type="text"
+                                   placeholder="{{acl.destinationIp}}" ng-model="acl.destinationIp"
+                                   ng-keyup="detail.checkIp(acl.destinationIp, $index, 'target')"/>
+                          </div>
+                          <select ng-model="detail.acl.acls_destinationIpEdit[$index]"
+                                  ng-options="o.v as o.n for o in [{ n: 'ANY', v: false }, { n: '填写范围', v: true }]"
+                                  ng-change="detail.ipChange($index, 'target')">
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="select-styled acl-protocol">
+                          <select ng-model="acl.protocolType"
+                                  ng-change="detail.checkAclProtocol(acl.protocolType, $index)">
+                            <option value="ANY">ANY</option>
+                            <option value="TCP">TCP</option>
+                            <option value="UDP">UDP</option>
+                            <option value="ICMP">ICMP</option>
+                            <option value="OPC_Classic">OPC_Classic</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="select-styled input-stacked" ng-hide="detail.acl.acls_sourcePortDisable[$index]">
+                          <div class="input-stacked-wrap"
+                               ng-class="detail.acl.acls_sourcePortValidate[$index] ?'acl-correct':'acl-error'">
+                            <input class="acl-port acl-input"
+                                   ng-class="detail.acl.acls_sourcePortEdit[$index]? 'acl-input-enable':'acl-input-disable'"
+                                   ng-disabled="!detail.acl.acls_sourcePortEdit[$index]" type="text"
+                                   placeholder="{{acl.sourcePort}}" ng-model="acl.sourcePort"
+                                   ng-keyup="detail.checkPort(acl.sourcePort, $index, 'source')"/>
+                          </div>
+                          <select ng-model="detail.acl.acls_sourcePortEdit[$index]"
+                                  ng-options="o.v as o.n for o in [{ n: 'ANY', v: false }, { n: '填写范围', v: true }]"
+                                  ng-change="detail.portChange($index, 'source')">
+                          </select>
+                        </div>
+                        <div class="acl-center" ng-hide="!detail.acl.acls_sourcePortDisable[$index]">--</div>
+                      </td>
+                      <td>
+                        <div class="select-styled input-stacked"
+                             ng-hide="detail.acl.acls_destinationPortDisable[$index]">
+                          <div class="input-stacked-wrap"
+                               ng-class="detail.acl.acls_destinationPortValidate[$index]?'acl-correct':'acl-error'">
+                            <input class="acl-port acl-input"
+                                   ng-class="detail.acl.acls_destinationPortEdit[$index]?'acl-input-enable':'acl-input-disable'"
+                                   ng-disabled="!detail.acl.acls_destinationPortEdit[$index]" type="text"
+                                   placeholder="{{acl.destinationPort}}" ng-model="acl.destinationPort"
+                                   ng-keyup="detail.checkPort(acl.destinationPort, $index, 'target')"/>
+                          </div>
+                          <select ng-model="detail.acl.acls_destinationPortEdit[$index]"
+                                  ng-options="o.v as o.n for o in [{ n: 'ANY', v: false }, { n: '填写范围', v: true }]"
+                                  ng-change="detail.portChange($index, 'target')">
+                          </select>
+                        </div>
+                        <div class="acl-center" ng-hide="!detail.acl.acls_destinationPortDisable[$index]">--</div>
+                      </td>
+                      <td>
+                        <input type="checkbox" ng-model="acl.aclLog"/>日志生成
+                      </td>
+                      <td style="text-align: center;">
+                        <button type="button" class="btn btn-default btn-sm" ng-click="detail.deleteSingleAcl($index)">
+                          <i class="fa fa-trash"></i></button>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <button type="button" class="btn btn-default acl-add-button" ng-click="detail.addAcl()"><span
+                    class="acl-icon-green"><i class="fa fa-plus"></i></span> 添加访问控制
+                  </button>
+                </div>
+                <div ng-hide="detail.isEdited">
+                  <table class="table table-hover icon-hidden">
+                    <thead>
+                    <tr>
+                      <th>编号</th>
+                      <th>操作</th>
+                      <th>起源地址</th>
+                      <th>目标地址</th>
+                      <th>协议</th>
+                      <th>起源端口</th>
+                      <th>目标端口</th>
+                      <th>日志生成</th>
+                      <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="acl in detail.aclData">
+                      <td>{{acl.aclNumber}}</td>
+                      <td>{{acl._aclAction}}</td>
+                      <td>{{acl.sourceIp}}</td>
+                      <td>{{acl.destinationIp}}</td>
+                      <td>{{acl.protocolType}}</td>
+                      <td>
+                        <div ng-hide="detail.acl.acls_sourcePortDisable[$index]">{{acl.sourcePort}}</div>
+                        <div ng-hide="!detail.acl.acls_sourcePortDisable[$index]">--</div>
+                      </td>
+                      <td>
+                        <div ng-hide="detail.acl.acls_destinationPortDisable[$index]">{{acl.destinationPort}}</div>
+                        <div ng-hide="!detail.acl.acls_destinationPortDisable[$index]">--</div>
+                      </td>
+                      <td><span ng-hide="acl.aclLog"><i class="fa fa-times"></i></span><span ng-hide="!acl.aclLog"><i
+                        class="fa fa-check"></i></span></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- DEVICE ROUTE TABLE -->
+<section id="device-route-table" ng-if="detail.device.showRoutingInfo">
+  <div class="detail-information detail-panel">
+    <div class="detail-title">
+      <div class="row">
+        <div class="col-xs-6">
+          <h4>路由信息</h4>
+        </div>
+      </div>
+      <hr class="hr-lime hr-thick">
+    </div>
+
+    <div class="detail-information-content">
+      <div class="row">
+        <form name="form" role="form" class="col-xs-12">
+          <div class="panel">
+            <div class="panel-heading">
+              <span><i class="fa fa-cogs icon-left"></i>缺省路由</span>
+            </div>
+            <div class="panel-body">
+              <div class="detail-page-list-item">
+                <div ng-hide="detail.isEdited">
+                  <h5 ng-show="detail.device.defaultGateway"
+                      class="detail-page-list-item-title detail-page-list-item-title-inline-block">默认网关：</h5>
+                  <span>{{detail.device.defaultGateway ? detail.device.defaultGateway : '默认网关并无设置，请点选编辑来添加信息'}}</span>
+                </div>
+                <h5 ng-show="detail.isEdited"
+                    class="detail-page-list-item-title detail-page-list-item-title-inline-block">默认网关：</h5>
+                <span ng-show="detail.isEdited">
+                  <input type="text" name="defaultGateway" ng-pattern="detail.validateIp"
+                         ng-model="detail.device.defaultGateway" size="15">
+                  <span class="input-alert-error" ng-show="detail.invalidGateway = form['defaultGateway'].$invalid">
+                    请输入合法的默认网关地址
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <!-- panel -->
+          <div class="panel">
+            <div class="panel-heading" ng-class="{'pandel-heading-with-icon': detail.isEdited}">
+              <span><i class="fa fa-cogs icon-left"></i>远端路由</span>
+              <button class="btn btn-default pull-right btn-in-panel-header-sm" ng-if="detail.isEdited"
+                      ng-click="detail.addRouteTableItem()"><i class="fa fa-plus text-lime icon-left"></i> 添加远端路由
+              </button>
+            </div>
+            <div class="panel-body">
+              <div class="device-view-panels">
+                <div class="device-view-panels-container">
+                  <span ng-if="!detail.device._remoteRoutings.length">远端路由并无设置，请点选编辑来添加信息。</span>
+                  <div ng-repeat="route in detail.device._remoteRoutings"
+                       class="device-view-routing-panel device-view-panel-wrapper">
+                    <form name="form" role="form">
+                      <div class="device-view-panel-head">
+                        <div class="row">
+                          <h5 class="col-xs-8 device-view-panel-head-w-icon">远端路由 {{$index+1}}</h5>
+                          <div class="col-xs-4 text-right">
+                            <button class="btn btn-sm btn-default" ng-click="detail.deleteRouteTableItem($index)"
+                                    ng-if="detail.isEdited"><i class="fa fa-trash"></i></button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="device-view-panel-content">
+                        <div class="row device-view-panel-content-row">
+                          <h5 class="col-xs-4 routing-title">远端网段：</h5>
+                          <span ng-if="!detail.isEdited" class="col-xs-8 routing-value">{{route.networkSegment}}</span>
+                          <span ng-if="detail.isEdited" class="col-xs-8 routing-input"><input type="text"
+                                                                                              name="networkSegment"
+                                                                                              ng-pattern="detail.validateSubnet"
+                                                                                              ng-model="route.networkSegment"
+                                                                                              ng-change="detail.validate[$index].networkSegment = form['networkSegment'].$valid; detail.validateInput()"
+                                                                                              size=10 required></span>
+                          <span class="input-alert-error"
+                                ng-show="form['networkSegment'].$error.pattern">请输入合法的远端网段地址</span>
+                          <span class="input-alert-error"
+                                ng-show="form['networkSegment'].$error.required">请输入远端网段地址</span>
+                        </div>
+                        <div class="row device-view-panel-content-row">
+                          <h5 class="col-xs-4 routing-title">网关：</h5>
+                          <span ng-if="!detail.isEdited" class="col-xs-8 routing-value">{{route.gateway}}</span>
+                          <span ng-if="detail.isEdited" class="col-xs-8 routing-input"><input type="text" name="gateway"
+                                                                                              ng-pattern="detail.validateIp"
+                                                                                              ng-model="route.gateway"
+                                                                                              ng-change="detail.validate[$index].gateway = form['gateway'].$valid; detail.validateInput()"
+                                                                                              size=10 required></span>
+                          <span class="input-alert-error" ng-show="form['gateway'].$error.pattern">请输入合法的网关地址</span>
+                          <span class="input-alert-error" ng-show="form['gateway'].$error.required">请输入网关地址</span>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <!-- panel -->
+          <div class="panel">
+            <div class="panel-heading" ng-class="{'pandel-heading-with-icon': detail.isEdited}">
+              <span><i class="fa fa-cogs icon-left"></i>端口路由配置</span>
+            </div>
+            <div class="panel-body">
+
+              <div class="detail-information-content">
+                <div class="row">
+                  <div class="device-view-panels">
+                    <form name="form" role="form"
+                          class="device-view-panel device-view-panel-wrapper device-large-form-panel"
+                          ng-repeat="(portIndex, p) in detail.device.devicePorts" ng-if="!p.isMgmtPort">
+
+                      <div class="device-view-panel-head">
+                        <div class="row">
+                          <div class="col-xs-8">通信端口 {{p.portName}}</div>
+                        </div>
+                      </div>
+                      <div class="device-view-panel-content">
+
+                        <div class="device-view-panel-content-row">
+                          <div class="title">路由</div>
+                          <div style="margin-bottom: 20px; text-align: center;"
+                               ng-repeat="sp in detail.device.devicePorts"
+                               ng-if="sp.portName != p.portName && !sp.isMgmtPort">
+                            <span>{{sp.portName}}</span>
+                            <span style="margin-left: 15px">
+                              <div class="toggle-bg toggle-alternate"
+                                   ng-class="{true: 'on', false: 'off'}[detail.port[p.portName][sp.portName].model]">
+                                <label
+                                  ng-class="{true: 'on', false: 'off'}[detail.port[p.portName][sp.portName].model]">{{detail.port[p.portName][sp.portName].model ? '连通':'隔离'}}</label>
+                                <input type="checkbox" name="toggle" ng-disabled="!detail.isEdited"
+                                       ng-model="detail.port[p.portName][sp.portName].model"
+                                       ng-change="detail.changeTopoStatus(p.portName, sp.portName)">
+                                <span class="switch"
+                                      ng-class="{true: 'on', false: 'off'}[detail.port[p.portName][sp.portName].model]"></span>
+                              </div>
+                              </span>
+                          </div>
+                        </div>
+
+                        <div class="device-view-panel-content-row">
+                          <div class="title">接口路由</div>
+                          <div ng-if="!detail.isEdit" style="margin-top: 5px">
+                            <span ng-if="!detail.isEdited && !p._subnets.length">端口网关并无路由设置，请点选编辑来添加信息。</span>
+                            <div class="device-subnet-address" ng-repeat="subnet in p._subnets track by $index"
+                                 style="display: block;">
+                              <span style="display: block; float: left; clear: left;">网段：</span>
+                              <span ng-if="!detail.isEdited">{{subnet.subnet}}</span>
+                              <span ng-if="detail.isEdited"><input type="text" name="subnet{{portIndex}}{{$index}}"
+                                                                   ng-model="subnet.subnet"
+                                                                   ng-change="detail.updateSubnetStatus(portIndex, $index, null, subnet.subnet)"
+                                                                   style="width:130px"></span>
+                              <span><button class="btn btn-sm btn-default" ng-if="detail.isEdited"
+                                            ng-click="detail.updateSubnetStatus(portIndex, $index, 'delete')"><i
+                                class="fa fa-trash"></i></button></span>
+                              <span ng-if="detail.isEdited" class="input-alert-error device-show-message"
+                                    ng-style="{'opacity': (detail.isEdited) && !(detail.subnetsValidate[portIndex][$index]) == true ? 1 : 0}">请输入合法的网段地址</span>
+                              <br>
+                            </div>
+                            <button class="btn btn-default device-add-routing-subnet" ng-if="detail.isEdited"
+                                    ng-click="detail.updateSubnetStatus(portIndex, p._subnets.length, 'add')"><i
+                              class="fa fa-plus text-lime icon-left"></i><span>添加路由</span></button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEVICE PORT SECTION -->
+<section id="device-port">
+
+  <!-- detail title -->
+  <div class="detail-title">
+    <div class="row">
+      <div class="col-xs-6">
+        <h4 class="pull-left">端口</h4>
+      </div>
+    </div>
+    <hr class="hr-lime hr-thick">
+  </div>
+
+
+  <div class="panel">
+    <div class="panel-body">
+
+      <!-- INCLUDE DEVICE VIEW -->
+      <div class="device-view" ng-controller="DeviceModelCtrl as deviceModel">
+        <device-view device="detail.device"></device-view>
+      </div>
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</section>
+
+<section id="device-deployment-rules">
+
+  <!-- detail title -->
+  <div class="detail-title">
+    <div class="row">
+      <div class="col-xs-6">
+        <h4 class="pull-left">部署规则</h4>
+      </div>
+      <div class="col-xs-6 text-right">
+        <a ui-sref="monitor.signature" class="btn btn-default pull-right">去规则查看</a>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hr-lime hr-thick margin-bottom-zero">
+
+  <div class="panel margin-top-default padding-default">
+    <dtable>
+      <device-rules></device-rules>
+    </dtable>
+  </div>
+</section>
+
+
+<!-- SECTION: DEVICE EQUIPMENT -->
+<section id="device-equipment" ng-if="0">
+
+  <!-- detail title -->
+  <div class="detail-title">
+    <div class="row">
+      <div class="col-xs-6">
+        <h4 class="pull-left">被保护工控设备</h4>
+      </div>
+    </div>
+  </div>
+
+  <hr class="hr-lime hr-thick margin-bottom-zero">
+
+  <div class="panel">
+
+    <!-- INCLUDE TOOLBAR -->
+    <div class="padding-default" ng-include src="'templates/includes/toolbar.html'"></div>
+
+
+    <!-- SECOND TABLE -->
+    <table class="table table-hover icon-hidden">
+      <thead>
+      <tr>
+        <th>
+          <span>名称</span>
+        </th>
+        <th>
+          <span>序列号</span>
+        </th>
+        <th>
+          <span>厂商</span>
+        </th>
+        <th>
+          <span>型号</span>
+        </th>
+        <th>
+          <span>分区</span>
+        </th>
+        <th>
+          <span>IP</span>
+        </th>
+        <th>
+          <span>应用版本</span>
+        </th>
+        <th>
+          <span>已知漏洞</span>
+        </th>
+        <th>
+          <span>保护漏洞</span>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>设备名称1</td>
+        <td>AN-1002</td>
+        <td>西门子</td>
+        <td>S-7000</td>
+        <td>表面处理车间</td>
+        <td>123.99.20</td>
+        <td>V3.5.113A</td>
+        <td>3</td>
+        <td>3</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="text-right padding-default">
+      <span>总共 3条事件</span>
+    </div>
+  </div>
+  </div>
+</section>

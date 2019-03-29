@@ -1,0 +1,19 @@
+{
+    "updatedAt": "2015-10-30T17:31:37Z",
+    "memoryUsage": 67.5,
+    "partitionUsage": [
+        {
+            "usage": 8.1,
+            "partitionName": "/"
+        },
+        {
+            "usage": 1.9,
+            "partitionName": "/preserve"
+        },
+        {
+            "usage": 91,
+            "partitionName": "/data"
+        }
+    ],
+    "cpuUsage": 27.1
+}

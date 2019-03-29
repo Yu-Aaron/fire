@@ -1,0 +1,34 @@
+<!-- PAGINATION -->
+
+<div class="row">
+  <div class="col-xs-4">
+    <div class="page-number-show" style="display:none">
+      <span>每页显示:</span>
+      <select ng-model="numPerPage" ng-options="pageNum for pageNum in [20, 40, 60]"
+              ng-change="updateNumPerPage()"></select>
+      <span>条</span>
+    </div>
+  </div>
+
+  <div class="col-xs-4 text-center">
+    <pagination ng-model="currentPage"
+                class="pagination-sm"
+                boundary-links="true"
+                total-items="totalCount"
+                items-per-page="numPerPage"
+                max-size="5"
+                num-pages="numPages"
+                previous-text="&lsaquo;"
+                next-text="&rsaquo;"
+                first-text="&laquo;"
+                last-text="&raquo;"
+                ng-change="pageChanged()"
+    ></pagination>
+  </div>
+
+  <div class="col-xs-4" ng-if="totalCount">
+    <div class="count-show text-right">
+      <span id="includes_paginator_totalcount">总共 {{totalCount}}条事件</span>
+    </div>
+  </div>
+</div>

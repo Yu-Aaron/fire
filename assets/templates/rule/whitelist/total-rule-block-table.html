@@ -1,0 +1,57 @@
+<div style="position: relative;">
+  <hr class="hr-small-margin">
+  <div class="spacing"></div>
+
+  <div class="table-scroll-wrapper table-scroll-wrapper-striped">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-1 padding-zero">
+          <input type="checkbox" ng-disabled="dtable.selectAllSigs" ng-change="dtable.toggle()" custom-checkbox tri-state-checkbox
+                 ng-model="dtable.selectAll"/>
+        </div>
+        <div class="col-xs-4">
+          <span>规则名称</span>
+        </div>
+        <div class="col-xs-2" order-by="type">
+          <span>类型</span>
+        </div>
+        <div class="col-xs-3" order-by="updatedAt">
+          <span>更新时间</span>
+        </div>
+        <div class="col-xs-1 padding-zero text-center">
+          <span>内容</span>
+        </div>
+      </div>
+      <div class="row" data-index="0" ng-repeat="rule in dtable.table" fade-in-list>
+        <div class="col-xs-1 padding-zero">
+          <div class="row padding-sm">
+            <div class="col-xs-6">
+              <input custom-checkbox type="checkbox" ng-hide="rule.deployed" ng-disabled="rule.deployed || dtable.selectAllSigs"
+                     ng-change="dtable.countSelected(rule)" ng-model="rule.checked">
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <span>{{rule.name}}</span>
+        </div>
+        <div class="col-xs-2">
+          {{dtable.getSource(rule.type)}}
+        </div>
+        <div class="col-xs-3">
+          <span>{{rule.updatedAt | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+        </div>
+        <div class="col-xs-1 text-center padding-zero">
+          <span><button ng-click="dtable.showDetail(rule)" class="btn btn-sm btn-default"><i
+            class="fa fa-file-text-o"></i></button></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <p id="rule_blacklist_sigaturetable_totalnum" ng-if="!dtable.selectedBlockCount">
+      总共{{dtable.totalNum}}组规则，{{dtable.blockCount}}条规则项</p>
+    <p id="rule_blacklist_ruletable_selectednum" ng-if="dtable.selectedBlockCount">
+      已选择{{dtable.selectedBlockCount}}/{{dtable.totalNum}}组规则，{{dtable.selectedRuleCount}}/{{dtable.blockCount}}条规则项</p>
+  </div>
+</div>

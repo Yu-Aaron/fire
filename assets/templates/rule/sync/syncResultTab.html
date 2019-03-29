@@ -1,0 +1,33 @@
+<div class="inner-main" id="rule_sync_result_tabs">
+  <div id="rule_sync_result_tabs_div" class="tab-container" ng-controller="TabCtrl as tab">
+    <ul class="nav nav-tabs nav-tabs-inverted nav-tabs-lg nav-tabs-lime"
+        ng-init="tab.active || tab.activatePanel((tab.isActive('ic') || (syncCtrl.syncTask.icSyncResultCount && syncCtrl.syncTask.icSyncResultCount > 0)) ? 'ic' : 'ip')">
+      <li id="rule_sync_result_li_icTab" ng-class="{ active: tab.isActive('ic') }">
+        <a ui-sref="rule.sync({panel: 'ic'})">
+          <i class="fa fa-wrench nav-tab-icon"></i><span class="nav-tab-title">工控白名单</span><span
+          ng-if="syncCtrl.syncTask.icSyncResultCount && syncCtrl.syncTask.icSyncResultCount > 0"
+          class="badge nav-tab-badge">{{syncCtrl.syncTask.icSyncResultCount}}
+        </a>
+      </li>
+      <li id="rule_sync_result_li_ipTab" ng-class="{ active: tab.isActive('ip') }">
+        <a ui-sref="rule.sync({panel: 'ip'})">
+          <i class="fa fa-file-text-o nav-tab-icon"></i><span class="nav-tab-title">网络白名单</span><span
+          ng-if="syncCtrl.syncTask.ipSyncResultCount && syncCtrl.syncTask.ipSyncResultCount > 0"
+          class="badge nav-tab-badge">{{syncCtrl.syncTask.ipSyncResultCount}}
+        </a></span>
+      </li>
+    </ul>
+    <div ng-switch on="tab.active" class="tab-container-body">
+      <div ng-switch-when="ic">
+        <dtable>
+          <sync-ic-result-table></sync-ic-result-table>
+        </dtable>
+      </div>
+      <div ng-switch-when="ip">
+        <dtable>
+          <sync-ip-result-table></sync-ip-result-table>
+        </dtable>
+      </div>
+    </div>
+  </div>
+</div>

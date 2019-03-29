@@ -1,0 +1,176 @@
+<h2 class="title-page-main">新建工控设备</h2>
+
+<div class="modal-body-frame">
+  <div class="modal-container">
+    <div class="row">
+      <div class="col-md-6">
+        <div name="form" id="new-device-form" class="form-horizontal" role="form">
+          <div class="form-group">
+            <label for="new-device-name" class="col-md-3 control-label"><span class="text-red">&#42;</span>设备名称</label>
+            <div class="col-md-9">
+              <input type="text" name="name" autofocus class="form-control" id="new-device-name" ng-model="device.name"
+                     ng-change="newDevice.validateDevice()" maxlength="20">
+              <error-msg obj="device" validator="newDevice" type="'name'"></error-msg>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="new-device-serial" class="col-md-3 control-label">设备序列号</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="new-device-serial" ng-model="device.serialNumber"
+                     maxlength="255" ng-change="newDevice.serialNumberChanged()">
+              <error-msg obj="device" validator="newDevice" type="'serialNumber'"></error-msg>
+            </div>
+          </div>
+          <div class="form-group" ng-hide="true">
+            <div class="col-md-9">
+              <div class="select-styled">
+                <select id="new-device-type" class="form-control" ng-init="device.category = 'FACTORY_DEVICE'"
+                        ng-model="device.category" ng-options="type | deviceCategoryFilter for type in forms.category"
+                        disabled></select>
+              </div>
+            </div>
+          </div>
+          <!-- 子网 OPTION -->
+          <div class="form-group">
+            <label for="new-device-working-mode" class="col-md-3 control-label"><span class="text-red">&#42;</span>设备类型</label>
+            <div class="col-md-9">
+              <div class="select-styled">
+                <select id="new-device-working-mode" class="form-control" ng-model="device.modename"
+                        ng-options="item.modename for item in forms.modes" ng-change="newDevice.modeChange()">
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- HIDE AND CLEAR WHEN MODENAME == 子网-->
+          <div class="form-group model-field" ng-hide="device.modename.modename == '子网'">
+            <label for="device-model-list" class="col-md-3 control-label"><span
+              class="text-red">&#42;</span>设备型号</label>
+            <div class="col-md-9">
+              <div class="select-styled input-stacked">
+                <div class="input-stacked-wrap" ng-show="newDevice.newModel">
+                  <input class="form-control" ng-show="newDevice.newModel" type="text" placeholder="请输入设备型号名称"
+                         ng-model="device.modelname" ng-change="newDevice.validateDevice()" maxlength="255">
+                </div>
+                <select id="device-model-list" class="form-control" ng-model="device.modelname"
+                        ng-options="item.modelId as (item.model_name + (item.model && (item.model !== item.model_name) ? ' / ' + item.model : '')) for item in forms.models"
+                        ng-change="newDevice.modelChange(device.modelname)">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group model-input-field" ng-show="newDevice.newModel && false">
+            <label for="new-device-model" class="col-md-3 control-label">型号</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="new-device-model" ng-show="newDevice.newModel"
+                     ng-model="device.model" ng-change="newDevice.validateDevice()" maxlength="255">
+            </div>
+          </div>
+          <!-- HIDE AND CLEAR WHEN MODENAME == 子网-->
+          <div class="form-group manufacturer-field" ng-hide="device.modename.modename == '子网'">
+            <label for="new-device-model-make" class="col-md-3 control-label">设备厂商</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-hide="newDevice.newModel">{{device.modelmake || '未知'}}</label>
+              <input type="text" class="form-control" id="new-device-model-make" ng-show="newDevice.newModel"
+                     ng-model="device.modelmake" maxlength="255">
+            </div>
+          </div>
+          <div class="form-group" ng-hide="true">
+            <label for="new-device-model-protocol" class="col-md-3 control-label">设备协议</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-hide="newDevice.newModel">{{device.modelprotocol || '未知'}}</label>
+              <input type="text" class="form-control" id="new-device-model-protocol" ng-show="newDevice.newModel"
+                     ng-model="device.modelprotocol" maxlength="255">
+            </div>
+          </div>
+          <div class="form-group" ng-hide="true">
+            <label for="new-device-model-version" class="col-md-3 control-label">软件版本</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-hide="newDevice.newModel">{{device.modelversion || '未知'}}</label>
+              <input type="text" class="form-control" id="new-device-model-version" ng-show="newDevice.newModel"
+                     ng-model="device.modelversion" maxlength="255">
+            </div>
+          </div>
+          <div class="form-group" ng-hide="true">
+            <label for="new-device-model-firmware" class="col-md-3 control-label">硬件版本</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-hide="newDevice.newModel">{{device.modelfirmware || '未知'}}</label>
+              <input type="text" class="form-control" id="new-device-model-firmware" ng-show="newDevice.newModel"
+                     ng-model="device.modelfirmware" maxlength="255">
+            </div>
+          </div>
+          <div class="form-group" ng-hide="true">
+            <label for="new-device-model-serial" class="col-md-3 control-label">型号序列</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-hide="newDevice.newModel">{{device.modelserial || '未知'}}</label>
+              <input type="text" class="form-control" id="new-device-model-serial" ng-show="newDevice.newModel"
+                     ng-model="device.modelserial" maxlength="255">
+            </div>
+          </div>
+          <!-- HIDE AND CLEAR WHEN MODENAME == 子网-->
+          <div class="form-group memo-field" ng-hide="device.modename.modename == '子网'">
+            <label for="new-device-model-memo" class="col-md-3 control-label">备注</label>
+            <div class="col-md-9">
+              <label style="margin-top: 7px" ng-hide="newDevice.newModel">{{device.modelmemo || '未知'}}</label>
+              <input type="text" class="form-control" id="new-device-model-memo" ng-show="newDevice.newModel"
+                     ng-model="device.modelmemo" maxlength="255">
+            </div>
+          </div>
+          <div class="form-group ip-mac-row" ng-hide="device.modename.modename == '子网'">
+            <div ng-repeat="ipmac in device.ipmac" class="ip-mac-row-{{$index}}">
+              <div class="col-md-3" style="text-align:right"><label style="width:100%">设备端口 {{$index+1}}</label></div>
+              <div class="col-md-9">
+                <div class="no-padding ip-mac-grid">
+                  <label><span class="text-red">&#42;</span>IP地址</label>
+                  <input class="ip-input" type="text" ng-model="ipmac.ip" maxlength="255"
+                         ng-change="newDevice.validateAllIp()">
+                  <error-msg class="error-msg" validator="ipmac" obj="device" type="'ip'"></error-msg>
+                </div>
+                <div class="no-padding ip-mac-grid">
+                  <label><span class="text-red" ng-if="device.needMac">&#42;</span>MAC地址</label>
+                  <input class="mac-input" type="text" ng-model="ipmac.mac" maxlength="255"
+                         ng-change="newDevice.validateAllMac()">
+                  <error-msg class="error-msg" validator="ipmac" obj="device" type="'mac'"></error-msg>
+                </div>
+                <div class="delete-button" ng-if="$index>0">
+                  <button class="btn btn-default" ng-click="removeIpMac($index); newDevice.allIpMacValid();"><i
+                    class="fa fa-trash"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group subnet-ip-mac" ng-show="device.modename.modename == '子网'">
+            <label for="new-device-mac" class="col-md-3 control-label"><span class="text-red">&#42;</span>子网地址</label>
+            <div class="col-md-9">
+              <input type="text" name='ipSub' ng-show="device.iconType === 'subnet'" class="form-control"
+                     id="new-device-ip" ng-model="device.ipmac[0].ip" ng-change="newDevice.validateAllIp()"
+                     maxlength="255">
+              <error-msg class="error-msg" validator="device.ipmac[0]" obj="device" type="'ip'"></error-msg>
+            </div>
+          </div>
+          <div class="form-group" ng-show="device.modename.modename !== '子网'">
+            <button class="btn btn-default add-ip-mac-button" ng-disabled="disableAddNewIp" ng-click="addIpMac()">添加端口
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="panel panel-device">
+          <div class="panel-body">
+            <img class="device-img" ng-src="/images/{{device.iconType ? device.iconType : 'unknown-device'}}-icon.png"
+                 width="200"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FOOTER -->
+<div class="modal-footer">
+  <a ui-sref="asset.factorydevice" class="btn btn-default"><i class="fa fa-times icon-left"></i>取消</a>
+  <button class="btn btn-default confirm-new-device-btn" ng-click="newDevice.done()"
+          ng-disabled="newDevice.hasDuplicateSN || newDevice.nameError || (device.modename.modename !== '子网' && (newDevice.modelError || disableAddNewIp)) || newDevice.modeError || (device.modename.modename === '子网' && (device.ipmac[0].ip==='' || device.ipmac[0].invalidIp || device.ipmac[0].invalidRange))||(device.needMac&&device.modename.modename !== '子网'&&device.ipmac[0].mac==='')">
+    <i class="fa fa-check icon-left" style="color:#76B900"></i>完成
+  </button>
+</div>

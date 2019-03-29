@@ -1,0 +1,18 @@
+<div id="rule_maliciousdomain_modal_delete">
+  <div class="modal-header">
+    <h3 class="modal-header-title">忽略待处理的域名规则</h3>
+  </div>
+  <div class="modal-body-no-frame" style="padding-top: 10px">
+    <p>待处理的域名规则被忽略后，将会从待处理规则列表中删除，并且不会再被检测到。</p>
+    <p ng-if="domain">确定忽略域名规则 {{domain.domainName}} ？</p>
+    <p ng-if="!domain">确定忽略全部选中域名规则？</p>
+  </div>
+  <div class="modal-footer">
+    <button id="rule_maliciousdomain_modal_delete_button_ok" class="btn btn-default" ng-click="ok()"><i
+      class="fa fa-trash-o icon-left"></i>忽略
+    </button>
+    <button id="rule_maliciousdomain_modal_delete_button_cancel" class="btn btn-default pull-left" ng-click="cancel()">
+      <i class="fa fa-close icon-left"></i>取消
+    </button>
+  </div>
+</div>

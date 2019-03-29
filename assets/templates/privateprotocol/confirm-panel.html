@@ -1,0 +1,19 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">私有协议</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body-no-frame">
+  <br>
+  <div class="modal-container">
+    <p><i class="fa fa-exclamation-triangle icon-left text-red" ng-if="msg.isShowDeviceConnectedCnt === 0"></i>{{msg.text}}</br>
+      {{msg.list}}</br>{{msg.qus}}</p><br/>
+  </div>
+  <br>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default pull-left" ng-click="cancel()" ng-if="!(msg.isShowDeviceConnectedCnt === 0)"><i
+    class="fa fa-times icon-left"></i>取消
+  </button>
+  <button class="btn btn-default" ng-click="done()"><i class="fa fa-check text-green icon-left"></i>确定</button>
+</div>
+

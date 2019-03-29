@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">导出记录</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+
+<div class="modal-body">
+  <div class="modal-container">
+    <p>请为即将导出的记录设置密码。解压文件时，使用者必须输入相同密码。</p>
+    <br/>
+    <div class="row">
+      <div class="col-xs-5">
+        <div class="form-group has-feedback">
+          <input type="password" class="form-control" placeholder="{{addPsw==='0'?'':'输入解压密码'}}" maxlength="25"
+                 ng-disabled="addPsw==='0'" ng-model="psw">
+          <i class="form-control-feedback glyphicon glyphicon-lock"></i>
+        </div>
+      </div>
+      <div class="col-xs-7">
+        <label ng-show="addPsw==='1'"><i class="fa fa-info-circle icon-right"></i> 必须是字母加数字和符号，8位或以上，25位以下</label>
+      </div>
+    </div>
+    <div class="row" ng-hide="$root.isC05">
+      <div class="col-xs-12">
+        <div class="checkbox form-group">
+          <label>
+            <input id="checkBox_addPsw" type="checkbox" ng-model="addPsw" ng-true-value="'0'" ng-false-value="'1'" ng-click="psw=''"
+                   ng-change="validatePsw(psw)"> 不用加密
+          </label>
+        </div>
+      </div>
+    </div>
+    <span ng-hide="validatePsw(psw)||addPsw==='0'" class="warning pull-right">解压密码不符合规则</span>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-default pull-right" ng-show="addPsw==='1'" ng-disabled="!validatePsw(psw)"
+          ng-click="download(psw)"><i class="fa fa-download icon-left"></i>下载文件
+  </button>
+  <button id="addPswhid" class="btn btn-default pull-right" ng-hide="addPsw==='1'" ng-click="download()"><i
+    class="fa fa-download icon-left"></i>下载文件
+  </button>
+</div>

@@ -1,0 +1,304 @@
+<div class="modal-header">
+  <h3 class="modal-header-title">预览规则</h3>
+  <a id="rule-blackList-policyDetail_a_closeDetail" class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+
+<div class="modal-body margin-md">
+  <h4 ng-if="policyBlocks.type!='SIGNATURE'" class="modal-title spacing-small"><i class="fa fa-cogs icon-left"></i>规则信息
+  </h4>
+  <h4 ng-if="policyBlocks.type=='SIGNATURE'" class="modal-title spacing-small"><i class="fa fa-cogs icon-left"></i>漏洞信息
+  </h4>
+
+  <div id="blacklist_policycontent_signature_preview_window_signature_info" ng-if="policyBlocks.type=='SIGNATURE'"
+       class="bg-gray-80 margin-top-default">
+    <div class="rules-info">
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">漏洞名称</h6>
+                <span>{{policyBlocks.name}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="rules-info-item border-gray-top">
+                <h6 class="rules-info-item-title">基本描述</h6>
+                <span class="textarea-full-width">{{policyBlocks['_description']}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-4 border-gray-left border-gray-right">
+          <div class="row">
+            <div class="col-xs-4">
+              <div class="rules-info-item pull-left">
+                <h6 class="rules-info-item-title">漏洞统一编号</h6>
+                <span ng-show="policyBlocks['_cve']">{{policyBlocks['_cve']}}</span>
+                <span ng-hide="policyBlocks['_cve']">无</span>
+              </div>
+
+              <div class="rules-info-item pull-left" ng-show="policyBlocks['_requirement']">
+                <h6 class="rules-info-item-title">攻击条件</h6>
+                <span>{{policyBlocks['_requirement']}}</span>
+              </div>
+
+              <div class="rules-info-item pull-left" ng-show="policyBlocks['_caused']">
+                <h6 class="rules-info-item-title">产生后果</h6>
+                <span>{{policyBlocks['_caused']}}</span>
+              </div>
+            </div>
+
+            <div class="col-xs-4">
+              <div id="blacklist_policycontent_signature_preview_window_signature_discoverdate"
+                   class="rules-info-item pull-left">
+                <h6 class="rules-info-item-title">发现时间</h6>
+                <span>{{policyBlocks['_publishDate']}}</span>
+              </div>
+
+              <div class="rules-info-item pull-left">
+                <h6 class="rules-info-item-title">漏洞来源</h6>
+                <span>iSightPartners</span>
+              </div>
+
+              <div class="rules-info-item pull-left">
+                <h6 class="rules-info-item-title">危害等级</h6>
+                <span>{{policyBlocks['_severity']}}</span>
+              </div>
+            </div>
+
+            <div class="col-xs-4">
+              <div class="rules-info-item pull-left">
+                <h6 class="rules-info-item-title">漏洞类型</h6>
+                <span>{{policyBlocks['_category']}}</span>
+              </div>
+
+              <div class="rules-info-item pull-left">
+                <h6 class="rules-info-item-title">受影响厂商</h6>
+                <span>Iconics</span>
+              </div>
+
+              <div class="rules-info-item pull-left">
+                <h6 class="rules-info-item-title">触发设备</h6>
+                <span>Genesis</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-2">
+          <div id="blacklist_policycontent_signature_preview_window_signature_rulesource" class="rules-info-item">
+            <h6 class="rules-info-item-title">规则来源</h6>
+            <span>漏洞库</span>
+          </div>
+        </div>
+
+        <div class="col-xs-2">
+          <div id="blacklist_policycontent_signature_preview_window_signature_action" class="rules-info-item">
+            <h6 class="rules-info-item-title">事件处理</h6>
+            <span>{{policyBlocks.signatures[0].action |actionName}}</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div ng-if="policyBlocks.type!='SIGNATURE'" class="bg-gray-80">
+    <div class="rules-info">
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="row">
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">规则组名称</h6>
+                <span>{{policyBlocks.name}}</span>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">起源组</h6>
+                <span>{{policyBlocks['_sourceZoneName']}}</span>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">目标组</h6>
+                <span>{{policyBlocks['_destinationZoneName']}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="rules-info-item">
+                <h6 class="rules-info-item-title">规则描述</h6>
+                <span ng-if="policyBlocks.description">{{policyBlocks.description}}</span>
+                <span ng-if="!policyBlocks.description">无</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="rules-info-item">
+            <h6 class="rules-info-item-title">创建时间</h6>
+            <span>{{policyBlocks.createdAt | date: 'yyyy-MM-dd'}}</span>
+          </div>
+          <div class="rules-info-item">
+            <h6 class="rules-info-item-title">规则来源</h6>
+            <span>{{policyBlocks._typeDisplay}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="spacing-small">
+    <div class="row">
+      <div class="col-xs-6">
+        <h4 ng-if="policyBlocks.rules" class="modal-title"><i class="fa fa-list icon-left"></i>规则项</h4>
+        <h4 ng-if="policyBlocks.signatures" class="modal-title"><i class="fa fa-list icon-left"></i>修补特征</h4>
+      </div>
+      <div class="col-xs-6 text-right">
+      </div>
+    </div>
+  </div>
+
+  <div class="table-scroll-wrapper-striped" ng-if="policyBlocks.signatures" class="margin-top-default">
+    <table id="blacklist_policycontent_signature_preview_window_table"
+           class="table table-bordered table-hover icon-hidden table-preview-signature">
+      <thead>
+      <tr>
+        <th>
+          <span>优先级</span>
+        </th>
+        <th>
+          <span>特征名称</span>
+        </th>
+        <th>
+          <span>风险等级</span>
+        </th>
+        <th>
+          <span>特征编号</span>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr id="blacklist_policycontent_signature_preview_window_table_row_{{$index}}" data-index="0"
+          ng-repeat="signature in policyBlocks.signatures">
+        <td>{{$index+1}}</td>
+        <td>{{signature.msg}}</td>
+        <td>{{signature.riskLevel | riskLevel}}</td>
+        <td>{{signature.sid}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--<div id="blacklist_policycontent_signature_preview_window_custome_signature_edit_area">
+    <div class="custom-signature-create" ng-if="policyBlocks.rules ==0 && !editRules">
+      <div ng-hide="editRules">
+        <h4>请添加规则来完成编辑规则</h4>
+        <br>
+        <button class="btn btn-default btn-create-signature" ng-click="createRuleItem()">创建规则项<i
+          class="fa fa-pencil fa-3x"></i></button>
+      </div>
+    </div>
+
+    <div class="custom-signature-edit-rules" ng-if="editRules">
+      <div>
+        <button id="blacklist_policycontent_signature_preview_window_custome_signature_edit_confirmcreaterule_btn"
+                class="btn btn-default pull-right" ng-if="!editRuleItem" ng-click="confirmCreateRule()"><i
+          class="fa fa-check icon-left"></i>完成
+        </button>
+        <button id="blacklist_policycontent_signature_preview_window_custome_signature_edit_confirmruleedit_btn"
+                class="btn btn-default pull-right" ng-if="editRuleItem" ng-click="confirmRuleEdit()"><i
+          class="fa fa-check icon-left"></i>完成
+        </button>
+        <button id="blacklist_policycontent_signature_preview_window_custome_signature_edit_cancelruleedit_btn"
+                class="btn btn-default pull-right" ng-click="cancelRuleEdit()"><i class="fa fa-times icon-left"></i>取消
+        </button>
+        <span class="custom-signature-padding">编辑规则项</span>
+      </div>
+      <div class="custom-signature-diagram">
+        <ul id="diagram"></ul>
+      </div>
+    </div>
+
+    <div ng-if="policyBlocks.rules && !editRules && policyBlocks.rules.length >0">
+
+      <div ng-if="enabledEditRuleItem">
+        <button id="blacklist_policycontent_signature_preview_window_custome_signature_edit_createruleitem_btn"
+                class="btn btn-default" ng-click="createRuleItem()">新增规则
+        </button>
+        <button id="blacklist_policycontent_signature_preview_window_custome_signature_edit_moveup_btn"
+                class="btn btn-default btn-sm" ng-click="moveUp()" ng-disabled="selectedRuleItems.length !=1"><i
+          class="fa fa-chevron-up"></i></button>
+        <button id="blacklist_policycontent_signature_preview_window_custome_signature_edit_movedown_btn"
+                class="btn btn-default btn-sm" ng-click="moveDown()" ng-disabled="selectedRuleItems.length !=1"><i
+          class="fa fa-chevron-down"></i></button>
+        <button id="blacklist_policycontent_signature_preview_window_custome_signature_edit_deleteruleitems_btn"
+                class="btn btn-default btn-sm" ng-click="deleteRuleItems()" ng-disabled="selectedRuleItems.length == 0">
+          <i class="fa fa-trash"></i></button>
+      </div>
+
+      <table id="blacklist_policycontent_signature_preview_window_signature_table"
+             class="table table-condensed table-th-right-border table-hover icon-hidden table-custom-preview-signature-2">
+        <thead>
+        <tr>
+          <th class="th-count">
+            <span>优先级</span>
+          </th>
+          <th ng-if="enabledEditRuleItem" class="th-checkbox">
+            <span><input type="checkbox" ng-model="policyBlocks.selectAll" ng-change="selectAllRuleItem()"></span>
+          </th>
+          <th class="th-name">
+            <span>协议名称</span>
+          </th>
+          <th>
+            <span>操作码</span>
+          </th>
+          <th>
+            <span>注释</span>
+          </th>
+          <th>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr id="blacklist_policycontent_signature_preview_window_signature_table_row_{{$index}}" data-index="0"
+            ng-repeat="rule in policyBlocks.rules">
+          <th>{{$index+1}}</th>
+          <th ng-if="enabledEditRuleItem">
+            <span><input type="checkbox" ng-model="rule.checked" ng-change="selectRuleItem(rule)"></span>
+          </th>
+          <td>{{rule.fields[0].value}}</td>
+          <td>
+            <span ng-repeat="field in rule.fields">
+              <span ng-if="$index >0">{{field.name}}:
+                <span ng-if="enabledEditRuleItem" class="pull-right"></span>
+                {{field.value}}
+              </span>
+            </span>
+          </td>
+          <td>
+            <div class="percent-80-width">
+              {{rule._fields}}
+            </div>
+          </td>
+          <td>
+            <button class="btn btn-default btn-sm pull-right" ng-if="enableEdit" ng-click="modifyRuleItem($index,rule)">
+              <i class="fa fa-pencil"></i></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>-->
+</div>

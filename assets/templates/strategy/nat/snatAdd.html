@@ -1,0 +1,222 @@
+<div cg-busy="{promise:configPromise,message:'正在保存...'}" global-events>
+  <div class="modal-header">
+    <h3 class="modal-header-title">编辑/新增SNAT策略</h3>
+  </div>
+
+  <div class="modal-body modal-nat">
+    <div class="panel">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-3">
+            <span>策略名称：</span>
+          </div>
+          <div class="col-xs-9" style="padding-left: 0px;">
+            <input ng-model="snatData.snatName" maxlength="31"
+                   type="text" id="snat_snatName_text"
+                   ng-disabled="isEditing"
+                   class="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength"
+                   ng-change="checkNameVal(snatData.snatName)"
+                   placeholder="SNAT名称">
+
+            <div class="input-alert-error" ng-show="error.snatName">
+              <span>{{nameValMsg}}</span>
+            </div>
+          </div>
+        </div>
+
+        <br/>
+        <hr class="hr-small-margin">
+        <br/>
+
+        <div class="row">
+          <div class="col-xs-3">
+            <span>源地址：</span>
+          </div>
+          <div class="col-xs-9">
+            <div class="row">
+              <input custom-radio type="radio" ng-value=0 id="snat_sourceAddressType_radio0"
+                     ng-model="snatData.sourceAddressType"/><span>按接口</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input custom-radio type="radio" ng-value=1 id="snat_sourceAddressType_radio1"
+                     ng-model="snatData.sourceAddressType"/><span>按地址组</span>
+            </div>
+            <br/>
+
+            <div class="row">
+              <div ng-if="snatData.sourceAddressType!==1">
+                <select id="snat_sourceAddress_ethName"
+                        style="min-height:30px;width: 200px;" class="select-styled"
+                        ng-model="snatData.sourceInterface"
+                        ng-options="interface for interface in interfaceList">
+                </select>
+                <div class="input-alert-error" ng-show="snatData.error.sourceAddress"><span>没有可用的选择接口</span></div>
+              </div>
+              <div ng-if="snatData.sourceAddressType===1">
+                <!--<span>安全区域：&nbsp;</span>-->
+                <select id="snat_sourceAddress_securityArea" class="select-styled"
+                        style="min-height:30px;width:100px;"
+                        ng-model="snatData.sourceSecurityArea"
+                        ng-options="securityArea for securityArea in securityAreaList">
+                </select>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <!--<span>地址组：&nbsp;</span>-->
+                <select id="snat_sourceAddress_addressPool" class="select-styled"
+                        style="min-height:30px;width:200px;"
+                        ng-model="snatData.sourceAddressPool"
+                        ng-options="addressPool for addressPool in sourceAddressPoolList">
+                </select>
+                <div class="input-alert-error" ng-show="error.sourceAddress"><span>没有可用的选择地址组</span></div>
+              </div>
+            </div>
+          </div>
+          <br/>
+        </div>
+
+        <br/>
+        <hr class="hr-small-margin">
+        <br/>
+
+        <div class="row">
+          <div class="col-xs-3">
+            <span>目的地址：</span>
+          </div>
+          <div class="col-xs-9">
+            <div class="row">
+              <input custom-radio type="radio" ng-value=0 id="snat_destinationAddressType_radio0"
+                     ng-model="snatData.destinationAddressType"/><span>按接口</span>
+
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input custom-radio type="radio" ng-value=1 id="snat_destinationAddressType_radio1"
+                     ng-model="snatData.destinationAddressType"/><span>按地址组</span>
+            </div>
+            <br/>
+
+            <div class="row">
+              <div ng-if="snatData.destinationAddressType!==1">
+                <select id="snat_destinationAddress_ethName"
+                        style="min-height:30px;width: 200px;" class="select-styled"
+                        ng-model="snatData.destinationInterface"
+                        ng-options="interface for interface in interfaceList">
+                </select>
+                <div class="input-alert-error" ng-show="snatData.error.destinationAddress"><span>没有可用的选择接口</span></div>
+              </div>
+              <div ng-if="snatData.destinationAddressType===1">
+                <!--<span>安全区域：&nbsp;</span>-->
+                <select id="snat_destinationAddress_securityArea" class="select-styled"
+                        style="min-height:30px;width:100px;"
+                        ng-model="snatData.destinationSecurityArea"
+                        ng-options="securityArea for securityArea in securityAreaList">
+                </select>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <!--<span>地址组：&nbsp;</span>-->
+                <select id="snat_destinationAddress_addressPool" class="select-styled"
+                        style="min-height:30px;width:200px;"
+                        ng-model="snatData.destinationAddressPool"
+                        ng-options="addressPool for addressPool in destinationAddressPoolList">
+                </select>
+                <div class="input-alert-error" ng-show="error.destinationAddress"><span>没有可用的选择地址组</span></div>
+              </div>
+            </div>
+          </div>
+          <br/>
+        </div>
+
+        <br/>
+        <hr class="hr-small-margin">
+        <br/>
+
+        <div class="row">
+          <div class="col-xs-3">
+            <span>应用/服务：</span>
+          </div>
+          <div class="col-xs-9">
+            <div class="row">
+              <input custom-radio type="radio" ng-value=0 ng-change="snatData.serversApps=''"
+                     id="snat_serversAppsType_radio0"
+                     ng-model="snatData.serversAppsType"/><span>按服务</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input custom-radio type="radio" ng-value=1 ng-change="snatData.serversApps=''"
+                     id="snat_serversAppsType_radio1"
+                     ng-model="snatData.serversAppsType"/><span>按应用</span>
+            </div>
+            <br/>
+
+            <div class="row">
+              <angucomplete search-str="snatData.serversApps" id="snat_serversApps_angucomplete"
+                            fetch-action="searchServiceApps(str)"
+                            placeholder="{{snatData.serversAppsType === 1 ? '请输入应用名称' : '请输入服务名称'}}"
+                            pause="500" minlength="1"
+                            selectedObject="selectedObj"
+                            searchfields="name" titlefield="name"
+                            inputclass="ng-pristine ng-untouched ng-valid ng-empty ng-valid-maxlength margin-right-default"></angucomplete>
+              <div class="input-alert-error" ng-hide="!snatData.serversApps || selectedObj">
+                 <span>未找到该名称{{snatData.serversAppsType === 1 ?'应用' : '服务'}}，请重新输入有效的名称</span>
+              </div>
+              <div class="input-alert-error" ng-show="!snatData.serversApps">
+                 <span>{{snatData.serversAppsType === 1 ? '应用' : '服务'}}名称不能为空</span>
+              </div>
+            </div>
+          </div>
+          <br/>
+        </div>
+
+        <br/>
+        <hr class="hr-small-margin">
+        <br/>
+
+        <div class="row">
+          <div class="col-xs-3">
+            <span>将地址转换为：</span>
+          </div>
+          <div class="col-xs-9">
+            <div class="row">
+              <input custom-radio type="radio" ng-value=0 id="snat_transAddressType_radio0"
+                     ng-model="snatData.transAddressType"/><span>按IP地址</span>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input custom-radio type="radio" ng-value=1 id="snat_transAddressType_radio1"
+                     ng-model="snatData.transAddressType"/><span>按地址组</span>
+            </div>
+            <br/>
+
+            <div class="row">
+              <div ng-if="snatData.transAddressType!==1">
+                <input type="text" placeholder="" id="snat_transAddress_ipaddress"
+                       ng-change="changeSnat_transAddress_ipaddress()"
+                       ng-model="snatData.transAddressIp" maxlength="16"/>
+                <div class="input-alert-error" ng-show="error.transAddress"><span>请输入有效的IP地址</span></div>
+              </div>
+              <div ng-if="snatData.transAddressType===1">
+                <!--<span>安全区域：&nbsp;</span>-->
+                <select id="snat_transAddress_securityArea" class="select-styled"
+                        style="min-height:30px;width:100px;"
+                        ng-model="snatData.transAddressSecurityArea"
+                        ng-options="securityArea for securityArea in securityAreaList">
+                </select>
+
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <!--<span>地址组：&nbsp;</span>-->
+                <select id="snat_transAddress_addressPool" class="select-styled"
+                        style="min-height:30px;width:200px;"
+                        ng-model="snatData.transAddressPool"
+                        ng-options="addressPool for addressPool in transAddressPoolList">
+                </select>
+                <div class="input-alert-error" ng-show="error.transAddress"><span>没有可用的选择地址组</span></div>
+              </div>
+            </div>
+          </div>
+          <br/>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <a class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times icon-left"></i>取消</a>
+    <a class="btn btn-default pull-right" ng-click="ok()"
+       ng-disabled="error.snatName||error.sourceAddress||error.destinationAddress||!selectedObj||!snatData.serversApps||error.transAddress"><i
+      class="fa fa-check text-lime icon-left"></i>保存</a>
+  </div>
+</div>

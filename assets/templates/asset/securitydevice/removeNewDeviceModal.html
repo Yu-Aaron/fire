@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h3 class="modal-header-title"><i class="fa fa-exclamation-triangle text-red"></i> &nbsp;警告</h3>
+  <a class="modal-close" ng-click="cancel()"><i class="fa fa-times"></i></a>
+</div>
+<div class="modal-body-no-frame">
+  <br>
+  <div class="modal-container">
+    <div ng-if="!hasProcessingLearn">
+      <p><b>你确定要删除当前设备？</b>
+      <p>
+        <br/>
+      <p><label>名称:</label>{{device.name}}<br/><label>序列号:</label>{{device.serialNumber}}</p>
+    </div>
+  </div>
+  <br>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default pull-left" ng-click="cancel()"><i class="fa fa-times icon-left"></i>取消</button>
+  <button class="btn btn-default" ng-click="confirm()"><i class="fa fa-check text-green icon-left"></i>确认</button>
+</div>

@@ -1,0 +1,67 @@
+<div>
+  <style type="text/css">
+    .showDateTimeRange {
+      position: static;
+      margin-top: 0;
+    }
+
+    .hideDateTimeRange {
+      position: absolute;
+      margin-top: -52px;
+    }
+  </style>
+  <!--<div class="padding-default"
+       ng-class="dtable.dateTimeRange && dtable.dateTimeRange.enable ? 'showDateTimeRange' : 'hideDateTimeRange'">
+    <button id="audit_audittab_refresh_button" type="button" class="btn btn-default" style="margin-left:10px"
+            ng-click="dtable.refresh()"><i class="fa fa-refresh text-lime icon-left"></i>刷新
+    </button>
+    <select id="audit_audittab_protocol_select" ng-model="dtable.filter"
+            ng-change="changeProtocol(dtable.filter); dtable.q=''" class="select-styled"
+            style="width:100px; margin-left: 10px; margin-top: -3px;">
+      <option id="audit_audittab_protocoloption_{{$index}}" value="{{p.value}}" ng-repeat="p in protocolOptions">
+        {{p.display}}
+      </option>
+      <option disabled value="">&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>
+      <option id="audit_audittab_factoryprotocoloption_{{$index}}" value="{{p.value}}"
+              ng-repeat="p in factoryProtocolOptions" ng-init="dtable.filter = 'normal'">{{p.display}}
+      </option>
+    </select>
+    <button id="audit_audittab_import_button" type="button" class="btn btn-default" style="margin-left:10px"
+            ng-click="openImportPanel()" privilege ng-show="audittable.showImportBtn"><i
+      class="fa fa-upload text-lime fa-beside-button-right"></i>导入
+    </button>
+  </div>-->
+  <table id="audit_audittab_table" class="table table-hover icon-hidden">
+    <thead>
+    <tr>
+      <th>
+        <span>&nbsp;</span>
+      </th>
+      <th order-by="packetTimestamp">起始时间</th>
+      <th order-by="sourceIp" ng-if="supportIpAndPort(dtable.filter)">IP地址</th>
+      <th order-by="sourceMac">MAC地址</th>
+      <th order-by="sourcePort" ng-if="supportIpAndPort(dtable.filter)">端口</th>
+      <th order-by="protocolSourceName">协议类型</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr id="audit_audittab_table_row_{{$index}}" ng-repeat="audit in dtable.table">
+      <td><span>&nbsp;</span></td>
+      <td>{{audit.packetTimestamp | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+      <td ng-if="supportIpAndPort(dtable.filter)">{{supportIpAndPort(audit.protocolSourceName) ? audit.sourceIp + '<==>'
+        + audit.destinationIp : ''}}
+      </td>
+      <td>{{audit.sourceMac | uppercase}}<==>{{audit.destinationMac | uppercase}}</td>
+      <td ng-if="supportIpAndPort(dtable.filter)">{{supportIpAndPort(audit.protocolSourceName) ? audit.sourcePort +
+        '<==>' + audit.destinationPort : ''}}
+      </td>
+      <td>{{audit.protocolSourceName === 'telnet' ? 'Telnet' : audit.protocolSourceName === 'modbus' ? 'Modbus' :
+        audit.protocolSourceName === 'profinetio' ? 'Profinetio' : audit.protocolSourceName.toUpperCase()}}
+      </td>
+      <td><a class="btn btn-default" ng-click="dtable.showDetailWindow(audit)">查看 <i
+        class="fa fa-chevron-circle-right icon-right"></i></a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

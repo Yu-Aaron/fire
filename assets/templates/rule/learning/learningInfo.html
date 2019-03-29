@@ -1,0 +1,86 @@
+<div class="signature-learning-processing">
+  <div class="top-button-wrap">
+    <button id="return-to-learning-panel" ng-show="learningCtrl.showDetailPanel" class="btn btn-default"
+            ng-click="learningCtrl.showDetailPanel=false;learningCtrl.checklearningTasks();learningCtrl.viewLearningDetail=false; learningCtrl.taskId=learningCtrl.learningTaskId">
+      <i class="fa fa-reply"></i></button>
+    <button id="rule-whiteList-learningCtrl_button_deleteRule" class="btn btn-default pull-right"
+            ng-click="learningCtrl.remove(learningCtrl.detailPanelItem);learningCtrl.disabledAdd=true; learningCtrl.showDetailPanel=false;learningCtrl.viewLearningDetail=false; learningCtrl.taskId=learningCtrl.learningTaskId"
+            setting-privilege privilege-name="RULE_WHITELIST" privilege-require="MIXED">
+      删除学习
+    </button>
+  </div>
+  <hr>
+  <div class="learning-detail-name">
+    <div class="row">
+      <div class="col-xs-9">
+        <h5>{{learningCtrl.detailPanelItem.taskName}}</h5>
+      </div>
+      <div class="col-xs-2 text-right">
+        <div ng-show="learningCtrl.detailPanelItem.state=='SUCCESS'" style="margin-top:8px;">
+          <span class="label label-success" ng-show="learningCtrl.detailPanelItem.state == 'SUCCESS'">完成</span>
+        </div>
+      </div>
+      <div class="col-xs-1 text-right">
+        <button id="rule-whiteList-learningCtrl_button_toggleRuleDetail"
+                ng-click="learningCtrl.learningDetailCollapse= !learningCtrl.learningDetailCollapse"
+                ng-init="learningCtrl.learningDetailCollapse=false" class="btn btn-default pull-right"
+                style="padding-top:2px; padding-bottom:2px; margin-top:5px;">
+          <i class="fa fa-info"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <div collapse="learningCtrl.learningDetailCollapse" class="learning-detail" style="margin-left:10px;">
+    <span>开始学习：{{learningCtrl.detailPanelItem.startDatetimeLocal}}</span>
+    <br>
+    <span>停止学习：{{learningCtrl.detailPanelItem.endDatetimeLocal}}</span>
+    <br>
+    <span>学习长度：{{learningCtrl.detailPanelItem.difference.days}}天{{learningCtrl.detailPanelItem.difference.hours}}小时{{learningCtrl.detailPanelItem.difference.mins | number:0}}分</span>
+    <br>
+    <span>数据流 : {{learningCtrl.detailPanelItem.learningResult.validFlowdataCount||0}}</span>
+    <br>
+    <span>设备活动记录 : <a id="rule-whiteList-learningCtrl_a_showMonitor" class="monitor-signature-link"
+                      ng-click="learningCtrl.openRecord()">{{learningCtrl.detailPanelItem.learningResult.knownDevices.length||0}} 设备活动， {{learningCtrl.detailPanelItem.learningResult.unknownDevices.length||0}} 未知设备活动</a> </span>
+    <br>
+    <span>IP/MAC地址记录 : <a id="rule-whiteList-learningCtrl_a_showIPMACMonitor" class="monitor-signature-link"
+                          ng-click="learningCtrl.openIPMACRecord()">{{learningCtrl.detailPanelItem.macData.length||0}} 个设备</a> </span>
+    <br>
+  </div>
+
+  <hr>
+
+  <div ng-if="learningCtrl.detailPanelItem.state=='PROCESSING' || learningCtrl.detailPanelItem.state=='PAUSED'"
+       ng-init="learningCtrl.countdown(learningCtrl.detailPanelItem, learningCtrl.detailPanelItem.state)"
+       class="learning-status-display">
+    <div class="row">
+      <div class="col-md-6">
+        <h5>
+          剩余时间：{{learningCtrl.remainTime.days}}天{{learningCtrl.remainTime.hours}}小时{{learningCtrl.remainTime.minutes}}分钟{{learningCtrl.remainTime.seconds}}秒</h5>
+      </div>
+      <div class="col-md-3 padding-zero text-center">
+        <h5>数据流 : <span
+          ng-class="{'fa-flashing-orange learning-traffic': learningCtrl.detailPanelItem.state=='PROCESSING'}">{{learningCtrl.detailPanelItem.learningResult.validFlowdataCount||0}}</span>
+        </h5>
+      </div>
+      <div class="col-md-3">
+        <h5 class="pull-right" ng-if="learningCtrl.detailPanelItem.state=='PROCESSING'"><i
+          class="fa fa-default fa-circle fa-flashing-orange"></i> 学习中</span></h5>
+      </div>
+    </div>
+    <div class="player learning-status-dashboard">
+      <div class="row">
+        <div class="col-xs-3 player-btns">
+          <button id="rule-whiteList-learningCtrl_button_stopLearning"
+                  ng-click="learningCtrl.cancelLearning(learningCtrl.detailPanelItem)" class="btn-default player-btn"><i
+            class="fa fa-stop"></i></button>
+        </div>
+        <div class="col-xs-9 player-progressbar">
+          <progressbar value="learningCtrl.value" type="success"></progressbar>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <div ng-include src="'templates/rule/learning/learningResultTables.html'"></div>
+</div>

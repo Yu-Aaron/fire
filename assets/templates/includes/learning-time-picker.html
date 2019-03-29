@@ -1,0 +1,56 @@
+<div id="learningTimePicker_container">
+<!--  <div class="col-xs-2 text-right learning-time-label">
+    <span>开始学习:</span>
+  </div>-->
+  <!--<div class="col-xs-9">-->
+    <form name="startDateTime">
+      <date-picker id="learningTimePicker_date_start" name="date"
+                   ng-model="learningCtrl.startdt_date"
+                   click="learningCtrl.cancelRenderTime()"></date-picker>
+      <time-picker id="learningTimePicker_time_start" name="time"
+                   ng-model="learningCtrl.startdt_time"
+                   click="learningCtrl.cancelRenderTime()"></time-picker>
+    </form>
+    <span>
+      <span><i class="fa fa-warning text-red"
+               ng-show="!startDateTime.date.$valid || startDateTime.date.$error.min || startDateTime.date.$error.date || !startDateTime.time.$valid || startDateTime.time.$error.time || learningCtrl.startdt<learningCtrl.now"> </i> </span>
+      <span class="error" id="learningTimePicker_start_error_date_invalid"
+            ng-show="!startDateTime.date.$valid">日期不合法</span>
+      <span class="error" id="learningTimePicker_start_error_date_min"
+            ng-show="startDateTime.date.$error.min">日期不可在今日之前</span>
+      <span class="error" id="learningTimePicker_start_error_date_error" ng-show="startDateTime.date.$error.date">日期填写不完整</span>
+      <span class="error" id="learningTimePicker_start_error_time_invalid"
+            ng-show="!startDateTime.time.$valid">时间不合法</span>
+      <span class="error" id="learningTimePicker_start_error_time_error" ng-show="startDateTime.time.$error.time">时间填写不完整</span>
+      <span class="error" id="learningTimePicker_start_error_time_min" ng-show="learningCtrl.startdt<learningCtrl.now">开始时间不可在当前时间之前</span>
+    </span>
+  <!--</div>-->
+</div>
+
+<!--<div class="row">
+  <div class="col-xs-2 text-right learning-time-label">
+    <span>完成学习:</span>
+  </div>
+  <div class="col-xs-9">
+    <form name="endDateTime">
+      <date-picker id="learningTimePicker_date_end" ng-disabled="!learningCtrl.setInterval" name="date"
+                   ng-model="learningCtrl.enddt_date"></date-picker>
+      <time-picker id="learningTimePicker_time_end" ng-disabled="!learningCtrl.setInterval" name="time"
+                   ng-model="learningCtrl.enddt_time"></time-picker>
+    </form>
+    <span ng-show="learningCtrl.setInterval">
+      <span><i class="fa fa-warning text-red"
+               ng-show="!endDateTime.date.$valid || endDateTime.date.$error.min || endDateTime.date.$error.date || !endDateTime.time.$valid || endDateTime.time.$error.time || learningCtrl.startdt>=learningCtrl.enddt || learningCtrl.enddt>learningCtrl.maxTime"> </i> </span>
+      <span class="error" id="learningTimePicker_end_error_date_invalid" ng-show="!endDateTime.date.$valid">日期不合法</span>
+      <span class="error" id="learningTimePicker_end_error_date_min"
+            ng-show="endDateTime.date.$error.min">日期不可在今日之前</span>
+      <span class="error" id="learningTimePicker_end_error_date_error"
+            ng-show="endDateTime.date.$error.date">日期填写不完整</span>
+      <span class="error" id="learningTimePicker_end_error_time_invalid" ng-show="!endDateTime.time.$valid">时间不合法</span>
+      <span class="error" id="learningTimePicker_end_error_time_error"
+            ng-show="endDateTime.time.$error.time">时间填写不完整</span>
+      <span class="error" id="learningTimePicker_end_error_time_min" ng-show="learningCtrl.startdt>=learningCtrl.enddt">开始时间不可在完成时间之后</span>
+      <span class="error" id="learningTimePicker_end_error_time_max" ng-show="learningCtrl.enddt>learningCtrl.maxTime">完成时间必须在2200年1月1日之前</span>
+    </span>
+  </div>
+</div>-->

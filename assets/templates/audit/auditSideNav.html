@@ -1,0 +1,22 @@
+<nav ng-if="!$root.isJAXX" class="left-navbar lg-navbar" ng-class="{'left-navbar-collapsed': audit.expanded}">
+  <!-- old audit menu. Keep for reference. Need to be deleted for release version. James-2015/11/16 -->
+  <!--<ul class="nav nav-pills nav-stacked">
+    <li ng-repeat="tab in $root.config.audit" ng-if="tab.enable&&audit.uiEnable(tab.target, 1)" privilege="{{tab.currentState}}" disable="true" class="highlight" id="audit_sidenav_tab_{{$index}}">
+      <a id="audit_a_{{tab.state}}" class="left-navbar-item left-navbar-item-{{tab.state}}" ui-sref="audit.{{tab.state}}" ng-class="{active: audit.isActive(tab.state)}" ui-sref-opts="{{tab.options}}">
+        <span class="svg-side_nav_icons_{{tab.icon}} svg-side_nav_icons_{{tab.icon}}-dims left-navbar-item-icon"></span>
+        <div class="left-navbar-item-name">{{tab.name}}</div>
+      </a>
+    </li>
+  </ul>-->
+  <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat="tab in $root.rootMenu.getChild('AUDIT').getChilds()" ng-if="audit.leftNavItemEnabled(tab)"
+        disable="true" class="highlight" id="audit_sidenav_tab_{{$index}}">
+      <a class="left-navbar-item left-navbar-item-{{tab.getState()}}" ui-sref="audit.{{tab.getState()}}"
+         ng-class="{active: audit.isActive(tab.getState())}" ui-sref-opts="{{tab.getOptions()}}">
+        <span
+          class="svg-side_nav_icons_{{tab.getIcon()}} svg-side_nav_icons_{{tab.getIcon()}}-dims left-navbar-item-icon"></span>
+        <div class="left-navbar-item-name">{{tab.getDescription()}}</div>
+      </a>
+    </li>
+  </ul>
+</nav>

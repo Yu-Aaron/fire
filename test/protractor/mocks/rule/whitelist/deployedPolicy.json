@@ -1,0 +1,26 @@
+[  
+   {  
+      "policyId":"b1de5d8c-d99b-404a-8948-58c2ab2c7871",
+      "name":"规则-2015-12-22-16:46",
+      "topologyId":"f35ba4ff-61df-4e77-8cfb-71b9e0cb4913",
+      "blocksRef":{  
+         "baseUrl":"/policies/b1de5d8c-d99b-404a-8948-58c2ab2c7871/blocks",
+         "type":"policyblock"
+      },
+      "defaultPolicy":false,
+      "updatedAt":"2015-12-23T00:46:30Z",
+      "createdAt":"2015-12-23T00:46:30Z",
+      "updatedBy":"admin",
+      "createdBy":"admin",
+      "currentRevision":49,
+      "inUse":true,
+      "lockedType":"READYDEPLOY",
+      "supportRuleAction":"ALERT",
+      "unknownRuleAction":"DENY",
+      "policyType":"WHITELIST",
+      "ipMacAction":"DENY",
+      "_blocksCount":1,
+      "_rulesCount":0,
+      "_signaturesCount":0
+   }
+]

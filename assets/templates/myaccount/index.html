@@ -1,0 +1,139 @@
+<div class="second-title">
+  <i class="fa fa-user icon-left"></i> 我的账户
+</div>
+
+<div class="panel-content">
+  <div class="row">
+    <div class="col-xs-9">
+      <div ng-if="$root.versionError" class="no-cm-warning">
+        <i class="fa fa-exclamation-triangle"></i> 用户权限数据或可视化菜单数据发生异常, 部分功能无法正常使用, 请联系系统管理员
+      </div>
+
+
+      <div class="myaccound-panel">
+        <div class="panel panel-lg">
+          <div class="panel-header">
+            <span>个人资料</span>
+          </div>
+          <div class="panel-body padded-rows">
+            <div class="row">
+              <div class="col-md-2">
+                <span>姓名:</span>
+              </div>
+              <div class="col-md-7">
+                <span>{{myaccount.user.name==='admin'?'管理员':myaccount.user.stuffName}}</span>
+              </div>
+
+
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <span>用户名:</span>
+              </div>
+              <div class="col-md-7">
+                <span>{{myaccount.user.name}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-lg">
+          <div class="panel-header">
+            <span>修改密码</span>
+          </div>
+          <div class="panel-body padded-rows">
+            <div class="row">
+              <div class="col-md-2">
+                <span>旧密码:</span>
+              </div>
+              <div class="col-md-4 position-relative">
+                <div class="row nopadding-top nopadding-bottom">
+                  <div class="col-sm-6 nomargin-top nomargin-bottom">
+                    <input type="password" maxlength="25" id="old-password"
+                           ng-model="myaccount.user.oldPassword" ng-keyup="myaccount.validatePassword()">
+                  </div>
+                  <div class="col-sm-6 nomargin-top nomargin-bottom">
+                    <div class="input-alert-error input-invalid" ng-show="myaccount.oldPassValid===1">
+                      {{myaccount.passwordErrormessages.oldPass}}
+                    </div>
+                    <div class="input-valid">
+                      <span ng-show="myaccount.oldPassValid===2">
+                        <i class="fa fa-check text-lime"></i>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <span>新密码:</span>
+              </div>
+              <div class="col-md-4 position-relative">
+                <div class="row nopadding-top nopadding-bottom">
+                  <div class="col-sm-6 nomargin-top nomargin-bottom">
+                    <input type="password" maxlength="25" id="input-password" ng-model="myaccount.user.newPassword"
+                           ng-keyup="myaccount.validatePassword()">
+                  </div>
+                  <div class="col-sm-6 nomargin-top nomargin-bottom">
+                    <div class="input-alert-error input-invalid" ng-show="myaccount.newPassValid===1">
+                      {{myaccount.passwordErrormessages.newPass}}
+                    </div>
+                    <div class="input-valid">
+                      <span ng-show="myaccount.newPassValid===2">
+                        <i class="fa fa-check text-lime"></i>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                    <span class="fa-beside-button-left ng-binding"><i
+                      class="fa fa-info-circle fa-beside-button-right"></i>{{myaccount.passwordComplexityMessage}}</span><span>(不填则保留原密码)</span></td>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <span>确认密码：</span>
+              </div>
+              <div class="col-md-4">
+                <div class="row nopadding-top nopadding-bottom">
+                  <div class="col-sm-6 nomargin-top nomargin-bottom">
+                    <input type="password" maxlength="25" id="input-confirm-password"
+                           ng-model="myaccount.user.confirmNewPassword" ng-keyup="myaccount.validatePassword()">
+                  </div>
+                  <div class="col-sm-6 nomargin-top nomargin-bottom">
+                    <div class="input-alert-error input-invalid" ng-show="myaccount.confirmPassValid===1">
+                      {{myaccount.passwordErrormessages.confirmPass}}
+                    </div>
+                    <div class="input-valid">
+                      <span ng-show="myaccount.confirmPassValid===2">
+                        <i class="fa fa-check text-lime"></i>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-10">
+                <button id="password_reset_save_button" class="btn btn-default"
+                        ng-disabled="!myaccount.passwordValid" ng-click="myaccount.changePassword()"><i
+                  class="fa fa-check text-lime icon-left"></i>确认
+                </button>
+                <span ng-if="myaccount.success.show">
+                    <i class="fa fa-check-circle text-lime icon-left"></i>修改成功
+                  </span>
+                <span ng-if="myaccount.error.showPassword">
+                    <i class="fa fa-times-circle text-red icon-left"></i>修改失败：{{myaccount.error.message}}
+                  </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

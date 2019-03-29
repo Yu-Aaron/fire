@@ -1,0 +1,161 @@
+<div class="second-title">可靠性</div>
+<div class="panel-content" cg-busy="{promise:$root.reliableSettingDeployTaskPromise,message:'部署中...'}">
+  <div class="row">
+    <div class="col-md-6" ng-if="false">
+      <div class="panel">
+        <div class="panel-header">
+          <label>双机热备</label>
+          <button class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  id="hotStandby_edit_btn"
+                  ng-hide="reliable.editMode.hotStandby"
+                  setting-privilege privilege-name="SETTING_RELIABLITY" privilege-handle="disabled"
+                  ng-click="reliable.editMode.hotStandby = !reliable.editMode.hotStandby">
+            <i class="fa fa-pencil-square-o"></i></button>
+          <button class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  id="hotStandby_save_btn"
+                  ng-show="reliable.editMode.hotStandby"
+                  ng-disabled="!reliable.validLocalHAIp || !reliable.validRemoteHAIp || !reliable.validLocalHAPort || !reliable.validPriority"
+                  ng-click="reliable.updateHotStandby()">
+            <i class="fa fa-check text-lime"></i></button>
+          <button class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                  id="hotStandby_cancel_btn"
+                  ng-show="reliable.editMode.hotStandby"
+                  ng-click="reliable.cancelHotStandby()">
+            <i class="fa fa-remove"></i></button>
+        </div>
+        <div class="panel-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label class="col-md-2 control-label">
+                启用双机热备
+              </label>
+              <div class="col-md-9">
+                <switch-toggle id="enableHotStandby" status="reliable.enableHotStandby" on-label="开启" off-label="关闭"
+                               disabled="!reliable.editMode.hotStandby"
+                               change="reliable.checkHotStandbySW();"></switch-toggle>​
+              </div>
+            </div>
+
+            <div class="form-group margin-top-lg">
+              <label class="col-md-2 control-label">
+                本地HA地址
+              </label>
+              <div class="col-md-9">
+                <input type="text" id="localHAIp" class="input-md" ng-model="reliable.localHAIp"
+                       ng-disabled="!reliable.enableHotStandby"
+                       ng-change="reliable.validateIp(reliable.localHAIp, 'local')">
+                <div class="input-alert-error"
+                      ng-show="reliable.enableHotStandby && !reliable.validLocalHAIp && reliable.localHAIp.length">请输入合法IP地址</div>
+              </div>
+            </div>
+
+            <div class="form-group margin-top-lg">
+              <label class="col-md-2 control-label">
+                本地HA端口
+              </label>
+              <div class="col-md-9">
+                <span>
+                  <input type="text" id="localHAPort" min="1024" max="4096"
+                         class="input-md margin-right-default"
+                         ng-model="reliable.localHAPort"
+                         ng-disabled="!reliable.enableHotStandby"
+                         ng-change="reliable.validateLocalHAPort(reliable.localHAPort)">( 1024 - 4096 )
+                </span>
+                <div class="input-alert-error"
+                      ng-show="reliable.enableHotStandby && !reliable.validLocalHAPort">请输入合法的端口</div>
+              </div>
+            </div>
+            <div class="form-group margin-top-lg">
+              <label class="col-md-2 control-label">
+                优先级
+              </label>
+              <div class="col-md-9">
+                <span>
+                  <input type="text" id="priority" min="1" max="255"
+                         class="input-md margin-right-default"
+                         ng-model="reliable.priority"
+                         ng-disabled="!reliable.enableHotStandby"
+                         ng-change="reliable.validatePriority(reliable.priority)">( 1 - 255 )
+                </span>
+                <div class="input-alert-error"
+                      ng-show="reliable.enableHotStandby && !reliable.validPriority">请输入合法的优先级</div>
+              </div>
+            </div>
+            <div class="form-group margin-top-lg">
+              <label class="col-md-2 control-label">
+                远端HA地址
+              </label>
+              <div class="col-md-9">
+                <input type="text" id="remoteHAIp" class="input-md" ng-model="reliable.remoteHAIp"
+                       ng-disabled="!reliable.enableHotStandby"
+                       ng-change="reliable.validateIp(reliable.remoteHAIp, 'remote')">
+                <div class="input-alert-error"
+                      ng-show="reliable.enableHotStandby && !reliable.validRemoteHAIp && reliable.remoteHAIp.length">请输入合法IP地址</div>
+              </div>
+            </div>
+            <div class="form-group margin-top-lg">
+              <label class="col-md-2 control-label">
+                强制本地为主设备
+              </label>
+              <div class="col-md-9">
+                <switch-toggle id="enableLocalPrimary" status="reliable.enableLocalPrimary" on-label="开启" off-label="关闭"
+                               disabled="!reliable.editMode.hotStandby || !reliable.enableHotStandby"
+                               change="reliable.enableHotStandby && reliable.validateAll();"></switch-toggle>​
+              </div>
+            </div>
+            <div class="row margin-top-lg margin-bottom-default padding-default" style="background-color: #3A404A;">
+              <h4 class="margin-top-zero margin-bottom-zero">{{reliable.hotStandbyState}}</h4>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel">
+        <div class="panel-header">
+          <label class="text-center">BYPASS配置</label>
+          <button class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  id="bypass_edit_btn"
+                  ng-hide="reliable.editMode.bypass"
+                  setting-privilege privilege-name="SETTING_RELIABLITY" privilege-handle="disabled"
+                  ng-click="reliable.editMode.bypass = !reliable.editMode.bypass">
+            <i class="fa fa-pencil-square-o"></i></button>
+          <button class="btn btn-default btn-sm pull-right btn-top-pull-right-margin-back"
+                  id="bypass_save_btn"
+                  ng-show="reliable.editMode.bypass"
+                  ng-click="reliable.updateBypass()">
+            <i class="fa fa-check text-lime"></i></button>
+          <button class="btn btn-default btn-sm margin-right-default pull-right btn-top-pull-right-margin-back"
+                  id="bypass_cancel_btn"
+                  ng-show="reliable.editMode.bypass"
+                  ng-click="reliable.cancelBypass()">
+            <i class="fa fa-remove"></i></button>
+        </div>
+        <div class="panel-body">
+          <div class="row margin-bottom-default" ng-repeat="bp in reliable.bypassList" fade-in-list>
+            <input type="hidden" ng-model="reliable.bypasses[$index].bypassName" ng-value="bp.bypassName">
+            <div class="col-md-3">
+              <label>
+                <input type="checkbox" id="{{bp.bypassName}}_appFault" custom-checkbox ng-model="reliable.bypasses[$index].appFault" ng-value="bp.appFault"
+                     ng-disabled="!reliable.editMode.bypass">
+                <span>应用故障</span>
+              </label>
+            </div>
+            <div class="col-md-3">
+              <label>
+                <input type="checkbox" id="{{bp.bypassName}}_powerOn" custom-checkbox ng-model="reliable.bypasses[$index].powerOn" ng-value="bp.powerOn"
+                       ng-disabled="!reliable.editMode.bypass">
+                <span>开机故障</span>
+              </label>
+            </div>
+            <div class="col-md-2">{{bp.bypassName}}</div>
+            <div class="col-md-2">{{bp.fromEth}}</div>
+            <div class="col-md-2">{{bp.toEth}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

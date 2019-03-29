@@ -1,0 +1,638 @@
+<div cg-busy="{promise:systemuser.updateUserGroupPromise, message:'更新中...'}">
+  <div>
+    <button id="systemuser_group_edit_back" class="btn btn-default pull-left"
+            ng-click="systemuser.goToUserManagerPage()">
+      <i class="fa fa-chevron-circle-left icon-left"></i>返回
+    </button>
+    <div class="btn-toolbar group-edit-state-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group" role="group" aria-label="First group">
+        <button type="button" id="groupEdit-groupInfo" class="btn btn-secondary btn-default"
+                ng-click="systemuser.groupEditState='groupInfo'"
+                ng-class="systemuser.groupEditState==='groupInfo'?'button-selected':''">
+          <span class="numberCircle">1</span> 用户组信息 <i class="fa fa-angle-double-right"></i>
+        </button>
+        <button type="button" id="groupEdit-monitor" class="btn btn-secondary btn-default"
+                ng-click="systemuser.groupEditState='monitor'"
+                ng-class="systemuser.groupEditState==='monitor'?'button-selected':''">
+          <span class="numberCircle">2</span> 监控管理权限 <i class="fa fa-angle-double-right"></i>
+        </button>
+        <button type="button" id="groupEdit-system" class="btn btn-secondary btn-default"
+                ng-click="systemuser.groupEditState='system'"
+                ng-class="systemuser.groupEditState==='system'?'button-selected':''">
+          <span class="numberCircle">3</span> 系统管理权限 <i class="fa fa-angle-double-right"></i>
+        </button>
+        <button type="button" id="groupEdit-menus" class="btn btn-secondary btn-default"
+                ng-click="systemuser.groupEditState='menus'"
+                ng-class="systemuser.groupEditState==='menus'?'button-selected':''">
+          <span class="numberCircle">4</span> 菜单可视配置 <i class="fa fa-angle-double-right"></i>
+        </button>
+        <button type="button" id="groupEdit-confirm" class="btn btn-secondary btn-default"
+                ng-click="systemuser.groupEditState='confirm'"
+                ng-class="systemuser.groupEditState==='confirm'?'button-selected':''">
+          <span class="numberCircle">5</span> 确认用户组编辑
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="systemuser-user-panel margin-top-default padded-rows">
+    <div class="systemuser-create-panel" ng-show="systemuser.groupEditState==='groupInfo'">
+      <div class="systemuser-header">
+        用户组设定
+      </div>
+      <div class="systemuser-contentContainer">
+        <div class="row">
+          <div class="col-md-1">
+            <span>用户组 </span>
+          </div>
+          <div class="col-md-4 systemuser-input">
+            <input id="systemUserGroupEditInput" type="text" id="input-username" maxlength="20"
+                   ng-model="systemuser.editedUserGroup.role.name"
+                   ng-disabled="true"
+                   ng-change="systemuser.validationGroupForm()">
+
+            <div class="account-input-error" ng-if="systemuser.createdError.nameVoid">
+              <span class="input-alert-error">用户组名称不能为空</span>
+            </div>
+            <div class="account-input-error" ng-if="systemuser.createdError.nameOversize">
+              <span class="input-alert-error">用户组名称不能超过20个字</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-1">
+            <span>描述 </span>
+          </div>
+          <div class="col-md-4 systemuser-input">
+            <textarea id="input-stuffname" ng-model="systemuser.editedUserGroup.role.comment" maxlength="64"
+                      ng-disabled="systemuser.userPrivilegeDisabled"
+                      ng-change="systemuser.validationGroupForm()"></textarea>
+            <span class="fa-beside-button-left ng-binding"><i class="fa fa-info-circle fa-beside-button-right"></i>描述不能超过64个字</span>
+
+            <div class="account-input-error" ng-if="systemuser.createdError.commentOversize">
+              <span class="input-alert-error">描述不能超过64个字</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="system-footer-button-group">
+        <button class="btn btn-default pull-right" ng-click="systemuser.groupEditState='monitor'"
+                id="btn_groupInfo_next">
+          <i class="fa fa-arrow-right text-lime icon-left"></i> 下一页
+        </button>
+      </div>
+    </div>
+
+    <div class="systemuser-create-panel" ng-show="systemuser.groupEditState==='monitor'">
+      <div class="systemuser-header">
+        <span>监控管理权限</span>
+        <div class="btn-group pull-right" ng-if="!systemuser.userPrivilegeDisabled">
+          <label id="userGroupPrivilege_MonitorMgt_edit" class="btn btn-editRight"
+                 ng-class="{active: systemuser.groupPrivilegeEnabled('MonitorMgt',30)}"
+                 ng-if="systemuser.groupPrivilegeEnabled('MonitorMgt',30)"
+                 ng-click="systemuser.groupPrivilegeChanged('MonitorMgt',30)">编辑</label>
+          <label id="userGroupPrivilege_MonitorMgt_view" class="btn btn-viewRight"
+                 ng-class="{active: systemuser.groupPrivilegeEnabled('MonitorMgt',2)}"
+                 ng-if="systemuser.groupPrivilegeEnabled('MonitorMgt',2)"
+                 ng-click="systemuser.groupPrivilegeChanged('MonitorMgt',2)">查看</label>
+          <label id="userGroupPrivilege_MonitorMgt_none" class="btn btn-forbidden active"
+                 ng-click="systemuser.groupPrivilegeChanged('MonitorMgt',1)">禁止</label>
+        </div>
+      </div>
+      <div class="systemuser-rightContainer">
+        <div class="systemuser-h1">
+          事件、日志、报告信息
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              事件
+            </div>
+            <privilege-edit privilege="EVENT"></privilege-edit>
+          </div>
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              日志
+            </div>
+            <privilege-edit privilege="LOG_MANAGEMENT"></privilege-edit>
+          </div>
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              报告
+            </div>
+            <privilege-edit privilege="REPORT"></privilege-edit>
+          </div>
+        </div>
+      </div>
+
+      <div class="systemuser-rightContainer">
+        <div class="systemuser-h1">
+          会话
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              会话
+            </div>
+            <privilege-edit privilege="SESSION_MANAGEMENT"></privilege-edit>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="systemuser-rightContainer">
+        <div class="systemuser-h1">
+          工控规则
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              黑名单
+            </div>
+            <privilege-edit privilege="RULE_BLACKLIST"></privilege-edit>
+          </div>
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              白名单
+            </div>
+            <privilege-edit privilege="RULE_WHITELIST"></privilege-edit>
+          </div>
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              IP/MAC
+            </div>
+            <privilege-edit privilege="RULE_IP_MAC"></privilege-edit>
+          </div>
+        </div>
+      </div>
+
+      <div class="systemuser-rightContainer">
+        <div class="systemuser-h1">
+          网络
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              接口
+            </div>
+            <privilege-edit privilege="NETWORK_INTERFACE"></privilege-edit>
+          </div>
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              路由
+            </div>
+            <privilege-edit privilege="NETWORK_ROUTE"></privilege-edit>
+          </div>
+        </div>
+      </div>
+
+      <div class="systemuser-rightContainer">
+        <div class="systemuser-h1">
+          对象
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              网络资产
+            </div>
+            <privilege-edit privilege="OBJECT_ASSET"></privilege-edit>
+          </div>
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              服务
+            </div>
+            <privilege-edit privilege="OBJECT_SERVICE"></privilege-edit>
+          </div>
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              应用
+            </div>
+            <privilege-edit privilege="OBJECT_APPLICATION"></privilege-edit>
+          </div>
+          <!--<div class="col-sm-4" ng-if="false">
+            <div class="systemuser-h2">
+              时间表
+            </div>
+            <privilege-edit privilege="OBJECT_SCHEDULE"></privilege-edit>
+          </div>-->
+        </div>
+      </div>
+
+      <div class="systemuser-rightContainer">
+        <div class="systemuser-h1">
+          策略
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              安全策略
+            </div>
+            <privilege-edit privilege="STRATEGY_SECURITY"></privilege-edit>
+          </div>
+          <!--<div class="col-sm-4">
+            <div class="systemuser-h2">
+              NAT策略
+            </div>
+            <privilege-edit privilege="STRATEGY_NAT"></privilege-edit>
+          </div>-->
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              会话策略
+            </div>
+            <privilege-edit privilege="STRATEGY_SESSION"></privilege-edit>
+          </div>
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              抗渗透
+            </div>
+            <privilege-edit privilege="STRATEGY_ANTI_ATTACK"></privilege-edit>
+          </div>
+        </div>
+      </div>
+
+      <div class="system-footer-button-group">
+        <button class="btn btn-default pull-left" ng-click="systemuser.groupEditState='groupInfo'"
+                id="btn_monitor_prev">
+          <i class="fa fa-arrow-left text-lime icon-left"></i> 上一页
+        </button>
+        <button class="btn btn-default pull-right" ng-click="systemuser.groupEditState='system'" id="btn_monitor_next">
+          <i class="fa fa-arrow-right text-lime icon-left"></i> 下一页
+        </button>
+      </div>
+    </div>
+
+    <div class="systemuser-create-panel systemuser-user-groups" ng-show="systemuser.groupEditState==='system'">
+      <div class="systemuser-header">
+        <span>系统管理权限</span>
+        <div class="btn-group pull-right" ng-if="!systemuser.userPrivilegeDisabled">
+          <label id="userGroupPrivilege_SystemMgt_edit" class="btn btn-editRight"
+                 ng-class="{active: systemuser.groupPrivilegeEnabled('SystemMgt',30)}"
+                 ng-if="systemuser.groupPrivilegeEnabled('SystemMgt',30)"
+                 ng-click="systemuser.groupPrivilegeChanged('SystemMgt',30)">编辑/开启</label>
+          <label id="userGroupPrivilege_SystemMgt_none" class="btn btn-forbidden active"
+                 ng-click="systemuser.groupPrivilegeChanged('SystemMgt',1)">禁止/关闭</label>
+        </div>
+      </div>
+
+      <div class="systemuser-rightContainer">
+        <div class="systemuser-h1">
+          系统设置
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              基本设置
+            </div>
+            <privilege-edit privilege="SETTING_BASIC" type="2"></privilege-edit>
+          </div>
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              开关设置
+            </div>
+            <privilege-edit privilege="SETTING_SWITCH" type="2"></privilege-edit>
+          </div>
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              可靠性
+            </div>
+            <privilege-edit privilege="SETTING_RELIABLITY" type="2"></privilege-edit>
+          </div>
+        </div>
+      </div>
+
+      <div class="systemuser-rightContainer">
+        <div class="systemuser-h1">
+          安全操作
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              升级
+            </div>
+            <privilege-edit privilege="OPERATION_UPGRADE" type="2"></privilege-edit>
+          </div>
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              重启
+            </div>
+            <privilege-edit privilege="OPERATION_REBOOT" type="2"></privilege-edit>
+          </div>
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              重置
+            </div>
+            <privilege-edit privilege="OPERATION_RESET" type="2"></privilege-edit>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              备份
+            </div>
+            <privilege-edit privilege="OPERATION_BACKUP" type="2"></privilege-edit>
+          </div>
+        </div>
+      </div>
+
+      <div class="systemuser-rightContainer">
+        <div class="systemuser-h1">
+          用户管理
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="systemuser-h2">
+              用户管理
+            </div>
+            <privilege-edit privilege="USER_MANAGEMENT"></privilege-edit>
+          </div>
+        </div>
+      </div>
+
+      <div class="system-footer-button-group">
+        <button class="btn btn-default pull-left" ng-click="systemuser.groupEditState='monitor'" id="btn_system_prev">
+          <i class="fa fa-arrow-left text-lime icon-left"></i> 上一页
+        </button>
+        <button class="btn btn-default pull-right" ng-click="systemuser.groupEditState='menus'" id="btn_system_next">
+          <i class="fa fa-arrow-right text-lime icon-left"></i> 下一页
+        </button>
+      </div>
+    </div>
+
+    <div class="systemuser-create-panel" ng-show="systemuser.groupEditState==='menus'">
+      <div class="systemuser-header">
+        菜单可视配置
+      </div>
+      <div class="systemuser-contentContainer">
+        <div class="menu-tree-container">
+          <div class="lv-1-menu" ng-repeat="menu_1 in systemuser.editedUserGroup.customizedMenu_parent">
+            <!--systemuser.userPrivilegeDisabled || !systemuser.hasPrivilege('USER_GROUP_MANAGEMENT', 30)||-->
+            <label>
+              <i class="icon icon-{{menu_1.icon}}-active"></i>
+              <span>{{menu_1.description}}</span>
+              <input custom-checkbox tri-state-checkbox class="checkbox" id="checkbox_{{menu_1.target}}" type="checkbox"
+                     ng-model="menu_1.checked"
+                     ng-change="systemuser.changeCM(menu_1.checked,menu_1)"
+                     ng-disabled="systemuser.userPrivilegeDisabled||menu_1.menuDisabled_infinte||menu_1.menuDisabled_temp">
+            </label>
+            <div class="lv-2-menu-container">
+              <div class="lv-2-menu" ng-repeat="menu_2 in menu_1.subMenus"
+                   ng-if="menu_1.childMenuShow&&menu_1.subMenus&&menu_1.subMenus.length">
+              <span class="pull-left" style="position: relative; width: 12px">
+
+              </span>
+                <label>
+                  <i class="icon icon-{{menu_2.icon}}"></i>
+                  <span>{{menu_2.description}}</span>
+                  <input custom-checkbox tri-state-checkbox class="checkbox" id="checkbox_{{menu_2.target}}"
+                         type="checkbox"
+                         ng-model="menu_2.checked"
+                         ng-change="systemuser.changeCM(menu_2.checked,menu_2, menu_1)"
+                         ng-disabled="systemuser.userPrivilegeDisabled||menu_2.menuDisabled_infinte||menu_2.menuDisabled_temp">
+                </label>
+                <!--systemuser.userPrivilegeDisabled || !systemuser.hasPrivilege('USER_GROUP_MANAGEMENT', 30)||-->
+                <div class="lv-3-menu" ng-repeat="menu_3 in menu_2.subMenus"
+                     ng-if="menu_2.subMenus&&menu_2.subMenus.length">
+                <span class="pull-left" style="position: relative; width: 12px">
+
+                </span>
+                  <label>
+                    <i class="icon icon-circle"></i>
+                    <span>{{menu_3.description}}</span>
+                    <input custom-checkbox tri-state-checkbox class="checkbox"
+                           id="checkbox_{{menu_3.target}}" type="checkbox" ng-model="menu_3.checked"
+                           ng-change="systemuser.changeCM(menu_3.checked,menu_3, menu_2, menu_1)"
+                           ng-disabled="systemuser.userPrivilegeDisabled||menu_3.menuDisabled_infinte||menu_3.menuDisabled_temp">
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="system-footer-button-group">
+        <button class="btn btn-default pull-left" ng-click="systemuser.groupEditState='system'" id="btn_menus_prev">
+          <i class="fa fa-arrow-left text-lime icon-left"></i> 上一页
+        </button>
+        <button class="btn btn-default pull-right" ng-click="systemuser.groupEditState='confirm'" id="btn_menus_next">
+          <i class="fa fa-arrow-right text-lime icon-left"></i> 下一页
+        </button>
+      </div>
+    </div>
+
+    <div class="systemuser-create-panel" ng-show="systemuser.groupEditState==='confirm'">
+      <div class="systemuser-header">
+        确认用户组编辑
+      </div>
+      <div class="systemuser-contentContainer">
+        <div class="row">
+          <div class="col-md-6">
+            <h5 class="systemuser-preview-section-title">用户组描述</h5>
+            <div class="row">
+              <div class="col-md-4">
+              </div>
+              <div class="col-md-4">
+                <h6 class="systemuser-preview-item-title">用户组: </h6>{{systemuser.editedUserGroup.role.name}}
+              </div>
+              <div class="col-md-4">
+                <h6 class="systemuser-preview-item-title">描述: </h6>{{systemuser.editedUserGroup.role.comment}}
+              </div>
+              <br/><br/>
+            </div>
+          </div>
+        </div>
+        <div class="row user-group-confirm-cmTree-container">
+          <div class="col-md-2">
+            <h5 class="systemuser-preview-section-title">事件、日志、报告</h5>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['EVENT']]">事件</label>
+            </div>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['LOG_MANAGEMENT']]">日志</label>
+            </div>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['REPORT']]">报告</label>
+            </div>
+            <br/><br/>
+          </div>
+          <div class="col-md-2">
+            <h5 class="systemuser-preview-section-title">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;会话</h5>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['SESSION_MANAGEMENT']]">会话</label>
+            </div>
+            <br/><br/>
+          </div>
+          <div class="col-md-2">
+            <h5 class="systemuser-preview-section-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工控规则</h5>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['RULE_BLACKLIST']]">黑名单</label>
+            </div>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['RULE_WHITELIST']]">白名单</label>
+            </div>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['RULE_IP_MAC']]">IP/MAC</label>
+            </div>
+            <br/><br/>
+          </div>
+          <div class="col-md-2">
+            <h5 class="systemuser-preview-section-title">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网络</h5>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['NETWORK_INTERFACE']]">接口</label>
+            </div>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['NETWORK_ROUTE']]">路由</label>
+            </div>
+            <br/><br/>
+          </div>
+          <div class="col-md-2">
+            <h5 class="systemuser-preview-section-title">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对象</h5>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['OBJECT_ASSET']]">网络资产</label>
+            </div>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['OBJECT_SERVICE']]">服务</label>
+            </div>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['OBJECT_APPLICATION']]">应用</label>
+            </div>
+            <!--<div class="div-height" ng-if="false">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['OBJECT_SCHEDULE']]">时间表</label>
+            </div>-->
+            <br/><br/>
+          </div>
+          <div class="col-md-2">
+            <h5 class="systemuser-preview-section-title">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;策略</h5>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['STRATEGY_SECURITY']]">安全策略</label>
+            </div>
+            <!--<div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['STRATEGY_NAT']]">NAT策略</label>
+            </div>-->
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['STRATEGY_SESSION']]">会话策略</label>
+            </div>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['STRATEGY_ANTI_ATTACK']]">抗渗透</label>
+            </div>
+            <br/><br/>
+          </div>
+        </div>
+        <div class="row user-group-confirm-cmTree-container">
+          <div class="col-md-2">
+            <h5 class="systemuser-preview-section-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系统设置</h5>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['SETTING_BASIC']]">基本设置</label>
+            </div>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['SETTING_SWITCH']]">开关设置</label>
+            </div>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['SETTING_RELIABLITY']]">可靠性</label>
+            </div>
+            <br/><br/>
+          </div>
+          <div class="col-md-2">
+            <h5 class="systemuser-preview-section-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;安全操作</h5>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['OPERATION_UPGRADE']]">升级</label>
+            </div>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['OPERATION_REBOOT']]">重启</label>
+            </div>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['OPERATION_RESET']]">重置</label>
+            </div>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['OPERATION_BACKUP']]">备份</label>
+            </div>
+            <br/><br/>
+          </div>
+          <div class="col-md-2">
+            <h5 class="systemuser-preview-section-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户管理</h5>
+            <div class="div-height">
+              <label class="btn active label-width"
+                     ng-class="{1:'btn-forbidden',2:'btn-viewRight',30:'btn-editRight'}[systemuser.userGroupPrivilege['USER_MANAGEMENT']]">用户管理</label>
+            </div>
+            <br/><br/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 user-group-confirm-cmTree-container">
+            <h5 class="systemuser-preview-section-title">
+              菜单可视配置
+            </h5>
+            <div class="menu-tree-container">
+              <div class="lv-1-menu" ng-repeat="menu_1 in systemuser.editedUserGroup.customizedMenu_parent"
+                   ng-if="menu_1.checked || menu_1.checked===null">
+                <label>
+                  <i class="icon icon-{{menu_1.icon}}-active"></i>
+                  <span>{{menu_1.description}}</span>
+                </label>
+                <div class="lv-2-menu-container">
+                  <div class="lv-2-menu" ng-repeat="menu_2 in menu_1.subMenus"
+                       ng-if="(menu_2.checked || menu_2.checked===null) && menu_1.childMenuShow">
+                    <label>
+                      <i class="icon icon-{{menu_2.icon}}"></i>
+                      <span>{{menu_2.description}}</span>
+                    </label>
+                    <div class="lv-3-menu" ng-repeat="menu_3 in menu_2.subMenus"
+                         ng-if="menu_3.checked|| menu_3.checked===null">
+                      <label>
+                        <i class="icon icon-circle"></i>
+                        <span>{{menu_3.description}}</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="system-footer-button-group"
+           ng-if="!systemuser.userPrivilegeDisabled">
+        <button class="btn btn-default pull-left" ng-click="systemuser.groupEditState='menus'" id="btn_last_prev">
+          <i class="fa fa-arrow-left text-lime icon-left"></i> 上一页
+        </button>
+        <button id="systemuser_group_edit_confirm" class="btn btn-default pull-right"
+                ng-click="systemuser.saveUserGroup()" ng-disabled="!systemuser.groupFormValid">
+          <i class="fa fa-check text-lime icon-left"></i>确定
+        </button>
+        <button id="systemuser_group_edit_cancel" class="btn btn-default pull-right"
+                ng-click="systemuser.goToUserManagerPage()" style="margin-right: 10px;">
+          <i class="fa fa-times-circle icon-left"></i>取消
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+</div>

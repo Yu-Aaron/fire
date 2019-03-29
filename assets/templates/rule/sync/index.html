@@ -1,0 +1,57 @@
+<div id="rule_sync_panel_container"
+     cg-busy="{promise: syncCtrl.syncTaskPromise, message: '同步中...',templateUrl:'templates/rule/sync/deploying.html'}">
+  <div ng-init="syncCtrl.checkSyncInitial()">
+    <div id="rule_sync_syncing_div" class="panel" ng-if="syncCtrl.hasSyncingTask()">
+      <div class="panel-header">
+        <h5 class="panel-header-title"><i class="fa fa-search-plus"></i>正在进行规则同步</h5>
+      </div>
+    </div>
+    <div id="rule_sync_div" ng-if="!syncCtrl.hasSyncingTask()">
+      <div class="panel panel-default-threat-main">
+        <div class="panel-header">
+          <h5><span class="panel-header-title"><i class="fa fa-default fa-exchange"></i> 规则同步</span> <span style="float:right"><i class="fa fa-info-circle"></i> 同步规则会把DPI设备上部署的规则和监管平台上的规则进行比较，然后可以将DPI设备上多出来的规则添加到模板库中</span>
+          </h5>
+        </div>
+        <div class="panel-body panel-body-light" ng-if="syncCtrl.isDPIUpgrading">
+          <div>
+            <span class="warning">&nbsp; (DPI设备升级中，无法同步规则)</span>
+          </div>
+        </div>
+        <div id="rule_sync_task_div" ng-if="syncCtrl.hasSyncedTask()">
+          <h5 class="last-update">最新规则同步检测完成时间：{{syncCtrl.syncTask.endDatetime | date:'yyyy-MM-dd HH:mm:ss'}}</h5>
+          <div class="display-inline-block btn-group" id="sync_btn_group" dropdown ng-if="syncCtrl.editRight">
+            <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle><i
+              class="fa fa-file-o fa-plus-overlay fa-after-lime icon-left"></i>新增规则<span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a ng-click="syncCtrl.editPolicy('whitelist')">工控白名单</a></li>
+              <li><a ng-click="syncCtrl.editPolicy('networklist')">网络白名单</a></li>
+            </ul>
+            <button id="rule_sync_restart_button" type="button" class="btn btn-default pull-right"
+                    ng-if="syncCtrl.editRight" ng-click="syncCtrl.start(true)"><i
+              class="fa fa-search-plus icon-left"></i>重新同步规则
+            </button>
+          </div>
+          <div id="rule_sync_result_div" ng-if="syncCtrl.hasSyncResult()">
+            <div ng-include class="inner-wrap" src="'templates/rule/sync/syncResultTab.html'"></div>
+          </div>
+          <div id="rule_sync_no_result_div" ng-if="!syncCtrl.hasSyncResult()">
+            <div class="panel-header">
+              <h4 ng-if="syncCtrl.lastSyncSuccess()" class="no-result-message">
+                同步过的DPI设备上的白名单规则全部包含在监管平台上，或者DPI设备上多出来的规则已经被添加到模板库中。</h4>
+              <h4 ng-if="!syncCtrl.lastSyncSuccess()&& !syncCtrl.hasSyncingTask" class="no-result-message">
+                上次同步失败，请重新同步。</h4>
+            </div>
+          </div>
+        </div>
+        <div id="rule_sync_no_task_div" ng-if="!syncCtrl.hasSyncedTask()">
+          <div class="panel-header" ng-if="syncCtrl.editRight">
+            <h4 class="panel-header-title">请开始同步规则</h4>
+            <button id="rule_sync_start_button" type="button" class="btn btn-default" ng-click="syncCtrl.start(false)">
+              <i class="fa fa-search-plus icon-left"></i>同步规则
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

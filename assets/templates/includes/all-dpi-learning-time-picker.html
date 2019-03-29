@@ -1,0 +1,45 @@
+<div class="row">
+  <span class="row margin-bottom-default col-xs-4 text-left">
+    <div class="col-xs-2 text-left learning-time-label whitelist-top-line">
+      <span>开始学习:</span>
+    </div>
+    <div class="col-xs-9">
+      <form name="initialScheduler">
+        <input type="date" name="date" ng-model="whitelistAllDpi.startdt"
+               placeholder="yyyy-MM-dd" min="{{whitelistAllDpi.minDate}}" max="{{whitelistAllDpi.maxDate}}" required/>
+        <input type="time" name="time" ng-model="whitelistAllDpi.startdt"
+               placeholder="HH:mm:ss" required/>
+      </form>
+      <span><i class="fa fa-warning text-red"
+               ng-show="!initialScheduler.date.$valid || initialScheduler.date.$error.min || initialScheduler.date.$error.date || !initialScheduler.time.$valid || initialScheduler.time.$error.time || whitelistAllDpi.startdt<whitelistAllDpi.now"> </i> </span>
+      <span class="error" ng-show="!initialScheduler.date.$valid">日期不合法</span>
+      <span class="error" ng-show="initialScheduler.date.$error.min">日期不可在今日之前</span>
+      <span class="error" ng-show="initialScheduler.date.$error.date">日期填写不完整</span>
+      <span class="error" ng-show="!initialScheduler.time.$valid">时间不合法</span>
+      <span class="error" ng-show="initialScheduler.time.$error.time">时间填写不完整</span>
+      <span class="error" ng-show="whitelistAllDpi.startdt<whitelistAllDpi.now">开始时间不可在当前时间之前</span>
+    </div>
+  </span>
+
+  <span class="row margin-bottom-default col-xs-4">
+    <div class="col-xs-2 text-left learning-time-label">
+      <span>完成学习:</span>
+    </div>
+    <div class="col-xs-9">
+      <form name="endDateTime">
+        <input type="date" name="date" ng-model="whitelistAllDpi.enddt"
+               placeholder="yyyy-MM-dd" min="{{whitelistAllDpi.minDate}}" max="{{whitelistAllDpi.maxDate}}" required/>
+        <input type="time" name="time" ng-model="whitelistAllDpi.enddt"
+               placeholder="HH:mm:ss" required/>
+      </form>
+      <span><i class="fa fa-warning text-red"
+               ng-show="!endDateTime.date.$valid || endDateTime.date.$error.min || endDateTime.date.$error.date || !endDateTime.time.$valid || endDateTime.time.$error.time || whitelistAllDpi.startdt>whitelistAllDpi.enddt"> </i> </span>
+      <span class="error" ng-show="!endDateTime.date.$valid">日期不合法</span>
+      <span class="error" ng-show="endDateTime.date.$error.min">日期不可在今日之前</span>
+      <span class="error" ng-show="endDateTime.date.$error.date">日期填写不完整</span>
+      <span class="error" ng-show="!endDateTime.time.$valid">时间不合法</span>
+      <span class="error" ng-show="endDateTime.time.$error.time">时间填写不完整</span>
+      <span class="error" ng-show="whitelistAllDpi.startdt>whitelistAllDpi.enddt">开始时间不可在完成时间之后</span>
+    </div>
+  </span>
+</div>

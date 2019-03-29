@@ -1,0 +1,23 @@
+<nav class="left-navbar" ng-class="{'left-navbar-collapsed': asset.expanded}">
+  <!-- old assets menu. Keep for reference. Need to be deleted for release version. James-2015/11/16 -->
+  <!--<ul class="nav nav-pills nav-stacked">
+    <li ng-repeat="tab in $root.config.asset" ng-if="tab.enable&&asset.uiEnable(tab.target, 1)" privilege="{{tab.currentState}}" disable="true" class="highlight" id="{{tab.currentState}}">
+      <a id="asset-assetSideNav_a_{{tab.state}}" class="left-navbar-item left-navbar-item-{{tab.state}}" ui-sref="asset.{{tab.state}}" ng-class="{active: asset.isActive(tab.state)}" ui-sref-opts="{{tab.options}}">
+        <span class="svg-side_nav_icons_{{tab.icon}} svg-side_nav_icons_{{tab.icon}}-dims left-navbar-item-icon"></span>
+        <div class="left-navbar-item-name">{{tab.name}}</div>
+      </a>
+    </li>
+  </ul>-->
+  <ul class="nav nav-pills nav-stacked">
+    <li ng-repeat="tab in $root.rootMenu.getChild('ASSET_MANAGEMENT').getChilds()" ng-if="asset.leftNavItemEnabled(tab)"
+        disable="true" class="highlight" id="{{tab.getPrivilege()}}">
+      <a id="asset-assetSideNav_a_{{tab.getState()}}" class="left-navbar-item left-navbar-item-{{tab.getState()}}"
+         ui-sref="asset.{{tab.getState()}}" ng-class="{active: asset.isActive(tab.getState())}"
+         ui-sref-opts="{{tab.getOptions()}}">
+        <span
+          class="svg-side_nav_icons_{{tab.getIcon()}} svg-side_nav_icons_{{tab.getIcon()}}-dims left-navbar-item-icon"></span>
+        <div class="left-navbar-item-name">{{tab.getDescription()}}</div>
+      </a>
+    </li>
+  </ul>
+</nav>
